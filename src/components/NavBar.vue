@@ -173,6 +173,7 @@
           .then(
             ({data: list}) => {
               console.log(list)
+              console.log('hey')
               // auth.setAccessControl(list)
               localStorage.removeItem('token')
               route.push('/')
