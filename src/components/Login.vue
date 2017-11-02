@@ -1,15 +1,32 @@
 <template>
-  <div class="login">
-    <form class="form-login" @submit.prevent="login" id="loginForm">
-      <label for="username">Username</label>
-      <input  name="username" type="text" id="username" placeholder="username" v-model="username"/>
-      <!--<span v-show="errors.has('username')"><small>This field is required</small>.</span>-->
-      <label for="password">Password</label>
-      <input name="password" type="password" id="password" placeholder="password" v-model="password"/>
-      <!--<span v-show="errors.has('password')"><small>This field is required.</small></span>-->
-      <button type="submit">Login</button>
-    </form>
-  </div>
+ <div class="col-md-4 col-md-offset-4 ">
+			<div class="box">
+        <h1>Member Service</h1>
+				<form role="form" @submit.prevent="login" id="loginForm">
+
+					<div class="divider-form"></div>
+
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Username" v-model="username">
+					</div>
+
+					<div class="divider-form"></div>
+
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" id="password" placeholder="Password" v-model="password">
+					</div>
+
+					<div class="divider-form"></div>
+
+
+					<button type="submit" class="btn-block btn btn-lg btn-primary">Login</button>
+
+				</form>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>

@@ -13,6 +13,7 @@ import router from './router'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 //
 // Vue.use(BootstrapVue)
+require('./assets/css/login.css')
 Vue.config.productionTip = false
 
 Vue.filter('date', (value, formatStr = 'MMM D, YYYY - h:mm A') => moment(value).format(formatStr))
