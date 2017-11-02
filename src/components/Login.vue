@@ -44,7 +44,44 @@
               console.log('data.message: ' + data.message)
               console.log('data token: ' + data.token)
               localStorage.setItem('token', data.token)
-              // Http get request for thana ids
+              // Http get request for permission list
+              Http.GET('permissions')
+                .then(
+                  ({data: list}) => {
+                    console.log(list)
+                    // auth.setAccessControl(list)
+                    route.push('/home')
+                  },
+                  error => {
+                    console.log('error in getting permission list: ', error)
+                  }
+                )
+              /**
+               * Http requests for all the resources
+               */
+              Promise.all([
+                Http.GET('resource', ['thana']),
+                Http.GET('resource', ['district']),
+                Http.GET('resource', ['branch']),
+                Http.GET('resource', ['country']),
+                Http.GET('resource', ['occupation']),
+                Http.GET('resource', ['bank'])])
+                .then(([
+                  {data: thana},
+                  {data: district},
+                  {data: branch},
+                  {data: country},
+                  {data: occupation},
+                  {data: bank}]) => {
+                  console.log('Success in retrieving all the resources.')
+                  localStorage.setItem('thana', JSON.stringify(thana.data))
+                  localStorage.setItem('district', JSON.stringify(district.data))
+                  localStorage.setItem('branch', JSON.stringify(branch.data))
+                  localStorage.setItem('country', JSON.stringify(country.data))
+                  localStorage.setItem('occupation', JSON.stringify(occupation.data))
+                  localStorage.setItem('bank', JSON.stringify(bank.data))
+                })
+              /*
               Http.GET('resource', ['thana'])
                 .then(
                   ({data: list}) => {
@@ -68,18 +105,7 @@
                     console.log('error in getting district list: ', error)
                   }
                 )
-              // Http get request for permission list
-              Http.GET('permissions')
-                .then(
-                  ({data: list}) => {
-                    console.log(list)
-                    // auth.setAccessControl(list)
-                    route.push('/home')
-                  },
-                  error => {
-                    console.log('error in getting permission list: ', error)
-                  }
-                )
+              */
             }
           )
       }

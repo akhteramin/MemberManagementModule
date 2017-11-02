@@ -70,9 +70,9 @@
                       <br>
                       Address Line 2:
                       <br>
-                      Thana Id:
+                      Thana:
                       <br>
-                      District Id:
+                      District:
                       <br>
                       Country:
                       <br>
@@ -82,9 +82,9 @@
                       <br>
                       {{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}
                       <br>
-                      {{ member.addresses.length !== 0 ? thanaName : 'N/A' }}
+                      {{ thanaName }}
                       <br>
-                      {{ member.addresses.length !== 0 ? member.addresses[0].districtId : 'N/A'}}
+                      {{ districtName }}
                       <br>
                       {{ member.addresses.length !== 0 ? member.addresses[0].country : 'N/A' }}
                       <br>
@@ -130,7 +130,7 @@
                       </div>
                       <div class="row justify-content-center" v-if="introducers">
                         <div class="col-5">
-                          <h5>Introduced By</h5>
+                          <h5>Introduced by</h5>
                           <hr>
                           <strong v-if="introducers.length === 0">N/A</strong>
                           <div v-else class="pre-scrollable" style="height: 210px;">
@@ -280,12 +280,19 @@
           this.thanaName = thanaList.find(x => x.id === this.member.addresses[0].thanaId).name
           this.districtName = districtList.find(x => x.id === this.member.addresses[0].districtId).name
 
-          console.log(this.thanaName)
-          console.log(this.districtName)
+          console.log('Thana name is: ', this.thanaName)
+          console.log('District name is: ', this.districtName)
         } else {
           this.thanaName = 'N/A'
           this.districtName = 'N/A'
         }
+      },
+      profilePicture (url) {
+        if (url) {
+          /* TODO: FTP URL is hard coded until manage development environment. */
+          return `https://dev.ipay.com.bd${url}`
+        }
+        return '/static/images/default-profile-180x180.png'
       }
     }
   }
