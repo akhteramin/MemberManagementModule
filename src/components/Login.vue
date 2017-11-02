@@ -80,6 +80,24 @@
                   localStorage.setItem('country', JSON.stringify(country.data))
                   localStorage.setItem('occupation', JSON.stringify(occupation.data))
                   localStorage.setItem('bank', JSON.stringify(bank.data))
+                },
+                error => {
+                  console.log('Error in getting thana list, ', error)
+                },
+                error => {
+                  console.log('Error in getting district list, ', error)
+                },
+                error => {
+                  console.log('Error in getting branch list, ', error)
+                },
+                error => {
+                  console.log('Error in getting country list, ', error)
+                },
+                error => {
+                  console.log('Error in getting occupation list, ', error)
+                },
+                error => {
+                  console.log('Error in getting bank list, ', error)
                 })
               /*
               Http.GET('resource', ['thana'])

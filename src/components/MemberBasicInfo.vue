@@ -86,7 +86,7 @@
                       <br>
                       {{ districtName }}
                       <br>
-                      {{ member.addresses.length !== 0 ? member.addresses[0].country : 'N/A' }}
+                      {{ countryName }}
                       <br>
                       <!--<div v-for="item in info.emails">-->
                       <!--<span>{{ item.emailAddress }} {{ `${item.primary ? '(P)' : ''}` }}</span>-->
@@ -216,6 +216,7 @@
         introducers: {},
         thanaName: '',
         districtName: '',
+        countryName: '',
         bankAccounts: {}
       }
     },
@@ -277,14 +278,17 @@
         if (this.member.addresses.length !== 0) {
           let thanaList = JSON.parse(localStorage.getItem('thana'))
           let districtList = JSON.parse(localStorage.getItem('district'))
+//          let countryList = JSON.parse(localStorage.getItem('country'))
           this.thanaName = thanaList.find(x => x.id === this.member.addresses[0].thanaId).name
           this.districtName = districtList.find(x => x.id === this.member.addresses[0].districtId).name
+          this.countryName = this.member.addresses[0].country
 
           console.log('Thana name is: ', this.thanaName)
           console.log('District name is: ', this.districtName)
         } else {
           this.thanaName = 'N/A'
           this.districtName = 'N/A'
+          this.countryName = 'N/A'
         }
       },
       profilePicture (url) {
