@@ -27,6 +27,7 @@ const routes = {
   member: `${API_URL}/member/`,
   login: `${AUTH_URL}/login/`,
   permissions: `${AUTH_URL}/permissions/`,
+  resource: `${API_URL}/resource/`,
   logout: `${AUTH_URL}/logout/`
 }
 

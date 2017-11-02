@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import ListRenderer from '@/components/ListRenderer'
 import Home from '@/components/Home'
+import MemberBasicInfo from '@/components/MemberBasicInfo'
 
 Vue.use(Router)
 
@@ -34,6 +35,7 @@ Vue.use(Router)
 // })
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -41,7 +43,7 @@ export default new Router({
       component: Login
     },
     {
-      path: '/member/list',
+      path: '/member',
       name: 'ListRenderer',
       component: ListRenderer
     },
@@ -49,6 +51,12 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/member/:id',
+      name: 'MemberBasicInformation',
+      component: MemberBasicInfo,
+      props: true
     }
   ]
 })

@@ -184,7 +184,7 @@
         route.push('/home')
       },
       goToMemberList () {
-        route.push('/member/list')
+        route.push('/member')
       }
     }
   }
