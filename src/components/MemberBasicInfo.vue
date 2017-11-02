@@ -2,14 +2,14 @@
 
   <div class="col-md-12" v-if="member">
       <br>
-      <div class="col-md-10 offset-md-1"> <!--offset-md-1-->
+      <div class="col-md-11 offset-md-1"> <!--offset-md-1-->
         <div class="card"> <!-- class="card"-->
           <h3 class="card-header">
             <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
           <div class="card-block">
               <div class="card">
                 <div class="card-block">
-                  <h5>Basic Information</h5>
+                  <h3>Basic Information</h3>
                   <br>
                   <div class="row">
                     <div class="col-2">
@@ -62,73 +62,150 @@
                 </div>
 
                 <div class="card-block">
-                  <h5>Address</h5>
+                  <h3>Address</h3>
                   <br>
-                  <div class="row">
-                    <div class="col-3 text-left offset-1">
-                      Address Line 1:
+                  <div class="row justify-content-center">
+                    <!-- ================================= Address 1 =============================================== -->
+
+                    <div class="col-5">
+                      <h5 style="align: center;">Present</h5>
                       <br>
-                      Address Line 2:
-                      <br>
-                      Thana:
-                      <br>
-                      District:
-                      <br>
-                      Country:
-                      <br>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          Line 1:
+                        </div>
+                        <div class="col-3">
+                          {{ member.addresses.length !== 0 ? member.addresses[0].addressLine1 : 'N/A' }}
+                        </div>
+                      </div>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          Line 2:
+                        </div>
+                        <div class="col-3 ">
+                          {{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}
+                        </div>
+                      </div>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          Thana:
+                        </div>
+                        <div class="col-3">
+                          {{ thanaNameFirst }}
+                        </div>
+                      </div>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          District:
+                        </div>
+                        <div class="col-3">
+                          {{ districtNameFirst }}
+                        </div>
+                      </div>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          Country:
+                        </div>
+                        <div class="col-3">
+                          {{ countryNameFirst }}
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-6 text-left">
-                      {{ member.addresses.length !== 0 ? member.addresses[0].addressLine1 : 'N/A' }}
+
+                    <!-- ================================= Address 2 =============================================== -->
+
+                    <div class="col-5">
+                      <h5 style="align: center;">Parmanent</h5>
                       <br>
-                      {{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}
-                      <br>
-                      {{ thanaName }}
-                      <br>
-                      {{ districtName }}
-                      <br>
-                      {{ countryName }}
-                      <br>
-                      <!--<div v-for="item in info.emails">-->
-                      <!--<span>{{ item.emailAddress }} {{ `${item.primary ? '(P)' : ''}` }}</span>-->
-                      <!--</div>-->
+                      <div class="row text-left">
+                        <div class="col-2">
+                          Line 1:
+                        </div>
+                        <div class="col-3">
+                          {{ member.addresses.length > 1 ? member.addresses[1].addressLine1 : 'N/A' }}
+                        </div>
+                      </div>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          Line 2:
+                        </div>
+                        <div class="col-3 ">
+                          {{ member.addresses.length > 1 ? member.addresses[1].addressLine2 : 'N/A' }}
+                        </div>
+                      </div>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          Thana:
+                        </div>
+                        <div class="col-3">
+                          {{ thanaNameSecond }}
+                        </div>
+                      </div>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          District:
+                        </div>
+                        <div class="col-3">
+                          {{ districtNameSecond }}
+                        </div>
+                      </div>
+                      <div class="row text-left">
+                        <div class="col-2">
+                          Country:
+                        </div>
+                        <div class="col-3">
+                          {{ countryNameSecond }}
+                        </div>
+                      </div>
                     </div>
+
+
+
+
                   </div>
                   <hr>
                 </div>
 
-                <div class="card-block" v-if="bankAccounts">
+                <div class="card-block">
                   <div class="verification">
                     <div>
+
                       <div class="row justify-content-center">
                         <div class="col-10">
-                          <h5>Bank Info</h5>
+                          <h3>Bank Info</h3>
                           <strong v-if="bankAccounts.length === 0">N/A<br></strong>
-                          <table v-else class="table table-hover table-sm">
-                            <thead class="thead-default">
-                            <tr>
-                              <th class = "text-center">Bank</th>
-                              <th class = "text-center">A/C No</th>
-                              <th class = "text-center">A/C Name</th>
-                              <th class = "text-center">A/C Status</th>
-                              <th class = "text-center">Verification</th>
-                              <th class = "text-center">Added</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="item in bankAccounts.filter(x => x.accountStatus === 0)">
-                              <td>{{ item.bankName }}</td>
-                              <td>{{ item.accountNumber }}</td>
-                              <td>{{ item.accountName }}</td>
-                              <td><span class="badge" :class="{'badge-success': true }">ACTIVE</span></td>
-                              <td>{{ item.verificationStatus | capitalize | underscoreless }}</td>
-                              <td>{{ item.creationDate | date }}</td>
-                            </tr>
-                            </tbody>
-                          </table>
+                          <div v-else class="pre-scrollable" style="height: 210px;">
+                            <table class="table table-hover table-sm">
+                              <thead class="thead-default">
+                              <tr>
+                                <th class = "text-center">Bank</th>
+                                <th class = "text-center">A/C No</th>
+                                <th class = "text-center">A/C Name</th>
+                                <th class = "text-center">A/C Status</th>
+                                <th class = "text-center">Verification</th>
+                                <th class = "text-center">Added</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr v-for="item in bankAccounts.filter(x => x.accountStatus === 0)">
+                                <td>{{ item.bankName }}</td>
+                                <td>{{ item.accountNumber }}</td>
+                                <td>{{ item.accountName }}</td>
+                                <td><span class="badge" :class="{'badge-success': true }">ACTIVE</span></td>
+                                <td>{{ item.verificationStatus }}</td>
+                                <td>{{ item.creationDate | date }}</td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
                           <br>
                         </div>
                       </div>
+
+
+
                       <div class="row justify-content-center" v-if="introducers">
+
                         <div class="col-5">
                           <h5>Introduced by</h5>
                           <hr>
@@ -147,6 +224,7 @@
                             </div>
                           </div>
                         </div>
+
                         <div class="col-5">
                           <h5>Has Introduced</h5>
                           <hr>
@@ -166,11 +244,10 @@
                           </div>
                         </div>
                       </div>
+
                     </div>
                   </div>
-
                 </div>
-
 
               </div>
           </div>
@@ -214,9 +291,12 @@
       return {
         member: {},
         introducers: {},
-        thanaName: '',
-        districtName: '',
-        countryName: '',
+        thanaNameFirst: '',
+        districtNameFirst: '',
+        countryNameFirst: '',
+        thanaNameSecond: '',
+        districtNameSecond: '',
+        countryNameSecond: '',
         bankAccounts: {}
       }
     },
@@ -275,21 +355,36 @@
       },
       getThanaAndDistrictNames () {
         console.log('district')
+        // Address 0 resolution
         if (this.member.addresses.length !== 0) {
           let thanaList = JSON.parse(localStorage.getItem('thana'))
           let districtList = JSON.parse(localStorage.getItem('district'))
 //          let countryList = JSON.parse(localStorage.getItem('country'))
-          this.thanaName = thanaList.find(x => x.id === this.member.addresses[0].thanaId).name
-          this.districtName = districtList.find(x => x.id === this.member.addresses[0].districtId).name
-          this.countryName = this.member.addresses[0].country
-
-          console.log('Thana name is: ', this.thanaName)
-          console.log('District name is: ', this.districtName)
+          this.thanaNameFirst = thanaList.find(x => x.id === this.member.addresses[0].thanaId).name
+          this.districtNameFirst = districtList.find(x => x.id === this.member.addresses[0].districtId).name
+          this.countryNameFirst = this.member.addresses[0].country
         } else {
-          this.thanaName = 'N/A'
-          this.districtName = 'N/A'
-          this.countryName = 'N/A'
+          this.thanaNameFirst = 'N/A'
+          this.districtNameFirst = 'N/A'
+          this.countryNameFirst = 'N/A'
         }
+        // Address 1 resolution
+        if (this.member.addresses.length === 2) {
+          let thanaList = JSON.parse(localStorage.getItem('thana'))
+          let districtList = JSON.parse(localStorage.getItem('district'))
+//          let countryList = JSON.parse(localStorage.getItem('country'))
+          this.thanaNameSecond = thanaList.find(x => x.id === this.member.addresses[1].thanaId).name
+          this.districtNameSecond = districtList.find(x => x.id === this.member.addresses[1].districtId).name
+          this.countryNameSecond = this.member.addresses[1].country
+        } else {
+          this.thanaNameSecond = 'N/A'
+          this.districtNameSecond = 'N/A'
+          this.countryNameSecond = 'N/A'
+        }
+        console.log('Address 0, Thana name is: ', this.thanaNameFirst)
+        console.log('Address 0, District name is: ', this.districtNameFirst)
+        console.log('Address 1, Thana name is: ', this.thanaNameSecond)
+        console.log('Address 1, District name is: ', this.districtNameSecond)
       },
       profilePicture (url) {
         if (url) {
