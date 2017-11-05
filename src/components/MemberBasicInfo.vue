@@ -2,11 +2,28 @@
 
   <div class="col-md-12" v-if="member">
       <br>
-      <div class="col-md-11 offset-md-1"> <!--offset-md-1-->
+      <div class="col-md-12"> <!--offset-md-1-->
         <div class="card"> <!-- class="card"-->
           <h3 class="card-header">
             <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
-          <div class="card-block">
+
+
+
+          <div id = "nav-bar" style="width: 500px;">
+            <ul class="nav nav-tabs">
+              <li class="col-md-4 text-center" :class="{active: showBasicDetails}"
+                  @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
+              <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
+              <li class="col-md-4 text-center" :class="{active: showActivities}"
+                  @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
+              <li class="col-md-4 text-center" :class="{active: showTransactions}"
+                  @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
+            </ul>
+          </div>
+
+
+
+          <div class="card-block" v-if="showBasicDetails">
               <div class="card">
                 <div class="card-block">
                   <h3>Basic Information</h3>
@@ -30,8 +47,6 @@
                       <br>
                       Occupation:
                       <br>
-                      Introduced by:
-                      <br>
                       Verification Status:
                     </div>
                     <div class="col-5 text-left">
@@ -46,8 +61,6 @@
                       <i v-bind:class="{'fa fa-male':member.basicInfo.gender==='M','fa fa-female':member.basicInfo.gender==='F'}"></i>{{ !member.basicInfo.gender ? 'N/A' : '' }}
                       <br>
                       {{ member.basicInfo.occupation || 'N/A' }}
-                      <br>
-                      N/A
                       <br>
                       {{ member.basicInfo.verificationStatus === null ? 'N/A': member.basicInfo.verificationStatus == 'VERIFIED' ? 'Verified':
                       member.basicInfo.verificationStatus == 'NOT_VERIFIED' ? 'Not Verified':
@@ -251,6 +264,91 @@
 
               </div>
           </div>
+
+          <div class="card-block" v-if="showActivities">
+
+            <div>
+              <table class="table table-hover table-sm ">
+                <thead class="thead-default">
+                <tr>
+                  <th style="text-align: center;">Activity</th>
+                  <th style="text-align: center;">Device Information</th>
+                  <th style="text-align: center;">User Agent</th>
+                  <th style="text-align: center;">Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="activity in activities.list" >
+                  <td style="width: 200px;">{{ activity.description }}</td>
+                  <td style="width: 200px;">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
+                  <td style="width: 500px;">{{ activity.userAgent }}</td>
+                  <td>{{ activity.time | date('MMM D, YYYY') }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card-footer text-muted" v-if="activities.totalElements > 0">
+              <div class="row">
+                <div class="col-3">
+                  <div style="margin-top: 0.2rem;" v-if="activities.list">
+                    <small>Showing {{ parseInt(query.pageNumber * query.pageSize + 1)
+                      }} to {{ parseInt(query.pageNumber * query.pageSize + activities.list.length)
+                      }} out of {{ activities.totalElements }}
+                    </small>
+                  </div>
+                </div>
+                <div class="col-9">
+                  <!-- Ticket Pagination -->
+                  <div v-if="activities.totalPages <= maxPaginationItem">
+                    <nav aria-label="ActivityPagination">
+                      <ul class="pagination pagination-sm justify-content-end">
+                        <li class="page-item " v-bind:class="{ disabled: query.pageNumber === 0 }">
+                          <a class="page-link" v-on:click="pageChange(query.pageNumber - 1)" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"
+                            v-bind:class="{ active: query.pageNumber === (n - 1) }"
+                            v-for="n in activities.totalPages">
+                          <a class="page-link" v-on:click="pageChange(n - 1)" tabindex="-1">{{ n }}</a>
+                        </li>
+                        <li class="page-item" v-bind:class="{ disabled: query.pageNumber === activities.totalPages - 1 }">
+                          <a class="page-link" v-on:click="pageChange(query.pageNumber + 1)" tabindex="-1">Next</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                  <div class="pull-right" v-else>
+                    <a class="btn btn-sm btn-secondary"
+                       role="button"
+                       v-bind:class="{ disabled: query.pageNumber === 0 }"
+                       v-on:click="pageChange(0)">
+                      <i class="fa fa-angle-double-left" aria-hidden="true"></i> First
+                    </a>
+                    <a class="btn btn-sm btn-secondary"
+                       role="button"
+                       v-bind:class="{ disabled: query.pageNumber === 0 }"
+                       v-on:click="pageChange(query.pageNumber - 1)">
+                      <i class="fa fa-angle-left" aria-hidden="true"></i> Previous
+                    </a>
+                    <small>Page {{ query.pageNumber + 1 }} of {{ activities.totalPages }}</small>
+                    <a class="btn btn-sm btn-secondary"
+                       role="button"
+                       v-bind:class="{ disabled: query.pageNumber === activities.totalPages - 1 }"
+                       v-on:click="pageChange(query.pageNumber + 1)">
+                      Next <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn btn-sm btn-secondary"
+                       role="button"
+                       v-bind:class="{ disabled: query.pageNumber === activities.totalPages - 1 }"
+                       v-on:click="pageChange(activities.totalPages - 1)">
+                      Last <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
       </div>
     </div>
   </div>
@@ -291,13 +389,18 @@
       return {
         member: {},
         introducers: {},
+        query: {},
         thanaNameFirst: '',
         districtNameFirst: '',
         countryNameFirst: '',
         thanaNameSecond: '',
         districtNameSecond: '',
         countryNameSecond: '',
-        bankAccounts: {}
+        bankAccounts: {},
+        activities: {},
+        showBasicDetails: true,
+        showActivities: false,
+        showTransactions: false
       }
     },
     created () {
@@ -307,6 +410,10 @@
     methods: {
       init () {
         // Http call for basic information of the member with the 'id'
+        this.query = Object.assign({}, {
+          pageNumber: 0,
+          pageSize: 10
+        })
         Http.GET('member', [this.id, 'basic-details'])
           .then(
             ({data: {data: member}}) => {
@@ -352,6 +459,45 @@
               console.log('Error in getting the list of bank accounts, error: ', error)
             }
           )
+        this.getActivities()
+        // Http call for account activities
+//        Http.GET('member', [this.id, 'activities'])
+//          .then(
+//            ({data: {data: activities}}) => {
+//              this.activities = activities
+//              console.log('Got the list of activities: ', activities)
+//            },
+//            error => {
+//              console.log('Error in getting the list of activities, error: ', error)
+//            }
+//          )
+      },
+      getActivities (key = 'member') {
+        Http.GET(key, [this.id, 'activities'], this.query)
+          .then(({data: {data: activities}}) => {
+            console.log('Success, got activities: ', activities)
+            this.activities = activities
+          }, error => {
+            console.error('Error in getting members: ', error)
+          })
+      },
+      pageChange (number = 0) {
+        if (this.query.pageNumber !== number) {
+          this.query.pageNumber = number
+          this.getActivities()
+        }
+      },
+      setTab (tabName) {
+        this.showBasicDetails = false
+        this.showActivities = false
+        this.showTransactions = false
+        if (tabName === 'basicDetails') {
+          this.showBasicDetails = true
+        } else if (tabName === 'activities') {
+          this.showActivities = true
+        } else {
+          this.showTransactions = true
+        }
       },
       getThanaAndDistrictNames () {
         console.log('district')
