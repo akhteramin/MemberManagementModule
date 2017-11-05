@@ -57,15 +57,35 @@
                   </div>
                 </div>
 
-                <div class="col-12">
-                  <div class="form-group">
-                    <label> Profile Completion Range: </label>
-                    <input  type="number" name="fromRange" placeholder="from" style="width: 55px;"
-                           min="0" max="99" maxlength="2" v-model="query.profileCompletionScoreStartRange"/>
-                    <input type="number" name="toRange" placeholder="to"
-                           style="width: 55px;" min="1" max="100" v-model="query.profileCompletionScoreEndRange"/>
-                  </div>
+
+                <div class="form-group offset-1">
+                  <label> Profile Completion Range: </label>
+                  <input  type="number" name="fromRange" placeholder="from" style="width: 55px;"
+                          min="0" max="99" maxlength="2" v-model="query.profileCompletionScoreStartRange"/>
+                  <input type="number" name="toRange" placeholder="to"
+                         style="width: 55px;" min="1" max="100" v-model="query.profileCompletionScoreEndRange"/>
                 </div>
+
+                <div class="form-group offset-1">
+                  <label>Sort by: </label>
+                  <select id="sort-by-select"  v-model="query.sort">
+                    <!--<option selected disabled>Select account type</option>-->
+                    <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
+                    <option value="CREATION_DATE">Creation Date</option>
+                  </select>
+                </div>
+                <div class="form-group offset-1">
+                  <label>Order by: </label>
+                  <select id="order-by-select"  v-model="query.order">
+                    <!--<option selected disabled>Select account type</option>-->
+                    <option selected value = "DESC">Descending</option>
+                    <option value="ASC">Ascending</option>
+                  </select>
+                </div>
+
+
+
+
 
                 <div class="col-12">
                   <div class="form-group">
@@ -208,6 +228,8 @@
           verificationStatus: '', // string: VERIFIED, NOT_VERIFIED
           profileCompletionScoreStartRange: '',
           profileCompletionScoreEndRange: '',
+          sort: 'DOCUMENT_UPLOAD',
+          order: 'DESC',
           pageNumber: 0,
           pageSize: 10
         })
