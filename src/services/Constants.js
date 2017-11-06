@@ -66,5 +66,11 @@ const Constants = [
   {
     id: 7001,
     name: 'IBT'
+  },
+  {
+    id: 3003,
+    name: 'WITHDRAW_ROLLBACK'
   }
 ]
+
+export default Constants

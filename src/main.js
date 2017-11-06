@@ -17,6 +17,12 @@ require('./assets/css/login.css')
 Vue.config.productionTip = false
 
 Vue.filter('date', (value, formatStr = 'MMM D, YYYY - h:mm A') => moment(value).format(formatStr))
+Vue.filter('underscoreless', val => val.replace(/[_-]/g, ' '))
+Vue.filter('static_mapper', (id, list) => {
+  if (list === null) return 'N/A'
+  const obj = list.find(x => x.id === id)
+  return obj ? obj.name : 'N/A'
+})
 
 /* eslint-disable no-new */
 new Vue({

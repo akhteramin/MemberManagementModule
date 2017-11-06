@@ -299,7 +299,6 @@
                   </div>
                 </div>
                 <div class="col-9">
-                  <!-- Ticket Pagination -->
                   <div v-if="activities.totalPages <= maxPaginationItem">
                     <nav aria-label="ActivityPagination">
                       <ul class="pagination pagination-sm justify-content-end">
@@ -351,6 +350,41 @@
           </div>
 
           <div class="card-block" v-if="showTransactions">
+            <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
+              <!--<div id="filters" class="col-12">-->
+                <div class="form-group col-12">
+                  <div  style="align-content: left;">
+                    <label> Date Range From: </label>
+                    <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="transactionQuery.fromDate"/>
+                    <label>To:</label>
+                    <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
+                           v-model="transactionQuery.toDate"/>
+                    <select class="offset-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">
+                      <option selected value=null disabled>Select Transaction Type</option>
+                      <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
+                    </select>
+                  </div>
+
+                  <!--<div class="col-5" style="background-color: #8a6d3b;">-->
+                    <!--<label>Transaction Type: </label>-->
+                    <!---->
+                  <!--</div>-->
+
+                </div>
+                <!--<div class="form-group col-6" style="background-color: #2aabd2">-->
+                  <!--<label> Transaction Type: </label>-->
+                  <!--<select id="transaction-selector" v-model="transactionQuery.serviceID">-->
+                    <!--<option selected value=null disabled>Select Transaction Type</option>-->
+                    <!--<option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>-->
+                  <!--</select>-->
+                <!--</div>-->
+                <div class="form-group">
+                  <button type="submit">Filter</button>
+                  <button type="reset">Reset</button>
+                </div>
+              <!--</div>-->
+            </form>
+
 
             <div>
               <table class="table table-hover table-sm ">
@@ -358,6 +392,7 @@
                 <tr>
                   <th style="text-align: center;">Transaction Id</th>
                   <th style="text-align: center;">Date</th>
+                  <th style="text-align: center;">Transaction Type</th>
                   <th style="text-align: center;">Description</th>
                   <th style="text-align: center;">Amount</th>
                   <th style="text-align: center;">Fee</th>
@@ -370,6 +405,7 @@
                 <tr v-for="transaction in transactions.transactions" >
                   <td style="width: 200px;">{{ transaction.transactionID }}</td>
                   <td>{{ transaction.time | date('MMM D, YYYY') }}</td>
+                  <td> {{ transaction.serviceID | static_mapper(serviceList) | underscoreless }}</td>
                   <td>{{ transaction.description }}</td>
                   <td>{{ transaction.amount }}</td>
                   <td>{{ transaction.fee }}</td>
@@ -476,6 +512,9 @@
 
 <script>
   import Http from '../services/Http'
+  import Constants from '../services/Constants'
+
+  console.log('constants: ', Constants)
 
   export default {
     name: 'MemberBasicInfo',
@@ -498,6 +537,8 @@
         districtNameSecond: '',
         countryNameSecond: '',
         transactionTotalPages: '',
+        maxPaginationItem: '',
+        serviceList: Constants,
         showBasicDetails: true,
         showActivities: false,
         showTransactions: false
@@ -516,7 +557,10 @@
         })
         this.transactionQuery = Object.assign({}, {
           pageNumber: 0,
-          pageSize: 10
+          pageSize: 10,
+          fromDate: 0,
+          serviceID: null,
+          toDate: new Date().getTime()
         })
         Http.GET('member', [this.id, 'basic-details'])
           .then(
@@ -576,6 +620,37 @@
 //              console.log('Error in getting the list of activities, error: ', error)
 //            }
 //          )
+      },
+      resetTransactions () {
+        this.transactionQuery = Object.assign({}, {
+          pageNumber: 0,
+          pageSize: 10,
+          fromDate: null,
+          toDate: null
+        })
+        console.log('reset clicked, page number: ', this.transactionQuery.pageNumber, ' page size: ',
+          this.transactionQuery.pageSize, ' fromDate: ', this.transactionQuery.fromDate, ' toDate: ',
+          this.transactionQuery.toDate)
+        this.getTransactions()
+      },
+      filterTransactions () {
+        // The adjustment is being made to avoid GMT issues.
+//         let fromDate = this.transactionQuery.fromDate
+//        let toDate = this.transactionQuery.toDate
+        if (this.transactionQuery.fromDate !== null) {
+          this.transactionQuery.fromDate = new Date(this.transactionQuery.fromDate).getTime() - 6 * 3600 * 1000
+        } else {
+          this.transactionQuery.fromDate = 0
+        }
+        if (this.transactionQuery.toDate !== null) {
+          this.transactionQuery.toDate = new Date(this.transactionQuery.toDate).getTime() - 6 * 60 * 60 * 1000
+        } else {
+          this.transactionQuery.toDate = new Date().getTime() - 6 * 3600 * 1000
+        }
+        this.transactionQuery.pageNumber = 0
+        console.log('transaction from: ', this.transactionQuery.fromDate, ' date: ',
+          new Date(this.transactionQuery.fromDate), 'transaction to: ', this.transactionQuery.toDate)
+        this.getTransactions()
       },
       getActivities (key = 'member') {
         Http.GET(key, [this.id, 'activities'], this.activityQuery)

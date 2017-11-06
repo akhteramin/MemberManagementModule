@@ -243,6 +243,13 @@
         } else if (this.query.accountType === 'Business') {
           this.query.accountType = 2
         }
+        this.query.pageNumber = 0
+//        if (this.query.profileCompletionScoreStartRange === '') {
+//          this.query.profileCompletionScoreStartRange = 0
+//        }
+//        if (this.query.profileCompletionScoreEndRange === '') {
+//          this.query.profileCompletionScoreEndRange = 100
+//        }
         console.log('mobile number: ' + this.query.mobileNumber + ' accountType: ' + this.query.accountType +
           ' verified: ' + this.query.verificationStatus)
         Http.GET('member', this.query)
