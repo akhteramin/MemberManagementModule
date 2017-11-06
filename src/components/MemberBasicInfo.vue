@@ -267,6 +267,40 @@
 
           <div class="card-block" v-if="showActivities">
 
+            <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
+              <!--<div id="filters" class="col-12">-->
+              <div class="form-group col-12">
+                <div  style="align-content: left;">
+                  <label class="offset-2"> Date Range From: </label>
+                  <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="activityQuery.fromDate"/>
+                  <label class="offset-0.5">To:</label>
+                  <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
+                         v-model="activityQuery.toDate"/>
+                  <label class="offset-0" for="search-key">Search with a Key</label>
+                  <input class="offset-0.5" id="search-key" v-model="activityQuery.searchKey"
+                         placeholder="Key">
+                </div>
+
+                <!--<div class="col-5" style="background-color: #8a6d3b;">-->
+                <!--<label>Transaction Type: </label>-->
+                <!---->
+                <!--</div>-->
+
+              </div>
+              <!--<div class="form-group col-6" style="background-color: #2aabd2">-->
+              <!--<label> Transaction Type: </label>-->
+              <!--<select id="transaction-selector" v-model="transactionQuery.serviceID">-->
+              <!--<option selected value=null disabled>Select Transaction Type</option>-->
+              <!--<option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>-->
+              <!--</select>-->
+              <!--</div>-->
+              <div class="form-group">
+                <button type="submit">Filter</button>
+                <button type="reset">Reset</button>
+              </div>
+              <!--</div>-->
+            </form>
+
             <div>
               <table class="table table-hover table-sm ">
                 <thead class="thead-default">
@@ -553,7 +587,10 @@
         // Http call for basic information of the member with the 'id'
         this.activityQuery = Object.assign({}, {
           pageNumber: 0,
-          pageSize: 10
+          pageSize: 10,
+          searchKey: null,
+          fromDate: null,
+          toDate: null
         })
         this.transactionQuery = Object.assign({}, {
           pageNumber: 0,
@@ -628,10 +665,17 @@
           fromDate: null,
           toDate: null
         })
-        console.log('reset clicked, page number: ', this.transactionQuery.pageNumber, ' page size: ',
-          this.transactionQuery.pageSize, ' fromDate: ', this.transactionQuery.fromDate, ' toDate: ',
-          this.transactionQuery.toDate)
         this.getTransactions()
+      },
+      resetActivities () {
+        this.activityQuery = Object.assign({}, {
+          pageNumber: 0,
+          pageSize: 10,
+          fromDate: null,
+          toDate: null,
+          searchKey: null
+        })
+        this.getActivities()
       },
       filterTransactions () {
         // The adjustment is being made to avoid GMT issues.
@@ -651,6 +695,23 @@
         console.log('transaction from: ', this.transactionQuery.fromDate, ' date: ',
           new Date(this.transactionQuery.fromDate), 'transaction to: ', this.transactionQuery.toDate)
         this.getTransactions()
+      },
+      filterActivities () {
+        // The adjustment is being made to avoid GMT issues.
+//         let fromDate = this.transactionQuery.fromDate
+//        let toDate = this.transactionQuery.toDate
+        if (this.activityQuery.fromDate !== null) {
+          this.activityQuery.fromDate = new Date(this.activityQuery.fromDate).getTime() - 6 * 3600 * 1000
+        } else {
+          this.activityQuery.fromDate = 0
+        }
+        if (this.activityQuery.toDate !== null) {
+          this.activityQuery.toDate = new Date(this.activityQuery.toDate).getTime() - 6 * 60 * 60 * 1000
+        } else {
+          this.activityQuery.toDate = new Date().getTime() - 6 * 3600 * 1000
+        }
+        this.activityQuery.pageNumber = 0
+        this.getActivities()
       },
       getActivities (key = 'member') {
         Http.GET(key, [this.id, 'activities'], this.activityQuery)
