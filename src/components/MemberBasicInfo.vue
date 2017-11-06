@@ -277,7 +277,7 @@
                   <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
                          v-model="activityQuery.toDate"/>
                   <label class="offset-0" for="search-key">Search with a Key</label>
-                  <input class="offset-0.5" id="search-key" v-model="activityQuery.searchKey"
+                  <input id="search-key" v-model="activityQuery.searchKey"
                          placeholder="Key">
                 </div>
 
@@ -386,25 +386,25 @@
           <div class="card-block" v-if="showTransactions">
             <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
               <!--<div id="filters" class="col-12">-->
-                <div class="form-group col-12">
-                  <div  style="align-content: left;">
-                    <label> Date Range From: </label>
-                    <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="transactionQuery.fromDate"/>
-                    <label>To:</label>
-                    <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
-                           v-model="transactionQuery.toDate"/>
-                    <select class="offset-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">
-                      <option selected value=null disabled>Select Transaction Type</option>
-                      <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
-                    </select>
-                  </div>
-
-                  <!--<div class="col-5" style="background-color: #8a6d3b;">-->
-                    <!--<label>Transaction Type: </label>-->
-                    <!---->
-                  <!--</div>-->
-
+              <div class="form-group col-12">
+                <div  style="align-content: left;">
+                  <label class="offset-1"> Date Range From: </label>
+                  <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="transactionQuery.fromDate"/>
+                  <label class="offset-0.5">To:</label>
+                  <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
+                         v-model="transactionQuery.toDate"/>
+                  <select class="offset-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">
+                    <option selected value=null disabled>Select Transaction Type</option>
+                    <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
+                  </select>
                 </div>
+
+                <!--<div class="col-5" style="background-color: #8a6d3b;">-->
+                <!--<label>Transaction Type: </label>-->
+                <!---->
+                <!--</div>-->
+
+              </div>
                 <!--<div class="form-group col-6" style="background-color: #2aabd2">-->
                   <!--<label> Transaction Type: </label>-->
                   <!--<select id="transaction-selector" v-model="transactionQuery.serviceID">-->
@@ -412,15 +412,13 @@
                     <!--<option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>-->
                   <!--</select>-->
                 <!--</div>-->
-                <div class="form-group">
-                  <button type="submit">Filter</button>
-                  <button type="reset">Reset</button>
-                </div>
+              <div class="form-group">
+                <button type="submit">Filter</button>
+                <button type="reset">Reset</button>
+              </div>
               <!--</div>-->
             </form>
-
-
-            <div>
+          <div>
               <table class="table table-hover table-sm ">
                 <thead class="thead-default">
                 <tr>
@@ -452,7 +450,7 @@
               </table>
             </div>
 
-            <div class="card-footer text-muted" v-if="transactions.totalCount > 0">
+          <div class="card-footer text-muted" v-if="transactions.totalCount > 0">
               <div class="row">
                 <div class="col-3">
                   <div style="margin-top: 0.2rem;" v-if="transactions.list">
@@ -515,7 +513,7 @@
               </div>
             </div>
 
-          </div>
+        </div>
       </div>
     </div>
   </div>
