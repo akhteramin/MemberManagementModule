@@ -215,6 +215,34 @@
                         </div>
                       </div>
 
+                      <div class="row justify-content-center">
+                        <div class="col-10">
+                          <h3>Identification Documents</h3>
+                          <strong v-if="documents === null || documents.length === 0">N/A<br></strong>
+                          <div v-else class="pre-scrollable" style="height: 210px;">
+                            <table class="table table-hover table-sm">
+                              <thead class="thead-default">
+                              <tr>
+                                <th class = "text-center">Name</th>
+                                <th class = "text-center">Type</th>
+                                <th class = "text-center">URL</th>
+                                <th class = "text-center">Verification</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr v-for="item in documents">
+                                <td>{{ item.documentName ? item.documentName : 'N/A' }}</td>
+                                <td>{{ item.documentType ? item.documentType : 'N/A' }}</td>
+                                <td>{{ item.documentUrl ? item.documentUrl : 'N/A'}}</td>
+                                <td>{{ item.documentVerificationStatus | underscoreless }}</td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <br>
+                        </div>
+                      </div>
+
 
 
                       <div class="row justify-content-center" v-if="introducers">
@@ -557,6 +585,7 @@
       return {
         member: {},
         introducers: {},
+        introduced: {},
         activityQuery: {},
         transactionQuery: {},
         bankAccounts: {},
@@ -571,6 +600,7 @@
         transactionTotalPages: '',
         maxPaginationItem: '',
         serviceList: Constants,
+        documents: {},
         showBasicDetails: true,
         showActivities: false,
         showTransactions: false
@@ -640,6 +670,18 @@
             },
             error => {
               console.log('Error in getting the list of bank accounts, error: ', error)
+            }
+          )
+        // Http call for identification documEnts
+        Http.GET('member', [this.id, 'identification-documents'])
+          .then(
+            ({data: {data: documents}}) => {
+              this.documents = documents
+              console.log('Got the list of documents: ', this.documents, ' documents.length: ',
+              this.documents.length)
+            },
+            error => {
+              console.log('Error in getting list of identification documents, error: ', error)
             }
           )
         this.getActivities()
