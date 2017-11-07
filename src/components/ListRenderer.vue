@@ -11,7 +11,7 @@
           </div>
           <!--========================================= my filters ==================================================-->
 
-            <form v-on:submit.prevent="filter">
+            <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
               <div class="row">
                 <div class="col-3">
                   <div class="form-group">
@@ -38,8 +38,8 @@
                     <select id="personal-business-select"  v-model="query.accountType">
                       <!--<option selected disabled>Select account type</option>-->
                       <option selected value = "">Both</option>
-                      <option value="Personal">Personal</option>
-                      <option value="Business">Business</option>
+                      <option value="1">Personal</option>
+                      <option value="2">Business</option>
                     </select>
                   </div>
                 </div>
@@ -58,30 +58,33 @@
                 </div>
 
 
-                <div class="form-group offset-1">
-                  <label> Profile Completion Range: </label>
-                  <input  type="number" name="fromRange" placeholder="from" style="width: 55px;"
-                          min="0" max="99" maxlength="2" v-model="query.profileCompletionScoreStartRange"/>
-                  <input type="number" name="toRange" placeholder="to"
-                         style="width: 55px;" min="1" max="100" v-model="query.profileCompletionScoreEndRange"/>
-                </div>
+                <div class="form-group col-11 justify-content-center">
 
-                <div class="form-group offset-1">
-                  <label>Sort by: </label>
+                  <label class="offset-0.5">Sort by: </label>
                   <select id="sort-by-select"  v-model="query.sort">
                     <!--<option selected disabled>Select account type</option>-->
-                    <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
-                    <option value="CREATION_DATE">Creation Date</option>
+                    <option selected value = "DOCUMENT_UPLOAD"> Document Upload Date</option>
+                    <option value="CREATION_DATE">Document Creation Date</option>
                   </select>
+
+                  <label class="offset-2"> Profile Completion Range: </label>
+
+
+                    <label class="offset-2">Order by: </label>
+                    <select id="order-by-select"  v-model="query.order">
+                      <!--<option selected disabled>Select account type</option>-->
+                      <option selected value = "DESC">Descending</option>
+                      <option value="ASC">Ascending</option>
+                    </select>
+
+
+                  <vue-slider class="offset-4" ref="slider" v-model="value" :width="'40%'"></vue-slider>
+
+
+
                 </div>
-                <div class="form-group offset-1">
-                  <label>Order by: </label>
-                  <select id="order-by-select"  v-model="query.order">
-                    <!--<option selected disabled>Select account type</option>-->
-                    <option selected value = "DESC">Descending</option>
-                    <option value="ASC">Ascending</option>
-                  </select>
-                </div>
+
+
 
 
 
@@ -90,7 +93,7 @@
                 <div class="col-12">
                   <div class="form-group">
                     <button type="submit" >Search</button>
-                    <button @click="init">Reset</button>
+                    <button type="reset" >Reset</button>
                   </div>
                 </div>
 
@@ -197,6 +200,11 @@
       return {
         members: [],
         query: {},
+        value: [
+          0,
+          100
+        ],
+
         maxPaginationItem: 10
       }
     },
@@ -233,23 +241,13 @@
           pageNumber: 0,
           pageSize: 10
         })
-
-        console.log('Okkokkkkk line 150')
+        this.value = [0, 100]
         this.getMembers()
       },
       filter: function (key = 'member') {
-        if (this.query.accountType === 'Personal') {
-          this.query.accountType = 1
-        } else if (this.query.accountType === 'Business') {
-          this.query.accountType = 2
-        }
         this.query.pageNumber = 0
-//        if (this.query.profileCompletionScoreStartRange === '') {
-//          this.query.profileCompletionScoreStartRange = 0
-//        }
-//        if (this.query.profileCompletionScoreEndRange === '') {
-//          this.query.profileCompletionScoreEndRange = 100
-//        }
+        this.query.profileCompletionScoreStartRange = this.value[0]
+        this.query.profileCompletionScoreEndRange = this.value[1]
         console.log('mobile number: ' + this.query.mobileNumber + ' accountType: ' + this.query.accountType +
           ' verified: ' + this.query.verificationStatus)
         Http.GET('member', this.query)

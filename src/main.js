@@ -4,6 +4,7 @@ import Vue from 'vue'
 import moment from 'moment'
 import App from './App'
 import router from './router'
+import vueSlider from 'vue-slider-component'
 // import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 
 // require('../node_modules/bootstrap/less/bootstrap.less')
@@ -15,6 +16,7 @@ import router from './router'
 // Vue.use(BootstrapVue)
 require('./assets/css/login.css')
 Vue.config.productionTip = false
+Vue.component('vueSlider', vueSlider)
 
 Vue.filter('date', (value, formatStr = 'MMM D, YYYY - h:mm A') => moment(value).format(formatStr))
 Vue.filter('underscoreless', val => val.replace(/[_-]/g, ' '))
