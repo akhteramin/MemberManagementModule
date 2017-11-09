@@ -3,6 +3,8 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import ListRenderer from '@/components/ListRenderer'
+import WaitingForVerificationList from '@/components/WaitingForVerificationList'
+import WaitingForApprovalList from '@/components/WaitingForApprovalList'
 import Home from '@/components/Home'
 import MemberBasicInfo from '@/components/MemberBasicInfo'
 
@@ -46,6 +48,16 @@ export default new Router({
       path: '/member',
       name: 'ListRenderer',
       component: ListRenderer
+    },
+    {
+      path: '/member/waiting/verification',
+      name: 'WaitingForVerificationList',
+      component: WaitingForVerificationList
+    },
+    {
+      path: '/member/waiting/approval',
+      name: 'WaitingForApprovalList',
+      component: WaitingForApprovalList
     },
     {
       path: '/home',

@@ -1,30 +1,41 @@
 <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 
 <template>
-  <div class="NavBar" >
-
-   
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-       </button>
-       <a class="navbar-brand" href="#">Member Service</a>
-       <ul class="navbar-nav mr-auto">
- 
-         <li class="nav-item">
-           <a class="nav-item nav-link" role="button" v-on:click="goHome">Home</a>
-         </li>
-         <li class="nav-item">
-           <a class="nav-item nav-link" role="button" v-on:click="goToMemberList">Member List</a>
-         </li>
-        </ul>
-        <ul class="navbar-nav" style="padding-right:20px">
-          <li>
-            <a class="nav-item nav-link" role="button" v-on:click="logout">Logout</a>
-          </li>
-        </ul>
-   </nav>
-   
+  <div class="NavBar gr-2 menu-container" >
+    <div class="menu-header">
+        <img src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="110" height="50"> 
+          Member Service
+    </div>
+    <nav>
+      <ul>
+        <li>
+          <a v-on:click="goHome">Home</a>
+        </li>
+        <li>
+          <a  v-on:click="goToMemberList">Member List</a>
+        </li>
+        <li>
+          <a  v-on:click="goToWaitingForVerificationMemberList">Waiting For Verification</a>
+        </li>
+        <li>
+          <a  v-on:click="goToWaitingForApprovalMemberList">Waiting For Approval</a>
+        </li>
+      </ul>
+      <ul class="bottom-menu">
+        <li>
+          <i class="fa fa-user-circle" aria-hidden="true"></i>
+          <a v-on:click="logout">{{user.loginID}}</a>
+        </li>
+        <li>
+          <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+          <a v-on:click="logout">Help</a>
+        </li>
+        <li>
+          <a v-on:click="logout">Logout</a>
+        </li>
+      </ul>
+      
+    </nav>
   </div>
 </template>
 
@@ -36,6 +47,11 @@
 
   export default {
     name: 'NavBar',
+    data () {
+      return {
+        user: {}
+      }
+    },
     methods: {
       logout () {
         Http.GET('logout')
@@ -54,7 +70,21 @@
       },
       goToMemberList () {
         route.push('/member')
+      },
+      goToWaitingForVerificationMemberList () {
+        route.push('/member/waiting/verification')
+      },
+      goToWaitingForApprovalMemberList () {
+        route.push('/member/waiting/approval')
+      },
+      init () {
+        console.log('here it is')
+        this.user = JSON.parse(localStorage.getItem('user'))
       }
+    },
+    created () {
+      console.log('nav bar created::::')
+      this.init()
     }
   }
 </script>

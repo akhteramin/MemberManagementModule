@@ -1,22 +1,22 @@
 <template>
 
-  <div class="col-md-12" v-if="member">
+  <div class="gr-10" v-if="member">
       <br>
-      <div class="col-md-12"> <!--offset-md-1-->
+      <div class="gr-12"> <!--offset-md-1-->
         <div class="card"> <!-- class="card"-->
           <h3 class="card-header">
             <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
 
 
 
-          <div id = "nav-bar" style="width: 500px;">
+          <div id = "nav-bar">
             <ul class="nav nav-tabs">
-              <li class="col-md-4 text-center" :class="{active: showBasicDetails}"
+              <li class="gr-3 text-center" :class="{active: showBasicDetails}"
                   @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
               <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-              <li class="col-md-4 text-center" :class="{active: showActivities}"
+              <li class="gr-3 text-center" :class="{active: showActivities}"
                   @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
-              <li class="col-md-4 text-center" :class="{active: showTransactions}"
+              <li class="gr-3 text-center" :class="{active: showTransactions}"
                   @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
             </ul>
           </div>
@@ -25,16 +25,16 @@
 
           <div class="card-block" v-if="showBasicDetails">
               <div class="card">
-                <div class="card-block">
+                <div class="card-block" v-if="member.basicInfo">
                   <h3>Basic Information</h3>
                   <br>
                   <div class="row">
-                    <div class="col-2">
+                    <div class="gr-2">
                       <img class="img-thumbnail mx-auto d-block" alt="180x180" :src="'/static/images/default-profile-180x180.png'" data-holder-rendered="true" style="width: 180px;">
                     </div>
 
 
-                    <div class="col-4 text-left offset-1">
+                    <div class="gr-4 text-left push-1">
                       Name:
                       <br>
                       Mobile Number:
@@ -49,7 +49,7 @@
                       <br>
                       Verification Status:
                     </div>
-                    <div class="col-5 text-left">
+                    <div class="gr-5 text-left">
                       {{ member.basicInfo.name || 'N/A'}}
                       <br>
                       {{ member.basicInfo.mobileNumber || 'N/A' }}
@@ -74,52 +74,52 @@
                   <hr>
                 </div>
 
-                <div class="card-block">
+                <div class="card-block" v-if="member.addresses">
                   <h3>Address</h3>
                   <br>
                   <div class="row justify-content-center">
                     <!-- ================================= Address 1 =============================================== -->
 
-                    <div class="col-5">
+                    <div class="gr-5">
                       <h5 style="align: center;">Present</h5>
                       <br>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           Line 1:
                         </div>
-                        <div class="col-3">
+                        <div class="gr-3">
                           {{ member.addresses.length !== 0 ? member.addresses[0].addressLine1 : 'N/A' }}
                         </div>
                       </div>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           Line 2:
                         </div>
-                        <div class="col-3 ">
+                        <div class="gr-3 ">
                           {{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}
                         </div>
                       </div>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           Thana:
                         </div>
-                        <div class="col-3">
+                        <div class="gr-3">
                           {{ thanaNameFirst }}
                         </div>
                       </div>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           District:
                         </div>
-                        <div class="col-3">
+                        <div class="gr-3">
                           {{ districtNameFirst }}
                         </div>
                       </div>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           Country:
                         </div>
-                        <div class="col-3">
+                        <div class="gr-3">
                           {{ countryNameFirst }}
                         </div>
                       </div>
@@ -127,46 +127,46 @@
 
                     <!-- ================================= Address 2 =============================================== -->
 
-                    <div class="col-5">
+                    <div class="gr-5">
                       <h5 style="align: center;">Parmanent</h5>
                       <br>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           Line 1:
                         </div>
-                        <div class="col-3">
+                        <div class="gr-3">
                           {{ member.addresses.length > 1 ? member.addresses[1].addressLine1 : 'N/A' }}
                         </div>
                       </div>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           Line 2:
                         </div>
-                        <div class="col-3 ">
+                        <div class="gr-3 ">
                           {{ member.addresses.length > 1 ? member.addresses[1].addressLine2 : 'N/A' }}
                         </div>
                       </div>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           Thana:
                         </div>
-                        <div class="col-3">
+                        <div class="gr-3">
                           {{ thanaNameSecond }}
                         </div>
                       </div>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           District:
                         </div>
-                        <div class="col-3">
+                        <div class="gr-3">
                           {{ districtNameSecond }}
                         </div>
                       </div>
                       <div class="row text-left">
-                        <div class="col-2">
+                        <div class="gr-2">
                           Country:
                         </div>
-                        <div class="col-3">
+                        <div class="gr-3">
                           {{ countryNameSecond }}
                         </div>
                       </div>
@@ -184,10 +184,10 @@
                     <div>
 
                       <div class="row justify-content-center">
-                        <div class="col-10">
+                        <div class="gr-10">
                           <h3>Bank Info</h3>
-                          <strong v-if="bankAccounts.length === 0">N/A<br></strong>
-                          <div v-else class="pre-scrollable" style="height: 210px;">
+                          <div v-if="bankAccounts.length === 0">N/A<br></div>
+                          <div v-else-if="bankAccounts" class="pre-scrollable" style="height: 210px;">
                             <table class="table table-hover table-sm">
                               <thead class="thead-default">
                               <tr>
@@ -200,7 +200,7 @@
                               </tr>
                               </thead>
                               <tbody>
-                              <tr v-for="item in bankAccounts.filter(x => x.accountStatus === 0)">
+                              <tr v-for="item in bankAccounts">
                                 <td>{{ item.bankName }}</td>
                                 <td>{{ item.accountNumber }}</td>
                                 <td>{{ item.accountName }}</td>
@@ -216,7 +216,7 @@
                       </div>
 
                       <div class="row justify-content-center">
-                        <div class="col-10">
+                        <div class="gr-10">
                           <h3>Identification Documents</h3>
                           <strong v-if="documents === null || documents.length === 0">N/A<br></strong>
                           <div v-else class="pre-scrollable" style="height: 210px;">
@@ -247,17 +247,17 @@
 
                       <div class="row justify-content-center" v-if="introducers">
 
-                        <div class="col-5">
+                        <div class="gr-5">
                           <h5>Introduced by</h5>
                           <hr>
                           <strong v-if="introducers.length === 0">N/A</strong>
                           <div v-else class="pre-scrollable" style="height: 210px;">
                             <div class="row" v-for="item in introducers">
-                              <div class="col-3">
+                              <div class="gr-3">
                                 <img class="img-rounded mx-auto d-block" :src="profilePicture(item.profilePictureUrl)"
                                      data-holder-rendered="true" style="width: 50px;">
                               </div>
-                              <div class="col-9">
+                              <div class="gr-9">
                                 {{item.name}}<br>
                                 {{item.mobileNumber}}
                                 <hr>
@@ -266,17 +266,17 @@
                           </div>
                         </div>
 
-                        <div class="col-5">
+                        <div class="gr-5">
                           <h5>Has Introduced</h5>
                           <hr>
                           <strong v-if="introduced.length === 0">N/A</strong>
                           <div v-else class="pre-scrollable" style="height: 210px;">
                             <div class="row" v-for="item in introduced">
-                              <div class="col-3">
+                              <div class="gr-3">
                                 <img class="img-rounded mx-auto d-block" :src="profilePicture(item.profilePictureUrl)"
                                      data-holder-rendered="true" style="width: 50px;">
                               </div>
-                              <div class="col-9">
+                              <div class="gr-9">
                                 {{item.name}}<br>
                                 {{item.mobileNumber}}
                                 <hr>
@@ -297,14 +297,14 @@
 
             <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
               <!--<div id="filters" class="col-12">-->
-              <div class="form-group col-12">
+              <div class="form-group gr-12">
                 <div  style="align-content: left;">
-                  <label class="offset-2"> Date Range From: </label>
+                  <label class="push-2"> Date Range From: </label>
                   <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="activityQuery.fromDate"/>
-                  <label class="offset-0.5">To:</label>
+                  <label class="push-0.5">To:</label>
                   <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
                          v-model="activityQuery.toDate"/>
-                  <label class="offset-0" for="search-key">Search with a Key</label>
+                  <label class="push-0" for="search-key">Search with a Key</label>
                   <input id="search-key" v-model="activityQuery.searchKey"
                          placeholder="Key">
                 </div>
@@ -352,7 +352,7 @@
 
             <div class="card-footer text-muted" v-if="activities.totalElements > 0">
               <div class="row">
-                <div class="col-3">
+                <div class="gr-3">
                   <div style="margin-top: 0.2rem;" v-if="activities.list">
                     <small>Showing {{ parseInt(activityQuery.pageNumber * activityQuery.pageSize + 1)
                       }} to {{ parseInt(activityQuery.pageNumber * activityQuery.pageSize + activities.list.length)
@@ -360,7 +360,7 @@
                     </small>
                   </div>
                 </div>
-                <div class="col-9">
+                <div class="gr-9">
                   <div v-if="activities.totalPages <= maxPaginationItem">
                     <nav aria-label="ActivityPagination">
                       <ul class="pagination pagination-sm justify-content-end">
@@ -414,14 +414,14 @@
           <div class="card-block" v-if="showTransactions">
             <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
               <!--<div id="filters" class="col-12">-->
-              <div class="form-group col-12">
+              <div class="form-group gr-12">
                 <div  style="align-content: left;">
-                  <label class="offset-1"> Date Range From: </label>
+                  <label class="push-1"> Date Range From: </label>
                   <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="transactionQuery.fromDate"/>
-                  <label class="offset-0.5">To:</label>
+                  <label class="push-0.5">To:</label>
                   <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
                          v-model="transactionQuery.toDate"/>
-                  <select class="offset-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">
+                  <select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">
                     <option selected value=null disabled>Select Transaction Type</option>
                     <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
                   </select>
@@ -480,7 +480,7 @@
 
           <div class="card-footer text-muted" v-if="transactions.totalCount > 0">
               <div class="row">
-                <div class="col-3">
+                <div class="gr-3">
                   <div style="margin-top: 0.2rem;" v-if="transactions.list">
                     <small>Showing {{ parseInt(transactionQuery.pageNumber * transactionQuery.pageSize + 1)
                       }} to {{ parseInt(transactionQuery.pageNumber * transactionQuery.pageSize + transactions.transactions.length)
@@ -488,7 +488,7 @@
                     </small>
                   </div>
                 </div>
-                <div class="col-9">
+                <div class="gr-9">
                   <!-- Ticket Pagination -->
                   <div v-if="transactionTotalPages <= maxPaginationItem">
                     <nav aria-label="ActivityPagination">

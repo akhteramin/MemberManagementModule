@@ -1,5 +1,5 @@
 <template>
-  <div id = "list" class="ListRenderer gr-10 content-container">
+  <div id = "list" class="gr-10 content-container">
     <h1>Members</h1>
     <hr>
     <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
@@ -350,7 +350,7 @@
   import Http from '../services/Http'
 
   export default {
-    name: 'ListRenderer',
+    name: 'WaitingForVerificationList',
     data () {
       return {
         members: [],
@@ -449,7 +449,7 @@
           name: '', // string
           mobileNumber: '', // string
           accountType: '', // int: 1 = personal, 2 = business
-          verificationStatus: '', // string: VERIFIED, NOT_VERIFIED
+          verificationStatus: 'NOT_VERIFIED', // string: VERIFIED, NOT_VERIFIED
           profileCompletionScoreStartRange: '',
           profileCompletionScoreEndRange: '',
           sort: 'DOCUMENT_UPLOAD',

@@ -1,7 +1,7 @@
 <template>
  <div class="col-md-4 col-md-offset-4 ">
 			<div class="box">
-        <h1>Member Service</h1>
+        <h1>Ipay Member Service</h1>
 				<form role="form" @submit.prevent="login" id="loginForm">
 
 					<div class="divider-form"></div>
