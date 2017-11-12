@@ -41,6 +41,8 @@
                       <br>
                       Email:
                       <br>
+                      Balance:
+                      <br>
                       Date of Birth:
                       <br>
                       Gender:
@@ -55,6 +57,8 @@
                       {{ member.basicInfo.mobileNumber || 'N/A' }}
                       <br>
                       {{  member.emails.length !== 0 ? member.emails[0].emailAddress: 'N/A' }}
+                      <br>
+                      {{ balance.accountBalance ? balance.accountBalance : 'N/A' }}
                       <br>
                       {{ member.basicInfo.dateOfBirth | date('MMM D, YYYY') || 'N/A' }}
                       <br>
@@ -414,25 +418,31 @@
           <div class="card-block" v-if="showTransactions">
             <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
               <!--<div id="filters" class="col-12">-->
-              <div class="form-group gr-12">
-                <div  style="align-content: left;">
-                  <label class="push-1"> Date Range From: </label>
+
+              <div>
+                <!--<label class="push-1"> Date Range From: </label>-->
+                <div class="form-group col-6">
+                  <label> Date Range From: </label>
                   <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="transactionQuery.fromDate"/>
                   <label class="push-0.5">To:</label>
                   <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
                          v-model="transactionQuery.toDate"/>
-                  <select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">
+                </div>
+                <div class="col-6">
+                  <select id="transaction-selector" v-model="transactionQuery.serviceID">
+                    <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
                     <option selected value=null disabled>Select Transaction Type</option>
                     <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
                   </select>
                 </div>
+              </div>
 
                 <!--<div class="col-5" style="background-color: #8a6d3b;">-->
                 <!--<label>Transaction Type: </label>-->
                 <!---->
                 <!--</div>-->
 
-              </div>
+
                 <!--<div class="form-group col-6" style="background-color: #2aabd2">-->
                   <!--<label> Transaction Type: </label>-->
                   <!--<select id="transaction-selector" v-model="transactionQuery.serviceID">-->
@@ -584,6 +594,7 @@
     data () {
       return {
         member: {},
+        balance: '',
         introducers: {},
         introduced: {},
         activityQuery: {},
@@ -672,7 +683,7 @@
               console.log('Error in getting the list of bank accounts, error: ', error)
             }
           )
-        // Http call for identification documEnts
+        // Http call for identification documents
         Http.GET('member', [this.id, 'identification-documents'])
           .then(
             ({data: {data: documents}}) => {
@@ -682,6 +693,17 @@
             },
             error => {
               console.log('Error in getting list of identification documents, error: ', error)
+            }
+          )
+        // Http call for balance
+        Http.GET('member', [this.id, 'balance'])
+          .then(
+            ({data}) => {
+              this.balance = data.data
+              console.log('balance is: ', this.balance)
+            },
+            error => {
+              console.log('Error in retrieving balance... ', error)
             }
           )
         this.getActivities()

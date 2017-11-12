@@ -25,7 +25,6 @@
 
 				</form>
 			</div>
-		</div>
 	</div>
 </template>
 
@@ -116,31 +115,9 @@
                 error => {
                   console.log('Error in getting bank list, ', error)
                 })
-              /*
-              Http.GET('resource', ['thana'])
-                .then(
-                  ({data: list}) => {
-                    console.log('thana list: ', list)
-                    localStorage.setItem('thana', JSON.stringify(list.data))
-                    // auth.setAccessControl(list)
-                  },
-                  error => {
-                    console.log('error in getting list: ', error)
-                  }
-                )
-              // Http get request for district ids
-              Http.GET('resource', ['district'])
-                .then(
-                  ({data: list}) => {
-                    console.log('district list: ', list)
-                    localStorage.setItem('district', JSON.stringify(list.data))
-                    // auth.setAccessControl(list)
-                  },
-                  error => {
-                    console.log('error in getting district list: ', error)
-                  }
-                )
-              */
+              // save login id
+              let user = {'loginID': this.username}
+              localStorage.setItem('user', JSON.stringify(user))
             }
           )
       }

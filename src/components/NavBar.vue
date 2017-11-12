@@ -3,7 +3,7 @@
 <template>
   <div class="NavBar gr-2 menu-container" >
     <div class="menu-header">
-        <img src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="110" height="50"> 
+        <img src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="110" height="50">
           Member Service
     </div>
     <nav>
@@ -34,7 +34,7 @@
           <a v-on:click="logout">Logout</a>
         </li>
       </ul>
-      
+
     </nav>
   </div>
 </template>

@@ -13,7 +13,7 @@
                         value=""/>
               </div>
             </div>
-          
+
 
             <div class="gr-3">
               <div class="form-group">
@@ -53,18 +53,19 @@
               </div>
             </div>
           </div>
-        <div class="gr-12">  
-          <div class="gr-6">
+        <div class="gr-12">
+          <div class="gr-6 text-center">
             <label> Profile Completion Range: </label>
             <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
           </div>
+
           <div class="gr-3">
             <label class="offset-0.5">Sort by: </label>
             <div class="select">
               <select id="sort-by-select"  v-model="query.sort">
                 <!--<option selected disabled>Select account type</option>-->
-                <option selected value = "DOCUMENT_UPLOAD"> Document Upload Date</option>
-                <option value="CREATION_DATE">Document Creation Date</option>
+                <option selected value = "DOCUMENT_UPLOAD">Upload Date</option>
+                <option value="CREATION_DATE">Creation Date</option>
               </select>
             </div>
           </div>
@@ -73,15 +74,25 @@
             <div class="select">
               <select id="order-by-select"  v-model="query.order">
                 <!--<option selected disabled>Select account type</option>-->
-                <option selected value = "DESC">Descending</option>
-                <option value="ASC">Ascending</option>
+                <option selected value = "DESC">DESC</option>
+                <option value="ASC">ASC</option>
               </select>
             </div>
           </div>
         </div>
-          
 
-        
+        <div class="gr-12">
+
+          <div class="text-center">
+            <label>Signup Starts: </label>
+            <input type="date" v-model="query.startSignUpDate"/>
+            <label>Ends: </label>
+            <input type="date" v-model="query.endSignUpDate"/>
+          </div>
+        </div>
+
+
+
         <div class="gr-4 push-4">
           <div class="form-group">
             <button type="submit" class="button-search">
@@ -112,19 +123,19 @@
             </thead>
             <tbody>
             <tr v-for="member in members.list">
-              
+
               <td class="member-name">
                 <span v-if="member.mmUserPictures[0]">
-                  <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A" width="30" height="30"> 
+                  <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
                 <span v-else>
-                  <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30"> 
+                  <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
-                
+
                 <a href="#"  @click="openNewTab(member.accountId)">
                   {{ member.name }}
                 </a>
-                <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>              
+                <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
               </td>
               <td>{{ member.mobileNumber }}</td>
               <td>
@@ -207,36 +218,36 @@
                         <h5>Update Profile</h5>
                 </div>
                 <div class="gr-6 push-4">
-                        <i class="fa fa-external-link" style="color:black" aria-hidden="true" @click="openNewTab(memberProfile.accountId)"></i>                                                   
-                        <i class="fa fa-window-close" aria-hidden="true" @click="hideProfile()"></i>                        
+                        <i class="fa fa-external-link" style="color:black" aria-hidden="true" @click="openNewTab(memberProfile.accountId)"></i>
+                        <i class="fa fa-window-close" aria-hidden="true" @click="hideProfile()"></i>
                 </div>
                 <hr>
                 <div class="gr-2">
                 <span v-if="memberProfile.mmUserPictures[0]">
-                  <img :src="imageBaseUrl+memberProfile.mmUserPictures[0].document.url" class="img-rounded" alt="Profile Picture" width="70" height="80"> 
+                  <img :src="imageBaseUrl+memberProfile.mmUserPictures[0].document.url" class="img-rounded" alt="Profile Picture" width="70" height="80">
                 </span>
                 <span v-else>
-                  <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80"> 
+                  <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
                 </span>
                 </div>
                 <div class="gr-10">
                     <div class="gr-2">
-                        <button class="button-banner" >{{memberProfile.verificationStatus}}</button>    
+                        <button class="button-banner" >{{memberProfile.verificationStatus}}</button>
                     </div>
                     <div class="gr-3 push-7">
                         <button class="button-edit">Edit <i class="fa fa-pencil-square-o"></i></button>
-                        
+
                     </div>
                     <div class="gr-12 small-text">
                         <b>{{memberProfile.name}}</b>
                         <span class="banner-text" v-if="memberProfile.accountType == 1">(Personal)</span>
                         <span class="banner-text" v-else>(Business)</span>
-                        <span>{{memberProfile.profileCompletionScore}}%</span>                        
+                        <span>{{memberProfile.profileCompletionScore}}%</span>
                         <br>{{memberProfile.mobileNumber}}
                         <br>General
 
                     </div>
-                    
+
                 </div>
                 <div class="gr-12 small-text">
                     <b>Missing Information</b>
@@ -248,7 +259,7 @@
                     </div>
                     <div class="gr-4">
                         <span class="text-ash">
-                            -Father Name   
+                            -Father Name
                         </span>
                     </div>
                     <div class="gr-4">
@@ -258,7 +269,7 @@
                     </div>
                     <div class="gr-4">
                         <span class="text-ash">
-                            -Present Address   
+                            -Present Address
                         </span>
                     </div>
                     <div class="gr-4">
@@ -268,19 +279,19 @@
                     </div>
                 </div>
                 <div class="gr-12 small-text min-height-slider" v-if="memberDocuments">
-                    <b>Identification Document</b> 
+                    <b>Identification Document</b>
                     <hr>
                     <div class="row margin-5" v-for="memberDocument in memberDocuments">
                         <div class="gr-5">
-                            <img :src="imageBaseUrl+memberDocument.documentUrl" class="img-rounded" alt="Documents" width="140" height="80">     
+                            <img :src="imageBaseUrl+memberDocument.documentUrl" class="img-rounded" alt="Documents" width="140" height="80">
                         </div>
                         <div class="gr-7">
-                            <b>{{memberDocument.documentType}}</b> 
+                            <b>{{memberDocument.documentType}}</b>
                             <i v-if="memberDocument.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
                             <br>{{memberDocument.documentIdNumber}}
                             <br>Updated On:12/05/2017
-                            <br>   
-                            <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">                     
+                            <br>
+                            <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">
                               <button class="button-small-edit"><i class="fa fa-pencil-square-o"></i> Edit </button>
                               <button class="button-small-verify">Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
                             </span>
@@ -306,7 +317,7 @@
                               <div id="introducedBy" class="tab-pane fade in active padding-4">
                                   <div class="gr-4 text-center" v-if="memberIntroducers">
                                       <div class="gr-6 padding-5" v-for="memberIntroducer in memberIntroducers">
-                                              <img :src="imageBaseUrl+memberIntroducer.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80"> 
+                                              <img :src="imageBaseUrl+memberIntroducer.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
                                               <br><b>{{memberIntroducer.name}}</b>
                                               <br>{{memberIntroducer.mobileNumber}}
                                       </div>
@@ -315,20 +326,20 @@
                               <div id="hasIntroduced" class="tab-pane fade  padding-4">
                                   <div class="gr-4 text-center" v-if="membersIntroduced">
                                       <div class="gr-6 padding-5" v-for="memberIntroduced in membersIntroduced">
-                                              <img :src="imageBaseUrl+memberIntroduced.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80"> 
+                                              <img :src="imageBaseUrl+memberIntroduced.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
                                               <br><b>{{memberIntroduced.name}}</b>
                                               <br>{{memberIntroduced.mobileNumber}}
-                                              
+
                                       </div>
                                   </div>
                               </div>
                               <div id="invitedBy" class="tab-pane fade  padding-4">
                                   <div class="gr-4 text-center" v-if="membersInvitedBy">
                                       <div class="gr-6 padding-5" v-for="memberInvitedBy in membersInvitedBy">
-                                              <img :src="imageBaseUrl+memberInvitedBy.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80"> 
+                                              <img :src="imageBaseUrl+memberInvitedBy.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
                                               <br><b>{{memberInvitedBy.name}}</b>
                                               <br>{{memberInvitedBy.mobileNumber}}
-                                              
+
                                       </div>
                                   </div>
                               </div>
@@ -336,7 +347,7 @@
                       </div>
                     </div>
 
-                
+
 
             </div>
         </div>
@@ -348,6 +359,7 @@
 
 <script>
   import Http from '../services/Http'
+  import router from '../router/index'
 
   export default {
     name: 'ListRenderer',
@@ -441,7 +453,8 @@
       },
       openNewTab (value) {
         console.log('Okay, I am doing it now!!!, value: ', value)
-        window.open(`${window.location.href}/${value}`, '_blank')
+        router.push(`./member/${value}`)
+        // window.open(`${window.location.href}/${value}`, '_blank')
       },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
@@ -452,6 +465,8 @@
           verificationStatus: '', // string: VERIFIED, NOT_VERIFIED
           profileCompletionScoreStartRange: '',
           profileCompletionScoreEndRange: '',
+          startSignUpDate: '',
+          endSignUpDate: '',
           sort: 'DOCUMENT_UPLOAD',
           order: 'DESC',
           pageNumber: 0,
@@ -466,6 +481,18 @@
         this.query.profileCompletionScoreEndRange = this.value[1]
         console.log('mobile number: ' + this.query.mobileNumber + ' accountType: ' + this.query.accountType +
           ' verified: ' + this.query.verificationStatus)
+        if (this.query.startSignUpDate !== null) {
+          this.query.startSignUpDate = new Date(this.query.startSignUpDate).getTime() - 6 * 3600 * 1000
+        } else {
+          this.query.startSignUpDate = 0
+        }
+        if (this.query.endSignUpDate !== null) {
+          this.query.endSignUpDate = new Date(this.query.endSignUpDate).getTime() - 6 * 60 * 60 * 1000
+        } else {
+          this.query.endSignUpDate = new Date().getTime() - 6 * 3600 * 1000
+        }
+        console.log('query, signup from date: ', this.query.startSignUpDate, ' to date: ',
+          this.query.endSignUpDate)
         Http.GET('member', this.query)
           .then(({data: {data}}) => {
             console.log('Success in getting filtered results, data: ', data)
