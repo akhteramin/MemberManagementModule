@@ -27,8 +27,15 @@
               <div class="card">
                 <div class="card-block" v-if="member.basicInfo">
                   <h3>Basic Information</h3>
+                  <div class="row">
+                    
+                    <div class="gr-2 push-6">
+                      Balance: {{ member.basicInfo.accountCurrency || 'N/A'}} BDT
+                    </div>
+                  </div>
                   <br>
                   <div class="row">
+                    
                     <div class="gr-2">
                       <img class="img-thumbnail mx-auto d-block" alt="180x180" :src="'/static/images/default-profile-180x180.png'" data-holder-rendered="true" style="width: 180px;">
                     </div>
@@ -60,7 +67,7 @@
                       <br>
                       <i v-bind:class="{'fa fa-male':member.basicInfo.gender==='M','fa fa-female':member.basicInfo.gender==='F'}"></i>{{ !member.basicInfo.gender ? 'N/A' : '' }}
                       <br>
-                      {{ member.basicInfo.occupation || 'N/A' }}
+                      {{ occupationName || 'N/A' }}
                       <br>
                       {{ member.basicInfo.verificationStatus === null ? 'N/A': member.basicInfo.verificationStatus == 'VERIFIED' ? 'Verified':
                       member.basicInfo.verificationStatus == 'NOT_VERIFIED' ? 'Not Verified':
@@ -171,10 +178,6 @@
                         </div>
                       </div>
                     </div>
-
-
-
-
                   </div>
                   <hr>
                 </div>
@@ -296,7 +299,6 @@
           <div class="card-block" v-if="showActivities">
 
             <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
-              <!--<div id="filters" class="col-12">-->
               <div class="form-group gr-12">
                 <div  style="align-content: left;">
                   <label class="push-2"> Date Range From: </label>
@@ -308,25 +310,11 @@
                   <input id="search-key" v-model="activityQuery.searchKey"
                          placeholder="Key">
                 </div>
-
-                <!--<div class="col-5" style="background-color: #8a6d3b;">-->
-                <!--<label>Transaction Type: </label>-->
-                <!---->
-                <!--</div>-->
-
               </div>
-              <!--<div class="form-group col-6" style="background-color: #2aabd2">-->
-              <!--<label> Transaction Type: </label>-->
-              <!--<select id="transaction-selector" v-model="transactionQuery.serviceID">-->
-              <!--<option selected value=null disabled>Select Transaction Type</option>-->
-              <!--<option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>-->
-              <!--</select>-->
-              <!--</div>-->
               <div class="form-group">
                 <button type="submit">Filter</button>
                 <button type="reset">Reset</button>
               </div>
-              <!--</div>-->
             </form>
 
             <div>
@@ -413,7 +401,6 @@
 
           <div class="card-block" v-if="showTransactions">
             <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
-              <!--<div id="filters" class="col-12">-->
               <div class="form-group gr-12">
                 <div  style="align-content: left;">
                   <label class="push-1"> Date Range From: </label>
@@ -426,25 +413,12 @@
                     <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
                   </select>
                 </div>
-
-                <!--<div class="col-5" style="background-color: #8a6d3b;">-->
-                <!--<label>Transaction Type: </label>-->
-                <!---->
-                <!--</div>-->
-
               </div>
-                <!--<div class="form-group col-6" style="background-color: #2aabd2">-->
-                  <!--<label> Transaction Type: </label>-->
-                  <!--<select id="transaction-selector" v-model="transactionQuery.serviceID">-->
-                    <!--<option selected value=null disabled>Select Transaction Type</option>-->
-                    <!--<option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>-->
-                  <!--</select>-->
-                <!--</div>-->
+                
               <div class="form-group">
                 <button type="submit">Filter</button>
                 <button type="reset">Reset</button>
               </div>
-              <!--</div>-->
             </form>
           <div>
               <table class="table table-hover table-sm ">
@@ -545,29 +519,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
-  <!--<div v-for="item in introducers">-->
-    <!--&lt;!&ndash;<span>{{ item.emailAddress }} {{ `${item.primary ? '(P)' : ''}` }}</span>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-3"></div>&ndash;&gt;-->
-    <!--<div class="col-2" style="background-color: red;">-->
-      <!--<img class="img-thumbnail mx-auto d-block" alt="64x64"-->
-           <!--:src="'/static/images/default-profile-64x64.png'"-->
-           <!--data-holder-rendered="true" style="width: 180px;">-->
-    <!--</div>-->
-    <!--<div class="col-4 text-left" style="background-color: aqua;">-->
-      <!--{{ item.name }}-->
-      <!--<br>-->
-      <!--{{ item.mobileNumber }}-->
-      <!--<br>-->
-    <!--</div>-->
-  <!--</div>-->
-
-
 </template>
 
 <script>
@@ -603,7 +554,8 @@
         documents: {},
         showBasicDetails: true,
         showActivities: false,
-        showTransactions: false
+        showTransactions: false,
+        occupationName: ''
       }
     },
     created () {
@@ -633,7 +585,7 @@
               this.member = member
               console.log('Got, member success::')
               console.log('member details: ', this.member)
-              this.getThanaAndDistrictNames()
+              this.getStaticNames()
             },
             error => {
               console.log('Error occured getting details of the member, error: ', error)
@@ -684,19 +636,6 @@
               console.log('Error in getting list of identification documents, error: ', error)
             }
           )
-        this.getActivities()
-        this.getTransactions()
-        // Http call for account activities
-//        Http.GET('member', [this.id, 'activities'])
-//          .then(
-//            ({data: {data: activities}}) => {
-//              this.activities = activities
-//              console.log('Got the list of activities: ', activities)
-//            },
-//            error => {
-//              console.log('Error in getting the list of activities, error: ', error)
-//            }
-//          )
       },
       resetTransactions () {
         this.transactionQuery = Object.assign({}, {
@@ -792,13 +731,19 @@
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
           this.showActivities = true
+          this.getActivities()
         } else {
           this.showTransactions = true
+          this.getTransactions()
         }
       },
-      getThanaAndDistrictNames () {
+      getStaticNames () {
         console.log('district')
         // Address 0 resolution
+        if (this.member.basicInfo.occupation) {
+          let occupationList = JSON.parse(localStorage.getItem('occupation'))
+          this.occupationName = occupationList.find(x => x.id === this.member.basicInfo.occupation).name
+        }
         if (this.member.addresses.length !== 0) {
           let thanaList = JSON.parse(localStorage.getItem('thana'))
           let districtList = JSON.parse(localStorage.getItem('district'))
@@ -832,7 +777,7 @@
       profilePicture (url) {
         if (url) {
           /* TODO: FTP URL is hard coded until manage development environment. */
-          return `https://dev.ipay.com.bd${url}`
+          return Http.IMAGE_URL + url
         }
         return '/static/images/default-profile-180x180.png'
       }

@@ -4920,6 +4920,12 @@ Files inside this folder should contain all styles relating to a reusable compon
 .button-small-verify { background-color: #1bb1a2; /* Ash */ border: none; color: white; padding: 5px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; font-size: 10px; width: 40px; height: 15px; padding: 0px 0px; }
 .button-small-verify:hover { color: white; box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); }
 
+.button-md-edit { background-color: #c9c6c6; /* Ash */ border: none; color: white; padding: 5px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; width: 70px; height: 30px; padding: 0px 0px; }
+.button-md-edit:hover { color: white; box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); }
+
+.button-md-verify { background-color: #1bb1a2; /* Ash */ border: none; color: white; padding: 5px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; width: 70px; height: 30px; padding: 0px 0px; }
+.button-md-verify:hover { color: white; box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); }
+
 .dropdown { height: 30px; width: 50px; }
 
 ul li ul.dropdown-hover { min-width: 100%; /* Set width of the dropdown */ background: #181717; display: none; position: absolute; z-index: 999; left: 0; }
@@ -4958,7 +4964,9 @@ select::-ms-expand { display: none; }
 
 .select::after { -webkit-transition: .25s all ease; -o-transition: .25s all ease; transition: .25s all ease; }
 
-.fa-external-link { color: #1bb1a2; }
+.fa-external-link { color: #1bb1a2; cursor: pointer; }
+
+.fa-window-close, .fa-arrow-left { cursor: pointer; }
 
 .banner-text { color: #1bb1a2; }
 
