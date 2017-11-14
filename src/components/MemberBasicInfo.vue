@@ -1,6 +1,6 @@
 <template>
 
-  <div class="gr-10" v-if="member">
+  <div class="gr-10 push-2" v-if="member">
       <br>
       <div class="gr-12"> <!--offset-md-1-->
         <div class="card"> <!-- class="card"-->
@@ -23,62 +23,277 @@
 
 
 
-          <div class="card-block" v-if="showBasicDetails">
-              <div class="card">
-                <div class="card-block" v-if="member.basicInfo">
-                  <h3>Basic Information</h3>
-                  <br>
+          <div  v-if="showBasicDetails">
+                <div v-if="member.basicInfo">
+
                   <div class="row">
-                    <div class="gr-2">
-                      <img class="img-thumbnail mx-auto d-block" alt="180x180" :src="'/static/images/default-profile-180x180.png'" data-holder-rendered="true" style="width: 180px;">
-                    </div>
-
-
-                    <div class="gr-4 text-left push-1">
-                      Name:
-                      <br>
-                      Mobile Number:
-                      <br>
-                      Email:
-                      <br>
-                      Balance:
-                      <br>
-                      Date of Birth:
-                      <br>
-                      Gender:
-                      <br>
-                      Occupation:
-                      <br>
-                      Verification Status:
-                    </div>
-                    <div class="gr-5 text-left">
-                      {{ member.basicInfo.name || 'N/A'}}
-                      <br>
-                      {{ member.basicInfo.mobileNumber || 'N/A' }}
-                      <br>
-                      {{  member.emails.length !== 0 ? member.emails[0].emailAddress: 'N/A' }}
-                      <br>
-                      {{ balance.accountBalance ? balance.accountBalance : 'N/A' }}
-                      <br>
-                      {{ member.basicInfo.dateOfBirth | date('MMM D, YYYY') || 'N/A' }}
-                      <br>
-                      <i v-bind:class="{'fa fa-male':member.basicInfo.gender==='M','fa fa-female':member.basicInfo.gender==='F'}"></i>{{ !member.basicInfo.gender ? 'N/A' : '' }}
-                      <br>
-                      {{ member.basicInfo.occupation || 'N/A' }}
-                      <br>
-                      {{ member.basicInfo.verificationStatus === null ? 'N/A': member.basicInfo.verificationStatus == 'VERIFIED' ? 'Verified':
-                      member.basicInfo.verificationStatus == 'NOT_VERIFIED' ? 'Not Verified':
-                      member.basicInfo.verificationStatus == 'IN_PROGRESS' ? 'In Progress':
-                      'Rejected'}}
-                      <!--<div v-for="item in info.emails">-->
-                        <!--<span>{{ item.emailAddress }} {{ `${item.primary ? '(P)' : ''}` }}</span>-->
-                      <!--</div>-->
+                    <div class="gr-2 push-6">
+                      Balance: {{ member.basicInfo.accountCurrency || 'N/A'}} BDT
                     </div>
                   </div>
-                  <hr>
+                  <br>
+                  <div class="row">
+
+                    <div class="gr-2">
+                      <img class="img-rounded"  :src="profilePicture(member.basicInfo.mmUserPictures[0].document.url)"
+                                     data-holder-rendered="true" width="200" height="200">
+                    </div>
+                    <div class="gr-9 text-left push-.5">
+                      <div class="gr-12">
+                        <div class="gr-2">
+                          <h5><b>Basic Information</b></h5>
+                        </div>
+                        <div class="gr-2 push-6" v-if="!editBasicProfileMode">
+                            <button class="button-md-edit" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>
+                        </div>
+                      </div>
+                      <div v-if="!editBasicProfileMode">
+                        <div class="gr-2">
+                          Name:
+                        </div>
+                        <div class="gr-4 text-left">
+                          {{ member.basicInfo.name || 'N/A'}}
+                        </div>
+                        <div class="gr-2">
+                          Mobile Number:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                          {{ member.basicInfo.mobileNumber || 'N/A' }}
+                        </div>
+                        <div class="gr-2">
+                          Email:
+                        </div>
+                        <div class="gr-4 text-left">
+                        {{  member.emails.length !== 0 ? member.emails[0].emailAddress: 'N/A' }}
+                        </div>
+                        <div class="gr-2">
+                          Date of Birth:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                        {{ member.basicInfo.dateOfBirth | date('MMM D, YYYY') || 'N/A' }}
+                        </div>
+                        <div class="gr-2">
+                        Gender:
+                        </div>
+                        <div class="gr-4 text-left">
+                        <i v-bind:class="{'fa fa-male':member.basicInfo.gender==='M','fa fa-female':member.basicInfo.gender==='F'}"></i>{{ !member.basicInfo.gender ? 'N/A' : '' }}
+                        </div>
+                        <div class="gr-2">
+                        Occupation:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                        {{ occupationName || 'N/A' }}
+                        </div>
+
+                        <div class="gr-2">
+                        Verification Status:
+                        </div>
+                        <div class="gr-4 text-left">
+                          {{ member.basicInfo.verificationStatus === null ? 'N/A': member.basicInfo.verificationStatus == 'VERIFIED' ? 'Verified':
+                          member.basicInfo.verificationStatus == 'NOT_VERIFIED' ? 'Not Verified':
+                          member.basicInfo.verificationStatus == 'IN_PROGRESS' ? 'In Progress':
+                          'Rejected'}}
+                        </div>
+                        <div class="gr-2">
+                        Member Since:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                        {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
+                        </div>
+                        <div class="gr-2">
+                        Organization Name:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                        {{ member.basicInfo.organizationName || 'N/A' }}
+                        </div>
+                      </div>
+                      <div v-else>
+                        <form v-on:submit.prevent="updateMemberBasicProfile">
+
+
+                        <div class="gr-2">
+                          Name:
+                        </div>
+                        <div class="gr-4 text-left">
+                          <input  name="memberName" class="input-sm" type="text" id="memberName" placeholder="Name"
+                          v-model="member.basicInfo.name"/>
+                        </div>
+                        <div class="gr-2">
+                          Mobile Number:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                          {{ member.basicInfo.mobileNumber || 'N/A' }}
+                        </div>
+                        <br><br><br>
+                        <div class="gr-2">
+                          Email:
+                        </div>
+                        <div class="gr-4 text-left">
+                        <input  name="memberEmail" class="input-sm" type="email" id="memberEmail" placeholder="Email"
+                          v-model="member.emails[0].emailAddress"/>
+                        </div>
+                        <div class="gr-2">
+                          Date of Birth:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                          <input type="date" class="input-sm" name="memberDOB" v-model="dob"/>
+                        </div>
+                        <div class="gr-2">
+                        Gender:
+                        </div>
+                        <div class="gr-4 text-left">
+                          <div class="select select-sm">
+                            <select id="genderSelection"  v-model="member.basicInfo.gender">
+                              <option value="">Select Gender</option>
+                              <option value="M">Male</option>
+                              <option value="F">Female</option>
+                          </select>
+                          </div>
+                        </div>
+                        <div class="gr-2">
+                        Occupation:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                          <div class="select select-sm">
+                            <select id="occupationSelection" v-model="member.basicInfo.occupation">
+                              <option value="">Select Occupation</option>
+                              <option v-for="occupation in occupationList" :value="occupation.id">{{ occupation.name }}</option>
+                          </select>
+                          </div>
+                        </div>
+
+                        <div class="gr-2">
+                        Verification Status:
+                        </div>
+                          <div class="gr-4 text-left">
+                            <div class="select select-sm">
+                              <select id="verification" v-model="member.basicInfo.verificationStatus" disabled>
+                                <option value="">Select Status</option>
+                                <option value="NOT_VERIFIED">Not Verified</option>
+                                <option value="IN_PROGRESS">In Progress</option>
+                                <option value="VERIFIED">Verified</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="gr-2">
+                        Member Since:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                        {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
+                        </div>
+
+                        <div class="gr-2">
+                        Organization Name:
+                        </div>
+                        <div class="gr-4 text-left pull-.5">
+                          <input  name="memberOrganizationName" class="input-sm" type="text" id="memberOrganizationName" placeholder="Organization Name"
+                          v-model="member.basicInfo.organizationName"/>
+                        </div>
+
+                        <div class="gr-4 push-4">
+                          <div class="form-group">
+                            <button type="submit" class="button-search">
+                              <i class="fa fa-edit" aria-hidden="true"></i>
+                              Update
+                            </button>
+                            <button type="reset" class="button-reset" @click="editBasicInfo()">
+                              <i class="fa fa-times"></i>
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                      </div>
+                      <hr>
+                    <div class="gr-12">
+                      <div class="gr-2">
+                          <h5><b>Family Information</b></h5>
+                        </div>
+                        <div class="gr-2 push-6">
+                            <button class="button-md-edit" @click="editParents()"><i class="fa fa-pencil-square-o"></i> Edit </button>
+                        </div>
+                    </div>
+                    <div v-if="!editParentsMode">
+                      <div class="gr-2">
+                      Father Name:
+                      </div>
+                      <div class="gr-4 text-left">
+                        {{ member.basicInfo.father || 'N/A' }}
+
+                      </div>
+                      <div class="gr-2">
+                      Mother Name:
+                      </div>
+                      <div class="gr-4 text-left">
+                        {{ member.basicInfo.mother || 'N/A' }}
+                      </div>
+                      <div class="gr-2">
+                      Father Mobile:
+                      </div>
+                      <div class="gr-4 text-left">
+                        {{ member.basicInfo.fatherMobileNumber || 'N/A' }}
+                      </div>
+                      <div class="gr-2">
+                      Mother Mobile:
+                      </div>
+                      <div class="gr-4 text-left">
+                        {{ member.basicInfo.motherMobileNumber || 'N/A' }}
+                      </div>
+                    </div>
+
+                    <div v-else>
+                    <form v-on:submit.prevent="updateMemberParents">
+                      <div class="gr-2">
+                      Father Name:
+                      </div>
+                      <div class="gr-4 text-left">
+                        <input  name="memberFather" class="input-sm" type="text" id="memberFather" placeholder="Father Name"
+                          v-model="member.basicInfo.father"/>
+                      </div>
+                      <div class="gr-2">
+                      Mother Name:
+                      </div>
+                      <div class="gr-4 text-left">
+                        <input  name="memberMother" class="input-sm" type="text" id="memberMother" placeholder="Mother Name"
+                          v-model="member.basicInfo.mother"/>
+                      </div>
+                      <div class="gr-2">
+                      Father Mobile:
+                      </div>
+                      <div class="gr-4 text-left">
+                        <input  name="memberFatherMobile" class="input-sm" type="text" id="memberFatherMobile" placeholder="Father Mobile Number"
+                          v-model="member.basicInfo.fatherMobileNumber"/>
+                      </div>
+                      <div class="gr-2">
+                      Mother Mobile:
+                      </div>
+                      <div class="gr-4 text-left">
+                        <input  name="memberMotherMobile" class="input-sm" type="text" id="memberMotherMobile" placeholder="Mother Mobile Number"
+                          v-model="member.basicInfo.motherMobileNumber"/>
+                      </div>
+                      <div class="gr-4 push-4">
+                          <div class="form-group">
+                            <button type="submit" class="button-search">
+                              <i class="fa fa-edit" aria-hidden="true"></i>
+                              Update
+                            </button>
+                            <button type="reset" class="button-reset" @click="editBasicInfo()">
+                              <i class="fa fa-times"></i>
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                    </form>
+                    </div>
+
+                  </div>
                 </div>
 
-                <div class="card-block" v-if="member.addresses">
+                <hr>
+              </div>
+
+                <div v-if="member.addresses">
                   <h3>Address</h3>
                   <br>
                   <div class="row justify-content-center">
@@ -175,15 +390,11 @@
                         </div>
                       </div>
                     </div>
-
-
-
-
                   </div>
                   <hr>
                 </div>
 
-                <div class="card-block">
+                <div>
                   <div class="verification">
                     <div>
 
@@ -293,14 +504,11 @@
                     </div>
                   </div>
                 </div>
-
-              </div>
           </div>
 
-          <div class="card-block" v-if="showActivities">
+          <div v-if="showActivities">
 
             <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
-              <!--<div id="filters" class="col-12">-->
               <div class="form-group gr-12">
                 <div  style="align-content: left;">
                   <label class="push-2"> Date Range From: </label>
@@ -312,25 +520,11 @@
                   <input id="search-key" v-model="activityQuery.searchKey"
                          placeholder="Key">
                 </div>
-
-                <!--<div class="col-5" style="background-color: #8a6d3b;">-->
-                <!--<label>Transaction Type: </label>-->
-                <!---->
-                <!--</div>-->
-
               </div>
-              <!--<div class="form-group col-6" style="background-color: #2aabd2">-->
-              <!--<label> Transaction Type: </label>-->
-              <!--<select id="transaction-selector" v-model="transactionQuery.serviceID">-->
-              <!--<option selected value=null disabled>Select Transaction Type</option>-->
-              <!--<option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>-->
-              <!--</select>-->
-              <!--</div>-->
               <div class="form-group">
                 <button type="submit">Filter</button>
                 <button type="reset">Reset</button>
               </div>
-              <!--</div>-->
             </form>
 
             <div>
@@ -417,12 +611,10 @@
 
           <div class="card-block" v-if="showTransactions">
             <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
-              <!--<div id="filters" class="col-12">-->
 
-              <div>
-                <!--<label class="push-1"> Date Range From: </label>-->
-                <div class="form-group col-6">
-                  <label> Date Range From: </label>
+              <div class="form-group gr-12">
+                <div  style="align-content: left;">
+                  <label class="push-1"> Date Range From: </label>
                   <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="transactionQuery.fromDate"/>
                   <label class="push-0.5">To:</label>
                   <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
@@ -437,24 +629,11 @@
                 </div>
               </div>
 
-                <!--<div class="col-5" style="background-color: #8a6d3b;">-->
-                <!--<label>Transaction Type: </label>-->
-                <!---->
-                <!--</div>-->
 
-
-                <!--<div class="form-group col-6" style="background-color: #2aabd2">-->
-                  <!--<label> Transaction Type: </label>-->
-                  <!--<select id="transaction-selector" v-model="transactionQuery.serviceID">-->
-                    <!--<option selected value=null disabled>Select Transaction Type</option>-->
-                    <!--<option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>-->
-                  <!--</select>-->
-                <!--</div>-->
               <div class="form-group">
                 <button type="submit">Filter</button>
                 <button type="reset">Reset</button>
               </div>
-              <!--</div>-->
             </form>
           <div>
               <table class="table table-hover table-sm ">
@@ -555,29 +734,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
-  <!--<div v-for="item in introducers">-->
-    <!--&lt;!&ndash;<span>{{ item.emailAddress }} {{ `${item.primary ? '(P)' : ''}` }}</span>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-3"></div>&ndash;&gt;-->
-    <!--<div class="col-2" style="background-color: red;">-->
-      <!--<img class="img-thumbnail mx-auto d-block" alt="64x64"-->
-           <!--:src="'/static/images/default-profile-64x64.png'"-->
-           <!--data-holder-rendered="true" style="width: 180px;">-->
-    <!--</div>-->
-    <!--<div class="col-4 text-left" style="background-color: aqua;">-->
-      <!--{{ item.name }}-->
-      <!--<br>-->
-      <!--{{ item.mobileNumber }}-->
-      <!--<br>-->
-    <!--</div>-->
-  <!--</div>-->
-
-
 </template>
 
 <script>
@@ -614,7 +770,12 @@
         documents: {},
         showBasicDetails: true,
         showActivities: false,
-        showTransactions: false
+        showTransactions: false,
+        occupationName: '',
+        editBasicProfileMode: false,
+        editParentsMode: false,
+        dob: '',
+        occupationList: {}
       }
     },
     created () {
@@ -644,57 +805,58 @@
               this.member = member
               console.log('Got, member success::')
               console.log('member details: ', this.member)
-              this.getThanaAndDistrictNames()
+              this.dob = this.$options.filters.date(member.basicInfo.dateOfBirth, 'YYYY-MM-DD')
+              this.getStaticNames()
             },
             error => {
               console.log('Error occured getting details of the member, error: ', error)
             }
           )
-        // Http call for the introducers
-        Http.GET('member', [this.id, 'introducers'])
-          .then(
-            ({data: {data: introducers}}) => {
-              this.introducers = introducers
-              console.log('Got the list of introducers: ', introducers)
-            },
-            error => {
-              console.log('Error in getting the list of introducers, error: ', error)
-            }
-          )
-        // Http call for the introduced list
-        Http.GET('member', [this.id, 'introduced'])
-          .then(
-            ({data: {data: introduced}}) => {
-              this.introduced = introduced
-              console.log('Got the list of introduced: ', introduced)
-            },
-            error => {
-              console.log('Error in getting the list of introduced, error: ', error)
-            }
-          )
-        // Http call for affiliated bank accounts
-        Http.GET('member', [this.id, 'bank-accounts'])
-          .then(
-            ({data: {data: bankAccounts}}) => {
-              this.bankAccounts = bankAccounts
-              console.log('Got the list of bank accounts: ', bankAccounts)
-            },
-            error => {
-              console.log('Error in getting the list of bank accounts, error: ', error)
-            }
-          )
-        // Http call for identification documents
-        Http.GET('member', [this.id, 'identification-documents'])
-          .then(
-            ({data: {data: documents}}) => {
-              this.documents = documents
-              console.log('Got the list of documents: ', this.documents, ' documents.length: ',
-              this.documents.length)
-            },
-            error => {
-              console.log('Error in getting list of identification documents, error: ', error)
-            }
-          )
+        // // Http call for the introducers
+        // Http.GET('member', [this.id, 'introducers'])
+        //   .then(
+        //     ({data: {data: introducers}}) => {
+        //       this.introducers = introducers
+        //       console.log('Got the list of introducers: ', introducers)
+        //     },
+        //     error => {
+        //       console.log('Error in getting the list of introducers, error: ', error)
+        //     }
+        //   )
+        // // Http call for the introduced list
+        // Http.GET('member', [this.id, 'introduced'])
+        //   .then(
+        //     ({data: {data: introduced}}) => {
+        //       this.introduced = introduced
+        //       console.log('Got the list of introduced: ', introduced)
+        //     },
+        //     error => {
+        //       console.log('Error in getting the list of introduced, error: ', error)
+        //     }
+        //   )
+        // // Http call for affiliated bank accounts
+        // Http.GET('member', [this.id, 'bank-accounts'])
+        //   .then(
+        //     ({data: {data: bankAccounts}}) => {
+        //       this.bankAccounts = bankAccounts
+        //       console.log('Got the list of bank accounts: ', bankAccounts)
+        //     },
+        //     error => {
+        //       console.log('Error in getting the list of bank accounts, error: ', error)
+        //     }
+        //   )
+        // // Http call for identification documEnts
+        // Http.GET('member', [this.id, 'identification-documents'])
+        //   .then(
+        //     ({data: {data: documents}}) => {
+        //       this.documents = documents
+        //       console.log('Got the list of documents: ', this.documents, ' documents.length: ',
+        //       this.documents.length)
+        //     },
+        //     error => {
+        //       console.log('Error in getting list of identification documents, error: ', error)
+        //     }
+        //   )
         // Http call for balance
         Http.GET('member', [this.id, 'balance'])
           .then(
@@ -706,19 +868,50 @@
               console.log('Error in retrieving balance... ', error)
             }
           )
-        this.getActivities()
-        this.getTransactions()
-        // Http call for account activities
-//        Http.GET('member', [this.id, 'activities'])
-//          .then(
-//            ({data: {data: activities}}) => {
-//              this.activities = activities
-//              console.log('Got the list of activities: ', activities)
-//            },
-//            error => {
-//              console.log('Error in getting the list of activities, error: ', error)
-//            }
-//          )
+      },
+      updateMemberBasicProfile () {
+        console.log('update basic profile info:')
+        this.member.basicInfo.dateOfBirth = Date.parse(this.dob)
+        console.log(this.member.basicInfo)
+        this.member.basicInfo.dob = Date.parse(this.dob)
+        Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
+          .then(
+            ({data: {data: memberUpdate}}) => {
+              console.log('updated profile::', memberUpdate)
+              this.init()
+              this.editBasicInfo()
+            },
+            error => {
+              console.log('Error in getting list of identification documents, error: ', error)
+            }
+          )
+      },
+      updateMemberParents () {
+        Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
+          .then(
+            ({data: {data: memberUpdate}}) => {
+              console.log('updated profile::', memberUpdate)
+              this.init()
+              this.editParents()
+            },
+            error => {
+              console.log('Error in getting list of identification documents, error: ', error)
+            }
+          )
+      },
+      editBasicInfo () {
+        if (this.editBasicProfileMode) {
+          this.editBasicProfileMode = false
+        } else {
+          this.editBasicProfileMode = true
+        }
+      },
+      editParents () {
+        if (this.editParentsMode) {
+          this.editParentsMode = false
+        } else {
+          this.editParentsMode = true
+        }
       },
       resetTransactions () {
         this.transactionQuery = Object.assign({}, {
@@ -814,13 +1007,19 @@
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
           this.showActivities = true
+          this.getActivities()
         } else {
           this.showTransactions = true
+          this.getTransactions()
         }
       },
-      getThanaAndDistrictNames () {
+      getStaticNames () {
         console.log('district')
         // Address 0 resolution
+        if (this.member.basicInfo.occupation) {
+          this.occupationList = JSON.parse(localStorage.getItem('occupation'))
+          this.occupationName = this.occupationList.find(x => x.id === this.member.basicInfo.occupation).name
+        }
         if (this.member.addresses.length !== 0) {
           let thanaList = JSON.parse(localStorage.getItem('thana'))
           let districtList = JSON.parse(localStorage.getItem('district'))
@@ -854,7 +1053,7 @@
       profilePicture (url) {
         if (url) {
           /* TODO: FTP URL is hard coded until manage development environment. */
-          return `https://dev.ipay.com.bd${url}`
+          return Http.IMAGE_URL + url
         }
         return '/static/images/default-profile-180x180.png'
       }

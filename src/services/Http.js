@@ -82,5 +82,16 @@ export default {
     const route = routes[key]
     return axios.post(route.concat(parameters), data)
   },
+  PUT (key, data, props = {}) {
+    let parameters = ''
+    if (Object.prototype.toString.call(props) === '[object Array]') {
+      parameters = props.length > 0 ? `${props.join('/')}` : ''
+    } else {
+      parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
+    }
+
+    const route = routes[key]
+    return axios.put(route.concat(parameters), data)
+  },
   IMAGE_URL
 }

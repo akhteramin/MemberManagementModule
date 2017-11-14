@@ -1,7 +1,7 @@
 <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 
 <template>
-  <div class="NavBar gr-2 menu-container" >
+  <div class="NavBar gr-2 menu-container">
     <div class="menu-header">
         <img src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="110" height="50">
           Member Service

@@ -4920,6 +4920,12 @@ Files inside this folder should contain all styles relating to a reusable compon
 .button-small-verify { background-color: #1bb1a2; /* Ash */ border: none; color: white; padding: 5px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; font-size: 10px; width: 40px; height: 15px; padding: 0px 0px; }
 .button-small-verify:hover { color: white; box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); }
 
+.button-md-edit { background-color: #c9c6c6; /* Ash */ border: none; color: white; padding: 5px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; width: 70px; height: 30px; padding: 0px 0px; }
+.button-md-edit:hover { color: white; box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); }
+
+.button-md-verify { background-color: #1bb1a2; /* Ash */ border: none; color: white; padding: 5px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; -webkit-transition-duration: 0.4s; /* Safari */ transition-duration: 0.4s; width: 70px; height: 30px; padding: 0px 0px; }
+.button-md-verify:hover { color: white; box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); }
+
 .dropdown { height: 30px; width: 50px; }
 
 ul li ul.dropdown-hover { min-width: 100%; /* Set width of the dropdown */ background: #181717; display: none; position: absolute; z-index: 999; left: 0; }
@@ -4937,8 +4943,15 @@ table td .fa-external-link { display: none; }
 table tr td:hover .fa-external-link { display: inline; }
 
 input[type=text] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
+input[type=text]:hover { border: 2px solid #1bb1a2; }
 
-input[type=text]:focus { border: 2px solid #1bb1a2; }
+input[type=email] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
+input[type=email]:hover { border: 2px solid #1bb1a2; }
+
+input[type=date] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
+input[type=date]:hover { border: 2px solid #1bb1a2; }
+
+.input-sm, .input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn { padding-top: 0px !important; padding-bottom: 0px !important; width: 70% !important; }
 
 /* Reset Select */
 select { -webkit-appearance: none; -moz-appearance: none; -ms-appearance: none; appearance: none; outline: 0; box-shadow: none; border: 0 !important; background: #ffffff; background-image: none; }
@@ -4958,7 +4971,11 @@ select::-ms-expand { display: none; }
 
 .select::after { -webkit-transition: .25s all ease; -o-transition: .25s all ease; transition: .25s all ease; }
 
-.fa-external-link { color: #1bb1a2; }
+.select-sm { padding-top: 0px !important; padding-bottom: 0px !important; width: 70% !important; }
+
+.fa-external-link { color: #1bb1a2; cursor: pointer; }
+
+.fa-window-close, .fa-arrow-left { cursor: pointer; }
 
 .banner-text { color: #1bb1a2; }
 
@@ -5010,7 +5027,7 @@ select::-ms-expand { display: none; }
 
 .menu-header { background: #1bb1a2; cursor: pointer; margin: 0; color: #ffffff; font-family: "sans-serif"; text-align: center; text-decoration: none; letter-spacing: 0px; font-size: medium; min-height: 50px; padding-top: 3%; padding: 0; }
 
-.menu-container { background: #f4f7f9; cursor: pointer; margin: 0; min-height: -webkit-fill-available; }
+.menu-container { background: #f4f7f9; cursor: pointer; margin: 0; min-height: -webkit-fill-available; position: fixed; }
 .menu-container a { text-decoration: none !important; color: black; font-size: 13px; }
 .menu-container li { padding: 10px 0px 10px 50px; margin: 0px; }
 .menu-container li:hover { background: #dadada; transition: all 0.3s ease; }

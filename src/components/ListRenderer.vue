@@ -1,5 +1,5 @@
 <template>
-  <div id = "list" class="ListRenderer gr-10 content-container">
+  <div id = "list" class="ListRenderer gr-10 push-2 content-container">
     <h1>Members</h1>
     <hr>
     <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
@@ -213,7 +213,7 @@
           </div>
           <!--========================================= slider ==================================================-->
         <div class="slider" v-if="sliderShow">
-            <div class="gr-12">
+            <div class="gr-12" v-if="profileDetails">
                 <div class="gr-6">
                         <h5>Update Profile</h5>
                 </div>
@@ -283,7 +283,7 @@
                     <hr>
                     <div class="row margin-5" v-for="memberDocument in memberDocuments">
                         <div class="gr-5">
-                            <img :src="imageBaseUrl+memberDocument.documentUrl" class="img-rounded" alt="Documents" width="140" height="80">
+                            <img :src="imageBaseUrl+memberDocument.documentUrl" class="img-rounded" alt="Documents" width="140" height="80" @click="showDocumentDetails(memberDocument)">
                         </div>
                         <div class="gr-7">
                             <b>{{memberDocument.documentType}}</b>
@@ -350,6 +350,29 @@
 
 
             </div>
+            <div class="gr-12" v-else>
+              <div class="gr-2 padding-5">
+                <i class="fa fa-arrow-left" aria-hidden="true" @click="showDocumentDetails(memberDocumentDetail)"></i>
+              </div>
+              <div class="gr-10">
+                <h5>{{memberDocumentDetail.documentType}}</h5>
+              </div>
+              <hr>
+              <div class="gr-12">
+                  <img :src="imageBaseUrl+memberDocumentDetail.documentUrl" class="img-rounded" alt="Documents" width="300" height="200">
+              </div>
+              <br>
+              <div class="gr-7">
+                  <i v-if="memberDocumentDetail.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
+                  <br>{{memberDocumentDetail.documentIdNumber}}
+                  <br>Updated On:12/05/2017
+                  <br>
+                  <span v-if="memberDocumentDetail.documentVerificationStatus=='NOT_VERIFIED'">
+                    <button class="button-md-edit"><i class="fa fa-pencil-square-o"></i> Edit </button>
+                    <button class="button-md-verify">Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
+                  </span>
+              </div>
+            </div>
         </div>
 
         </div>
@@ -378,36 +401,42 @@
           100
         ],
         sliderShow: false,
-        maxPaginationItem: 10
+        maxPaginationItem: 10,
+        profileDetails: true,
+        memberDocumentDetail: {}
       }
     },
     methods: {
       loadProfile: function (member) {
         console.log('accountID:', member)
-        this.memberProfile = member
-        Http.GET('member', [member.accountId, 'identification-documents'])
-          .then(
-            ({data: {data: documents}}) => {
-              this.memberDocuments = documents
-              console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
-              this.memberDocuments.length)
-            },
-            error => {
-              console.log('Error in getting list of identification documents, error: ', error)
-            }
-          )
-        // Http call for the introducers
-        Http.GET('member', [member.accountId, 'introducers'])
-          .then(
-            ({data: {data: introducers}}) => {
-              this.memberIntroducers = introducers
-              console.log('Got the list of introducers: ', this.memberIntroducers)
-            },
-            error => {
-              console.log('Error in getting the list of introducers, error: ', error)
-            }
-          )
-        this.sliderShow = true
+        if (this.sliderShow === true && this.memberProfile.accountId === member.accountId) {
+          this.sliderShow = false
+        } else {
+          this.memberProfile = member
+          Http.GET('member', [member.accountId, 'identification-documents'])
+            .then(
+              ({data: {data: documents}}) => {
+                this.memberDocuments = documents
+                console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
+                this.memberDocuments.length)
+              },
+              error => {
+                console.log('Error in getting list of identification documents, error: ', error)
+              }
+            )
+          // Http call for the introducers
+          Http.GET('member', [member.accountId, 'introducers'])
+            .then(
+              ({data: {data: introducers}}) => {
+                this.memberIntroducers = introducers
+                console.log('Got the list of introducers: ', this.memberIntroducers)
+              },
+              error => {
+                console.log('Error in getting the list of introducers, error: ', error)
+              }
+            )
+          this.sliderShow = true
+        }
       },
       loadMemberIntroduced: function (accountId) {
         Http.GET('member', [accountId, 'introduced'])
@@ -435,6 +464,14 @@
       },
       hideProfile: function () {
         this.sliderShow = false
+      },
+      showDocumentDetails: function (document) {
+        this.memberDocumentDetail = document
+        if (this.profileDetails) {
+          this.profileDetails = false
+        } else {
+          this.profileDetails = true
+        }
       },
       getMembers: function (key = 'member') {
         Http.GET(key, this.query)
