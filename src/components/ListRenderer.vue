@@ -518,12 +518,12 @@
         this.query.profileCompletionScoreEndRange = this.value[1]
         console.log('mobile number: ' + this.query.mobileNumber + ' accountType: ' + this.query.accountType +
           ' verified: ' + this.query.verificationStatus)
-        if (this.query.startSignUpDate !== null) {
+        if (this.query.startSignUpDate !== null && this.query.startSignUpDate.length > 0) {
           this.query.startSignUpDate = new Date(this.query.startSignUpDate).getTime() - 6 * 3600 * 1000
         } else {
           this.query.startSignUpDate = 0
         }
-        if (this.query.endSignUpDate !== null) {
+        if (this.query.endSignUpDate !== null && this.query.endSignUpDate.length > 0) {
           this.query.endSignUpDate = new Date(this.query.endSignUpDate).getTime() - 6 * 60 * 60 * 1000
         } else {
           this.query.endSignUpDate = new Date().getTime() - 6 * 3600 * 1000

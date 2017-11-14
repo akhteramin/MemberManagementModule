@@ -28,15 +28,18 @@
 
                   <div class="row">
                     <div class="gr-2 push-6">
-                      Balance: {{ member.basicInfo.accountCurrency || 'N/A'}} BDT
+                      Balance: {{ balance.availableBalance || 'N/A'}} BDT
                     </div>
                   </div>
                   <br>
                   <div class="row">
 
                     <div class="gr-2">
-                      <img class="img-rounded"  :src="profilePicture(member.basicInfo.mmUserPictures[0].document.url)"
-                                     data-holder-rendered="true" width="200" height="200">
+                      <img v-if="member.basicInfo.mmUserPictures[0]"
+                             :src="profilePicture(member.basicInfo.mmUserPictures[0].document.url)" class="img-circle" alt="N/A" width="30" height="30">
+
+                      <img v-else src="static/images/default-original.jpg" class="img-circle"
+                           alt="N/A" width="30" height="30">
                     </div>
                     <div class="gr-9 text-left push-.5">
                       <div class="gr-12">
@@ -70,7 +73,7 @@
                           Date of Birth:
                         </div>
                         <div class="gr-4 text-left pull-.5">
-                        {{ member.basicInfo.dateOfBirth | date('MMM D, YYYY') || 'N/A' }}
+                        {{ member.basicInfo.dob | date('MMM D, YYYY') || 'N/A' }}
                         </div>
                         <div class="gr-2">
                         Gender:
@@ -291,7 +294,7 @@
                 </div>
 
                 <hr>
-              </div>
+            </div>
 
 
             <div id="addresses" class="gr-12">
@@ -303,7 +306,7 @@
                 <!--</div>-->
 
               <!--<br>-->
-                <div class="row justify-content-left" v-if="!editAddressMode">
+                <div class="row justify-content-left">
                   <!-- ================================= present address =============================================== -->
 
                   <div class="gr-5" v-if="!editPresentAddressMode">
@@ -321,7 +324,7 @@
                         Line 1:
                       </div>
                       <div class="gr-3">
-                        {{ member.addresses.length !== 0 ? member.addresses[0].addressLine1 : 'N/A' }}
+                        {{ memberPresentAddress.addressLine1 }}
                       </div>
                     </div>
                     <div class="row text-left">
@@ -329,7 +332,7 @@
                         Line 2:
                       </div>
                       <div class="gr-3 ">
-                        {{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}
+                        {{ memberPresentAddress.addressLine2 }}
                       </div>
                     </div>
                     <div class="row text-left">
@@ -337,7 +340,7 @@
                         District:
                       </div>
                       <div class="gr-3">
-                        {{ districtNameFirst }}
+                        {{ districtNamePresent }}
                       </div>
                     </div>
                     <div class="row text-left">
@@ -345,7 +348,7 @@
                         Thana:
                       </div>
                       <div class="gr-3">
-                        {{ thanaNameFirst }}
+                        {{ thanaNamePresent }}
                       </div>
                     </div>
                     <div class="row text-left">
@@ -353,7 +356,7 @@
                         Country:
                       </div>
                       <div class="gr-3">
-                        {{ countryNameFirst }}
+                        {{ countryNamePresent }}
                       </div>
                     </div>
                   </div>
@@ -369,7 +372,7 @@
                           </div>
                           <div class="gr-3">
                             <input class="input-sm" style="width: 250px !important; height: 35px !important;"
-                                   v-model="member.addresses[0].addressLine1 || ''"/>
+                                   v-model="memberPresentAddress.addressLine1"/>
                             <!--{{ member.addresses.length !== 0 ? member.addresses[0].addressLine1 : 'N/A' }}-->
                           </div>
                         </div>
@@ -379,7 +382,7 @@
                           </div>
                           <div class="gr-3 ">
                             <input class="input-sm" style="width: 250px !important; height: 35px !important;"
-                                   v-model="member.addresses[0].addressLine2 || ''"/>
+                                   v-model="memberPresentAddress.addressLine2"/>
                             <!--{{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}-->
                           </div>
                         </div>
@@ -388,7 +391,7 @@
                             District:
                           </div>
                           <div class="gr-3 select select-sm">
-                            <select id="districtSelection" v-model="member.addresses[0].districtId" required>
+                            <select id="districtSelection" v-model="memberPresentAddress.districtId" required>
                               <option value="" disabled>Select District</option>
                               <option v-for="district in districtList" :value="district.id">{{ district.name }}</option>
                             </select>
@@ -400,10 +403,10 @@
                             Thana:
                           </div>
                           <div class="gr-3 select select-sm">
-                            <select id="thanaSelection" v-model="member.addresses[0].thanaId" required>
+                            <select id="thanaSelection" v-model="memberPresentAddress.thanaId" required>
                               <option value="" disabled>Select Thana</option>
                               <option v-for="thana in thanaList" :value="thana.id"
-                                      v-if="thana.districtId == member.addresses[0].districtId">{{ thana.name }}</option>
+                                      v-if="thana.districtId == memberPresentAddress.districtId">{{ thana.name }}</option>
 
                             </select>
                             <!--{{ districtNameFirst }}-->
@@ -414,7 +417,7 @@
                             Country:
                           </div>
                           <div class="gr-3">
-                            {{ countryNameFirst }}
+                            {{ countryNamePresent}}
                           </div>
                         </div>
                         <div class="form-group">
@@ -431,15 +434,15 @@
                     </form>
                   </div>
 
-                  <!-- ================================= parmanent address =============================================== -->
+                  <!-- ================================= permanent address =============================================== -->
 
-                  <div class="gr-5" v-if="!editParmanentAddressMode">
+                  <div class="gr-5" v-if="!editPermanentAddressMode">
                     <div class="gr-12">
                       <div class="gr-2">
-                        <h5><b>Parmanent</b></h5>
+                        <h5><b>Permanent</b></h5>
                       </div>
-                      <div class="gr-2 push-6" v-if="!editParmanentAddressMode">
-                        <button class="button-md-edit" @click="editParmanentAddress">
+                      <div class="gr-2 push-6" v-if="!editPermanentAddressMode">
+                        <button class="button-md-edit" @click="editPermanentAddress">
                           <i class="fa fa-pencil-square-o"></i> Edit </button>
                       </div>
                     </div>
@@ -448,7 +451,8 @@
                         Line 1:
                       </div>
                       <div class="gr-3">
-                        {{ member.addresses.length > 1 ? member.addresses[1].addressLine1 : 'N/A' }}
+                        {{ memberPermanentAddress.addressLine1 }}
+                        <!--{{ member.addresses.length > 1 ? member.addresses[1].addressLine1 : 'N/A' }}-->
                       </div>
                     </div>
                     <div class="row text-left">
@@ -456,7 +460,8 @@
                         Line 2:
                       </div>
                       <div class="gr-3 ">
-                        {{ member.addresses.length > 1 ? member.addresses[1].addressLine2 : 'N/A' }}
+                        {{ memberPermanentAddress.addressLine2 }}
+                        <!--{{ member.addresses.length > 1 ? member.addresses[1].addressLine2 : 'N/A' }}-->
                       </div>
                     </div>
                     <div class="row text-left">
@@ -464,7 +469,7 @@
                         District:
                       </div>
                       <div class="gr-3">
-                        {{ districtNameSecond }}
+                        {{ districtNamePermanent }}
                       </div>
                     </div>
                     <div class="row text-left">
@@ -472,7 +477,7 @@
                         Thana:
                       </div>
                       <div class="gr-3">
-                        {{ thanaNameSecond }}
+                        {{ thanaNamePermanent }}
                       </div>
                     </div>
                     <div class="row text-left">
@@ -480,15 +485,15 @@
                         Country:
                       </div>
                       <div class="gr-3">
-                        {{ countryNameSecond }}
+                        {{ countryNamePermanent }}
                       </div>
                     </div>
                   </div>
 
-                  <div v-else id="editParmanentAddress">
+                  <div v-else id="editPermanentAddress">
                     <form  v-on:submit.prevent="updateMemberAddress(1)">
                       <div class="gr-5">
-                        <h5 style="align: center;">Parmanent</h5>
+                        <h5 style="align: center;">Permanent</h5>
                         <br>
                         <div class="row text-left">
                           <div class="gr-2">
@@ -496,7 +501,7 @@
                           </div>
                           <div class="gr-3">
                             <input class="input-sm" style="width: 250px !important; height: 35px !important;"
-                                   v-model="member.addresses[1].addressLine1 || ''"/>
+                                   v-model="memberPermanentAddress.addressLine1"/>
                           </div>
                         </div>
                         <div class="row text-left">
@@ -505,7 +510,7 @@
                           </div>
                           <div class="gr-3 ">
                             <input class="input-sm" style="width: 250px !important; height: 35px !important;"
-                                   v-model="member.addresses[1].addressLine2 || ''"/>
+                                   v-model="memberPermanentAddress.addressLine2"/>
                           </div>
                         </div>
                         <div class="row text-left">
@@ -513,7 +518,7 @@
                             District:
                           </div>
                           <div class="gr-3 select select-sm">
-                            <select v-model="member.addresses[1].districtId" required>
+                            <select v-model="memberPermanentAddress.districtId" required>
                               <option value="" disabled>Select District</option>
                               <option v-for="district in districtList" :value="district.id">{{ district.name }}</option>
                             </select>
@@ -525,10 +530,10 @@
                             Thana:
                           </div>
                           <div class="gr-3 select select-sm">
-                            <select  v-model="member.addresses[1].thanaId" required>
+                            <select  v-model="memberPermanentAddress.thanaId" required>
                               <option value="" disabled>Select Thana</option>
                               <option v-for="thana in thanaList" :value="thana.id"
-                                      v-if="thana.districtId == member.addresses[1].districtId">{{ thana.name }}</option>
+                                      v-if="thana.districtId == memberPermanentAddress.districtId">{{ thana.name }}</option>
 
                             </select>
                             <!--{{ districtNameFirst }}-->
@@ -539,7 +544,7 @@
                             Country:
                           </div>
                           <div class="gr-3">
-                            {{ countryNameSecond }}
+                            {{ countryNamePermanent }}
                           </div>
                         </div>
                         <div class="form-group">
@@ -547,7 +552,7 @@
                             <i class="fa fa-edit" aria-hidden="true"></i>
                             Update
                           </button>
-                          <button type="reset" class="button-reset" @click="editParmanentAddress()">
+                          <button type="reset" class="button-reset" @click="editPermanentAddress()">
                             <i class="fa fa-times"></i>
                             Cancel
                           </button>
@@ -925,12 +930,12 @@
         bankAccounts: {},
         activities: {},
         transactions: {},
-        thanaNameFirst: '',
-        districtNameFirst: '',
-        countryNameFirst: '',
-        thanaNameSecond: '',
-        districtNameSecond: '',
-        countryNameSecond: '',
+        thanaNamePresent: '',
+        districtNamePresent: '',
+        countryNamePresent: '',
+        thanaNamePermanent: '',
+        districtNamePermanent: '',
+        countryNamePermanent: '',
         transactionTotalPages: '',
         maxPaginationItem: '',
         serviceList: Constants,
@@ -942,11 +947,31 @@
         editBasicProfileMode: false,
         editParentsMode: false,
         editPresentAddressMode: false,
-        editParmanentAddressMode: false,
+        editPermanentAddressMode: false,
         dob: '',
         occupationList: {},
         thanaList: {},
-        districtList: {}
+        districtList: {},
+        memberPresentAddress: {
+          addressLine1: 'N/A',
+          addressLine2: 'N/A',
+          country: 1,
+          districtId: 'N/A',
+          postalCode: 'N/A',
+          status: 'N/A',
+          thanaId: 'N/A',
+          type: 'PRESENT'
+        },
+        memberPermanentAddress: {
+          addressLine1: 'N/A',
+          addressLine2: 'N/A',
+          country: 1,
+          districtId: 'N/A',
+          postalCode: 'N/A',
+          status: 'N/A',
+          thanaId: 'N/A',
+          type: 'PERMANENT'
+        }
       }
     },
     created () {
@@ -970,70 +995,99 @@
           serviceID: null,
           toDate: new Date().getTime()
         })
+        this.memberPresentAddress = {
+          addressLine1: 'N/A',
+          addressLine2: 'N/A',
+          country: 'BD',
+          districtId: 'N/A',
+          postalCode: 'N/A',
+          status: 'N/A',
+          thanaId: 'N/A',
+          type: 'PRESENT'
+        }
+        this.memberPermanentAddress = {
+          addressLine1: 'N/A',
+          addressLine2: 'N/A',
+          country: 'BD',
+          districtId: 'N/A',
+          postalCode: 'N/A',
+          status: 'N/A',
+          thanaId: 'N/A',
+          type: 'PERMANENT'
+        }
         Http.GET('member', [this.id, 'basic-details'])
           .then(
             ({data: {data: member}}) => {
               this.member = member
               console.log('Got, member success::')
-              console.log('member details: ', this.member)
+              console.log('member basic info: ', this.member.basicInfo)
               this.dob = this.$options.filters.date(member.basicInfo.dateOfBirth, 'YYYY-MM-DD')
+              // check for address
+              if (this.member.addresses.length === 2) {
+                this.memberPresentAddress = this.member.addresses[0]
+                this.memberPermanentAddress = this.member.addresses[1]
+              } else if (this.member.addresses.length === 1) {
+                this.memberPresentAddress = this.member.addresses[0]
+              }
+              console.log('this.memberPresentAddress: ', this.memberPresentAddress)
+              console.log('this.memberPermanentAddress: ', this.memberPermanentAddress)
               this.getStaticNames()
             },
             error => {
               console.log('Error occured getting details of the member, error: ', error)
             }
           )
-        // // Http call for the introducers
-        // Http.GET('member', [this.id, 'introducers'])
-        //   .then(
-        //     ({data: {data: introducers}}) => {
-        //       this.introducers = introducers
-        //       console.log('Got the list of introducers: ', introducers)
-        //     },
-        //     error => {
-        //       console.log('Error in getting the list of introducers, error: ', error)
-        //     }
-        //   )
-        // // Http call for the introduced list
-        // Http.GET('member', [this.id, 'introduced'])
-        //   .then(
-        //     ({data: {data: introduced}}) => {
-        //       this.introduced = introduced
-        //       console.log('Got the list of introduced: ', introduced)
-        //     },
-        //     error => {
-        //       console.log('Error in getting the list of introduced, error: ', error)
-        //     }
-        //   )
-        // // Http call for affiliated bank accounts
-        // Http.GET('member', [this.id, 'bank-accounts'])
-        //   .then(
-        //     ({data: {data: bankAccounts}}) => {
-        //       this.bankAccounts = bankAccounts
-        //       console.log('Got the list of bank accounts: ', bankAccounts)
-        //     },
-        //     error => {
-        //       console.log('Error in getting the list of bank accounts, error: ', error)
-        //     }
-        //   )
-        // // Http call for identification documEnts
-        // Http.GET('member', [this.id, 'identification-documents'])
-        //   .then(
-        //     ({data: {data: documents}}) => {
-        //       this.documents = documents
-        //       console.log('Got the list of documents: ', this.documents, ' documents.length: ',
-        //       this.documents.length)
-        //     },
-        //     error => {
-        //       console.log('Error in getting list of identification documents, error: ', error)
-        //     }
-        //   )
-        // Http call for balance
+         // Http call for the introducers
+        Http.GET('member', [this.id, 'introducers'])
+           .then(
+             ({data: {data: introducers}}) => {
+               this.introducers = introducers
+//               console.log('Got the list of introducers: ', introducers)
+             },
+             error => {
+               console.log('Error in getting the list of introducers, error: ', error)
+             }
+           )
+         // Http call for the introduced list
+        Http.GET('member', [this.id, 'introduced'])
+           .then(
+             ({data: {data: introduced}}) => {
+               this.introduced = introduced
+//               console.log('Got the list of introduced: ', introduced)
+             },
+             error => {
+               console.log('Error in getting the list of introduced, error: ', error)
+             }
+           )
+         // Http call for affiliated bank accounts
+        Http.GET('member', [this.id, 'bank-accounts'])
+           .then(
+             ({data: {data: bankAccounts}}) => {
+               this.bankAccounts = bankAccounts
+//               console.log('Got the list of bank accounts: ', bankAccounts)
+             },
+             error => {
+               console.log('Error in getting the list of bank accounts, error: ', error)
+             }
+           )
+         // Http call for identification documEnts
+        Http.GET('member', [this.id, 'identification-documents'])
+           .then(
+             ({data: {data: documents}}) => {
+               this.documents = documents
+//               console.log('Got the list of documents: ', this.documents, ' documents.length: ',
+//               this.documents.length)
+             },
+             error => {
+               console.log('Error in getting list of identification documents, error: ', error)
+             }
+           )
+//         Http call for balance
         Http.GET('member', [this.id, 'balance'])
           .then(
             ({data}) => {
               this.balance = data.data
-              console.log('balance is: ', this.balance)
+//              console.log('balance is: ', this.balance)
             },
             error => {
               console.log('Error in retrieving balance... ', error)
@@ -1060,15 +1114,24 @@
       },
       updateMemberAddress (addressId) { // addressId is in {0,1}
         console.log('in member update, addressId: ', addressId)
-        let updatedAddress = {
-          'address': this.member.addresses[addressId],
-          'addressType': this.member.addresses[addressId].type
+        let updatedAddress = {}
+        if (addressId === 0) {
+          updatedAddress = {
+            'address': this.memberPresentAddress,
+            'addressType': this.memberPresentAddress.type
+          }
+        } else {
+          updatedAddress = {
+            'address': this.memberPermanentAddress,
+            'addressType': this.memberPermanentAddress.type
+          }
         }
         updatedAddress.address['district'] = updatedAddress.address['districtId']
         updatedAddress.address['thana'] = updatedAddress.address['thanaId']
         delete updatedAddress.address['thanaId']
         delete updatedAddress.address['districtId']
         delete updatedAddress.address['type']
+        console.log('updatedAddress: ', updatedAddress)
         Http.PUT('member', updatedAddress, [this.id, 'address'])
           .then(
             ({data: {data: addressUpdate}}) => {
@@ -1083,7 +1146,7 @@
         if (addressId === 0) {
           this.editPresentAddress()
         } else {
-          this.editParmanentAddress()
+          this.editPermanentAddress()
         }
       },
       updateMemberParents () {
@@ -1114,7 +1177,7 @@
         }
       },
       editPresentAddress () {
-        console.log('edit button of address clicked... it was: ', this.editPresentAddressMode)
+        console.log('edit button of PRESENT address clicked... it was: ', this.editPresentAddressMode)
         if (this.editPresentAddressMode) {
           this.editPresentAddressMode = false
         } else {
@@ -1122,14 +1185,14 @@
         }
         console.log('now editAddressMode is: ', this.editPresentAddressMode)
       },
-      editParmanentAddress () {
-        console.log('edit button of address clicked... it was: ', this.editParmanentAddressMode)
-        if (this.editParmanentAddressMode) {
-          this.editParmanentAddressMode = false
+      editPermanentAddress () {
+        console.log('edit button of PARMANENT address clicked... it was: ', this.editPermanentAddressMode)
+        if (this.editPermanentAddressMode) {
+          this.editPermanentAddressMode = false
         } else {
-          this.editParmanentAddressMode = true
+          this.editPermanentAddressMode = true
         }
-        console.log('now editAddressMode is: ', this.editParmanentAddressMode)
+        console.log('now edit Parmanent AddressMode is: ', this.editPermanentAddressMode)
       },
       resetTransactions () {
         this.transactionQuery = Object.assign({}, {
@@ -1232,41 +1295,51 @@
         }
       },
       getStaticNames () {
-        console.log('district')
-        // Address 0 resolution
         if (this.member.basicInfo.occupation) {
           this.occupationList = JSON.parse(localStorage.getItem('occupation'))
           this.occupationName = this.occupationList.find(x => x.id === this.member.basicInfo.occupation).name
         }
-        if (this.member.addresses.length !== 0) {
-          let thanaList = JSON.parse(localStorage.getItem('thana'))
-          let districtList = JSON.parse(localStorage.getItem('district'))
-//          let countryList = JSON.parse(localStorage.getItem('country'))
-          this.thanaNameFirst = thanaList.find(x => x.id === this.member.addresses[0].thanaId).name
-          this.districtNameFirst = districtList.find(x => x.id === this.member.addresses[0].districtId).name
-          this.countryNameFirst = this.member.addresses[0].country
+        this.thanaList = JSON.parse(localStorage.getItem('thana'))
+        this.districtList = JSON.parse(localStorage.getItem('district'))
+        this.thanaNamePresent = this.thanaList.find(x => x.id === this.memberPresentAddress.thanaId)
+        if (this.thanaNamePresent) {
+          this.thanaNamePresent = this.thanaNamePresent.name
         } else {
-          this.thanaNameFirst = 'N/A'
-          this.districtNameFirst = 'N/A'
-          this.countryNameFirst = 'N/A'
+          this.thanaNamePresent = 'N/A'
         }
-        // Address 1 resolution
-        if (this.member.addresses.length === 2) {
-          this.thanaList = JSON.parse(localStorage.getItem('thana'))
-          this.districtList = JSON.parse(localStorage.getItem('district'))
-//          let countryList = JSON.parse(localStorage.getItem('country'))
-          this.thanaNameSecond = this.thanaList.find(x => x.id === this.member.addresses[1].thanaId).name
-          this.districtNameSecond = this.districtList.find(x => x.id === this.member.addresses[1].districtId).name
-          this.countryNameSecond = this.member.addresses[1].country
+        this.districtNamePresent = this.districtList.find(x => x.id === this.memberPresentAddress.districtId)
+        if (this.districtNamePresent) {
+          this.districtNamePresent = this.districtNamePresent.name
         } else {
-          this.thanaNameSecond = 'N/A'
-          this.districtNameSecond = 'N/A'
-          this.countryNameSecond = 'N/A'
+          this.districtNamePresent = 'N/A'
         }
-//        console.log('Address 0, Thana name is: ', this.thanaNameFirst)
-//        console.log('Address 0, District name is: ', this.districtNameFirst)
-//        console.log('Address 1, Thana name is: ', this.thanaNameSecond)
-//        console.log('Address 1, District name is: ', this.districtNameSecond)
+        this.countryNamePresent = this.memberPresentAddress.country
+//        if (this.countryNamePresent) {
+//          this.countryNamePresent = this.countryNamePresent.name
+//        } else {
+//          this.countryNamePresent = 'N/A'
+//        }
+        console.log('Line 1322, thana id: ', this.thanaNamePermanent.thanaId)
+        this.thanaNamePermanent = this.thanaList.find(x => x.id === this.memberPermanentAddress.thanaId)
+        if (this.thanaNamePermanent) {
+          this.thanaNamePermanent = this.thanaNamePermanent.name
+          console.log('Line 1325, thana name permanent: ', this.thanaNamePermanent)
+        } else {
+          this.thanaNamePermanent = 'N/A'
+          console.log('Line 1328, thana name permanent: ', this.thanaNamePermanent)
+        }
+        this.districtNamePermanent = this.districtList.find(x => x.id === this.memberPermanentAddress.districtId)
+        if (this.districtNamePermanent) {
+          this.districtNamePermanent = this.districtNamePermanent.name
+        } else {
+          this.districtNamePermanent = 'N/A'
+        }
+        this.countryNamePermanent = this.memberPermanentAddress.country
+//        if (this.countryNamePermanent) {
+//          this.countryNamePermanent = this.countryNamePermanent.name
+//        } else {
+//          this.countryNamePermanent = 'N/A'
+//        }
       },
       profilePicture (url) {
         if (url) {
