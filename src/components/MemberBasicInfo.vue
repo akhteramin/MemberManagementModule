@@ -24,7 +24,7 @@
 
 
           <div  v-if="showBasicDetails">
-                <div v-if="member.basicInfo">
+            <div v-if="member.basicInfo">
 
                   <div class="row">
                     <div class="gr-2 push-6">
@@ -158,7 +158,7 @@
                             <select id="occupationSelection" v-model="member.basicInfo.occupation">
                               <option value="">Select Occupation</option>
                               <option v-for="occupation in occupationList" :value="occupation.id">{{ occupation.name }}</option>
-                          </select>
+                            </select>
                           </div>
                         </div>
 
@@ -210,7 +210,7 @@
                       <div class="gr-2">
                           <h5><b>Family Information</b></h5>
                         </div>
-                        <div class="gr-2 push-6">
+                        <div class="gr-2 push-6" v-if="!editParentsMode">
                             <button class="button-md-edit" @click="editParents()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                         </div>
                     </div>
@@ -243,48 +243,48 @@
                     </div>
 
                     <div v-else>
-                    <form v-on:submit.prevent="updateMemberParents">
-                      <div class="gr-2">
-                      Father Name:
-                      </div>
-                      <div class="gr-4 text-left">
-                        <input  name="memberFather" class="input-sm" type="text" id="memberFather" placeholder="Father Name"
-                          v-model="member.basicInfo.father"/>
-                      </div>
-                      <div class="gr-2">
-                      Mother Name:
-                      </div>
-                      <div class="gr-4 text-left">
-                        <input  name="memberMother" class="input-sm" type="text" id="memberMother" placeholder="Mother Name"
-                          v-model="member.basicInfo.mother"/>
-                      </div>
-                      <div class="gr-2">
-                      Father Mobile:
-                      </div>
-                      <div class="gr-4 text-left">
-                        <input  name="memberFatherMobile" class="input-sm" type="text" id="memberFatherMobile" placeholder="Father Mobile Number"
-                          v-model="member.basicInfo.fatherMobileNumber"/>
-                      </div>
-                      <div class="gr-2">
-                      Mother Mobile:
-                      </div>
-                      <div class="gr-4 text-left">
-                        <input  name="memberMotherMobile" class="input-sm" type="text" id="memberMotherMobile" placeholder="Mother Mobile Number"
-                          v-model="member.basicInfo.motherMobileNumber"/>
-                      </div>
-                      <div class="gr-4 push-4">
+                      <form v-on:submit.prevent="updateMemberParents">
+                        <div class="gr-2">
+                        Father Name:
+                        </div>
+                        <div class="gr-4 text-left">
+                          <input  name="memberFather" class="input-sm" type="text" id="memberFather" placeholder="Father Name"
+                            v-model="member.basicInfo.father"/>
+                        </div>
+                        <div class="gr-2">
+                        Mother Name:
+                        </div>
+                        <div class="gr-4 text-left">
+                          <input  name="memberMother" class="input-sm" type="text" id="memberMother" placeholder="Mother Name"
+                            v-model="member.basicInfo.mother"/>
+                        </div>
+                        <div class="gr-2">
+                        Father Mobile:
+                        </div>
+                        <div class="gr-4 text-left">
+                          <input  name="memberFatherMobile" class="input-sm" type="text" id="memberFatherMobile" placeholder="Father Mobile Number"
+                            v-model="member.basicInfo.fatherMobileNumber"/>
+                        </div>
+                        <div class="gr-2">
+                        Mother Mobile:
+                        </div>
+                        <div class="gr-4 text-left">
+                          <input  name="memberMotherMobile" class="input-sm" type="text" id="memberMotherMobile" placeholder="Mother Mobile Number"
+                            v-model="member.basicInfo.motherMobileNumber"/>
+                        </div>
+                        <div class="gr-4 push-4">
                           <div class="form-group">
                             <button type="submit" class="button-search">
                               <i class="fa fa-edit" aria-hidden="true"></i>
                               Update
                             </button>
-                            <button type="reset" class="button-reset" @click="editBasicInfo()">
+                            <button type="reset" class="button-reset" @click="editParents()">
                               <i class="fa fa-times"></i>
                               Cancel
                             </button>
                           </div>
                         </div>
-                    </form>
+                      </form>
                     </div>
 
                   </div>
@@ -293,217 +293,384 @@
                 <hr>
               </div>
 
-                <div v-if="member.addresses">
-                  <h3>Address</h3>
-                  <br>
-                  <div class="row justify-content-center">
-                    <!-- ================================= Address 1 =============================================== -->
 
-                    <div class="gr-5">
-                      <h5 style="align: center;">Present</h5>
-                      <br>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Line 1:
-                        </div>
-                        <div class="gr-3">
-                          {{ member.addresses.length !== 0 ? member.addresses[0].addressLine1 : 'N/A' }}
-                        </div>
+            <div id="addresses" class="gr-12">
+                <div class="gr-2">
+                  <h5><b>Address</b></h5>
+                </div>
+                <!--<div class="gr-2 push-6" v-if="!editAddressMode">-->
+                  <!--<button class="button-md-edit" @click="editAddress"><i class="fa fa-pencil-square-o"></i> Edit </button>-->
+                <!--</div>-->
+
+              <!--<br>-->
+                <div class="row justify-content-left" v-if="!editAddressMode">
+                  <!-- ================================= present address =============================================== -->
+
+                  <div class="gr-5" v-if="!editPresentAddressMode">
+                    <div class="gr-12">
+                      <div class="gr-2">
+                        <h5><b>Present</b></h5>
                       </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Line 2:
-                        </div>
-                        <div class="gr-3 ">
-                          {{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Thana:
-                        </div>
-                        <div class="gr-3">
-                          {{ thanaNameFirst }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          District:
-                        </div>
-                        <div class="gr-3">
-                          {{ districtNameFirst }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Country:
-                        </div>
-                        <div class="gr-3">
-                          {{ countryNameFirst }}
-                        </div>
+                      <div class="gr-2 push-6" v-if="!editPresentAddressMode">
+                        <button class="button-md-edit" @click="editPresentAddress">
+                          <i class="fa fa-pencil-square-o"></i> Edit </button>
                       </div>
                     </div>
-
-                    <!-- ================================= Address 2 =============================================== -->
-
-                    <div class="gr-5">
-                      <h5 style="align: center;">Parmanent</h5>
-                      <br>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Line 1:
-                        </div>
-                        <div class="gr-3">
-                          {{ member.addresses.length > 1 ? member.addresses[1].addressLine1 : 'N/A' }}
-                        </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Line 1:
                       </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Line 2:
-                        </div>
-                        <div class="gr-3 ">
-                          {{ member.addresses.length > 1 ? member.addresses[1].addressLine2 : 'N/A' }}
-                        </div>
+                      <div class="gr-3">
+                        {{ member.addresses.length !== 0 ? member.addresses[0].addressLine1 : 'N/A' }}
                       </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Thana:
-                        </div>
-                        <div class="gr-3">
-                          {{ thanaNameSecond }}
-                        </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Line 2:
                       </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          District:
-                        </div>
-                        <div class="gr-3">
-                          {{ districtNameSecond }}
-                        </div>
+                      <div class="gr-3 ">
+                        {{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}
                       </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Country:
-                        </div>
-                        <div class="gr-3">
-                          {{ countryNameSecond }}
-                        </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        District:
+                      </div>
+                      <div class="gr-3">
+                        {{ districtNameFirst }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Thana:
+                      </div>
+                      <div class="gr-3">
+                        {{ thanaNameFirst }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Country:
+                      </div>
+                      <div class="gr-3">
+                        {{ countryNameFirst }}
                       </div>
                     </div>
                   </div>
-                  <hr>
-                </div>
 
+                  <div v-else id="editPresentAddress">
+                    <form v-on:submit.prevent="updateMemberAddress(0)">
+                      <div class="gr-5">
+                        <h5 style="align: left;">Present</h5>
+                        <br>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            Line 1:
+                          </div>
+                          <div class="gr-3">
+                            <input class="input-sm" style="width: 250px !important; height: 35px !important;"
+                                   v-model="member.addresses[0].addressLine1 || ''"/>
+                            <!--{{ member.addresses.length !== 0 ? member.addresses[0].addressLine1 : 'N/A' }}-->
+                          </div>
+                        </div>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            Line 2:
+                          </div>
+                          <div class="gr-3 ">
+                            <input class="input-sm" style="width: 250px !important; height: 35px !important;"
+                                   v-model="member.addresses[0].addressLine2 || ''"/>
+                            <!--{{ member.addresses.length !== 0 ? member.addresses[0].addressLine2 : 'N/A' }}-->
+                          </div>
+                        </div>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            District:
+                          </div>
+                          <div class="gr-3 select select-sm">
+                            <select id="districtSelection" v-model="member.addresses[0].districtId" required>
+                              <option value="" disabled>Select District</option>
+                              <option v-for="district in districtList" :value="district.id">{{ district.name }}</option>
+                            </select>
+                            <!--{{ districtNameFirst }}-->
+                          </div>
+                        </div>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            Thana:
+                          </div>
+                          <div class="gr-3 select select-sm">
+                            <select id="thanaSelection" v-model="member.addresses[0].thanaId" required>
+                              <option value="" disabled>Select Thana</option>
+                              <option v-for="thana in thanaList" :value="thana.id"
+                                      v-if="thana.districtId == member.addresses[0].districtId">{{ thana.name }}</option>
+
+                            </select>
+                            <!--{{ districtNameFirst }}-->
+                          </div>
+                        </div>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            Country:
+                          </div>
+                          <div class="gr-3">
+                            {{ countryNameFirst }}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="button-search">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                            Update
+                          </button>
+                          <button type="reset" class="button-reset" @click="editPresentAddress()">
+                            <i class="fa fa-times"></i>
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- ================================= parmanent address =============================================== -->
+
+                  <div class="gr-5" v-if="!editParmanentAddressMode">
+                    <div class="gr-12">
+                      <div class="gr-2">
+                        <h5><b>Parmanent</b></h5>
+                      </div>
+                      <div class="gr-2 push-6" v-if="!editParmanentAddressMode">
+                        <button class="button-md-edit" @click="editParmanentAddress">
+                          <i class="fa fa-pencil-square-o"></i> Edit </button>
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Line 1:
+                      </div>
+                      <div class="gr-3">
+                        {{ member.addresses.length > 1 ? member.addresses[1].addressLine1 : 'N/A' }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Line 2:
+                      </div>
+                      <div class="gr-3 ">
+                        {{ member.addresses.length > 1 ? member.addresses[1].addressLine2 : 'N/A' }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        District:
+                      </div>
+                      <div class="gr-3">
+                        {{ districtNameSecond }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Thana:
+                      </div>
+                      <div class="gr-3">
+                        {{ thanaNameSecond }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Country:
+                      </div>
+                      <div class="gr-3">
+                        {{ countryNameSecond }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div v-else id="editParmanentAddress">
+                    <form  v-on:submit.prevent="updateMemberAddress(1)">
+                      <div class="gr-5">
+                        <h5 style="align: center;">Parmanent</h5>
+                        <br>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            Line 1:
+                          </div>
+                          <div class="gr-3">
+                            <input class="input-sm" style="width: 250px !important; height: 35px !important;"
+                                   v-model="member.addresses[1].addressLine1 || ''"/>
+                          </div>
+                        </div>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            Line 2:
+                          </div>
+                          <div class="gr-3 ">
+                            <input class="input-sm" style="width: 250px !important; height: 35px !important;"
+                                   v-model="member.addresses[1].addressLine2 || ''"/>
+                          </div>
+                        </div>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            District:
+                          </div>
+                          <div class="gr-3 select select-sm">
+                            <select v-model="member.addresses[1].districtId" required>
+                              <option value="" disabled>Select District</option>
+                              <option v-for="district in districtList" :value="district.id">{{ district.name }}</option>
+                            </select>
+                            <!--{{ districtNameFirst }}-->
+                          </div>
+                        </div>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            Thana:
+                          </div>
+                          <div class="gr-3 select select-sm">
+                            <select  v-model="member.addresses[1].thanaId" required>
+                              <option value="" disabled>Select Thana</option>
+                              <option v-for="thana in thanaList" :value="thana.id"
+                                      v-if="thana.districtId == member.addresses[1].districtId">{{ thana.name }}</option>
+
+                            </select>
+                            <!--{{ districtNameFirst }}-->
+                          </div>
+                        </div>
+                        <div class="row text-left">
+                          <div class="gr-2">
+                            Country:
+                          </div>
+                          <div class="gr-3">
+                            {{ countryNameSecond }}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="button-search">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                            Update
+                          </button>
+                          <button type="reset" class="button-reset" @click="editParmanentAddress()">
+                            <i class="fa fa-times"></i>
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            <hr>
+
+            <div>
+              <div class="verification">
                 <div>
-                  <div class="verification">
-                    <div>
 
-                      <div class="row justify-content-center">
-                        <div class="gr-10">
-                          <h3>Bank Info</h3>
-                          <div v-if="bankAccounts.length === 0">N/A<br></div>
-                          <div v-else-if="bankAccounts" class="pre-scrollable" style="height: 210px;">
-                            <table class="table table-hover table-sm">
-                              <thead class="thead-default">
-                              <tr>
-                                <th class = "text-center">Bank</th>
-                                <th class = "text-center">A/C No</th>
-                                <th class = "text-center">A/C Name</th>
-                                <th class = "text-center">A/C Status</th>
-                                <th class = "text-center">Verification</th>
-                                <th class = "text-center">Added</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr v-for="item in bankAccounts">
-                                <td>{{ item.bankName }}</td>
-                                <td>{{ item.accountNumber }}</td>
-                                <td>{{ item.accountName }}</td>
-                                <td><span class="badge" :class="{'badge-success': true }">ACTIVE</span></td>
-                                <td>{{ item.verificationStatus }}</td>
-                                <td>{{ item.creationDate | date }}</td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <br>
-                        </div>
+                  <div class="row justify-content-center">
+                    <div class="gr-10">
+                      <h3>Bank Info</h3>
+                      <div v-if="bankAccounts.length === 0">N/A<br></div>
+                      <div v-else-if="bankAccounts" class="pre-scrollable" style="height: 210px;">
+                        <table class="table table-hover table-sm">
+                          <thead class="thead-default">
+                          <tr>
+                            <th class = "text-center">Bank</th>
+                            <th class = "text-center">A/C No</th>
+                            <th class = "text-center">A/C Name</th>
+                            <th class = "text-center">A/C Status</th>
+                            <th class = "text-center">Verification</th>
+                            <th class = "text-center">Added</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr v-for="item in bankAccounts">
+                            <td>{{ item.bankName }}</td>
+                            <td>{{ item.accountNumber }}</td>
+                            <td>{{ item.accountName }}</td>
+                            <td><span class="badge" :class="{'badge-success': true }">ACTIVE</span></td>
+                            <td>{{ item.verificationStatus }}</td>
+                            <td>{{ item.creationDate | date }}</td>
+                          </tr>
+                          </tbody>
+                        </table>
                       </div>
-
-                      <div class="row justify-content-center">
-                        <div class="gr-10">
-                          <h3>Identification Documents</h3>
-                          <strong v-if="documents === null || documents.length === 0">N/A<br></strong>
-                          <div v-else class="pre-scrollable" style="height: 210px;">
-                            <table class="table table-hover table-sm">
-                              <thead class="thead-default">
-                              <tr>
-                                <th class = "text-center">Name</th>
-                                <th class = "text-center">Type</th>
-                                <th class = "text-center">URL</th>
-                                <th class = "text-center">Verification</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr v-for="item in documents">
-                                <td>{{ item.documentName ? item.documentName : 'N/A' }}</td>
-                                <td>{{ item.documentType ? item.documentType : 'N/A' }}</td>
-                                <td>{{ item.documentUrl ? item.documentUrl : 'N/A'}}</td>
-                                <td>{{ item.documentVerificationStatus | underscoreless }}</td>
-                              </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <br>
-                        </div>
-                      </div>
-
-
-
-                      <div class="row justify-content-center" v-if="introducers">
-
-                        <div class="gr-5">
-                          <h5>Introduced by</h5>
-                          <hr>
-                          <strong v-if="introducers.length === 0">N/A</strong>
-                          <div v-else class="pre-scrollable" style="height: 210px;">
-                            <div class="row" v-for="item in introducers">
-                              <div class="gr-3">
-                                <img class="img-rounded mx-auto d-block" :src="profilePicture(item.profilePictureUrl)"
-                                     data-holder-rendered="true" style="width: 50px;">
-                              </div>
-                              <div class="gr-9">
-                                {{item.name}}<br>
-                                {{item.mobileNumber}}
-                                <hr>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="gr-5">
-                          <h5>Has Introduced</h5>
-                          <hr>
-                          <strong v-if="introduced.length === 0">N/A</strong>
-                          <div v-else class="pre-scrollable" style="height: 210px;">
-                            <div class="row" v-for="item in introduced">
-                              <div class="gr-3">
-                                <img class="img-rounded mx-auto d-block" :src="profilePicture(item.profilePictureUrl)"
-                                     data-holder-rendered="true" style="width: 50px;">
-                              </div>
-                              <div class="gr-9">
-                                {{item.name}}<br>
-                                {{item.mobileNumber}}
-                                <hr>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
+                      <br>
                     </div>
                   </div>
+
+                  <div class="row justify-content-center">
+                    <div class="gr-10">
+                      <h3>Identification Documents</h3>
+                      <strong v-if="documents === null || documents.length === 0">N/A<br></strong>
+                      <div v-else class="pre-scrollable" style="height: 210px;">
+                        <table class="table table-hover table-sm">
+                          <thead class="thead-default">
+                          <tr>
+                            <th class = "text-center">Name</th>
+                            <th class = "text-center">Type</th>
+                            <th class = "text-center">URL</th>
+                            <th class = "text-center">Verification</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr v-for="item in documents">
+                            <td>{{ item.documentName ? item.documentName : 'N/A' }}</td>
+                            <td>{{ item.documentType ? item.documentType : 'N/A' }}</td>
+                            <td>{{ item.documentUrl ? item.documentUrl : 'N/A'}}</td>
+                            <td>{{ item.documentVerificationStatus | underscoreless }}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <br>
+                    </div>
+                  </div>
+
+
+
+                  <div class="row justify-content-center" v-if="introducers">
+
+                    <div class="gr-5">
+                      <h5>Introduced by</h5>
+                      <hr>
+                      <strong v-if="introducers.length === 0">N/A</strong>
+                      <div v-else class="pre-scrollable" style="height: 210px;">
+                        <div class="row" v-for="item in introducers">
+                          <div class="gr-3">
+                            <img class="img-rounded mx-auto d-block" :src="profilePicture(item.profilePictureUrl)"
+                                 data-holder-rendered="true" style="width: 50px;">
+                          </div>
+                          <div class="gr-9">
+                            {{item.name}}<br>
+                            {{item.mobileNumber}}
+                            <hr>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="gr-5">
+                      <h5>Has Introduced</h5>
+                      <hr>
+                      <strong v-if="introduced.length === 0">N/A</strong>
+                      <div v-else class="pre-scrollable" style="height: 210px;">
+                        <div class="row" v-for="item in introduced">
+                          <div class="gr-3">
+                            <img class="img-rounded mx-auto d-block" :src="profilePicture(item.profilePictureUrl)"
+                                 data-holder-rendered="true" style="width: 50px;">
+                          </div>
+                          <div class="gr-9">
+                            {{item.name}}<br>
+                            {{item.mobileNumber}}
+                            <hr>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
+              </div>
+            </div>
           </div>
 
           <div v-if="showActivities">
@@ -774,8 +941,12 @@
         occupationName: '',
         editBasicProfileMode: false,
         editParentsMode: false,
+        editPresentAddressMode: false,
+        editParmanentAddressMode: false,
         dob: '',
-        occupationList: {}
+        occupationList: {},
+        thanaList: {},
+        districtList: {}
       }
     },
     created () {
@@ -874,6 +1045,7 @@
         this.member.basicInfo.dateOfBirth = Date.parse(this.dob)
         console.log(this.member.basicInfo)
         this.member.basicInfo.dob = Date.parse(this.dob)
+        console.log('update member clicked, this.member.basicInfo: ', this.member.basicInfo)
         Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
           .then(
             ({data: {data: memberUpdate}}) => {
@@ -885,6 +1057,34 @@
               console.log('Error in getting list of identification documents, error: ', error)
             }
           )
+      },
+      updateMemberAddress (addressId) { // addressId is in {0,1}
+        console.log('in member update, addressId: ', addressId)
+        let updatedAddress = {
+          'address': this.member.addresses[addressId],
+          'addressType': this.member.addresses[addressId].type
+        }
+        updatedAddress.address['district'] = updatedAddress.address['districtId']
+        updatedAddress.address['thana'] = updatedAddress.address['thanaId']
+        delete updatedAddress.address['thanaId']
+        delete updatedAddress.address['districtId']
+        delete updatedAddress.address['type']
+        Http.PUT('member', updatedAddress, [this.id, 'address'])
+          .then(
+            ({data: {data: addressUpdate}}) => {
+              console.log('updated address: ', addressUpdate)
+              this.init()
+            },
+            error => {
+              console.log('Error in address update, error: ', error)
+            }
+          )
+        console.log('after http put in update member address.')
+        if (addressId === 0) {
+          this.editPresentAddress()
+        } else {
+          this.editParmanentAddress()
+        }
       },
       updateMemberParents () {
         Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
@@ -912,6 +1112,24 @@
         } else {
           this.editParentsMode = true
         }
+      },
+      editPresentAddress () {
+        console.log('edit button of address clicked... it was: ', this.editPresentAddressMode)
+        if (this.editPresentAddressMode) {
+          this.editPresentAddressMode = false
+        } else {
+          this.editPresentAddressMode = true
+        }
+        console.log('now editAddressMode is: ', this.editPresentAddressMode)
+      },
+      editParmanentAddress () {
+        console.log('edit button of address clicked... it was: ', this.editParmanentAddressMode)
+        if (this.editParmanentAddressMode) {
+          this.editParmanentAddressMode = false
+        } else {
+          this.editParmanentAddressMode = true
+        }
+        console.log('now editAddressMode is: ', this.editParmanentAddressMode)
       },
       resetTransactions () {
         this.transactionQuery = Object.assign({}, {
@@ -1034,21 +1252,21 @@
         }
         // Address 1 resolution
         if (this.member.addresses.length === 2) {
-          let thanaList = JSON.parse(localStorage.getItem('thana'))
-          let districtList = JSON.parse(localStorage.getItem('district'))
+          this.thanaList = JSON.parse(localStorage.getItem('thana'))
+          this.districtList = JSON.parse(localStorage.getItem('district'))
 //          let countryList = JSON.parse(localStorage.getItem('country'))
-          this.thanaNameSecond = thanaList.find(x => x.id === this.member.addresses[1].thanaId).name
-          this.districtNameSecond = districtList.find(x => x.id === this.member.addresses[1].districtId).name
+          this.thanaNameSecond = this.thanaList.find(x => x.id === this.member.addresses[1].thanaId).name
+          this.districtNameSecond = this.districtList.find(x => x.id === this.member.addresses[1].districtId).name
           this.countryNameSecond = this.member.addresses[1].country
         } else {
           this.thanaNameSecond = 'N/A'
           this.districtNameSecond = 'N/A'
           this.countryNameSecond = 'N/A'
         }
-        console.log('Address 0, Thana name is: ', this.thanaNameFirst)
-        console.log('Address 0, District name is: ', this.districtNameFirst)
-        console.log('Address 1, Thana name is: ', this.thanaNameSecond)
-        console.log('Address 1, District name is: ', this.districtNameSecond)
+//        console.log('Address 0, Thana name is: ', this.thanaNameFirst)
+//        console.log('Address 0, District name is: ', this.districtNameFirst)
+//        console.log('Address 1, Thana name is: ', this.thanaNameSecond)
+//        console.log('Address 1, District name is: ', this.districtNameSecond)
       },
       profilePicture (url) {
         if (url) {
