@@ -31,7 +31,7 @@
 <script>
   import Http from '../services/Http'
   // nimport auth from '../services/auth'
-  // import Util from '../services/Util'
+  import Util from '../services/Util'
   import route from '../router'
 
   export default{
@@ -48,7 +48,7 @@
           loginID: this.username,
           password: this.password,
           appID: 6,
-          deviceID: 'bishwa'
+          deviceID: Util.getDeviceID() // 'bishwa'
         }
         console.log('login id: ' + this.username + ' password: ' + this.password)
         console.log('credentials.login: ' + credentials.loginID + ' credentials.password: ' + credentials.password)
