@@ -79,19 +79,17 @@
               </select>
             </div>
           </div>
-        </div>
 
-        <div class="gr-12">
-
-          <div class="text-center">
+          <div class="gr-3">
             <label>Signup Starts: </label>
             <input type="date" v-model="query.startSignUpDate"/>
+          </div>
+          <div class="gr-3">
             <label>Ends: </label>
             <input type="date" v-model="query.endSignUpDate"/>
           </div>
+        
         </div>
-
-
 
         <div class="gr-4 push-4">
           <div class="form-group">
@@ -385,7 +383,7 @@
   import router from '../router/index'
 
   export default {
-    name: 'ListRenderer',
+    name: 'MemberList',
     data () {
       return {
         members: [],

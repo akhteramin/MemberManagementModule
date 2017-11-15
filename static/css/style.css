@@ -4,7 +4,7 @@
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 /* FONT PATH -------------------------- */
-@font-face { font-family: 'FontAwesome'; src: url("../fonts/font-awesome-4.7.0/fontawesome-webfont.eot?v=4.7.0"); src: url("../fonts/font-awesome-4.7.0/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("../fonts/font-awesome-4.7.0/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("../fonts/font-awesome-4.7.0/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("../fonts/font-awesome-4.7.0/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("../fonts/font-awesome-4.7.0/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg"); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'FontAwesome'; src: url("../fonts/fontawesome-webfont.eot?v=4.7.0"); src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg"); font-weight: normal; font-style: normal; }
 .fa { display: inline-block; font: normal normal normal 14px/1 FontAwesome; font-size: inherit; text-rendering: auto; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
 /* makes the font 33% larger relative to the icon container */
@@ -4948,7 +4948,10 @@ input[type=text]:hover { border: 2px solid #1bb1a2; }
 input[type=email] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
 input[type=email]:hover { border: 2px solid #1bb1a2; }
 
-input[type=date] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
+input[type=password] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
+input[type=password]:hover { border: 2px solid #1bb1a2; }
+
+input[type=date] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; line-height: inherit !important; }
 input[type=date]:hover { border: 2px solid #1bb1a2; }
 
 .input-sm, .input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn { padding-top: 0px !important; padding-bottom: 0px !important; width: 70% !important; }

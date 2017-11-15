@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
-import ListRenderer from '@/components/ListRenderer'
-import WaitingForVerificationList from '@/components/WaitingForVerificationList'
-import WaitingForApprovalList from '@/components/WaitingForApprovalList'
+import MemberList from '@/components/MemberListComponent'
+import WaitingForVerificationList from '@/components/WaitingForVerificationListComponent'
+import WaitingForApprovalList from '@/components/WaitingForApprovalListComponent'
 import Home from '@/components/Home'
-import MemberBasicInfo from '@/components/MemberBasicInfo'
+import MemberIndividualComponent from '@/components/MemberIndividualComponent'
 
 Vue.use(Router)
 
@@ -46,8 +46,8 @@ export default new Router({
     },
     {
       path: '/member',
-      name: 'ListRenderer',
-      component: ListRenderer
+      name: 'MemberList',
+      component: MemberList
     },
     {
       path: '/member/waiting/verification',
@@ -66,8 +66,8 @@ export default new Router({
     },
     {
       path: '/member/:id',
-      name: 'MemberBasicInformation',
-      component: MemberBasicInfo,
+      name: 'MemberIndividualComponent',
+      component: MemberIndividualComponent,
       props: true
     }
   ]

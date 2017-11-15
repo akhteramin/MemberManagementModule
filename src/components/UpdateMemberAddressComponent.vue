@@ -1,0 +1,232 @@
+<template> 
+    <div v-if="addressType==0">
+        <form v-on:submit.prevent="updateMemberAddress(addressType)">
+            <div class="gr-6">
+            <h5 style="align: left;">Present</h5>
+            <br>
+            <div class="row text-left">
+                <div class="gr-2">
+                Line 1:
+                </div>
+                <div class="gr-8">
+                <input 
+                id="presentAddrssLine1"
+                class="input-sm"
+                type="text"
+                v-model="memberPresentAddress.addressLine1"/>
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="gr-2">
+                Line 2:
+                </div>
+                <div class="gr-8">
+                <input class="input-sm"
+                        type="text"
+                        v-model="memberPresentAddress.addressLine2"/>
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="gr-2">
+                District:
+                </div>
+                <div class="gr-8">
+                <div class="select select-sm">
+                    <select id="districtSelection" v-model="memberPresentAddress.districtId" required>
+                    <option value="" disabled>Select District</option>
+                    <option v-for="district in districtList" :value="district.id">{{ district.name }}</option>
+                    </select>
+                </div>
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="gr-2">
+                Thana:
+                </div>
+                <div class="gr-8">
+                <div class="select select-sm">
+                    <select id="thanaSelection" v-model="memberPresentAddress.thanaId" required>
+                    <option value="" disabled>Select Thana</option>
+                    <option v-for="thana in thanaList" :value="thana.id"
+                            v-if="thana.districtId == memberPresentAddress.districtId">{{ thana.name }}</option>
+
+                    </select>
+                </div>
+                
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="gr-2">
+                Country:
+                </div>
+                <div class="gr-8">
+                {{ memberPresentAddress.country}}
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="button-search">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+                Update
+                </button>
+                <button type="reset" class="button-reset" @click="editPresentAddress()">
+                <i class="fa fa-times"></i>
+                Cancel
+                </button>
+            </div>
+            </div>
+        </form>
+    </div>
+    <div v-else-if="addressType==1">
+        <form  v-on:submit.prevent="updateMemberAddress(1)">
+            <div class="gr-6">
+            <h5 style="align: center;">Permanent</h5>
+            <br>
+            <div class="row text-left">
+                <div class="gr-2">
+                Line 1:
+                </div>
+                <div class="gr-8">
+                <input class="input-sm"
+                        type="text"
+                        v-model="memberPermanentAddress.addressLine1"/>
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="gr-2">
+                Line 2:
+                </div>
+                <div class="gr-8">
+                <input class="input-sm"
+                        type="text"
+                        v-model="memberPermanentAddress.addressLine2"/>
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="gr-2">
+                District:
+                </div>
+                <div class="gr-8">
+                <div class="select select-sm">
+                    <select v-model="memberPermanentAddress.districtId" required>
+                    <option value="" disabled>Select District</option>
+                    <option v-for="district in districtList" :value="district.id">{{ district.name }}</option>
+                    </select>
+                </div>
+                
+                <!--{{ districtNameFirst }}-->
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="gr-2">
+                Thana:
+                </div>
+                <div class="gr-8">
+                <div class="select select-sm">
+                    <select  v-model="memberPermanentAddress.thanaId" required>
+                    <option value="" disabled>Select Thana</option>
+                    <option v-for="thana in thanaList" :value="thana.id"
+                            v-if="thana.districtId == memberPermanentAddress.districtId">{{ thana.name }}</option>
+                    </select>
+                </div>
+                <!--{{ districtNameFirst }}-->
+                </div>
+            </div>
+            <div class="row text-left">
+                <div class="gr-2">
+                Country:
+                </div>
+                <div class="gr-8">
+                {{ memberPermanentAddress.country }}
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="button-search">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+                Update
+                </button>
+                <button type="reset" class="button-reset" @click="editPermanentAddress()">
+                <i class="fa fa-times"></i>
+                Cancel
+                </button>
+            </div>
+            </div>
+
+        </form>
+    </div>
+
+</template>
+
+
+<script>
+  import Http from '../services/Http'
+  export default {
+    name: 'UpdateMemberAddress',
+    props: [
+      'id',
+      'memberPresentAddress',
+      'memberPermanentAddress',
+      'thanaList',
+      'districtList'
+    ],
+    data () {
+      return {
+        addressType: 0
+      }
+    },
+    methods: {
+      init () {
+        if (this.memberPresentAddress) {
+          this.addressType = 0
+        } else {
+          this.addressType = 1
+        }
+      },
+      updateMemberAddress (addressId) { // addressId is in {0,1}
+        console.log('in member update, addressId: ', addressId)
+        let updatedAddress = {}
+        if (addressId === 0) {
+          updatedAddress = {
+            'address': this.memberPresentAddress,
+            'addressType': this.memberPresentAddress.type
+          }
+        } else {
+          updatedAddress = {
+            'address': this.memberPermanentAddress,
+            'addressType': this.memberPermanentAddress.type
+          }
+        }
+        updatedAddress.address['district'] = updatedAddress.address['districtId']
+        updatedAddress.address['thana'] = updatedAddress.address['thanaId']
+        delete updatedAddress.address['thanaId']
+        delete updatedAddress.address['districtId']
+        delete updatedAddress.address['type']
+        console.log('updatedAddress: ', updatedAddress)
+        Http.PUT('member', updatedAddress, [this.id, 'address'])
+          .then(
+            ({data: {data: addressUpdate}}) => {
+              console.log('updated address: ', addressUpdate)
+              if (addressId === 0) {
+                this.editPresentAddress()
+              } else {
+                this.editPermanentAddress()
+              }
+            },
+            error => {
+              console.log('Error in address update, error: ', error)
+            }
+          )
+        console.log('after http put in update member address.')
+      },
+      editPresentAddress () {
+        this.$emit('update', 'false')
+      },
+      editPermanentAddress () {
+        this.$emit('update', 'false')
+      }
+
+    },
+    created () {
+      this.init()
+    }
+}
+</script>

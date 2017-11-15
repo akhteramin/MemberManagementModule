@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="row">
-      <NavBar v-if="$route.name !== 'Login'"></NavBar>      
+      <MenuComponent v-if="$route.name !== 'Login'"></MenuComponent>      
       <router-view></router-view>
     </div>
     <!--<router-view></router-view>-->
@@ -9,16 +9,16 @@
 </template>
 
 <script>
-  import NavBar from './components/NavBar.vue'
-  import ListRenderer from './components/ListRenderer.vue'
+  import MenuComponent from './components/MenuComponent.vue'
+  import MemberList from './components/MemberListComponent.vue'
   import Home from './components/Home.vue'
-  import WaitingForApprovalList from './components/WaitingForApprovalList.vue'
-  import WaitingForVerificationList from './components/WaitingForVerificationList.vue'
+  import WaitingForApprovalList from './components/WaitingForApprovalListComponent.vue'
+  import WaitingForVerificationList from './components/WaitingForVerificationListComponent.vue'
   export default {
     name: 'app',
     components: {
-      'NavBar': NavBar,
-      'ListRenderer': ListRenderer,
+      'MenuComponent': MenuComponent,
+      'MemberList': MemberList,
       'Home': Home,
       'WaitingForApprovalList': WaitingForApprovalList,
       'WaitingForVerificationList': WaitingForVerificationList
