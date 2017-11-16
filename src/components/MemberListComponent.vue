@@ -33,7 +33,7 @@
                     <option selected value = "">Both</option>
                     <option value="1">Personal</option>
                     <option value="2">Business</option>
-                </select>
+                  </select>
                 </div>
               </div>
             </div>
@@ -130,7 +130,7 @@
                   <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
 
-                <a href="#"  @click="openNewTab(member.accountId)">
+                <a href="#"  @click="memberDetails(member.accountId,member.accountType)">
                   {{ member.name }}
                 </a>
                 <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
@@ -216,7 +216,7 @@
                         <h5>Update Profile</h5>
                 </div>
                 <div class="gr-6 push-4">
-                        <i class="fa fa-external-link" style="color:black" aria-hidden="true" @click="openNewTab(memberProfile.accountId)"></i>
+                        <i class="fa fa-external-link" style="color:black" aria-hidden="true" @click="memberDetails(memberProfile.accountId,memberProfile.accountType)"></i>
                         <i class="fa fa-window-close" aria-hidden="true" @click="hideProfile()"></i>
                 </div>
                 <hr>
@@ -486,9 +486,13 @@
           this.getMembers()
         }
       },
-      openNewTab (value) {
-        console.log('Okay, I am doing it now!!!, value: ', value)
-        router.push(`./member/${value}`)
+      memberDetails (value, accntType) {
+        console.log('Okay, I am doing it now!!!, value: ', value, accntType)
+        // router.push(`./member/${value}`)
+        router.push({
+          name: 'MemberIndividualComponent',
+          params: {id: value, accountType: accntType}
+        })
         // window.open(`${window.location.href}/${value}`, '_blank')
       },
       init () {

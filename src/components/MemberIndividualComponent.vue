@@ -39,15 +39,12 @@
 
                         <img v-else src="static/images/default-original.jpg" class="img-circle"
                             alt="N/A" width="30" height="30">
-                        
-                        <button class="update btn btn-sm btn-block btn-default btn-active-til" 
-                        data-toggle="modal" data-target="#ChangePpModal" title="Change Profile Picture" data-backdrop="false">
-                          <i class="glyphicon glyphicon-camera">
-                          </i> Change
-                        </button>
-
-                        
-
+                        <update-member-image
+                          :member="member" 
+                          :id="id"
+                          @update="editProfilePic">
+                        </update-member-image>
+                       
                       </div>
                       <div class="gr-9 text-left push-.5">
                         <div class="gr-12">
@@ -323,8 +320,8 @@
               <div>
                 <div class="verification">
                   <div>
+                    <member-identification-document :id="id" :accountType="accountType"></member-identification-document>
                     <member-bank-account :id="id"></member-bank-account>
-                    <member-identification-document :id="id"></member-identification-document>
                     <div class="row justify-content-center">
                       <member-introduced-by :id="id"></member-introduced-by>
                       <member-has-introduced :id="id"></member-has-introduced>
@@ -338,60 +335,6 @@
             <member-transaction v-if="showTransactions" :id="id"></member-transaction>
         </div>
       </div>
-
-
-
-      <div id="ChangePpModal" class="modal fade" role="dialog">
-        <div class="modal-dialog  modal-md">
-          <!-- Modal content-->
-
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" >&times;</button>
-              <h4 class="modal-title"> Change Your Profile Picture </h4>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-
-                <div class="row">
-                  <div class="col-md-3">
-                    <label class="control-label">Image:</label>
-                  </div>
-                  <div class="col-md-8">
-                    <div>
-                      <img v-if="member.basicInfo.mmUserPictures[0]"
-                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'" 
-                              class="img-circle" width="250" height="250">
-
-                        <img v-else src="static/images/default-original.jpg" class="img-circle"
-                            alt="N/A" width="30" height="30">
-                        
-                    </div>
-                  </div>
-                </div>
-            <br>
-                <div class="row">
-                  <div class="col-md-4 col-md-offset-3">
-                    <span>
-                      <div class="fileUpload">
-                        <!--<span>Browse</span>-->
-                        <input id="uploadBtn3" type="file" class="btn btn-default"/>
-                      </div>
-                      <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-
-              <button type="button" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal">Update</button>
-              <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
 </template>
 
@@ -407,11 +350,13 @@
   import MemberBasicInfoUpdate from './UpdateMemberBasicInfoComponent.vue'
   import UpdateMemberFamilyInfo from './UpdateMemberFamilyInfoComponent.vue'
   import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
+  import UpdateMemberImage from './UpdateMemberImageComponent.vue'
   
   export default {
     name: 'MemberIndividualComponent',
     props: [
-      'id'
+      'id',
+      'accountType'
     ],
     components: {
       'member-activity': MemberActivity,
@@ -422,7 +367,8 @@
       'member-bank-account': MemberBankAccount,
       'member-basic-info-update': MemberBasicInfoUpdate,
       'update-member-parents': UpdateMemberFamilyInfo,
-      'update-member-address': UpdateMemberAddress
+      'update-member-address': UpdateMemberAddress,
+      'update-member-image': UpdateMemberImage
     },
     data () {
       return {
@@ -446,6 +392,7 @@
         imageBaseUrl: '',
         thanaList: {},
         districtList: {},
+        profilePicture: {},
         memberPresentAddress: {
           addressLine1: 'N/A',
           addressLine2: 'N/A',
@@ -545,6 +492,9 @@
         } else {
           this.editParentsMode = true
         }
+      },
+      editProfilePic () {
+        this.init()
       },
       editPresentAddress (param = '') {
         console.log('edit button of PRESENT address clicked... it was: ', this.editPresentAddressMode)

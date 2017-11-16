@@ -1,0 +1,118 @@
+<template>
+    <div>
+        <div class="modal-dialog  modal-md">
+          <!-- Modal content-->
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" >&times;</button>
+              <h4 class="modal-title"> Change Document {{ document.id }} </h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="control-label">Document:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <div>
+                      <img id="ppImage" v-if="document.documentUrl"
+                              :src="documentUrl || 'static/images/default-original.jpg'" 
+                              class="img-circle" width="250" height="250">
+
+                        <img v-else src="static/images/default-original.jpg" class="img-circle"
+                            alt="N/A" width="30" height="30">
+                        
+                    </div>
+                  </div>
+                </div>
+            <br>
+                <div class="row">
+                  <div class="col-md-4 col-md-offset-3">
+                    <span>
+                      <div class="fileUpload">
+                        <!--<span>Browse</span>-->
+                        <input id="uploadBtn3" type="file" class="btn btn-default" @change="onDocumentChange"/>
+                      </div>
+                      <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-sm btn-default btn-active-til" @click="uploadDocument" data-dismiss="modal">Update</button>
+              <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+    </div>
+</template>
+
+<script>
+  import Http from '../services/Http'
+  export default {
+    name: 'UpdateMemberIdentificationDocument',
+    props: [
+      'document',
+      'id'
+    ],
+    data () {
+      return {
+        documentBaseUrl: '',
+        documentUrl: '',
+        memberDocument: {}
+      }
+    },
+    methods: {
+      init () {
+        console.log('document::', this.document)
+        this.documentBaseUrl = Http.IMAGE_URL
+        this.documentUrl = this.imageBaseUrl + this.document.documentUrl
+      },
+      onDocumentChange (e) {
+        console.log('document::', this.document)
+
+        var files = e.target.files || e.dataTransfer.files
+        if (!files.length) {
+          return
+        }
+        this.documentUrl = new Image()
+        var reader = new FileReader()
+        reader.onload = (e) => {
+          this.documentUrl = e.target.result
+        }
+        reader.readAsDataURL(files[0])
+        this.memberDocument = files[0]
+        console.log(files[0])
+      },
+      uploadDocument () {
+        console.log(this.memberDocument)
+        var fd = new FormData()
+        fd.append('file', this.memberDocument)
+        fd.append('documentIdNumber', this.document.documentIdNumber)
+        fd.append('documentType', this.document.documentType)
+        console.log('document type::', this.document.documentType)
+        Http.POST('member', fd, [this.id, 'identification-document'])
+          .then(
+            ({data: documentdata}) => {
+              console.log('document data: ', documentdata)
+              this.editIdentificationDocument()
+            },
+            error => {
+              console.log('Error in address update, error: ', error)
+            }
+          )
+      },
+      editIdentificationDocument () {
+        this.$emit('update', 'false')
+      }
+    },
+    created () {
+      console.log(this.id, this.document)
+      this.init()
+    }
+}
+</script>

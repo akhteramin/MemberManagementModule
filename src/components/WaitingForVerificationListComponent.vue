@@ -1,5 +1,5 @@
 <template>
-  <div id = "list" class="gr-10 content-container">
+  <div id = "list" class="gr-10  push-2 content-container">
     <h1>Members</h1>
     <hr>
     <form v-on:submit.prevent="filter" v-on:reset.prevent="init">

@@ -30,7 +30,8 @@ const routes = {
   login: `${AUTH_URL}/login/`,
   permissions: `${AUTH_URL}/permissions/`,
   resource: `${API_URL}/resource/`,
-  logout: `${AUTH_URL}/logout/`
+  logout: `${AUTH_URL}/logout/`,
+  verification: `${API_URL}/verify/member/`
 }
 
 const encodeQueryData = (data) => {
@@ -74,7 +75,7 @@ export default {
   POST (key, data, props = {}) {
     let parameters = ''
     if (Object.prototype.toString.call(props) === '[object Array]') {
-      parameters = props.length > 0 ? `/${props.join('/')}` : ''
+      parameters = props.length > 0 ? `${props.join('/')}` : ''
     } else {
       parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
     }
