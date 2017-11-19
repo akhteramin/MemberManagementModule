@@ -1,30 +1,65 @@
  <template>
     <div>
-        <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
-            <div class="form-group gr-12">
-            <div  style="align-content: left;">
-                <label class="push-1"> Date Range From: </label>
-                <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="transactionQuery.fromDate"/>
-                <label class="push-0.5">To:</label>
-                <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
-                        v-model="transactionQuery.toDate"/>
+      <br>
+      <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
+          <div class="form-group gr-12">
+            <div class="gr-8">
+              <label class="push-1"> Date Range From: </label>
+              <input  type="date" name="fromRDate"  v-model="transactionQuery.fromDate" style="width: 200px;"
+                      class="push-1"/>
+              <label class="push-1">To:</label>
+              <input type="date" name="toRange"  placeholder="to"
+                     v-model="transactionQuery.toDate" style="width: 210px;"
+                     class="push-1"/>
             </div>
-            <div class="col-6">
+
+          <!--<div  style="align-content: left;">-->
+              <!--<label class="push-1"> Date Range From: </label>-->
+              <!--<input  type="date" name="fromRDate"  v-model="transactionQuery.fromDate"/>-->
+              <!--<label class="push-0.5">To:</label>-->
+              <!--<input type="date" name="toRange"  v-model="transactionQuery.toDate"/>-->
+          <!--</div>-->
+            <div class="gr-1" style="height: 40px;
+              text-align: center;  line-height: 40px;">
+              <label class="push-1">Type: </label>
+            </div>
+
+            <div class="gr-3" style="border: 3px solid #C0C0C0; height: 37px; width: 200px;
+                border-radius: 4px;"> <!-- #8b9eb6; -->
                 <select id="transaction-selector" v-model="transactionQuery.serviceID">
                 <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
-                <option selected value=null disabled>Select Transaction Type</option>
-                <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
+                  <option value=null disabled selected>Select Transaction Type</option>
+                  <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
                 </select>
             </div>
-            </div>
+          </div>
 
 
-            <div class="form-group">
-            <button type="submit">Filter</button>
-            <button type="reset">Reset</button>
+
+          <div class="form-group push-4">
+            <div class="gr-4">
+              <button type="submit" class="button-search">
+                <i class="fa fa-search" aria-hidden="true"></i> Search</button>
+              <button type="reset" class="button-reset">
+                <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
             </div>
-        </form>
-        <div>
+
+            <div id="container" class="gr-3" style="height: 40px;">
+              <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
+                <select v-model="transactionQuery.pageSize">
+                  <option disabled>Number of Entries</option>
+                  <option selected value=10>10</option>
+                  <option value=20>20</option>
+                  <option value=30>30</option>
+                  <option value=50>50</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+      </form>
+      <div>
             <table class="table table-hover table-sm ">
                 <thead class="thead-default">
                     <tr>
@@ -56,7 +91,7 @@
             </table>
         </div>
 
-        <div class="card-footer text-muted" v-if="transactions.totalCount > 0">
+      <div class="card-footer text-muted" v-if="transactions.totalCount > 0">
               <div class="row">
                 <div class="gr-3">
                   <div style="margin-top: 0.2rem;" v-if="transactions.transactions">
@@ -119,9 +154,8 @@
               </div>
             </div>
 
-        </div>
-
     </div>
+
 </template>
 
 <script>
@@ -155,13 +189,14 @@
         this.getTransactions()
       },
       resetTransactions () {
-        this.transactionQuery = Object.assign({}, {
-          pageNumber: 0,
-          pageSize: 10,
-          fromDate: null,
-          toDate: null
-        })
-        this.getTransactions()
+        this.init()
+//        this.transactionQuery = Object.assign({}, {
+//          pageNumber: 0,
+//          pageSize: 10,
+//          fromDate: null,
+//          toDate: null
+//        })
+//        this.getTransactions()
       },
       filterTransactions () {
         // The adjustment is being made to avoid GMT issues.

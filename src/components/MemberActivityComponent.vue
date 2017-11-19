@@ -3,19 +3,41 @@
         <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
             <div class="form-group gr-12">
             <div  style="align-content: left;">
-                <label class="push-2"> Date Range From: </label>
-                <input  type="date" name="fromRDate" onfocus="(this.type='date')" v-model="activityQuery.fromDate"/>
-                <label class="push-0.5">To:</label>
-                <input type="date" name="toRange" onfocus="(this.type='date')" placeholder="to"
-                        v-model="activityQuery.toDate"/>
-                <label class="push-0" for="search-key">Search with a Key</label>
+              <br>
+              <div class="gr-8">
+                <label class="push-1"> Date Range From: </label>
+                <input  type="date" name="fromRDate"  v-model="activityQuery.fromDate" style="width: 200px;"
+                class="push-1"/>
+                <label class="push-1">To:</label>
+                <input type="date" name="toRange"  placeholder="to"
+                       v-model="activityQuery.toDate" style="width: 210px;"
+                class="push-1"/>
+              </div>
+              <div class="gr-4">
+                <label class="justify-content-md-start" for="search-key">Description</label>
                 <input id="search-key" v-model="activityQuery.searchKey"
-                        placeholder="Key">
+                       placeholder="description" type="text" style="width: 150px;">
+              </div>
             </div>
             </div>
-            <div class="form-group">
-            <button type="submit">Search</button>
-            <button type="reset">Reset</button>
+            <div class="form-group push-4">
+              <div class="gr-4">
+                <button type="submit" class="button-search">
+                  <i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                <button type="reset" class="button-reset">
+                  <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
+              </div>
+              <div id="container" class="gr-3" style="height: 40px;">
+                <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
+                  <select v-model="activityQuery.pageSize">
+                    <option disabled>Number of Entries</option>
+                    <option selected value=10>10</option>
+                    <option value=20>20</option>
+                    <option value=30>30</option>
+                    <option value=50>50</option>
+                  </select>
+                </div>
+              </div>
             </div>
         </form>
 
@@ -176,3 +198,5 @@
     }
   }
 </script>
+
+
