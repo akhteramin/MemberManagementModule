@@ -32,14 +32,14 @@
             </div>
             <div class="gr-4 push-4">
                 <div class="form-group">
-                <button type="submit" class="button-search">
-                    <i class="fa fa-edit" aria-hidden="true"></i>
-                    Update
-                </button>
-                <button type="reset" class="button-reset" @click="editParents()">
-                    <i class="fa fa-times"></i>
-                    Cancel
-                </button>
+                  <button type="submit" class="button-search">
+                      <i class="fa fa-edit" aria-hidden="true"></i>
+                      Update
+                  </button>
+                  <button type="reset" class="button-reset" @click="editParents()">
+                      <i class="fa fa-times"></i>
+                      Cancel
+                  </button>
                 </div>
             </div>
         </form>

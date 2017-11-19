@@ -1,5 +1,5 @@
 <template>
-  
+
     <div class="gr-10 push-2" v-if="member">
 
         <br>
@@ -40,11 +40,11 @@
                         <img v-else src="static/images/default-original.jpg" class="img-circle"
                             alt="N/A" width="30" height="30">
                         <update-member-image
-                          :member="member" 
+                          :member="member"
                           :id="id"
                           @update="editProfilePic">
                         </update-member-image>
-                       
+
                       </div>
                       <div class="gr-9 text-left push-.5">
                         <div class="gr-12">
@@ -116,8 +116,8 @@
                           </div>
                         </div>
                         <div v-else>
-                          <member-basic-info-update 
-                            :member="member" 
+                          <member-basic-info-update
+                            :member="member"
                             :occupationList="occupationList"
                             @update="editBasicInfo">
                           </member-basic-info-update>
@@ -240,7 +240,7 @@
                     <div v-else id="editPresentAddress">
                       <update-member-address
                             :id= "id"
-                            :memberPresentAddress="memberPresentAddress" 
+                            :memberPresentAddress="memberPresentAddress"
                             :thanaList= "thanaList"
                             :districtList= "districtList"
                             @update="editPresentAddress">
@@ -306,7 +306,7 @@
                     <div v-else id="editPermanentAddress">
                       <update-member-address
                             :id= "id"
-                            :memberPermanentAddress="memberPermanentAddress" 
+                            :memberPermanentAddress="memberPermanentAddress"
                             :thanaList= "thanaList"
                             :districtList= "districtList"
                             @update="editPermanentAddress">
@@ -327,6 +327,12 @@
                       <member-has-introduced :id="id"></member-has-introduced>
                     </div>
 
+                  </div>
+
+                  <div class="row justify-content-center">
+                    Hello I am who!!! {{ member.basicInfo.verificationStatus }}
+                    <member-verify-and-approve :id="id" :verificationStatus="member.basicInfo.verificationStatus"
+                    :verificationHistory="member.verificationHistory"></member-verify-and-approve>
                   </div>
                 </div>
               </div>
@@ -351,7 +357,8 @@
   import UpdateMemberFamilyInfo from './UpdateMemberFamilyInfoComponent.vue'
   import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
   import UpdateMemberImage from './UpdateMemberImageComponent.vue'
-  
+  import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
+
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -366,6 +373,7 @@
       'member-has-introduced': MemberHasIntroduced,
       'member-bank-account': MemberBankAccount,
       'member-basic-info-update': MemberBasicInfoUpdate,
+      'member-verify-and-approve': MemberVerifyAndApproveComponent,
       'update-member-parents': UpdateMemberFamilyInfo,
       'update-member-address': UpdateMemberAddress,
       'update-member-image': UpdateMemberImage
@@ -448,7 +456,8 @@
             ({data: {data: member}}) => {
               this.member = member
               console.log('Got, member success::')
-              console.log('member basic info: ', this.member.basicInfo)
+              console.log('member basic info: ', this.member.basicInfo,
+                ' member verification history: ', this.member.verificationHistory)
               this.dob = this.$options.filters.date(member.basicInfo.dateOfBirth, 'YYYY-MM-DD')
               // check for address
               if (this.member.addresses.length === 2) {
