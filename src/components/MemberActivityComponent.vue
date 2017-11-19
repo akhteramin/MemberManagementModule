@@ -14,9 +14,9 @@
                 class="push-1"/>
               </div>
               <div class="gr-4">
-                <label class="justify-content-md-start" for="search-key">Search with a Key</label>
+                <label class="justify-content-md-start" for="search-key">Description</label>
                 <input id="search-key" v-model="activityQuery.searchKey"
-                       placeholder="Key" type="text" style="width: 150px;">
+                       placeholder="description" type="text" style="width: 150px;">
               </div>
             </div>
             </div>
@@ -26,6 +26,17 @@
                   <i class="fa fa-search" aria-hidden="true"></i> Search</button>
                 <button type="reset" class="button-reset">
                   <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
+              </div>
+              <div id="container" class="gr-3" style="height: 40px;">
+                <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
+                  <select v-model="activityQuery.pageSize">
+                    <option disabled>Number of Entries</option>
+                    <option selected value=10>10</option>
+                    <option value=20>20</option>
+                    <option value=30>30</option>
+                    <option value=50>50</option>
+                  </select>
+                </div>
               </div>
             </div>
         </form>
@@ -187,3 +198,5 @@
     }
   }
 </script>
+
+
