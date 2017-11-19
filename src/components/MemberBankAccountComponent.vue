@@ -46,6 +46,10 @@
         imageBaseUrl: ''
       }
     },
+    created () {
+      console.log('document created::::')
+      this.init()
+    },
     methods: {
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
@@ -63,10 +67,6 @@
                console.log('Error in getting the list of bank accounts, error: ', error)
              }
            )
-      },
-      created () {
-        console.log('document created::::')
-        this.init()
       }
     }
 }

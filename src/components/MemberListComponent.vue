@@ -81,11 +81,11 @@
           </div>
 
           <div class="gr-3">
-            <label>Signup Starts: </label>
+            <label>Signup From: </label>
             <input type="date" v-model="query.startSignUpDate"/>
           </div>
           <div class="gr-3">
-            <label>Ends: </label>
+            <label>Signup To: </label>
             <input type="date" v-model="query.endSignUpDate"/>
           </div>
         
@@ -117,6 +117,7 @@
                 <th>A/C Type</th>
                 <th>Verification</th>
                 <th>Profile Completed</th>
+                <th>Account Status</th>
               </tr>
             </thead>
             <tbody>
@@ -146,6 +147,16 @@
               </td>
               <td>{{ member.verificationStatus }}</td>
               <td>{{ member.profileCompletionScore }}%</td>
+              <td>
+                <div class="select">
+                  <select id="order-by-select"  v-model="member.accountStatus" @change="statusChange( member.accountId,member.accountStatus)">
+                    <option value = "1">Active</option>
+                    <option value = "2">Suspended</option>
+                  </select>
+                </div>
+                
+              </td>
+
             </tr>
             </tbody>
           </table>
@@ -210,170 +221,50 @@
             </div>
           </div>
           <!--========================================= slider ==================================================-->
-        <div class="slider" v-if="sliderShow">
-            <div class="gr-12" v-if="profileDetails">
-                <div class="gr-6">
-                        <h5>Update Profile</h5>
-                </div>
-                <div class="gr-6 push-4">
-                        <i class="fa fa-external-link" style="color:black" aria-hidden="true" @click="memberDetails(memberProfile.accountId,memberProfile.accountType)"></i>
-                        <i class="fa fa-window-close" aria-hidden="true" @click="hideProfile()"></i>
-                </div>
-                <hr>
-                <div class="gr-2">
-                <span v-if="memberProfile.mmUserPictures[0]">
-                  <img :src="imageBaseUrl+memberProfile.mmUserPictures[0].document.url" class="img-rounded" alt="Profile Picture" width="70" height="80">
-                </span>
-                <span v-else>
-                  <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
-                </span>
-                </div>
-                <div class="gr-10">
-                    <div class="gr-2">
-                        <button class="button-banner" >{{memberProfile.verificationStatus}}</button>
-                    </div>
-                    <div class="gr-3 push-7">
-                        <button class="button-edit">Edit <i class="fa fa-pencil-square-o"></i></button>
+          <member-list-slider  v-if="sliderShow"
+          :memberProfile="memberProfile"
+          :memberDocuments="memberDocuments"
+          :memberIntroducers="memberIntroducers"
+          :memberMissingInfo="memberMissingInfo"
+          @update="hideProfile"></member-list-slider>
 
-                    </div>
-                    <div class="gr-12 small-text">
-                        <b>{{memberProfile.name}}</b>
-                        <span class="banner-text" v-if="memberProfile.accountType == 1">(Personal)</span>
-                        <span class="banner-text" v-else>(Business)</span>
-                        <span>{{memberProfile.profileCompletionScore}}%</span>
-                        <br>{{memberProfile.mobileNumber}}
-                        <br>General
+          <div id="MemberAccountStatusModal" class="modal fade" role="dialog">
+            <div class="modal-dialog  modal-md">
+            <!-- Modal content-->
 
-                    </div>
-
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                <h4 class="modal-title">Change Account Status </h4>
                 </div>
-                <div class="gr-12 small-text">
-                    <b>Missing Information</b>
-                    <hr>
-                    <div class="gr-4">
-                        <span class="text-ash">
-                            -Profile Picture
-                        </span>
-                    </div>
-                    <div class="gr-4">
-                        <span class="text-ash">
-                            -Father Name
-                        </span>
-                    </div>
-                    <div class="gr-4">
-                        <span class="text-ash">
-                            -Mother Name
-                        </span>
-                    </div>
-                    <div class="gr-4">
-                        <span class="text-ash">
-                            -Present Address
-                        </span>
-                    </div>
-                    <div class="gr-4">
-                        <span class="text-ash">
-                            -Permanent Address
-                        </span>
-                    </div>
-                </div>
-                <div class="gr-12 small-text min-height-slider" v-if="memberDocuments">
-                    <b>Identification Document</b>
-                    <hr>
-                    <div class="row margin-5" v-for="memberDocument in memberDocuments">
-                        <div class="gr-5">
-                            <img :src="imageBaseUrl+memberDocument.documentUrl" class="img-rounded" alt="Documents" width="140" height="80" @click="showDocumentDetails(memberDocument)">
+                <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                    <div class="col-md-4 col-md-offset-3">
+                        <span>
+                        <div class="comment">
+                            <!--<span>Browse</span>-->
+                            Comment:
+                            <textarea id="comment" rows="4" cols="50" v-model="memberComment"></textarea> 
                         </div>
-                        <div class="gr-7">
-                            <b>{{memberDocument.documentType}}</b>
-                            <i v-if="memberDocument.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
-                            <br>{{memberDocument.documentIdNumber}}
-                            <br>Updated On:12/05/2017
-                            <br>
-                            <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">
-                              <button class="button-small-edit"><i class="fa fa-pencil-square-o"></i> Edit </button>
-                              <button class="button-small-verify">Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
-                            </span>
-                        </div>
+                        <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                        </span>
+                    </div>
                     </div>
                 </div>
-                <div class="gr-12 small-text" v-if="memberDocuments">
+                </div>
+                <div class="modal-footer">
 
-                      <div class="row container side-nav">
-                          <ul class="nav nav-tabs">
-                              <li class="text-center margin-left-15 active">
-                                  <a class="black-text" data-toggle="tab" href="#introducedBy">Introduced By</a>
-                              </li>
-                              <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-                              <li class="text-center margin-left-15">
-                                  <a class="black-text" data-toggle="tab" href="#hasIntroduced" @click="loadMemberIntroduced(memberProfile.accountId)">Has Introduced</a>
-                              </li>
-                              <li class="text-center margin-left-15">
-                                  <a class="black-text" data-toggle="tab" href="#invitedBy" @click="loadMemberInvitedBy(memberProfile.accountId)">Invited By</a>
-                              </li>
-                          </ul>
-                          <div class="tab-content">
-                              <div id="introducedBy" class="tab-pane fade in active padding-4">
-                                  <div class="gr-4 text-center" v-if="memberIntroducers">
-                                      <div class="gr-6 padding-5" v-for="memberIntroducer in memberIntroducers">
-                                              <img :src="imageBaseUrl+memberIntroducer.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
-                                              <br><b>{{memberIntroducer.name}}</b>
-                                              <br>{{memberIntroducer.mobileNumber}}
-                                      </div>
-                                  </div>
-                              </div>
-                              <div id="hasIntroduced" class="tab-pane fade  padding-4">
-                                  <div class="gr-4 text-center" v-if="membersIntroduced">
-                                      <div class="gr-6 padding-5" v-for="memberIntroduced in membersIntroduced">
-                                              <img :src="imageBaseUrl+memberIntroduced.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
-                                              <br><b>{{memberIntroduced.name}}</b>
-                                              <br>{{memberIntroduced.mobileNumber}}
-
-                                      </div>
-                                  </div>
-                              </div>
-                              <div id="invitedBy" class="tab-pane fade  padding-4">
-                                  <div class="gr-4 text-center" v-if="membersInvitedBy">
-                                      <div class="gr-6 padding-5" v-for="memberInvitedBy in membersInvitedBy">
-                                              <img :src="imageBaseUrl+memberInvitedBy.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
-                                              <br><b>{{memberInvitedBy.name}}</b>
-                                              <br>{{memberInvitedBy.mobileNumber}}
-
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                    </div>
-
-
-
-            </div>
-            <div class="gr-12" v-else>
-              <div class="gr-2 padding-5">
-                <i class="fa fa-arrow-left" aria-hidden="true" @click="showDocumentDetails(memberDocumentDetail)"></i>
-              </div>
-              <div class="gr-10">
-                <h5>{{memberDocumentDetail.documentType}}</h5>
-              </div>
-              <hr>
-              <div class="gr-12">
-                  <img :src="imageBaseUrl+memberDocumentDetail.documentUrl" class="img-rounded" alt="Documents" width="300" height="200">
-              </div>
-              <br>
-              <div class="gr-7">
-                  <i v-if="memberDocumentDetail.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
-                  <br>{{memberDocumentDetail.documentIdNumber}}
-                  <br>Updated On:12/05/2017
-                  <br>
-                  <span v-if="memberDocumentDetail.documentVerificationStatus=='NOT_VERIFIED'">
-                    <button class="button-md-edit"><i class="fa fa-pencil-square-o"></i> Edit </button>
-                    <button class="button-md-verify">Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
-                  </span>
+                <button v-if="memberAccountStatus==2" type="button" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="changeAccountStatus(2)">Suspend</button>
+                <button v-if="memberAccountStatus==1" type="button" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="changeAccountStatus(1)">Activate</button>
+                
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" @click="init">Cancel</button>
+                </div>
               </div>
             </div>
         </div>
 
-        </div>
+
       </div>
   </div>
 </template>
@@ -381,9 +272,12 @@
 <script>
   import Http from '../services/Http'
   import router from '../router/index'
-
+  import MemberListSlider from './MemberListSliderComponent.vue'
   export default {
     name: 'MemberList',
+    components: {
+      'member-list-slider': MemberListSlider
+    },
     data () {
       return {
         members: [],
@@ -391,8 +285,7 @@
         memberProfile: {},
         memberDocuments: {},
         memberIntroducers: {},
-        membersIntroduced: {},
-        membersInvitedBy: {},
+        memberMissingInfo: {},
         imageBaseUrl: '',
         value: [
           0,
@@ -400,8 +293,9 @@
         ],
         sliderShow: false,
         maxPaginationItem: 10,
-        profileDetails: true,
-        memberDocumentDetail: {}
+        memberAccountStatus: 0,
+        memberComment: '',
+        memberAccountID: ''
       }
     },
     methods: {
@@ -433,43 +327,22 @@
                 console.log('Error in getting the list of introducers, error: ', error)
               }
             )
+          // Http call for the missing information
+          Http.GET('member', [member.accountId, 'is-verifiable'])
+          .then(
+            ({data: {data: missingData}}) => {
+              this.memberMissingInfo = missingData
+              console.log('Got the list of missing: ', this.memberMissingInfo)
+            },
+            error => {
+              console.log('Error in getting the list of missing, error: ', error)
+            }
+          )
           this.sliderShow = true
         }
       },
-      loadMemberIntroduced: function (accountId) {
-        Http.GET('member', [accountId, 'introduced'])
-          .then(
-            ({data: {data: introduced}}) => {
-              this.membersIntroduced = introduced
-              console.log('Got the list of introduced: ', this.membersIntroduced)
-            },
-            error => {
-              console.log('Error in getting the list of introduced, error: ', error)
-            }
-          )
-      },
-      loadMemberInvitedBy: function (accountId) {
-        Http.GET('member', [accountId, 'inviters'])
-          .then(
-            ({data: {data: invited}}) => {
-              this.membersInvitedBy = invited
-              console.log('Got the list of inviters: ', this.membersInvitedBy)
-            },
-            error => {
-              console.log('Error in getting the list of inviters, error: ', error)
-            }
-          )
-      },
-      hideProfile: function () {
+      hideProfile: function (param = 'false') {
         this.sliderShow = false
-      },
-      showDocumentDetails: function (document) {
-        this.memberDocumentDetail = document
-        if (this.profileDetails) {
-          this.profileDetails = false
-        } else {
-          this.profileDetails = true
-        }
       },
       getMembers: function (key = 'member') {
         Http.GET(key, this.query)
@@ -479,6 +352,28 @@
           }, error => {
             console.error('Error in getting members: ', error)
           })
+      },
+      statusChange: function (accountID, accountStatus) {
+        console.log(accountStatus)
+        this.memberAccountStatus = accountStatus
+        this.memberAccountID = accountID
+        $('#MemberAccountStatusModal').modal({backdrop: false})
+      },
+      changeAccountStatus: function (accountStatus) {
+        let paramData = {
+          'message': this.memberComment,
+          'effectiveFrom': new Date().getTime().toString()
+        }
+        Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
+        .then(
+          ({data: statusData}) => {
+            console.log('document data::', statusData)
+            this.init()
+          },
+          error => {
+            console.log('Error vrification of document: ', error)
+          }
+        )
       },
       pageChange (number = 0) {
         if (this.query.pageNumber !== number) {
