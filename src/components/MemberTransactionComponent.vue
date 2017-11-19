@@ -3,34 +3,25 @@
       <br>
       <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
           <div class="form-group gr-12">
-            <div class="gr-8">
-              <label class="push-1"> Date Range From: </label>
-              <input  type="date" name="fromRDate"  v-model="transactionQuery.fromDate" style="width: 200px;"
-                      class="push-1"/>
-              <label class="push-1">To:</label>
+            <div class="gr-3">
+              <label> Date Range From: </label>
+              <input  type="date" name="fromRDate"  v-model="transactionQuery.fromDate" />
+            </div>
+            <div class="gr-3">
+              <label>To:</label>
               <input type="date" name="toRange"  placeholder="to"
-                     v-model="transactionQuery.toDate" style="width: 210px;"
-                     class="push-1"/>
+                     v-model="transactionQuery.toDate" />
             </div>
 
-          <!--<div  style="align-content: left;">-->
-              <!--<label class="push-1"> Date Range From: </label>-->
-              <!--<input  type="date" name="fromRDate"  v-model="transactionQuery.fromDate"/>-->
-              <!--<label class="push-0.5">To:</label>-->
-              <!--<input type="date" name="toRange"  v-model="transactionQuery.toDate"/>-->
-          <!--</div>-->
-            <div class="gr-1" style="height: 40px;
-              text-align: center;  line-height: 40px;">
-              <label class="push-1">Type: </label>
-            </div>
-
-            <div class="gr-3" style="border: 3px solid #C0C0C0; height: 37px; width: 200px;
-                border-radius: 4px;"> <!-- #8b9eb6; -->
-                <select id="transaction-selector" v-model="transactionQuery.serviceID">
-                <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
-                  <option value=null disabled selected>Select Transaction Type</option>
-                  <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
+            <div class="gr-3" > <!-- #8b9eb6; -->
+              <label>Type: </label>
+              <div class="select">
+                <select id="sort-by-select" v-model="transactionQuery.serviceID">
+                  <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
+                    <option value=null disabled selected>Select Transaction Type</option>
+                    <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
                 </select>
+              </div>
             </div>
           </div>
 

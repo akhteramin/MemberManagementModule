@@ -78,7 +78,11 @@
     methods: {
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
-        this.imageUrl = this.imageBaseUrl + this.member.basicInfo.mmUserPictures[0].document.url
+        if (this.member.basicInfo.mmUserPictures[0]) {
+          this.imageUrl = this.imageBaseUrl + this.member.basicInfo.mmUserPictures[0].document.url
+        } else {
+          this.imageUrl = 'static/images/default-original.jpg'
+        }
       },
       onPPChange (e) {
         var files = e.target.files || e.dataTransfer.files

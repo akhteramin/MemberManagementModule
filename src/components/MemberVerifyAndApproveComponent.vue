@@ -3,21 +3,22 @@
     <div class="gr-10" style="text-align: center;">
       <h5><b>Verification</b></h5>
     </div>
-    <div class="gr-8 push-1">
+    <div class="gr-10">
       <table class="table table-bordered">
         <tbody>
         <tr>
-          <td style="width:50%;">
+          <td>
             <form v-on:submit.prevent="acceptVerification" v-on:reset.prevent="rejectVerification">
               <br>
               <div class="row text-center" v-if="verificationStatus === 'NOT_VERIFIED'" style="color: red;">
                 NOT VERIFIED
                 <br> <br>
-                <textarea v-model="verificationComment" placeholder="Enter comment" required
-                style="color: black; width: 300px; height: 150px;"></textarea>
+                <div class="gr-10 push-1">
+                  <textarea v-model="verificationComment" placeholder="Enter comment" required></textarea>
+                </div>
                 <div>
-                  <div class="form-group">
-                    <button type="submit" class="button-md-verify" style="width: 90px; height: 32px;">
+                  <div class="form-group gr-12">
+                    <button type="submit" class="button-md-verify">
                       <i class="fa fa-check" aria-hidden="true"></i>
                       Verify
                     </button>
@@ -87,8 +88,7 @@
                   <i class="fa fa-times"></i> NOT APPROVED
                 </div>
                 <br> <br>
-                <textarea v-model="approvalComment" placeholder="Enter comment" required
-                          style="color: black; width: 300px; height: 150px;"></textarea>
+                  <textarea v-model="approvalComment" placeholder="Enter comment" required></textarea>
 
                 <div>
                   <div class="form-group">

@@ -331,7 +331,6 @@
                   </div>
 
                   <div class="row justify-content-center">
-                    Hello I am who!!! {{ member.basicInfo.verificationStatus }}
                     <member-verify-and-approve :id="id" :verificationStatus="member.basicInfo.verificationStatus"
                     :verificationHistory="member.verificationHistory"></member-verify-and-approve>
                   </div>

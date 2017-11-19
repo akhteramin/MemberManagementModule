@@ -1,8 +1,8 @@
  <template>
     <div class="gr-5">
-        <h5>Introduced by</h5>
+        <h5><b>Introduced by</b></h5>
         <hr>
-        <strong v-if="introducers.length === 0">N/A</strong>
+        <div class="text-center" v-if="introducers.length === 0">This member has no introducer.</div>
         <div v-else class="pre-scrollable" style="height: 210px;">
             <div class="row" v-for="item in introducers">
                 <div class="gr-3">
