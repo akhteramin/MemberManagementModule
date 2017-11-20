@@ -54,7 +54,7 @@
             </div>
           </div>
         <div class="gr-12">
-          <div class="gr-6 text-center">
+          <div class="gr-5 text-center">
             <label> Profile Completion Range: </label>
             <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
           </div>
@@ -239,8 +239,27 @@
                 </div>
                 <div class="modal-body">
                 <div class="form-group">
-                    <div class="row">
-                    <div class="col-md-4 col-md-offset-3">
+                  <div class="row">
+                    <div class="col-md-12" v-if="memberSuspensionHistory.list">
+                      <div class="col-md-12 comment" v-for="history in memberSuspensionHistory.list">
+                        <ul class="chat">
+                          <li class="left clearfix"><span class="chat-img pull-left">
+                              <!--img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /-->
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">{{history.suspensionStatus}}</strong> by <strong class="primary-font">{{history.adminUserDetails.name}}  </strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>{{history.createdAt | date('MMM D, YYYY')}}</small>
+                                      </div>
+                                      <p>
+                                          {{history.description}}
+                                      </p>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
                         <span>
                         <div class="comment">
                             <!--<span>Browse</span>-->
@@ -295,7 +314,8 @@
         maxPaginationItem: 10,
         memberAccountStatus: 0,
         memberComment: '',
-        memberAccountID: ''
+        memberAccountID: '',
+        memberSuspensionHistory: {}
       }
     },
     methods: {
@@ -357,6 +377,19 @@
         console.log(accountStatus)
         this.memberAccountStatus = accountStatus
         this.memberAccountID = accountID
+        let paramData = Object.assign({}, {
+          order: 'DESC',
+          pageNumber: 0,
+          pageSize: 3
+        })
+        Http.GET('member', [accountID, 'suspension-history'], paramData)
+          .then(({data: {data}}) => {
+            console.log('Success, got members: ', data)
+            this.memberSuspensionHistory = data
+          }, error => {
+            console.error('Error in getting members: ', error)
+          }
+        )
         $('#MemberAccountStatusModal').modal({backdrop: false})
       },
       changeAccountStatus: function (accountStatus) {

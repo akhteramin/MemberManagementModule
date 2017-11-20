@@ -1,19 +1,19 @@
  <template>
     <div>
         <button class="update btn btn-sm btn-block btn-default btn-active-til" 
-        data-toggle="modal" data-target="#ChangePpModal" title="Change Profile Picture" data-backdrop="false">
+        data-toggle="modal" data-target="#ChangeBusinessPpModal" title="Change Profile Picture" data-backdrop="false">
             <i class="glyphicon glyphicon-camera">
-            </i> Change
+            </i> <small>Change</small>
         </button>
 
-        <div id="ChangePpModal" class="modal fade" role="dialog">
+        <div id="ChangeBusinessPpModal" class="modal fade" role="dialog">
         <div class="modal-dialog  modal-md">
           <!-- Modal content-->
 
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" >&times;</button>
-              <h4 class="modal-title"> Change Your Profile Picture </h4>
+              <h4 class="modal-title"> Change Your Business Profile Picture </h4>
             </div>
             <div class="modal-body">
               <div class="form-group">
@@ -24,7 +24,7 @@
                   </div>
                   <div class="col-md-8">
                     <div>
-                      <img id="ppImage" v-if="member.basicInfo.mmUserPictures[0]"
+                      <img id="ppImage" v-if="member.businessDetails.businessOwnerPictures[0]"
                               :src="imageUrl || 'static/images/default-original.jpg'" 
                               class="img-rounded img-responsive" width="250" height="250">
 
@@ -64,7 +64,7 @@
 <script>
   import Http from '../services/Http'
   export default {
-    name: 'UpdateMemberImage',
+    name: 'UpdateMemberBusinessImage',
     props: [
       'member',
       'id'
@@ -78,10 +78,9 @@
     },
     methods: {
       init () {
-        console.log('type::', this.id)
         this.imageBaseUrl = Http.IMAGE_URL
-        if (this.member.basicInfo.mmUserPictures[0]) {
-          this.imageUrl = this.imageBaseUrl + this.member.basicInfo.mmUserPictures[0].document.url
+        if (this.member.businessDetails.businessOwnerPictures[0]) {
+          this.imageUrl = this.imageBaseUrl + this.member.businessDetails.businessOwnerPictures[0].url
         } else {
           this.imageUrl = 'static/images/default-original.jpg'
         }
@@ -104,7 +103,7 @@
         console.log(this.profilePicture)
         var fd = new FormData()
         fd.append('imageFile', this.profilePicture)
-        Http.POST('member', fd, [this.id, 'profile-picture'])
+        Http.POST('member', fd, [this.id, 'business-owner', 'picture'])
         .then(
           ({data: propicData}) => {
             console.log('profile picture data: ', propicData)

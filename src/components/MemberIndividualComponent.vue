@@ -26,7 +26,7 @@
               <div v-if="member.basicInfo">
 
                     <div class="row">
-                      <div class="gr-2 push-6">
+                      <div class="gr-2 push-7">
                         <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
                         <span v-else>Balance: N/A BDT </span>
                       </div>
@@ -36,9 +36,10 @@
 
                       <div class="gr-2">
                         <img v-if="member.basicInfo.mmUserPictures[0]"
-                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'" class="img-circle" width="250" height="250">
+                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'" 
+                              class="img-circle img-responsive" width="250" height="250">
 
-                        <img v-else src="static/images/default-original.jpg" class="img-circle"
+                        <img v-else src="static/images/default-original.jpg" class="img-circle img-responsive"
                             alt="N/A" width="30" height="30">
                         <update-member-image
                           :member="member"
@@ -47,8 +48,27 @@
                         </update-member-image>
 
                       </div>
+
+                      
+
                       <div class="gr-9 text-left push-.5">
-                        <div class="gr-12">
+                        <div class="gr-1" v-if="member.basicInfo.accountType===2">
+                          <span v-if="member.businessDetails.businessOwnerPictures[0]">
+                              <img :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
+                              class="img-rounded img-responsive" alt="Profile Picture" width="130" height="100">
+                          </span>
+                          <span v-else>
+                              <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
+                          </span>
+                          <update-member-business-image
+                            :member="member"
+                            :id="id"
+                            @update="editProfilePic">
+                          </update-member-business-image>
+                        </div>
+
+
+                        <div class="gr-11">
                           <div class="gr-2">
                             <h5><b>Basic Information</b></h5>
                           </div>
@@ -56,7 +76,7 @@
                               <button class="button-md-edit" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                           </div>
                         </div>
-                        <div v-if="!editBasicProfileMode">
+                        <div class="gr-10" v-if="!editBasicProfileMode">
                           <div class="gr-2">
                             Name:
                           </div>
@@ -116,55 +136,93 @@
                           {{ member.basicInfo.organizationName || 'N/A' }}
                           </div>
                         </div>
-                        <div v-else>
+                        <div class="gr-11" v-else>
                           <member-basic-info-update
                             :member="member"
                             :occupationList="occupationList"
                             @update="editBasicInfo">
                           </member-basic-info-update>
                         </div>
+                        
                         <hr>
-                      <div class="gr-12">
-                        <div class="gr-2">
-                            <h5><b>Family Information</b></h5>
+                      <div v-if="member.basicInfo.accountType===1">
+                        <div class="gr-12">
+                          <div class="gr-2">
+                              <h5><b>Family Information</b></h5>
+                            </div>
+                            <div class="gr-2 push-6" v-if="!editParentsMode">
+                                <button class="button-md-edit" @click="editParents()"><i class="fa fa-pencil-square-o"></i> Edit </button>
+                            </div>
+                        </div>
+                        <div v-if="!editParentsMode">
+                          <div class="gr-2">
+                          Father Name:
                           </div>
-                          <div class="gr-2 push-6" v-if="!editParentsMode">
-                              <button class="button-md-edit" @click="editParents()"><i class="fa fa-pencil-square-o"></i> Edit </button>
+                          <div class="gr-4 text-left">
+                            {{ member.basicInfo.father || 'N/A' }}
+
                           </div>
-                      </div>
-                      <div v-if="!editParentsMode">
-                        <div class="gr-2">
-                        Father Name:
+                          <div class="gr-2">
+                          Mother Name:
+                          </div>
+                          <div class="gr-4 text-left">
+                            {{ member.basicInfo.mother || 'N/A' }}
+                          </div>
+                          <div class="gr-2">
+                          Father Mobile:
+                          </div>
+                          <div class="gr-4 text-left">
+                            {{ member.basicInfo.fatherMobileNumber || 'N/A' }}
+                          </div>
+                          <div class="gr-2">
+                          Mother Mobile:
+                          </div>
+                          <div class="gr-4 text-left">
+                            {{ member.basicInfo.motherMobileNumber || 'N/A' }}
+                          </div>
                         </div>
-                        <div class="gr-4 text-left">
-                          {{ member.basicInfo.father || 'N/A' }}
-
-                        </div>
-                        <div class="gr-2">
-                        Mother Name:
-                        </div>
-                        <div class="gr-4 text-left">
-                          {{ member.basicInfo.mother || 'N/A' }}
-                        </div>
-                        <div class="gr-2">
-                        Father Mobile:
-                        </div>
-                        <div class="gr-4 text-left">
-                          {{ member.basicInfo.fatherMobileNumber || 'N/A' }}
-                        </div>
-                        <div class="gr-2">
-                        Mother Mobile:
-                        </div>
-                        <div class="gr-4 text-left">
-                          {{ member.basicInfo.motherMobileNumber || 'N/A' }}
+                        <div v-else>
+                          <update-member-parents
+                              :member="member"
+                              @update="editParents">
+                          </update-member-parents>
                         </div>
                       </div>
+                      <div v-if="member.basicInfo.accountType===2">
+                        <div class="gr-12">
+                          <div class="gr-2">
+                              <h5><b>Business Information</b></h5>
+                            </div>
+                            
+                        </div>
+                        <div>
+                          <div class="gr-2">
+                          Business Name:
+                          </div>
+                          <div class="gr-4 text-left">
+                            {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
 
-                      <div v-else>
-                        <update-member-parents
-                            :member="member"
-                            @update="editParents">
-                        </update-member-parents>
+                          </div>
+                          <div class="gr-2">
+                          Business Type:
+                          </div>
+                          <div class="gr-4 text-left">
+                            {{ member.businessDetails.businessBasicInfo.businessType || 'N/A' }}
+                          </div>
+                          <div class="gr-2">
+                          Email:
+                          </div>
+                          <div class="gr-4 text-left">
+                            {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
+                          </div>
+                          <div class="gr-2">
+                          Mobile Number:
+                          </div>
+                          <div class="gr-4 text-left">
+                            {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                          </div>
+                        </div>
+                        
                       </div>
 
                     </div>
@@ -253,7 +311,9 @@
                     <div class="gr-5" v-if="!editPermanentAddressMode">
                       <div class="gr-12">
                         <div class="gr-2">
-                          <h5><b>Permanent</b></h5>
+                          <h5 v-if="member.basicInfo.accountType===1"><b>Permanent</b></h5>
+                          <h5 v-if="member.basicInfo.accountType===2"><b>Business</b></h5>
+                          
                         </div>
                         <div class="gr-2 push-6" v-if="!editPermanentAddressMode">
                           <button class="button-md-edit" @click="editPermanentAddress">
@@ -358,7 +418,7 @@
   import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
   import UpdateMemberImage from './UpdateMemberImageComponent.vue'
   import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
-
+  import UpdateMemberBusinessImage from './UpdateMemberBusinessImageComponent.vue'
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -376,7 +436,8 @@
       'member-verify-and-approve': MemberVerifyAndApproveComponent,
       'update-member-parents': UpdateMemberFamilyInfo,
       'update-member-address': UpdateMemberAddress,
-      'update-member-image': UpdateMemberImage
+      'update-member-image': UpdateMemberImage,
+      'update-member-business-image': UpdateMemberBusinessImage
     },
     data () {
       return {
