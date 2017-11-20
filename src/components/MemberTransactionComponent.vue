@@ -5,12 +5,12 @@
           <div class="form-group gr-12">
             <div class="gr-3">
               <label> Date Range From: </label>
-              <input  type="date" name="fromRDate"  v-model="transactionQuery.fromDate" />
+              <input  type="date" name="fromRDate"  v-model="searchDateFrom" />
             </div>
             <div class="gr-3">
               <label>To:</label>
               <input type="date" name="toRange"  placeholder="to"
-                     v-model="transactionQuery.toDate" />
+                     v-model="searchDateTo" />
             </div>
 
             <div class="gr-3" > <!-- #8b9eb6; -->
@@ -163,6 +163,8 @@
         transactions: {},
         transactionTotalPages: '',
         maxPaginationItem: '',
+        searchDateFrom: null,
+        searchDateTo: null,
         serviceList: Constants
       }
     },
@@ -177,6 +179,8 @@
           serviceID: null,
           toDate: new Date().getTime()
         })
+        this.searchDateFrom = null
+        this.searchDateTo = null
         this.getTransactions()
       },
       resetTransactions () {
@@ -193,13 +197,13 @@
         // The adjustment is being made to avoid GMT issues.
 //         let fromDate = this.transactionQuery.fromDate
 //        let toDate = this.transactionQuery.toDate
-        if (this.transactionQuery.fromDate !== null) {
-          this.transactionQuery.fromDate = new Date(this.transactionQuery.fromDate).getTime() - 6 * 3600 * 1000
+        if (this.searchDateFrom !== null) {
+          this.transactionQuery.fromDate = new Date(this.searchDateFrom).getTime() - 6 * 3600 * 1000
         } else {
           this.transactionQuery.fromDate = 0
         }
-        if (this.transactionQuery.toDate !== null) {
-          this.transactionQuery.toDate = new Date(this.transactionQuery.toDate).getTime() - 6 * 60 * 60 * 1000
+        if (this.searchDateTo !== null) {
+          this.transactionQuery.toDate = new Date(this.searchDateTo).getTime() - 6 * 60 * 60 * 1000
         } else {
           this.transactionQuery.toDate = new Date().getTime() - 6 * 3600 * 1000
         }

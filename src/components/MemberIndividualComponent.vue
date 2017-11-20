@@ -391,8 +391,11 @@
                   </div>
 
                   <div class="row justify-content-center">
-                    <member-verify-and-approve :id="id" :verificationStatus="member.basicInfo.verificationStatus"
-                    :verificationHistory="member.verificationHistory"></member-verify-and-approve>
+                     {{ member.basicInfo.verificationStatus ? '' : '' }}
+                    <member-verify-and-approve :id="id" :member="member">
+
+                    </member-verify-and-approve>
+
                   </div>
                 </div>
               </div>
