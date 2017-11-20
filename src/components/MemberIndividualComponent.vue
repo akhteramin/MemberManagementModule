@@ -27,7 +27,8 @@
 
                     <div class="row">
                       <div class="gr-2 push-6">
-                        Balance: {{ balance.availableBalance || 'N/A'}} BDT
+                        <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
+                        <span v-else>Balance: N/A BDT </span>
                       </div>
                     </div>
                     <br>
@@ -334,6 +335,7 @@
                     <member-verify-and-approve :id="id" :member="member">
 
                     </member-verify-and-approve>
+
                   </div>
                 </div>
               </div>

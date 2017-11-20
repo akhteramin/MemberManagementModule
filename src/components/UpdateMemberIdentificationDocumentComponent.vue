@@ -6,7 +6,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" >&times;</button>
-              <h4 class="modal-title"> Change Document {{ document.id }} </h4>
+              <h4 class="modal-title"> Change Document {{ document.documentType }} </h4>
             </div>
             <div class="modal-body">
               <div class="form-group">
@@ -19,9 +19,9 @@
                     <div>
                       <img id="ppImage" v-if="document.documentUrl"
                               :src="documentUrl || 'static/images/default-original.jpg'" 
-                              class="img-circle" width="250" height="250">
+                              class="img-rounded" width="250" height="250">
 
-                        <img v-else src="static/images/default-original.jpg" class="img-circle"
+                        <img v-else src="static/images/default-original.jpg" class="img-rounded"
                             alt="N/A" width="30" height="30">
                         
                     </div>
@@ -70,7 +70,7 @@
       init () {
         console.log('document::', this.document)
         this.documentBaseUrl = Http.IMAGE_URL
-        this.documentUrl = this.imageBaseUrl + this.document.documentUrl
+        this.documentUrl = this.documentBaseUrl + this.document.documentUrl
       },
       onDocumentChange (e) {
         console.log('document::', this.document)

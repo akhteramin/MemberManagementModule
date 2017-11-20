@@ -1,8 +1,8 @@
  <template>
     <div class="row justify-content-center">
       <div class="gr-10">
-        <h3>Bank Info</h3>
-        <div v-if="bankAccounts.length === 0">N/A<br></div>
+        <h5><b>Bank Info</b></h5>
+        <div class="text-center" v-if="bankAccounts.length === 0">No Bank Added<br></div>
         <div v-else-if="bankAccounts" class="pre-scrollable" style="height: 210px;">
           <table class="table table-hover table-sm">
             <thead class="thead-default">
@@ -46,6 +46,10 @@
         imageBaseUrl: ''
       }
     },
+    created () {
+      console.log('document created::::')
+      this.init()
+    },
     methods: {
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
@@ -63,10 +67,6 @@
                console.log('Error in getting the list of bank accounts, error: ', error)
              }
            )
-      },
-      created () {
-        console.log('document created::::')
-        this.init()
       }
     }
 }

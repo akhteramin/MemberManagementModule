@@ -4,19 +4,18 @@
             <div class="form-group gr-12">
             <div  style="align-content: left;">
               <br>
-              <div class="gr-8">
-                <label class="push-1"> Date Range From: </label>
-                <input  type="date" name="fromRDate"  v-model="activityQuery.fromDate" style="width: 200px;"
-                class="push-1"/>
-                <label class="push-1">To:</label>
-                <input type="date" name="toRange"  placeholder="to"
-                       v-model="activityQuery.toDate" style="width: 210px;"
-                class="push-1"/>
+              <div class="gr-3">
+                <label> From: </label>
+                <input  type="date" name="fromRDate"  v-model="activityQuery.fromDate"/>
+              </div>
+              <div class="gr-3">
+                <label>To:</label>
+                <input type="date" name="toRange"  placeholder="to" v-model="activityQuery.toDate"/>
               </div>
               <div class="gr-4">
                 <label class="justify-content-md-start" for="search-key">Description</label>
                 <input id="search-key" v-model="activityQuery.searchKey"
-                       placeholder="description" type="text" style="width: 150px;">
+                       placeholder="description" type="text">
               </div>
             </div>
             </div>

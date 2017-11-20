@@ -1,9 +1,11 @@
  <template>
     <div class="row justify-content-center">
         <div class="gr-10">
-            <h3>Identification Documents</h3>
-            <strong v-if="documents === null || documents.length === 0">N/A<br></strong>
-            <div v-else class="pre-scrollable" style="height: 210px;">
+            <h5><b>Identification Documents</b></h5>
+            <div class="text-center" v-if="documents === null || documents.length === 0">
+              No Document has been uploaded.
+            </div>
+            <div v-else class="pre-scrollable">
             <table class="table table-hover table-sm">
                 <thead class="thead-default">
                 <tr>
@@ -17,7 +19,7 @@
                 </thead>
                 <tbody>
                 <tr class = "text-center" v-for="item in documents">
-                <td>{{ item.documentType ? item.documentType : 'N/A' }}</td>
+                <td>{{ item.documentType ? item.documentType : 'N/A' | underscoreless}}</td>
                 <td>{{ item.documentIdNumber ? item.documentIdNumber : 'N/A' }}</td>
                 <td>
                     <button>
