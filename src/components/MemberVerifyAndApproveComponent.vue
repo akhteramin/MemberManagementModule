@@ -8,7 +8,7 @@
         <tbody>
         <tr>
           <td>
-            <form v-on:submit.prevent="acceptVerification" v-on:reset.prevent="rejectVerification">
+            <form  v-on:submit.prevent="acceptVerification" v-on:reset.prevent="rejectVerification">
               <br>
               <div class="row text-center" v-if="verificationStatus === 'NOT_VERIFIED'" style="color: red;">
                 <i class="fa fa-times" aria-hidden="true"></i> NOT VERIFIED
@@ -49,7 +49,7 @@
               <div class="gr-4 push-1" style="text-align: left;">
                 Time:
               </div>
-              <div class="gr-8 push-1" v-if="approveHistory.actor">
+              <div class="gr-4 push-1" v-if="approveHistory.actor">
                 {{ approveHistory.updateTime | date('MMM D, YYYY h:mm:ss') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
@@ -73,22 +73,22 @@
                 <i class="fa fa-times"></i> REJECTED
               </div>
               <br>
-              <div class="gr-4 push-1">
+              <div class="gr-2 text-left">
                 Rejected By:
               </div>
-              <div class="gr-4 push-1">
+              <div class="gr-4" style="text-align: left;">
                 {{ approveHistory.actor ? approveHistory.actor.name : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <br>
-              <div class="gr-4 push-1" style="text-align: left;">
+              <div class="gr-2 text-left" style="text-align: left;">
                 Time:
               </div>
-              <div class="gr-8 push-1" v-if="approveHistory.actor">
+              <div class="gr-3" v-if="approveHistory.actor" style="text-align: left;">
                 {{ approveHistory.updateTime | date('MMM D, YYYY h:mm:ss') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
-              <div v-else class="gr-6 push-1">
+              <div v-else class="gr-4 push-1">
                 N/A
               </div>
             </div>
@@ -113,22 +113,22 @@
                 <i class="fa fa-check"></i> VERIFIED
               </div>
               <br>
-              <div class="gr-5 push-1" style="text-align: left;">
+              <div class="gr-2" style="text-align: left;">
                 Approved By:
               </div>
-              <div class="gr-4 push-1" style="text-align: left;">
+              <div class="gr-4" style="text-align: left;">
                 {{ approveHistory.actor ? approveHistory.actor.name : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <br>
-              <div class="gr-4 push-1" style="text-align: left;">
+              <div class="gr-2" style="text-align: left;">
                 Time:
               </div>
-              <div class="gr-8 push-1" v-if="approveHistory.actor">
+              <div class="gr-4" v-if="approveHistory.actor" style="text-align: left;">
                 {{ approveHistory.updateTime | date('MMM D, YYYY h:mm:ss') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
-              <div v-else class="gr-6 push-1">
+              <div v-else class="gr-4 push-1">
                 N/A
               </div>
             </div>
@@ -138,8 +138,9 @@
 
 
 
-
-          <td>
+          <td v-if="!((verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
+              (verificationStatus === 'VERIFIED' && verificationType === null) ||
+              (verificationStatus === 'REJECTED' || verificationStatus === 'REJECT'))">
             <br>
             <form v-on:submit.prevent="acceptApproval" v-on:reset.prevent="rejectApproval">
 
@@ -183,6 +184,7 @@
                   <i class="fa fa-times"></i> NOT APPROVED
                 </div>
               </div>
+
             </form>
           </td>
 
