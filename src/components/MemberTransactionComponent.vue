@@ -1,7 +1,7 @@
  <template>
     <div>
       <br>
-      <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
+      <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions"  @change="triggerSearchTransactions">
           <div class="form-group gr-12">
             <div class="gr-3">
               <label> Date Range From: </label>
@@ -192,6 +192,10 @@
 //          toDate: null
 //        })
 //        this.getTransactions()
+      },
+      triggerSearchTransactions () {
+        this.transactionQuery.pageNumber = 0
+        this.filterTransactions()
       },
       filterTransactions () {
         // The adjustment is being made to avoid GMT issues.

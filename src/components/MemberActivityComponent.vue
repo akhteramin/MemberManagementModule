@@ -28,7 +28,7 @@
               </div>
               <div id="container" class="gr-3" style="height: 40px;">
                 <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
-                  <select v-model="activityQuery.pageSize">
+                  <select v-model="activityQuery.pageSize" @change="triggerSearchActivities">
                     <option disabled>Number of Entries</option>
                     <option selected value=10>10</option>
                     <option value=20>20</option>
@@ -161,6 +161,11 @@
         this.searchFromDate = null
         this.searchToDate = null
         this.getActivities()
+      },
+      triggerSearchActivities () {
+        this.activityQuery.pageNumber = 0
+        console.log('trigger search activities method invoked.')
+        this.filterActivities()
       },
       filterActivities () {
         // The adjustment is being made to avoid GMT issues.
