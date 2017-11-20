@@ -14,7 +14,7 @@
                 <i class="fa fa-times" aria-hidden="true"></i> NOT VERIFIED
                 <br> <br>
                 <div class="gr-10 push-1">
-                  <textarea v-model="verificationComment" placeholder="Enter comment" required></textarea>
+                  <textarea v-model="verificationComment" placeholder="Enter comment" required style="width: 80%; height: 150px;"></textarea>
                 </div>
                 <div>
                   <div class="form-group gr-12">
@@ -148,7 +148,8 @@
                   <i class="fa fa-times"></i> NOT APPROVED
                 </div>
                 <br> <br>
-                  <textarea v-model="approvalComment" placeholder="Enter comment" required></textarea>
+                  <textarea v-model="approvalComment" placeholder="Enter comment" required
+                            style="width: 80%; height: 150px;"></textarea>
 
                 <div>
                   <div class="form-group">

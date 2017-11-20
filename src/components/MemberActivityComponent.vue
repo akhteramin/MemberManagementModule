@@ -6,11 +6,11 @@
               <br>
               <div class="gr-3">
                 <label> From: </label>
-                <input  type="date" name="fromRDate"  v-model="activityQuery.fromDate"/>
+                <input  type="date" name="fromRDate" placeholder=activityQuery.fromDate  v-model="searchFromDate"/>
               </div>
               <div class="gr-3">
                 <label>To:</label>
-                <input type="date" name="toRange"  placeholder="to" v-model="activityQuery.toDate"/>
+                <input type="date" name="toRange"  placeholder=activityQuery.toDate v-model="searchToDate"/>
               </div>
               <div class="gr-4">
                 <label class="justify-content-md-start" for="search-key">Description</label>
@@ -132,7 +132,9 @@
     data () {
       return {
         activities: {},
-        maxPaginationItem: ''
+        maxPaginationItem: '',
+        searchFromDate: null,
+        searchToDate: null
       }
     },
     methods: {
@@ -156,19 +158,21 @@
           toDate: null,
           searchKey: null
         })
+        this.searchFromDate = null
+        this.searchToDate = null
         this.getActivities()
       },
       filterActivities () {
         // The adjustment is being made to avoid GMT issues.
 //         let fromDate = this.transactionQuery.fromDate
 //        let toDate = this.transactionQuery.toDate
-        if (this.activityQuery.fromDate !== null) {
-          this.activityQuery.fromDate = new Date(this.activityQuery.fromDate).getTime() - 6 * 3600 * 1000
+        if (this.searchFromDate !== null) {
+          this.activityQuery.fromDate = new Date(this.searchFromDate).getTime() - 6 * 3600 * 1000
         } else {
           this.activityQuery.fromDate = 0
         }
-        if (this.activityQuery.toDate !== null) {
-          this.activityQuery.toDate = new Date(this.activityQuery.toDate).getTime() - 6 * 60 * 60 * 1000
+        if (this.searchToDate !== null) {
+          this.activityQuery.toDate = new Date(this.searchToDate).getTime() - 6 * 60 * 60 * 1000
         } else {
           this.activityQuery.toDate = new Date().getTime() - 6 * 3600 * 1000
         }
