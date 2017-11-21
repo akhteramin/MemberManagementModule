@@ -17,12 +17,18 @@
                   </div>
                   <div class="col-md-8">
                     <div>
-                      <img id="ppImage" v-if="document.documentUrl"
-                              :src="documentUrl || 'static/images/default-original.jpg'" 
-                              class="img-rounded" width="250" height="250">
+                        <div v-if="!isPdf(document.documentUrl)">
+                          <img id="ppImage" v-if="document.documentUrl"
+                                :src="documentUrl || 'static/images/default-original.jpg'" 
+                                class="img-rounded" width="250" height="250">
 
-                        <img v-else src="static/images/default-original.jpg" class="img-rounded"
-                            alt="N/A" width="30" height="30">
+                          <img v-else src="static/images/default-original.jpg" class="img-rounded"
+                              alt="N/A" width="30" height="30">
+                        </div>
+                        <div v-if="isPdf(document.documentUrl)">
+                            <iframe :src="documentBaseUrl+document.documentUrl" width="400" height="400"></iframe>
+                        </div>
+                      
                         
                     </div>
                   </div>
@@ -68,9 +74,9 @@
     },
     methods: {
       init () {
-        console.log('document::', this.document)
         this.documentBaseUrl = Http.IMAGE_URL
         this.documentUrl = this.documentBaseUrl + this.document.documentUrl
+        console.log('document::', this.documentUrl)
       },
       onDocumentChange (e) {
         console.log('document::', this.document)
@@ -105,6 +111,19 @@
               console.log('Error in address update, error: ', error)
             }
           )
+      },
+      isPdf (fileName) {
+        if (fileName) {
+          var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
+          if (ext === 'pdf') {
+            console.log('returning trueeee')
+            return true
+          } else {
+            return false
+          }
+        } else {
+          return false
+        }
       },
       editIdentificationDocument () {
         this.$emit('update', 'false')

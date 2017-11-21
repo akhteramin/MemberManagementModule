@@ -18,10 +18,10 @@
             </span>
             </div>
             <div class="gr-10">
-                <div class="gr-2">
-                    <button class="button-banner" >{{memberProfile.verificationStatus}}</button>
+                <div class="gr-3">
+                    <button class="button-banner padding-2" >{{memberProfile.verificationStatus}}</button>
                 </div>
-                <div class="gr-3 push-7">
+                <div class="gr-2 push-7" v-if="memberProfile.accountType===2">
                     <!--button class="button-edit">Edit <i class="fa fa-pencil-square-o"></i></button-->
 
                 </div>
@@ -45,7 +45,7 @@
                 <div class="gr-12" v-else>
                     <div class="gr-6" v-for="missingInfo in memberMissingInfo.missingInformation">
                         <span class="text-ash">
-                            -{{missingInfo}}
+                            -{{missingInfo | underscoreless}}
                         </span>
                     </div>
                     
@@ -55,11 +55,20 @@
                 <b>Identification Document</b>
                 <hr>
                 <div class="row margin-5" v-for="memberDocument in memberDocuments">
-                    <div class="gr-5">
-                        <img :src="imageBaseUrl+memberDocument.documentUrl" class="img-rounded" alt="Documents" width="140" height="80" @click="showDocumentDetails(memberDocument)">
+                    <div class="gr-5 text-center padding-2">
+                        <img :src="imageBaseUrl+memberDocument.documentUrl" 
+                        v-if="!isPdf(memberDocument.documentUrl)"
+                        class="img-rounded" alt="Documents" width="140" height="80" 
+                        @click="showDocumentDetails(memberDocument)">
+
+                        <i v-if="isPdf(memberDocument.documentUrl)"
+                        class="fa fa-file-pdf-o"
+                        style="font-size:50px;"
+                        aria-hidden="true"
+                        @click="showDocumentDetails(memberDocument)"></i>
                     </div>
                     <div class="gr-7">
-                        <b>{{memberDocument.documentType}}</b>
+                        <b>{{memberDocument.documentType | underscoreless}}</b>
                         <i v-if="memberDocument.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
                         <br>{{memberDocument.documentIdNumber}}
                         <br>Updated On:12/05/2017
@@ -71,7 +80,7 @@
                              <i class="fa fa-pencil-square-o"></i> 
                              Edit 
                             </button>
-                            <div :id="`ChangeDocumentModal${memberDocument.id}`" class="modal fade" role="dialog">
+                            <div :id="`ChangeDocumentModal${memberDocument.id}`" class="modal fade modal-slider" role="dialog">
                                 <update-member-identification-document
                                 :document="memberDocument"
                                 :id="memberProfile.accountId"
@@ -142,13 +151,38 @@
             <i class="fa fa-arrow-left" aria-hidden="true" @click="showDocumentDetails(memberDocumentDetail)"></i>
             </div>
             <div class="gr-10">
-            <h5>{{memberDocumentDetail.documentType}}</h5>
+            <h5>{{memberDocumentDetail.documentType | underscoreless}}</h5>
             </div>
             <hr>
             <div class="gr-12">
-                <img :src="imageBaseUrl+memberDocumentDetail.documentUrl" class="img-rounded" alt="Documents" width="300" height="200">
+                <img v-if="!isPdf(memberDocumentDetail.documentUrl)"
+                :src="imageBaseUrl+memberDocumentDetail.documentUrl" 
+                class="img-rounded" alt="Documents" width="350" height="200">
+                
+                <iframe v-if="isPdf(memberDocumentDetail.documentUrl)" 
+                :src="imageBaseUrl+memberDocumentDetail.documentUrl" width="350" height="200"></iframe>
+
             </div>
             <br>
+            <div class="gr-12" v-if="documentDetails.histories">
+                <div class="gr-12 comment" v-for="history in documentDetails.histories">
+                   <ul class="chat">
+                    <li class="left clearfix"><span class="chat-img pull-left">
+                        <!--img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /-->
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">{{history.verificationStatus}}</strong> by <strong class="primary-font">{{history.verifier.name}}  </strong> <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>{{history.creationTime | date('MMM D, YYYY')}}</small>
+                                </div>
+                                <p>
+                                    {{history.comment}}
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="gr-7">
                 <i v-if="memberDocumentDetail.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
                 <br>{{memberDocumentDetail.documentIdNumber}}
@@ -161,7 +195,7 @@
                              <i class="fa fa-pencil-square-o"></i> 
                              Edit 
                 </button>
-                <div :id="`ChangeDocumentModal${memberDocumentDetail.id}`" class="modal fade" role="dialog">
+                <div :id="`ChangeDocumentModal${memberDocumentDetail.id}`" class="modal-slider modal fade" role="dialog">
                     <update-member-identification-document
                     :document="memberDocumentDetail"
                     :id="memberProfile.accountId"
@@ -179,14 +213,14 @@
         </div>
 
 
-        <div id="DocumentVerificationModal" class="modal fade" role="dialog">
+        <div id="DocumentVerificationModal" class="modal-slider modal fade" role="dialog">
             <div class="modal-dialog  modal-md">
             <!-- Modal content-->
 
             <div class="modal-content">
                 <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                <h4 class="modal-title"> Document Verification </h4>
+                <h4 class="modal-title"> {{paramData.documentType | underscoreless}} Verification </h4>
                 </div>
                 <div class="modal-body">
                 <div class="form-group">
@@ -213,6 +247,7 @@
             </div>
         </div>
 
+        
 
         </div>
 
@@ -246,7 +281,8 @@
           documentVerificationStatus: ''
         },
         memberDocumentDetail: {},
-        profileDetails: true
+        profileDetails: true,
+        documentDetails: {}
       }
     },
     created () {
@@ -294,6 +330,18 @@
             }
         )
       },
+      getDocumentDetails: function (documentID) {
+        Http.GET('member', ['identification-document', documentID])
+        .then(
+            ({data: {data: documentDetail}}) => {
+              this.documentDetails = documentDetail
+              console.log('documentDetail:', documentDetail)
+            },
+            error => {
+              console.log('Error in getting list of identification documents, error: ', error)
+            }
+        )
+      },
       setDocument (document) {
         console.log(document)
         this.paramData = {
@@ -305,11 +353,11 @@
       },
       verifyDocument () {
         console.log('param data ::', this.paramData)
-        Http.PUT('verification', this.paramData, [this.id, 'document', this.paramData.documentID])
+        Http.PUT('verification', this.paramData, [this.memberProfile.accountId, 'document', this.paramData.documentID])
         .then(
           ({data: documentData}) => {
             console.log('document data::', documentData)
-            this.init()
+            this.loadIdentificationDocument(this.memberProfile.accountId)
           },
           error => {
             console.log('Error vrification of document: ', error)
@@ -321,8 +369,10 @@
       },
       showDocumentDetails: function (document) {
         this.memberDocumentDetail = document
+        console.log(document)
         if (this.profileDetails) {
           this.profileDetails = false
+          this.getDocumentDetails(document.id)
         } else {
           this.profileDetails = true
         }
@@ -334,6 +384,19 @@
           name: 'MemberIndividualComponent',
           params: {id: value, accountType: accntType}
         })
+      },
+      isPdf (fileName) {
+        if (fileName) {
+          var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
+          if (ext === 'pdf') {
+            console.log('returning trueeee')
+            return true
+          } else {
+            return false
+          }
+        } else {
+          return false
+        }
       },
       hideProfile () {
         this.$emit('update', 'false')
