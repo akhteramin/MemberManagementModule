@@ -65,7 +65,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/member/profile',
+      path: '/member/profile/:id/:accountType',
       name: 'MemberIndividualComponent',
       component: MemberIndividualComponent,
       props: true

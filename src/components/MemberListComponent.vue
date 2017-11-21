@@ -53,42 +53,56 @@
               </div>
             </div>
           </div>
-        <div class="gr-12">
-          <div class="gr-5 text-center">
-            <label> Profile Completion Range: </label>
-            <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
-          </div>
 
-          <div class="gr-3">
-            <label class="offset-0.5">Sort by: </label>
-            <div class="select">
-              <select id="sort-by-select"  v-model="query.sort">
-                <!--<option selected disabled>Select account type</option>-->
-                <option selected value = "DOCUMENT_UPLOAD">Upload Date</option>
-                <option value="CREATION_DATE">Creation Date</option>
-              </select>
+
+         <div v-if="!doAdvancedSearch">
+           <span style="display: inline-block; width: 10px;"></span>
+           <a @click="toggleAdvancedSearch"> <i class="fa fa-search-plus" aria-hidden="true"></i> Advanced Search</a>
+         </div>
+
+
+        <div v-if="doAdvancedSearch">
+          <div class="gr-12">
+            <div class="gr-5 text-center">
+              <label> Profile Completion Range: </label>
+              <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
+            </div>
+
+            <div class="gr-3">
+              <label class="offset-0.5">Sort by: </label>
+              <div class="select">
+                <select id="sort-by-select"  v-model="query.sort">
+                  <!--<option selected disabled>Select account type</option>-->
+                  <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
+                  <option value="CREATION_DATE">Account Creation Date</option>
+                </select>
+              </div>
+            </div>
+            <div class="gr-3">
+              <label class="offset-2">Order by: </label>
+              <div class="select">
+                <select id="order-by-select"  v-model="query.order">
+                  <!--<option selected disabled>Select account type</option>-->
+                  <option selected value = "DESC">DESC</option>
+                  <option value="ASC">ASC</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="gr-3">
+              <label>Signup From: </label>
+              <input type="date" v-model="query.startSignUpDate"/>
+            </div>
+            <div class="gr-3">
+              <label>Signup To: </label>
+              <input type="date" v-model="query.endSignUpDate"/>
+            </div>
+            <br> <br> <br> <br> <br> <br>
+            <div v-if="doAdvancedSearch">
+              <span style="display: inline-block; width: 370px;"></span>
+              <a @click="toggleAdvancedSearch"> <i class="fa fa-search-minus" aria-hidden="true"></i> Advanced Search</a>
             </div>
           </div>
-          <div class="gr-3">
-            <label class="offset-2">Order by: </label>
-            <div class="select">
-              <select id="order-by-select"  v-model="query.order">
-                <!--<option selected disabled>Select account type</option>-->
-                <option selected value = "DESC">DESC</option>
-                <option value="ASC">ASC</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="gr-3">
-            <label>Signup From: </label>
-            <input type="date" v-model="query.startSignUpDate"/>
-          </div>
-          <div class="gr-3">
-            <label>Signup To: </label>
-            <input type="date" v-model="query.endSignUpDate"/>
-          </div>
-        
         </div>
 
         <div class="gr-4 push-4">
@@ -103,6 +117,17 @@
             </button>
           </div>
         </div>
+        <div id="container" class="gr-8" style="height: 40px;">
+          <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
+            <select v-model="query.pageSize" @change="filter">
+              <option disabled>Number of Entries</option>
+              <option selected value=10>10</option>
+              <option value=20>20</option>
+              <option value=30>30</option>
+              <option value=50>50</option>
+            </select>
+          </div>
+        </div>
 
       </div>
     </form>
@@ -112,6 +137,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
+                <th>#</th>
                 <th>Name</th>
                 <th>Mobile Number</th>
                 <th>A/C Type</th>
@@ -121,7 +147,8 @@
               </tr>
             </thead>
             <tbody>
-            <tr v-for="member in members.list">
+            <tr v-for="member,index in members.list">
+              <td>{{query.pageNumber * query.pageSize + index + 1}}</td>
 
               <td class="member-name">
                 <span v-if="member.mmUserPictures[0]">
@@ -131,7 +158,7 @@
                   <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
 
-                <a href="#"  @click="memberDetails(member.accountId,member.accountType)">
+                <a href=""  @click="memberDetails(member.accountId,member.accountType)">
                   {{ member.name }}
                 </a>
                 <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
@@ -154,7 +181,7 @@
                     <option value = "2">Suspended</option>
                   </select>
                 </div>
-                
+
               </td>
 
             </tr>
@@ -264,7 +291,7 @@
                         <div class="comment">
                             <!--<span>Browse</span>-->
                             Comment:
-                            <textarea id="comment" rows="4" cols="50" v-model="memberComment"></textarea> 
+                            <textarea id="comment" rows="4" cols="50" v-model="memberComment"></textarea>
                         </div>
                         <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
                         </span>
@@ -276,7 +303,7 @@
 
                 <button v-if="memberAccountStatus==2" type="button" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="changeAccountStatus(2)">Suspend</button>
                 <button v-if="memberAccountStatus==1" type="button" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="changeAccountStatus(1)">Activate</button>
-                
+
                 <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" @click="init">Cancel</button>
                 </div>
               </div>
@@ -290,7 +317,7 @@
 
 <script>
   import Http from '../services/Http'
-  import router from '../router/index'
+//  import router from '../router/index'
   import MemberListSlider from './MemberListSliderComponent.vue'
   export default {
     name: 'MemberList',
@@ -315,10 +342,18 @@
         memberAccountStatus: 0,
         memberComment: '',
         memberAccountID: '',
+        doAdvancedSearch: false,
         memberSuspensionHistory: {}
       }
     },
     methods: {
+      toggleAdvancedSearch () {
+        if (this.doAdvancedSearch) {
+          this.doAdvancedSearch = false
+        } else {
+          this.doAdvancedSearch = true
+        }
+      },
       loadProfile: function (member) {
         console.log('accountID:', member)
         if (this.sliderShow === true && this.memberProfile.accountId === member.accountId) {
@@ -416,12 +451,12 @@
       },
       memberDetails (value, accntType) {
         console.log('Okay, I am doing it now!!!, value: ', value, accntType)
-        // router.push(`./member/${value}`)
-        router.push({
-          name: 'MemberIndividualComponent',
-          params: {id: value, accountType: accntType}
-        })
-        // window.open(`${window.location.href}/${value}`, '_blank')
+//        router.push(`./member/${value}`)
+//        router.push({
+//          name: 'MemberIndividualComponent',
+//          params: {id: value, accountType: accntType}
+//        })
+        window.open(`${window.location.href}/profile/${value}/${accntType}`, '_blank')
       },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
@@ -442,7 +477,7 @@
         this.value = [0, 100]
         this.getMembers()
       },
-      filter: function (key = 'member') {
+      filter (key = 'member') {
         this.query.pageNumber = 0
         this.query.profileCompletionScoreStartRange = this.value[0]
         this.query.profileCompletionScoreEndRange = this.value[1]
