@@ -196,6 +196,8 @@
                for (var i = 0; i < this.documentTypes.length; i++) {
                  if (this.documents.find(x => x.documentType === this.documentTypes[i].type)) {
                    this.documentTypes[i].found = 'Found'
+                 } else {
+                   this.documentTypes[i].found = 'Not Found'
                  }
                }
 //               console.log('Got the list of documents: ', this.documents, ' documents.length: ',
