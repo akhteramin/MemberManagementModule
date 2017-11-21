@@ -28,7 +28,7 @@
                     <div class="row">
                       <div class="gr-2 push-7">
                         <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
-                        <span v-else>Balance: N/A BDT </span>
+                        <span v-else>Balance: N/A </span>
                       </div>
                     </div>
                     <br>
@@ -36,7 +36,7 @@
 
                       <div class="gr-2">
                         <img v-if="member.basicInfo.mmUserPictures[0]"
-                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'" 
+                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
                               class="img-circle img-responsive" width="250" height="250">
 
                         <img v-else src="static/images/default-original.jpg" class="img-circle img-responsive"
@@ -49,7 +49,7 @@
 
                       </div>
 
-                      
+
 
                       <div class="gr-9 text-left push-.5">
                         <div class="gr-1" v-if="member.basicInfo.accountType===2">
@@ -72,7 +72,7 @@
                           <div class="gr-2">
                             <h5><b>Basic Information</b></h5>
                           </div>
-                          <div class="gr-2 push-6" v-if="!editBasicProfileMode">
+                          <div class="gr-2 push-7" v-if="!editBasicProfileMode">
                               <button class="button-md-edit" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                           </div>
                         </div>
@@ -143,7 +143,7 @@
                             @update="editBasicInfo">
                           </member-basic-info-update>
                         </div>
-                        
+
                         <hr>
                       <div v-if="member.basicInfo.accountType===1">
                         <div class="gr-12">
@@ -193,7 +193,7 @@
                           <div class="gr-2">
                               <h5><b>Business Information</b></h5>
                             </div>
-                            
+
                         </div>
                         <div>
                           <div class="gr-2">
@@ -222,7 +222,7 @@
                             {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
                           </div>
                         </div>
-                        
+
                       </div>
 
                     </div>
@@ -313,7 +313,7 @@
                         <div class="gr-2">
                           <h5 v-if="member.basicInfo.accountType===1"><b>Permanent</b></h5>
                           <h5 v-if="member.basicInfo.accountType===2"><b>Business</b></h5>
-                          
+
                         </div>
                         <div class="gr-2 push-6" v-if="!editPermanentAddressMode">
                           <button class="button-md-edit" @click="editPermanentAddress">
