@@ -61,7 +61,7 @@
             </table>
         </div>
 
-        <div class="card-footer text-muted" v-if="activities.totalElements > 0">
+        <div class="card-footer text-muted" v-if="activities.totalElements > 0 && activities.totalPages > 1">
             <div class="row">
             <div class="gr-3">
                 <div style="margin-top: 0.2rem;" v-if="activities.list">

@@ -10,13 +10,15 @@
 
             <div id = "nav-bar">
               <ul class="nav nav-tabs">
-                <li class="gr-3 text-center" :class="{active: showBasicDetails}"
+                <li class="gr-2 text-center" :class="{active: showBasicDetails}"
                     @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
                 <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-                <li class="gr-3 text-center" :class="{active: showActivities}"
+                <li class="gr-2 text-center" :class="{active: showActivities}"
                     @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
-                <li class="gr-3 text-center" :class="{active: showTransactions}"
+                <li class="gr-2 text-center" :class="{active: showTransactions}"
                     @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
+                <li class="gr-2 text-center" :class="{active: showTransactions}"
+                    @click="setTab('suspensionHistory')"><a data-toggle="tab">Suspension History</a></li>
               </ul>
             </div>
 
@@ -402,6 +404,7 @@
             </div>
             <member-activity v-if="showActivities" :id="id"></member-activity>
             <member-transaction v-if="showTransactions" :id="id"></member-transaction>
+            <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
         </div>
       </div>
     </div>
@@ -410,6 +413,7 @@
 <script>
   import Http from '../services/Http'
   import Constants from '../services/Constants'
+  import MemberSuspensionHistory from './MemberSuspensionHistoryComponent.vue'
   import MemberActivity from './MemberActivityComponent.vue'
   import MemberTransaction from './MemberTransactionComponent.vue'
   import MemberIdentificationDocument from './MemberIdentificationDocumentComponent.vue'
@@ -429,6 +433,8 @@
       'accountType'
     ],
     components: {
+      MemberSuspensionHistory,
+      'member-suspension-history': MemberSuspensionHistory,
       'member-activity': MemberActivity,
       'member-transaction': MemberTransaction,
       'member-identification-document': MemberIdentificationDocument,
@@ -456,6 +462,7 @@
         showBasicDetails: true,
         showActivities: false,
         showTransactions: false,
+        showSuspensionHistory: false,
         occupationName: '',
         editBasicProfileMode: false,
         editParentsMode: false,
@@ -593,12 +600,15 @@
         this.showBasicDetails = false
         this.showActivities = false
         this.showTransactions = false
+        this.showSuspensionHistory = false
         if (tabName === 'basicDetails') {
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
           this.showActivities = true
-        } else {
+        } else if (tabName === 'transactions') {
           this.showTransactions = true
+        } else {
+          this.showSuspensionHistory = true
         }
       },
       getStaticNames () {

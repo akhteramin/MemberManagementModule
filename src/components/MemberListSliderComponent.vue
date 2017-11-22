@@ -48,7 +48,7 @@
                             -{{missingInfo | underscoreless}}
                         </span>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="gr-12 small-text min-height-slider" v-if="memberDocuments">
@@ -56,9 +56,9 @@
                 <hr>
                 <div class="row margin-5" v-for="memberDocument in memberDocuments">
                     <div class="gr-5 text-center padding-2">
-                        <img :src="imageBaseUrl+memberDocument.documentUrl" 
+                        <img :src="imageBaseUrl+memberDocument.documentUrl"
                         v-if="!isPdf(memberDocument.documentUrl)"
-                        class="img-rounded" alt="Documents" width="140" height="80" 
+                        class="img-rounded" alt="Documents" width="140" height="80"
                         @click="showDocumentDetails(memberDocument)">
 
                         <i v-if="isPdf(memberDocument.documentUrl)"
@@ -74,11 +74,11 @@
                         <br>Updated On:12/05/2017
                         <br>
                         <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">
-                            <button class="button-small-edit" 
-                             data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocument.id}`" 
+                            <button class="button-small-edit"
+                             data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocument.id}`"
                              data-backdrop="false">
-                             <i class="fa fa-pencil-square-o"></i> 
-                             Edit 
+                             <i class="fa fa-pencil-square-o"></i>
+                             Edit
                             </button>
                             <div :id="`ChangeDocumentModal${memberDocument.id}`" class="modal fade modal-slider" role="dialog">
                                 <update-member-identification-document
@@ -87,10 +87,10 @@
                                 @update="editIdentificationDocument">
                                 </update-member-identification-document>
                             </div>
-                            <button class="button-small-verify" 
-                            data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false" 
+                            <button class="button-small-verify"
+                            data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
                             @click= "setDocument(memberDocument)">
-                            Verify 
+                            Verify
                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                             </button>
                         </span>
@@ -156,10 +156,10 @@
             <hr>
             <div class="gr-12">
                 <img v-if="!isPdf(memberDocumentDetail.documentUrl)"
-                :src="imageBaseUrl+memberDocumentDetail.documentUrl" 
+                :src="imageBaseUrl+memberDocumentDetail.documentUrl"
                 class="img-rounded" alt="Documents" width="350" height="200">
-                
-                <iframe v-if="isPdf(memberDocumentDetail.documentUrl)" 
+
+                <iframe v-if="isPdf(memberDocumentDetail.documentUrl)"
                 :src="imageBaseUrl+memberDocumentDetail.documentUrl" width="350" height="200"></iframe>
 
             </div>
@@ -190,10 +190,10 @@
                 <br>
                 <span v-if="memberDocumentDetail.documentVerificationStatus=='NOT_VERIFIED'">
                 <button class="button-md-edit"
-                data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocumentDetail.id}`" 
+                data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocumentDetail.id}`"
                              data-backdrop="false">
-                             <i class="fa fa-pencil-square-o"></i> 
-                             Edit 
+                             <i class="fa fa-pencil-square-o"></i>
+                             Edit
                 </button>
                 <div :id="`ChangeDocumentModal${memberDocumentDetail.id}`" class="modal-slider modal fade" role="dialog">
                     <update-member-identification-document
@@ -203,9 +203,9 @@
                     </update-member-identification-document>
                 </div>
                 <button class="button-md-verify"
-                        data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false" 
+                        data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
                         @click= "setDocument(memberDocumentDetail)">
-                        Verify 
+                        Verify
                         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                 </button>
                 </span>
@@ -230,7 +230,7 @@
                         <div class="comment">
                             <!--<span>Browse</span>-->
                             Comment:
-                            <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea> 
+                            <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
                         </div>
                         <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
                         </span>
@@ -247,7 +247,7 @@
             </div>
         </div>
 
-        
+
 
         </div>
 
