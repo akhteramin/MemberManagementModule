@@ -194,7 +194,7 @@
           })
       },
       pageChange (number = 0, activeQuery = true) {
-        if (activeQuery && this.activityQuery.pageNumber !== number) { // activity query
+        if (number > 0 && number < this.activities.totalPages && activeQuery && this.activityQuery.pageNumber !== number) { // activity query
           this.activityQuery.pageNumber = number
           this.getActivities()
         }

@@ -54,14 +54,17 @@
             </div>
           </div>
 
-
-         <div v-if="!doAdvancedSearch">
+          <div>
            <span style="display: inline-block; width: 10px;"></span>
-           <a @click="toggleAdvancedSearch"> <i class="fa fa-search-plus" aria-hidden="true"></i> Advanced Search</a>
-         </div>
+           <a @click="toggleAdvancedSearch">
+             <i class="fa fa-search-plus" aria-hidden="true" v-if="!doAdvancedSearch"></i>
+             <i class="fa fa-search-minus" aria-hidden="true" v-if="doAdvancedSearch"></i>
+             Advanced Search</a>
+          </div>
 
 
         <div v-if="doAdvancedSearch">
+          <br>
           <div class="gr-12">
             <div class="gr-5 text-center">
               <label> Profile Completion Range: </label>
@@ -91,16 +94,11 @@
 
             <div class="gr-3">
               <label>Signup From: </label>
-              <input type="date" v-model="query.startSignUpDate"/>
+              <input type="date" v-model="signUpDateFrom"/>
             </div>
             <div class="gr-3">
               <label>Signup To: </label>
-              <input type="date" v-model="query.endSignUpDate"/>
-            </div>
-            <br> <br> <br> <br> <br> <br>
-            <div v-if="doAdvancedSearch">
-              <span style="display: inline-block; width: 370px;"></span>
-              <a @click="toggleAdvancedSearch"> <i class="fa fa-search-minus" aria-hidden="true"></i> Advanced Search</a>
+              <input type="date" v-model="signUpDateTo"/>
             </div>
           </div>
         </div>
@@ -338,11 +336,13 @@
           100
         ],
         sliderShow: false,
-        maxPaginationItem: 10,
+        maxPaginationItem: '',
         memberAccountStatus: 0,
         memberComment: '',
         memberAccountID: '',
         doAdvancedSearch: false,
+        signUpDateFrom: null,
+        signUpDateTo: null,
         memberSuspensionHistory: {}
       }
     },
@@ -444,7 +444,7 @@
         )
       },
       pageChange (number = 0) {
-        if (this.query.pageNumber !== number) {
+        if (number >= 0 && number < this.members.totalPages && this.query.pageNumber !== number) {
           this.query.pageNumber = number
           this.getMembers()
         }
@@ -475,6 +475,8 @@
           pageSize: 10
         })
         this.value = [0, 100]
+        this.signUpDateFrom = null
+        this.signUpDateTo = null
         this.getMembers()
       },
       filter (key = 'member') {
@@ -483,13 +485,13 @@
         this.query.profileCompletionScoreEndRange = this.value[1]
         console.log('mobile number: ' + this.query.mobileNumber + ' accountType: ' + this.query.accountType +
           ' verified: ' + this.query.verificationStatus)
-        if (this.query.startSignUpDate !== null && this.query.startSignUpDate.length > 0) {
-          this.query.startSignUpDate = new Date(this.query.startSignUpDate).getTime() - 6 * 3600 * 1000
+        if (this.signUpDateFrom !== null && this.signUpDateFrom.length > 0) {
+          this.query.startSignUpDate = new Date(this.signUpDateFrom).getTime() - 6 * 3600 * 1000
         } else {
           this.query.startSignUpDate = 0
         }
-        if (this.query.endSignUpDate !== null && this.query.endSignUpDate.length > 0) {
-          this.query.endSignUpDate = new Date(this.query.endSignUpDate).getTime() - 6 * 60 * 60 * 1000
+        if (this.signUpDateTo !== null && this.signUpDateTo.length > 0) {
+          this.query.endSignUpDate = new Date(this.signUpDateTo).getTime() - 6 * 60 * 60 * 1000
         } else {
           this.query.endSignUpDate = new Date().getTime() - 6 * 3600 * 1000
         }

@@ -17,7 +17,7 @@
                     @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
                 <li class="gr-2 text-center" :class="{active: showTransactions}"
                     @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
-                <li class="gr-2 text-center" :class="{active: showTransactions}"
+                <li class="gr-2 text-center" :class="{active: showSuspensionHistory}"
                     @click="setTab('suspensionHistory')"><a data-toggle="tab">Suspension History</a></li>
               </ul>
             </div>
