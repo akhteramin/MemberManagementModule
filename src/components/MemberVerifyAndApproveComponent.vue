@@ -43,7 +43,7 @@
                 Verified By:
               </div>
               <div class="gr-4 push-1">
-                {{ verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
+                {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
                 : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
@@ -52,7 +52,7 @@
                 Time:
               </div>
               <div class="gr-4 push-1" v-if="verificationHistory.length > 0">
-                {{ verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY') }}
+                {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <div v-else class="gr-6 push-1">
@@ -72,7 +72,7 @@
                 Rejected By:
               </div>
               <div class="gr-4" style="text-align: left;">
-                {{ verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
+                {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
                 : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
@@ -80,7 +80,7 @@
               <div class="gr-2 text-left" style="text-align: left;">
                 Time:
               </div>
-              <div class="gr-3" v-if="verificationHistory.length > 0" style="text-align: left;">
+              <div class="gr-3" v-if="verificationHistory && verificationHistory.length > 0" style="text-align: left;">
                 {{ verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY h:mm:ss') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
@@ -102,7 +102,7 @@
                 Approved By:
               </div>
               <div class="gr-4" style="text-align: left;">
-                {{ approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
+                {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <br>
@@ -110,7 +110,7 @@
                 Time:
               </div>
               <div class="gr-4" v-if="approvalHistory.length > 0" style="text-align: left;">
-                {{ approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY h:mm:ss') }}
+                {{ approvalHistory && approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY h:mm:ss') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <div v-else class="gr-4 push-1">
@@ -227,7 +227,7 @@
         </div>
 
         <div v-if="showVerificationHistory">
-          <div class="card-block" v-if="verificationHistory.length > 0">
+          <div class="card-block" v-if="verificationHistory && verificationHistory.length > 0">
             <div class="col-md-12">
               <div class="col-md-12 comment">
                 <ul class="chat">
@@ -306,7 +306,7 @@
           this.verificationHistory = null
         }
         this.verificationStatus = this.member.basicInfo.verificationStatus
-        this.verificationType = this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
+        this.verificationType = this.approvalHistory && this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
         console.log('verification status: ', this.verificationStatus, ' verification type: ', this.verificationType,
         'approvalHistory: ', this.approvalHistory)
       },
