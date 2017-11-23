@@ -1,5 +1,5 @@
 <template>
-    <div class="slider">
+    <div class="slider pre-scrollable" style="height: 500px;">
         <div class="gr-12" v-if="profileDetails">
             <div class="gr-6">
                     <h5>Update Profile</h5>
@@ -145,6 +145,16 @@
                         </div>
                     </div>
                 </div>
+            <div class="gr-12 small-text" v-if="member.basicInfo">
+              <hr>
+              <member-verify-and-approve-component
+                :id = "member.basicInfo.accountId"
+                :member = "member">
+
+              </member-verify-and-approve-component>
+            </div>
+
+
         </div>
         <div class="gr-12" v-else>
             <div class="gr-2 padding-5">
@@ -258,16 +268,20 @@
   import Http from '../services/Http'
   import router from '../router/index'
   import UpdateMemberIdentificationDocument from './UpdateMemberIdentificationDocumentComponent.vue'
+  import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
   export default {
     name: 'MemberListSlider',
     props: [
+      'id',
       'memberProfile',
       'memberDocuments',
       'memberIntroducers',
       'memberMissingInfo'
     ],
     components: {
-      'update-member-identification-document': UpdateMemberIdentificationDocument
+      MemberVerifyAndApproveComponent,
+      'update-member-identification-document': UpdateMemberIdentificationDocument,
+      'member-verify-and-approve-component': MemberVerifyAndApproveComponent
     },
     data () {
       return {
@@ -282,7 +296,8 @@
         },
         memberDocumentDetail: {},
         profileDetails: true,
-        documentDetails: {}
+        documentDetails: {},
+        member: {}
       }
     },
     created () {
@@ -292,6 +307,16 @@
     methods: {
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
+        Http.GET('member', [this.memberProfile.accountId, 'basic-details'])
+          .then(
+            ({data: {data: member}}) => {
+              this.member = member
+              console.log('In slider component, member basic details: ', this.member)
+            },
+            error => {
+              console.log('Error in loading member basic details for slider... ', error)
+            }
+          )
       },
       loadMemberIntroduced: function (accountId) {
         Http.GET('member', [accountId, 'introduced'])

@@ -247,6 +247,8 @@
           </div>
           <!--========================================= slider ==================================================-->
           <member-list-slider  v-if="sliderShow"
+          :id = "memberProfile.id"
+          :memberBasicDetails = "loadMemberBasicDetails"
           :memberProfile="memberProfile"
           :memberDocuments="memberDocuments"
           :memberIntroducers="memberIntroducers"
@@ -343,7 +345,8 @@
         doAdvancedSearch: false,
         signUpDateFrom: null,
         signUpDateTo: null,
-        memberSuspensionHistory: {}
+        memberSuspensionHistory: {},
+        loadMemberBasicDetails: {}
       }
     },
     methods: {
@@ -356,6 +359,7 @@
       },
       loadProfile: function (member) {
         console.log('accountID:', member)
+
         if (this.sliderShow === true && this.memberProfile.accountId === member.accountId) {
           this.sliderShow = false
         } else {
@@ -393,6 +397,16 @@
               console.log('Error in getting the list of missing, error: ', error)
             }
           )
+          Http.GET('member', [member.accountId, 'basic-details'])
+            .then(
+              ({data: {data: member}}) => {
+                console.log('In member list component, member basic details: ', member)
+                this.loadMemberBasicDetails = member
+              },
+              error => {
+                console.log('Error in loading member basic details for slider... ', error)
+              }
+            )
           this.sliderShow = true
         }
       },

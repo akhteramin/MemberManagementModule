@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gr-10" style="text-align: center;">
+    <div class="gr-10">
       <h5><b>Verification</b></h5>
     </div>
     <div class="gr-10">
@@ -8,6 +8,7 @@
         <tbody>
         <tr>
           <td>
+            <!--How cow verification status: {{ verificationStatus }} and verification type: {{ verificationType }}-->
             <form  v-on:submit.prevent="acceptVerification" v-on:reset.prevent="rejectVerification">
               <br>
               <div class="row text-center" v-if="verificationStatus === 'NOT_VERIFIED'" style="color: red;">
@@ -42,28 +43,22 @@
                 Verified By:
               </div>
               <div class="gr-4 push-1">
-                {{ approveHistory.actor ? approveHistory.actor.name : 'N/A' }}
+                {{ verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
+                : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <br>
               <div class="gr-4 push-1" style="text-align: left;">
                 Time:
               </div>
-              <div class="gr-4 push-1" v-if="approveHistory.actor">
-                {{ approveHistory.updateTime | date('MMM D, YYYY h:mm:ss') }}
+              <div class="gr-4 push-1" v-if="verificationHistory.length > 0">
+                {{ verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <div v-else class="gr-6 push-1">
                 N/A
               </div>
               <br>
-              <!--<div class="gr-4 push-1" style="text-align: left;">-->
-                <!--Comment:-->
-              <!--</div>-->
-              <!--<div class="gr-6 push-1">-->
-                <!--{{ approveHistory.comment ? approveHistory.comment : 'No comment available' }}-->
-                <!--&lt;!&ndash;{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}&ndash;&gt;-->
-              <!--</div>-->
 
             </div>
 
@@ -77,15 +72,16 @@
                 Rejected By:
               </div>
               <div class="gr-4" style="text-align: left;">
-                {{ approveHistory.actor ? approveHistory.actor.name : 'N/A' }}
+                {{ verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
+                : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <br>
               <div class="gr-2 text-left" style="text-align: left;">
                 Time:
               </div>
-              <div class="gr-3" v-if="approveHistory.actor" style="text-align: left;">
-                {{ approveHistory.updateTime | date('MMM D, YYYY h:mm:ss') }}
+              <div class="gr-3" v-if="verificationHistory.length > 0" style="text-align: left;">
+                {{ verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY h:mm:ss') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <div v-else class="gr-4 push-1">
@@ -93,39 +89,28 @@
               </div>
             </div>
 
-            <!--<div v-else-if="verificationStatus === 'ACCEPT' && verificationType === 'VERIFY'" class="row text-center">-->
-              <!--<div style="color: #5BC43C;">-->
-                <!--<i class="fa fa-check"></i> VERIFIED-->
-              <!--</div>-->
-              <!--<br>-->
-              <!--<div class="gr-4 push-1">-->
-                <!--Verified By:-->
-              <!--</div>-->
-              <!--<div class="gr-4 push-1">-->
-                <!--{{ approveHistory.actor ? approveHistory.actor.name : 'N/A' }}-->
-                <!--&lt;!&ndash;{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}&ndash;&gt;-->
-              <!--</div>-->
-            <!--</div>-->
+
 
             <div v-else-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
-              (verificationStatus === 'VERIFIED' && verificationType === null)" class="row text-center">
+              (verificationStatus === 'VERIFIED' && verificationType === null) ||
+              (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
               <div style="color: #5BC43C;">
-                <i class="fa fa-check"></i> VERIFIED
+                <i class="fa fa-check"></i> APPROVED
               </div>
               <br>
               <div class="gr-2" style="text-align: left;">
                 Approved By:
               </div>
               <div class="gr-4" style="text-align: left;">
-                {{ approveHistory.actor ? approveHistory.actor.name : 'N/A' }}
+                {{ approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <br>
               <div class="gr-2" style="text-align: left;">
                 Time:
               </div>
-              <div class="gr-4" v-if="approveHistory.actor" style="text-align: left;">
-                {{ approveHistory.updateTime | date('MMM D, YYYY h:mm:ss') }}
+              <div class="gr-4" v-if="approvalHistory.length > 0" style="text-align: left;">
+                {{ approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY h:mm:ss') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <div v-else class="gr-4 push-1">
@@ -140,7 +125,8 @@
 
           <td v-if="!((verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
               (verificationStatus === 'VERIFIED' && verificationType === null) ||
-              (verificationStatus === 'REJECTED' || verificationStatus === 'REJECT'))">
+              (verificationStatus === 'REJECTED' || verificationStatus === 'REJECT')
+              || (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE'))">
             <br>
             <form v-on:submit.prevent="acceptApproval" v-on:reset.prevent="rejectApproval">
 
@@ -192,11 +178,92 @@
         </tbody>
       </table>
       <hr>
-      <div class="card-block" v-if="approveHistory.comment && verificationStatus !== 'NOT_VERIFIED'">
-        <h4>Comment</h4>
+
+
+      <div id = "nav-bar">
+        <h5><b>Verification History</b></h5>
+        <ul class="nav nav-tabs">
+          <li class="gr-2 text-center" :class="{active: showVerificationHistory}"
+              @click="setTab('tabVerificationHistory')"><a data-toggle="tab">Verification</a></li>
+          <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
+          <li class="gr-2 text-center" :class="{active: showApprovalHistory}"
+              @click="setTab('tabApprovalHistory')"><a data-toggle="tab">Approval</a></li>
+        </ul>
         <br>
-        {{ approveHistory.comment}}
       </div>
+      <div class="pre-scrollable" style="height: 250px;">
+        <div v-if="showApprovalHistory">
+          <div class="card-block" v-if="approvalHistory && approvalHistory.length > 0">
+            <div class="col-md-12">
+              <div class="col-md-12 comment">
+                <ul class="chat">
+                  <div v-for="history in approvalHistory">
+                    <li class="left clearfix">
+                      <span class="chat-img pull-left"></span>
+                      <div class="chat-body clearfix">
+                        <div class="header">
+                          <strong class="primary-font">{{ history.verificationStatus }}</strong> by
+                          <strong class="primary-font">{{ history.actor ? history.actor.name : 'N/A' }}  </strong>
+                          <small class="pull-right text-muted">
+                            <span class="glyphicon glyphicon-time"></span>
+                            {{ history.updateTime | date('MMM D, YYYY hh:mm') }}
+                          </small>
+                        </div>
+                        <p>
+                          {{ history.comment }}
+                        </p>
+                      </div>
+                    </li>
+                  </div>
+
+
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <strong class="primary-font">N/A</strong>
+          </div>
+        </div>
+
+        <div v-if="showVerificationHistory">
+          <div class="card-block" v-if="verificationHistory.length > 0">
+            <div class="col-md-12">
+              <div class="col-md-12 comment">
+                <ul class="chat">
+                  <div v-for="history in verificationHistory">
+                    <li class="left clearfix">
+                      <span class="chat-img pull-left"></span>
+                      <div class="chat-body clearfix">
+                        <div class="header">
+                          <strong class="primary-font">{{ history.verificationStatus }}</strong> by
+                          <strong class="primary-font">{{ history.actor ? history.actor.name : 'N/A' }}  </strong>
+                          <small class="pull-right text-muted">
+                            <span class="glyphicon glyphicon-time"></span>
+                            {{ history.updateTime | date('MMM D, YYYY hh:mm') }}
+                          </small>
+                        </div>
+                        <p>
+                          {{ history.comment }}
+                        </p>
+                      </div>
+                    </li>
+                  </div>
+
+
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <strong class="primary-font">N/A</strong>
+          </div>
+        </div>
+        <br> <br> <br> <br>
+      </div>
+
+
+
     </div>
   </div>
 </template>
@@ -213,40 +280,67 @@
       return {
         verificationStatus: '',
         verificationType: '',
-        approveHistory: '',
+        approvalHistory: {},
+        verificationHistory: {},
         verificationComment: '',
-        approvalComment: ''
+        approvalComment: '',
+        showVerificationHistory: true,
+        showApprovalHistory: false
       }
     },
     created () {
       this.init()
-      console.log('verification information component created:::::')
+      console.log('verification information component created, verification status: ', this.verificationStatus,
+        ', verirification type: ', this.verificationType)
     },
     methods: {
       init () {
-        if (this.member.approveHistory.length > 0) {
-          this.approveHistory = this.member.approveHistory[this.member.approveHistory.length - 1]
+        if (this.member.approveHistory && this.member.approveHistory.length > 0) {
+          this.approvalHistory = this.member.approveHistory
         } else {
-          this.approveHistory = null
+          this.approvalHistory = null
+        }
+        if (this.member.verificationHistory && this.member.verificationHistory.length > 0) {
+          this.verificationHistory = this.member.verificationHistory
+        } else {
+          this.verificationHistory = null
         }
         this.verificationStatus = this.member.basicInfo.verificationStatus
-        this.verificationType = this.member.approveHistory.verificationType ? this.member.approveHistory.verificationType : null
+        this.verificationType = this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
         console.log('verification status: ', this.verificationStatus, ' verification type: ', this.verificationType,
-        'approveHistory: ', this.approveHistory)
+        'approvalHistory: ', this.approvalHistory)
+      },
+      setTab (setName) {
+        console.log('here, at set tab:: ')
+        this.showVerificationHistory = false
+        this.showApprovalHistory = false
+        if (setName === 'tabVerificationHistory') {
+          if (this.showVerificationHistory) {
+            this.showVerificationHistory = false
+          } else {
+            this.showVerificationHistory = true
+          }
+        } else {
+          if (this.showApprovalHistory) {
+            this.showApprovalHistory = false
+          } else {
+            this.showApprovalHistory = true
+          }
+        }
       },
       acceptVerification () {
         let request = {
           'comment': this.verificationComment,
           'status': 'ACCEPT'
         }
-        console.log('verification request: ', request)
+        console.log('verification request: ', request, ' this.id: ', this.id)
         Http.PUT('verification', request, [this.id])
           .then(
             ({data: {data: verificationResponse}}) => {
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
-              this.approveHistory = verificationResponse
+              this.verificationHistory.push(verificationResponse)
             },
             error => {
               console.log('Error in putting verification request, error: ', error)
@@ -265,7 +359,7 @@
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
-              this.approveHistory = verificationResponse
+              this.verificationHistory.push(verificationResponse)
             },
             error => {
               console.log('Error in putting verification request, error: ', error)
@@ -284,7 +378,7 @@
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
-              this.approveHistory = approvalResponse.data
+              this.approvalHistory.push(approvalResponse.data)
             },
             error => {
               console.log('Error in putting approval request, error: ', error)
@@ -303,7 +397,7 @@
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
-              this.approveHistory = approvalResponse.data
+              this.approvalHistory.push(approvalResponse.data)
             },
             error => {
               console.log('Error in putting approval request, error: ', error)

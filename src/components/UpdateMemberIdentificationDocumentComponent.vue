@@ -19,7 +19,7 @@
                     <div>
                         <div v-if="!isPdf(document.documentUrl)">
                           <img id="ppImage" v-if="document.documentUrl"
-                                :src="documentUrl || 'static/images/default-original.jpg'" 
+                                :src="documentUrl || 'static/images/default-original.jpg'"
                                 class="img-rounded" width="250" height="250">
 
                           <img v-else src="static/images/default-original.jpg" class="img-rounded"
@@ -28,8 +28,8 @@
                         <div v-if="isPdf(document.documentUrl)">
                             <iframe :src="documentBaseUrl+document.documentUrl" width="400" height="400"></iframe>
                         </div>
-                      
-                        
+
+
                     </div>
                   </div>
                 </div>
@@ -76,7 +76,7 @@
       init () {
         this.documentBaseUrl = Http.IMAGE_URL
         this.documentUrl = this.documentBaseUrl + this.document.documentUrl
-        console.log('document::', this.documentUrl)
+//        console.log('document::', this.documentUrl)
       },
       onDocumentChange (e) {
         console.log('document::', this.document)
@@ -130,7 +130,7 @@
       }
     },
     created () {
-      console.log(this.id, this.document)
+//      console.log(this.id, this.document)
       this.init()
     }
 }

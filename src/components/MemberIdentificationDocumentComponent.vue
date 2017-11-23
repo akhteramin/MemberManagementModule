@@ -14,7 +14,7 @@
                 <th class = "text-center">URL</th>
                 <th class = "text-center">Verification</th>
                 <th class = "text-center">Action</th>
-                
+
                 </tr>
                 </thead>
                 <tbody>
@@ -39,8 +39,8 @@
                 <td>{{ item.documentVerificationStatus | underscoreless }}</td>
                 <td>
                   <span>
-                  
-                  <button data-toggle="modal" :data-target="`#ChangeDocumentModal${item.id}`" 
+
+                  <button data-toggle="modal" :data-target="`#ChangeDocumentModal${item.id}`"
                   class="button-md-edit" data-backdrop="false"><i class="fa fa-pencil-square-o"></i> Edit </button>
                     <div :id="`ChangeDocumentModal${item.id}`" class="modal fade" role="dialog">
                       <update-member-identification-document
@@ -55,7 +55,7 @@
                   </span>
 
                 </td>
-                
+
                 </tr>
                 </tbody>
             </table>
@@ -77,7 +77,7 @@
                             <div class="comment">
                               <!--<span>Browse</span>-->
                               Comment:
-                               <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea> 
+                               <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
                             </div>
                             <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
                           </span>
@@ -119,14 +119,14 @@
                           value=""/>
                 </div>
               </div>
-              
+
               <div class="gr-4">
                 <div class="form-group">
                   <label> Document: </label>
                     <input id="uploadBtn3" type="file" class="btn btn-default" @change="onDocumentChange"/>
                 </div>
               </div>
-              
+
               <div class="gr-12 push-3">
                 <div class="form-group">
                   <button type="submit" class="button-search" @click="submitDocument()">
@@ -139,7 +139,7 @@
               </div>
 
             </div>
-            
+
             <br>
         </div>
     </div>
@@ -192,7 +192,7 @@
            .then(
              ({data: {data: documents}}) => {
                this.documents = documents
-               console.log('docs::', this.documents)
+//               console.log('docs::', this.documents)
                for (var i = 0; i < this.documentTypes.length; i++) {
                  if (this.documents.find(x => x.documentType === this.documentTypes[i].type)) {
                    this.documentTypes[i].found = 'Found'
@@ -202,7 +202,7 @@
                }
 //               console.log('Got the list of documents: ', this.documents, ' documents.length: ',
 //               this.documents.length)
-               console.log('document types::', this.documentTypes)
+//               console.log('document types::', this.documentTypes)
              },
              error => {
                console.log('Error in getting list of identification documents, error: ', error)
@@ -213,7 +213,7 @@
         this.init()
       },
       showDocumentUpload () {
-        console.log('doc typ:', this.docType)
+//        console.log('doc typ:', this.docType)
         if (!this.showDocumentUploadData && this.docType) {
           this.showDocumentUploadData = true
         } else {
@@ -222,7 +222,7 @@
         }
       },
       setDocument (document) {
-        console.log(document)
+//        console.log(document)
         this.paramData = {
           documentIdNumber: document.documentIdNumber,
           documentType: document.documentType,
@@ -231,11 +231,11 @@
         }
       },
       verifyDocument () {
-        console.log('param data ::', this.paramData)
+//        console.log('param data ::', this.paramData)
         Http.PUT('verification', this.paramData, [this.id, 'document', this.paramData.documentID])
         .then(
           ({data: documentData}) => {
-            console.log('document data::', documentData)
+//            console.log('document data::', documentData)
             this.init()
           },
           error => {
@@ -244,7 +244,7 @@
         )
       },
       onDocumentChange (e) {
-        console.log('document::', this.document)
+//        console.log('document::', this.document)
 
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {
@@ -253,18 +253,18 @@
         this.memberDocument = files[0]
       },
       submitDocument () {
-        console.log(this.memberDocument)
-        console.log(this.documentID)
-        console.log(this.docType)
+//        console.log(this.memberDocument)
+//        console.log(this.documentID)
+//        console.log(this.docType)
         var fd = new FormData()
         fd.append('file', this.memberDocument)
         fd.append('documentIdNumber', this.documentID)
         fd.append('documentType', this.docType)
-        console.log('document type::', this.docType)
+//        console.log('document type::', this.docType)
         Http.POST('member', fd, [this.id, 'identification-document'])
           .then(
-            ({data: documentdata}) => {
-              console.log('document data: ', documentdata)
+            () => {
+//              console.log('document data: ', documentData)
               this.editIdentificationDocument()
               this.init()
             },
@@ -288,7 +288,7 @@
       }
     },
     created () {
-      console.log('document created::::')
+//      console.log('document created::::')
       this.init()
     }
   }

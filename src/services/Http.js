@@ -10,7 +10,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
-    console.log('intercepted http success...')
+    // console.log('intercepted http success...')
     return response
   },
   (error) => {
@@ -59,7 +59,7 @@ export default {
       parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
     }
 
-    console.log('Http.js 54, parameters: ', parameters, ' I have shown the parameters')
+    // console.log('Http.js 54, parameters: ', parameters, ' I have shown the parameters')
 
     let additionalParams = ''
     if (Object.prototype.toString.call(params) === '[object Array]') {
@@ -67,9 +67,9 @@ export default {
     } else {
       additionalParams = !isEmpty(params) ? `?${encodeQueryData(params)}` : ''
     }
-    console.log('Line 60, http.js, key: ', key)
+    // console.log('Line 60, http.js, key: ', key)
     const route = routes[key]
-    console.log('Line 62, http.js parameters: ' + parameters)
+    // console.log('Line 62, http.js parameters: ' + parameters)
     return axios.get(route.concat(parameters).concat(additionalParams))
   },
   POST (key, data, props = {}) {
