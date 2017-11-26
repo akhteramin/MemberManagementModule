@@ -31,7 +31,8 @@ const routes = {
   permissions: `${AUTH_URL}/permissions/`,
   resource: `${API_URL}/resource/`,
   logout: `${AUTH_URL}/logout/`,
-  verification: `${API_URL}/verify/member/`
+  verification: `${API_URL}/verify/member/`,
+  user: `${API_URL}/user/`
 }
 
 const encodeQueryData = (data) => {
@@ -81,6 +82,7 @@ export default {
     }
 
     const route = routes[key]
+    console.log('Http POST, parameters:: ', route.concat(parameters), '\tdata: ', data)
     return axios.post(route.concat(parameters), data)
   },
   PUT (key, data, props = {}) {
