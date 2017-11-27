@@ -151,6 +151,7 @@
 
 <script>
   import Http from '../services/Http'
+  import route from '../router'
   import Constants from '../services/Constants'
   export default {
     name: 'MemberTransaction',
@@ -169,6 +170,18 @@
       }
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         // Http call for basic information of the member with the 'id'
@@ -226,6 +239,11 @@
             this.transactionTotalPages = Math.ceil(
               this.transactions.totalCount / this.transactionQuery.pageSize)
           }, error => {
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             console.error('Error in getting members: ', error)
           })
       },

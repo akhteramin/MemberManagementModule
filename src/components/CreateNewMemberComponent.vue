@@ -80,6 +80,7 @@
 
 <script>
   import Http from '../services/Http'
+  import route from '../router'
 
   export default {
     name: 'CreateNewMemberComponent',
@@ -97,6 +98,18 @@
       }
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       createNewMember () {
         if (this.password !== this.passwordReTyped) {
           alert('Passwords mismatched.')
@@ -115,6 +128,11 @@
             $('#MemberAccountCreationResponse').modal({backdrop: false})
           },
           error => {
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             this.accountCreationSuccessful = false
             console.log('Error in member creation, error: ', error)
             $('#MemberAccountCreationResponse').modal({backdrop: false})

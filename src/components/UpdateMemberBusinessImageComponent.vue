@@ -1,6 +1,6 @@
  <template>
     <div>
-        <button class="update btn btn-sm btn-block btn-default btn-active-til" 
+        <button class="update btn btn-sm btn-block btn-default btn-active-til"
         data-toggle="modal" data-target="#ChangeBusinessPpModal" title="Change Profile Picture" data-backdrop="false">
             <i class="glyphicon glyphicon-camera">
             </i> <small>Change</small>
@@ -25,12 +25,12 @@
                   <div class="col-md-8">
                     <div>
                       <img id="ppImage" v-if="member.businessDetails.businessOwnerPictures[0]"
-                              :src="imageUrl || 'static/images/default-original.jpg'" 
+                              :src="imageUrl || 'static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250">
 
                         <img v-else src="static/images/default-original.jpg" class="img-rounded img-responsive"
                             alt="N/A" width="30" height="30">
-                        
+
                     </div>
                   </div>
                 </div>
@@ -63,6 +63,7 @@
 
 <script>
   import Http from '../services/Http'
+  import route from '../router'
   export default {
     name: 'UpdateMemberBusinessImage',
     props: [
@@ -77,6 +78,18 @@
       }
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         if (this.member.businessDetails.businessOwnerPictures[0]) {
@@ -110,6 +123,11 @@
             this.editProfilePic()
           },
           error => {
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             console.log('Error in address update, error: ', error)
           }
         )

@@ -266,9 +266,11 @@
 
 <script>
   import Http from '../services/Http'
-  import router from '../router/index'
+//  import router from '../router/index'
   import UpdateMemberIdentificationDocument from './UpdateMemberIdentificationDocumentComponent.vue'
   import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
+  import route from '../router'
+
   export default {
     name: 'MemberListSlider',
     props: [
@@ -305,6 +307,18 @@
       this.init()
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         Http.GET('member', [this.memberProfile.accountId, 'basic-details'])
@@ -314,6 +328,11 @@
               console.log('In slider component, member basic details: ', this.member)
             },
             error => {
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in loading member basic details for slider... ', error)
             }
           )
@@ -326,6 +345,11 @@
               console.log('Got the list of introduced: ', this.membersIntroduced)
             },
             error => {
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting the list of introduced, error: ', error)
             }
           )
@@ -338,6 +362,11 @@
               console.log('Got the list of inviters: ', this.membersInvitedBy)
             },
             error => {
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting the list of inviters, error: ', error)
             }
           )
@@ -351,6 +380,11 @@
               this.memberDocuments.length)
             },
             error => {
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting list of identification documents, error: ', error)
             }
         )
@@ -363,6 +397,11 @@
               console.log('documentDetail:', documentDetail)
             },
             error => {
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting list of identification documents, error: ', error)
             }
         )
@@ -385,6 +424,11 @@
             this.loadIdentificationDocument(this.memberProfile.accountId)
           },
           error => {
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             console.log('Error vrification of document: ', error)
           }
         )
@@ -405,7 +449,7 @@
       memberDetails (value, accntType) {
         console.log('Okay, I am doing it now!!!, value: ', value, accntType)
         // router.push(`./member/${value}`)
-        router.push({
+        route.push({
           name: 'MemberIndividualComponent',
           params: {id: value, accountType: accntType}
         })

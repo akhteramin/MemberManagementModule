@@ -14,7 +14,7 @@ axios.interceptors.response.use(
     return response
   },
   (error) => {
-    console.log('intercepted http failure...')
+    console.log('intercepted http failure..., error is: ', error)
     return Promise.reject(error)
   }
 )

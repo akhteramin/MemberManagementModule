@@ -319,6 +319,7 @@
   import Http from '../services/Http'
   //  import router from '../router/index'
   import MemberListSlider from './MemberListSliderComponent.vue'
+  import route from '../router'
   export default {
     name: 'MemberList',
     components: {
@@ -347,6 +348,18 @@
       }
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       toggleAdvancedSearch () {
         if (this.doAdvancedSearch) {
           this.doAdvancedSearch = false
@@ -368,6 +381,11 @@
                   this.memberDocuments.length)
               },
               error => {
+                if (error.response) {
+                  if (error.response.status === 401) { // unauthorized, logging out.
+                    this.logout()
+                  }
+                }
                 console.log('Error in getting list of identification documents, error: ', error)
               }
             )
@@ -379,6 +397,11 @@
                 console.log('Got the list of introducers: ', this.memberIntroducers)
               },
               error => {
+                if (error.response) {
+                  if (error.response.status === 401) { // unauthorized, logging out.
+                    this.logout()
+                  }
+                }
                 console.log('Error in getting the list of introducers, error: ', error)
               }
             )
@@ -390,6 +413,11 @@
                 console.log('Got the list of missing: ', this.memberMissingInfo)
               },
               error => {
+                if (error.response) {
+                  if (error.response.status === 401) { // unauthorized, logging out.
+                    this.logout()
+                  }
+                }
                 console.log('Error in getting the list of missing, error: ', error)
               }
             )
@@ -405,6 +433,11 @@
             console.log('Success, got members: ', data)
             this.members = data
           }, error => {
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             console.error('Error in getting members: ', error)
           })
       },
@@ -422,6 +455,11 @@
               console.log('Success, got members: ', data)
               this.memberSuspensionHistory = data
             }, error => {
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.error('Error in getting members: ', error)
             }
           )
@@ -439,6 +477,11 @@
               this.init()
             },
             error => {
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error vrification of document: ', error)
             }
           )
@@ -500,6 +543,11 @@
             console.log('Success in getting filtered results, data: ', data)
             this.members = data
           }, error => {
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             console.log('Error in getting filtered results: ', error)
           })
       }

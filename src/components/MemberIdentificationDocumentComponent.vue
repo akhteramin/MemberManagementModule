@@ -149,6 +149,7 @@
   import Http from '../services/Http'
   import GLOBAL_VARS from '../services/GlobalVariables'
   import UpdateMemberIdentificationDocument from './UpdateMemberIdentificationDocumentComponent.vue'
+  import route from '../router'
   export default {
     name: 'MemberIdentificationDocument',
     props: [
@@ -176,6 +177,18 @@
       }
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         this.showDocumentUploadData = false
         this.documentBaseUrl = Http.IMAGE_URL
@@ -205,6 +218,11 @@
 //               console.log('document types::', this.documentTypes)
              },
              error => {
+               if (error.response) {
+                 if (error.response.status === 401) { // unauthorized, logging out.
+                   this.logout()
+                 }
+               }
                console.log('Error in getting list of identification documents, error: ', error)
              }
            )
@@ -239,6 +257,11 @@
             this.init()
           },
           error => {
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             console.log('Error vrification of document: ', error)
           }
         )
@@ -269,6 +292,11 @@
               this.init()
             },
             error => {
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in address update, error: ', error)
             }
           )
