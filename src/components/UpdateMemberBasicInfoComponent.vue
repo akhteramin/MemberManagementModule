@@ -2,7 +2,6 @@
 
     <div>
         <form v-on:submit.prevent="updateMemberBasicProfile">
-
             <div class="gr-2">
                 Name:
             </div>
@@ -21,8 +20,7 @@
                 Email:
             </div>
             <div class="gr-4 text-left">
-            <input  name="memberEmail" class="input-sm" type="email" id="memberEmail" placeholder="Email"
-                v-model="member.emails[0].emailAddress"/>
+            {{ member.emails.length > 0 ? member.emails[0].emailAddress : 'N/A' }}
             </div>
             <div class="gr-2">
                 Date of Birth:
@@ -83,7 +81,7 @@
                 v-model="member.basicInfo.organizationName"/>
             </div>
 
-            <div class="gr-4 push-4">
+            <div class="gr-5 push-2">
                 <div class="form-group">
                 <button type="submit" class="button-search">
                     <i class="fa fa-edit" aria-hidden="true"></i>
@@ -131,7 +129,6 @@
         console.log(this.member)
       },
       updateMemberBasicProfile () {
-        console.log('update basic profile info:')
         this.member.basicInfo.dateOfBirth = Date.parse(this.dob)
         console.log(this.member.basicInfo)
         this.member.basicInfo.dob = Date.parse(this.dob)
@@ -158,6 +155,7 @@
       }
     },
     created () {
+      console.log('update member basic information created::::::')
       this.init()
     }
 }
