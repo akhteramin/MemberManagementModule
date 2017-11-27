@@ -1,5 +1,3 @@
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-
 <template>
   <div class="MenuComponent gr-2 menu-container">
     <div class="menu-header">
@@ -22,6 +20,18 @@
         </li>
       </ul>
       <ul class="bottom-menu">
+        <li>
+          <i class="fa fa-folder-o" aria-hidden="true"></i>
+          <a @click="toggleShowApp()">Applications</a>
+        </li>
+        <li v-if="showApp"  v-for="app in appsData">
+            <var v-if="app.appID === 2">
+              <a href="http://localhost:8000/admin-auth" target="_blank">Auth</a>
+            </var>
+            <var v-if="app.appID === 3">
+              <a href="#">CRM</a>
+            </var>            
+        </li>
         <li>
           <i class="fa fa-user-circle" aria-hidden="true"></i>
           <a v-on:click="logout">{{user.loginID}}</a>
@@ -49,7 +59,9 @@
     name: 'MenuComponent',
     data () {
       return {
-        user: {}
+        user: {},
+        appsData: {},
+        showApp: false
       }
     },
     methods: {
@@ -61,7 +73,9 @@
               console.log('hey')
               // auth.setAccessControl(list)
               localStorage.removeItem('token')
-              route.push('/')
+              let authUri = Http.AUTH_HTTP_URI + 'accountslogout/?appID=6'
+              window.location.href = authUri
+              // route.push('/')
             }
           )
       },
@@ -77,9 +91,17 @@
       goToWaitingForApprovalMemberList () {
         route.push('/member/waiting/approval')
       },
+      toggleShowApp () {
+        if (this.showApp) {
+          this.showApp = false
+        } else {
+          this.showApp = true
+        }
+      },
       init () {
         console.log('here it is')
         this.user = JSON.parse(localStorage.getItem('user'))
+        this.appsData = JSON.parse(localStorage.getItem('appsData'))
       }
     },
     created () {

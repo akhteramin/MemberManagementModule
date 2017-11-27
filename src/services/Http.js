@@ -22,10 +22,13 @@ axios.interceptors.response.use(
 // let apiUrl = 'http://10.10.10.199:8085/member-service/api/v1'
 // const API_URL = 'http://192.168.1.134:8085/member-service/api/v1' // nafisa
 const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
-const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
+// const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
+const AUTH_URL = 'http://localhost:9000/auth/api/v1'
 const IMAGE_URL = 'https://dev.ipay.com.bd'
+const AUTH_HTTP_URI = 'http://localhost:8000/admin-auth/'
 
 const routes = {
+  apps: `${AUTH_URL}/user/get`,
   member: `${API_URL}/member/`,
   login: `${AUTH_URL}/login/`,
   permissions: `${AUTH_URL}/permissions/`,
@@ -94,5 +97,6 @@ export default {
     const route = routes[key]
     return axios.put(route.concat(parameters), data)
   },
-  IMAGE_URL
+  IMAGE_URL,
+  AUTH_HTTP_URI
 }
