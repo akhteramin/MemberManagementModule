@@ -15,7 +15,7 @@
           <a  v-on:click="goToMemberList">Member List</a>
         </li>
         <li>
-          <a v-on:click="goToCreateMember">Create New User</a>
+          <a v-on:click="goToUserList">User List</a>
         </li>
         <li>
           <a  v-on:click="goToWaitingForVerificationMemberList">Waiting For Verification</a>
@@ -80,8 +80,11 @@
       goToWaitingForApprovalMemberList () {
         route.push('/member/waiting/approval')
       },
-      goToCreateMember () {
+      goToCreateUser () {
         route.push('/create')
+      },
+      goToUserList () {
+        route.push('/user')
       },
       init () {
         console.log('here it is')

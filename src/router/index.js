@@ -8,6 +8,7 @@ import WaitingForApprovalList from '@/components/WaitingForApprovalListComponent
 import Home from '@/components/Home'
 import MemberIndividualComponent from '@/components/MemberIndividualComponent'
 import CreateNewMemberComponent from '@/components/CreateNewMemberComponent'
+import UserListComponent from '@/components/UserListComponent'
 
 Vue.use(Router)
 
@@ -75,6 +76,11 @@ export default new Router({
       path: '/create',
       name: 'CreateNewMemberComponent',
       component: CreateNewMemberComponent
+    },
+    {
+      path: '/user',
+      name: 'UserListComponent',
+      component: UserListComponent
     }
   ]
 })

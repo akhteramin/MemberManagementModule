@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="col-md-4 col-md-offset-5 ">
+    <div class="col-md-4 col-md-offset-3 ">
       <div class="box">
         <h2>iPay Member Service</h2>
         <form role="form" @submit.prevent="createNewMember" id="loginForm">

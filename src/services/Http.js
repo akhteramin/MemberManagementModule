@@ -68,9 +68,9 @@ export default {
     } else {
       additionalParams = !isEmpty(params) ? `?${encodeQueryData(params)}` : ''
     }
-    // console.log('Line 60, http.js, key: ', key)
+    console.log('Line 60, http.js, key: ', key)
     const route = routes[key]
-    // console.log('Line 62, http.js parameters: ' + parameters)
+    console.log('Line 62, http.js parameters: ' + parameters)
     return axios.get(route.concat(parameters).concat(additionalParams))
   },
   POST (key, data, props = {}) {
