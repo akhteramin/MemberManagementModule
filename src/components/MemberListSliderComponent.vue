@@ -1,5 +1,5 @@
 <template>
-    <div class="slider pre-scrollable" style="height: 500px;">
+    <div class="custom-scrollable slider">
         <div class="gr-12" v-if="profileDetails">
             <div class="gr-6">
                     <h5>Update Profile</h5>

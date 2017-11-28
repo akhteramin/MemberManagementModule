@@ -170,7 +170,7 @@
                   <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
                 </span>
               </td>
-              <td>{{ member.verificationStatus }}</td>
+              <td>{{ member.verificationStatus | underscoreless }}</td>
               <td>{{ member.profileCompletionScore }}%</td>
               <td>
                 <div class="select">

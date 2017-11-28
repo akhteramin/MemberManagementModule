@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gr-10">
+    <div class="gr-12">
       <h5><b>Verification</b></h5>
     </div>
     <div class="gr-10">
@@ -15,8 +15,7 @@
                 <i class="fa fa-times" aria-hidden="true"></i> NOT VERIFIED
                 <br> <br>
                 <div class="gr-10 push-1">
-                  <textarea v-model="verificationComment" placeholder="Enter comment" required
-                            style="width: 80%; height: 150px; color: black;"></textarea>
+                  <textarea v-model="verificationComment" placeholder="Enter comment" required></textarea>
                 </div>
                 <div>
                   <div class="form-group gr-12">
@@ -183,15 +182,15 @@
       <div id = "nav-bar">
         <h5><b>Verification History</b></h5>
         <ul class="nav nav-tabs">
-          <li class="gr-2 text-center" :class="{active: showVerificationHistory}"
+          <li class="gr-6 text-center" :class="{active: showVerificationHistory}"
               @click="setTab('tabVerificationHistory')"><a data-toggle="tab">Verification</a></li>
           <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-          <li class="gr-2 text-center" :class="{active: showApprovalHistory}"
+          <li class="gr-6 text-center" :class="{active: showApprovalHistory}"
               @click="setTab('tabApprovalHistory')"><a data-toggle="tab">Approval</a></li>
         </ul>
         <br>
       </div>
-      <div class="pre-scrollable" style="height: 250px;">
+      <div class="pre-scrollable padding-5" style="height: 250px;">
         <div v-if="showApprovalHistory">
           <div class="card-block" v-if="approvalHistory && approvalHistory.length > 0">
             <div class="col-md-12">
