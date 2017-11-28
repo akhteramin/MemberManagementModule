@@ -1,5 +1,5 @@
 <template>
-  <div class="gr-10 push-2">
+  <div>
     <!--I am user list component................................. users:: {{ users ? users : 'N/A' }}-->
     <div class="gr-12 push-2">
       <br>
