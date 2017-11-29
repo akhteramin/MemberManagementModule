@@ -25,7 +25,7 @@
                   <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name"
-                           placeholder="Your name" v-model="createUser.name" required>
+                           placeholder="Name" v-model="createUser.name" required>
                   </div>
 
                   <div class="divider-form"></div>
@@ -328,7 +328,7 @@
       <div class="modal-dialog  modal-md">
         <!-- Modal content-->
 
-        <div class="modal-content" style="height: 270px;">
+        <div class="modal-content" style="height: 320px;">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" >&times;</button>
             <h4 class="modal-title" style="text-align: center;">Update User</h4>
@@ -354,17 +354,17 @@
                 </div>
                 <div class="gr-4">
                   <input id="name" placeholder="User's name" v-model="updateRequest.name"
-                         style="width: 200px; height: 30px;" required/>
+                         style="width: 220px; height: 35px;"  type="text" required/>
                 </div>
               </div>
 
               <div class="row">
                 <div class="gr-3">
-                  <label for="designation">Designation: </label>
+                  <label for="designation">Designationss: </label>
                 </div>
-                <div class="gr-3">
+                <div class="gr-3" style="align-items: flex-start;">
                   <input id="designation" placeholder="User's designation" v-model="updateRequest.designation"
-                         style="width: 200px; height: 30px;" required/>
+                         style="width: 220px; height: 35px;" type="text" required/>
                 </div>
               </div>
 
@@ -372,11 +372,13 @@
                 <div class="gr-3">
                   <label for="status">Status: </label>
                 </div>
-                <div class="gr-3" style="width: 220px;">
-                  <select id="status" v-model="updateRequest.status">
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="SUSPENDED">SUSPENDED</option>
-                  </select>
+                <div class="gr-3">
+                  <div class="select" style="width: 220px;">
+                    <select id="status" v-model="updateRequest.status">
+                      <option value="ACTIVE">ACTIVE</option>
+                      <option value="SUSPENDED">SUSPENDED</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
