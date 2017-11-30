@@ -348,7 +348,7 @@
             <form v-on:submit.prevent="updateUser"
                 v-on:reset.prevent="doNotUpdateUser">
 
-              <div class="row">
+              <div class="row push-2">
                 <div class="gr-3">
                   <label for="name">Name: </label>
                 </div>
@@ -358,7 +358,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row push-2">
                 <div class="gr-3">
                   <label for="designation">Designationss: </label>
                 </div>
@@ -368,7 +368,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row push-2">
                 <div class="gr-3">
                   <label for="status">Status: </label>
                 </div>
@@ -382,7 +382,7 @@
                 </div>
               </div>
 
-              <div class="gr-10 push-5">
+              <div class="gr-10 push-6">
                 <br>
                 <div class="form-group">
                   <button type="submit" class="button-search">
