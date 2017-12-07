@@ -198,7 +198,7 @@
         </ul>
         <br>
       </div>
-      <div class="pre-scrollable padding-5" style="height: 250px;">
+      <div class="small-scrollable padding-5">
         <div v-if="showApprovalHistory">
           <div class="card-block" v-if="approvalHistory && approvalHistory.length > 0">
             <div class="col-md-12">
