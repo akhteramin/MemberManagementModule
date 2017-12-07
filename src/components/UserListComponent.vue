@@ -68,13 +68,6 @@
 
                 </form>
               </div>
-
-
-
-
-
-
-
             </div>
           </div>
         </div>
@@ -124,55 +117,6 @@
             </div>
           </div>
 
-          <!--<div>-->
-            <!--<span style="display: inline-block; width: 10px;"></span>-->
-            <!--<a @click="toggleAdvancedSearch">-->
-              <!--<i class="fa fa-search-plus" aria-hidden="true" v-if="!doAdvancedSearch"></i>-->
-              <!--<i class="fa fa-search-minus" aria-hidden="true" v-if="doAdvancedSearch"></i>-->
-              <!--Advanced Search</a>-->
-          <!--</div>-->
-
-
-          <!--<div v-if="doAdvancedSearch">-->
-            <!--<br>-->
-            <!--<div class="gr-12">-->
-              <!--<div class="gr-5 text-center">-->
-                <!--<label> Profile Completion Range: </label>-->
-                <!--<vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>-->
-              <!--</div>-->
-
-              <!--<div class="gr-3">-->
-                <!--<label class="offset-0.5">Sort by: </label>-->
-                <!--<div class="select">-->
-                  <!--<select id="sort-by-select"  v-model="query.sort">-->
-                    <!--&lt;!&ndash;<option selected disabled>Select account type</option>&ndash;&gt;-->
-                    <!--<option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>-->
-                    <!--<option value="CREATION_DATE">Account Creation Date</option>-->
-                  <!--</select>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="gr-3">-->
-                <!--<label class="offset-2">Order by: </label>-->
-                <!--<div class="select">-->
-                  <!--<select id="order-by-select"  v-model="query.order">-->
-                    <!--&lt;!&ndash;<option selected disabled>Select account type</option>&ndash;&gt;-->
-                    <!--<option selected value = "DESC">DESC</option>-->
-                    <!--<option value="ASC">ASC</option>-->
-                  <!--</select>-->
-                <!--</div>-->
-              <!--</div>-->
-
-              <!--<div class="gr-3">-->
-                <!--<label>Signup From: </label>-->
-                <!--<input type="date" v-model="signUpDateFrom"/>-->
-              <!--</div>-->
-              <!--<div class="gr-3">-->
-                <!--<label>Signup To: </label>-->
-                <!--<input type="date" v-model="signUpDateTo"/>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-
           <div class="gr-4 push-4">
             <div class="form-group">
               <button type="submit" class="button-search">
@@ -185,21 +129,36 @@
               </button>
             </div>
           </div>
-
-          <div id="container" class="gr-6" style="height: 40px;">
-            <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
-              <select v-model="userQuery.pageSize" @change="getUsers">
+          <div class="gr-1 push-5">
+            <div class="select select-sm">              
+              <select  v-model="userQuery.pageSize" @change="getUsers">
                 <option disabled>Number of Entries</option>
-                <option value=10 selected>10</option>
+                <option selected value=10>10</option>
                 <option value=20>20</option>
                 <option value=30>30</option>
                 <option value=50>50</option>
               </select>
             </div>
           </div>
+          
 
         </div>
       </form>
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+                <div class="loader-inner ball-grid-pulse">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+        </div>
+      </div>
 
       <div>
         <span style="display:inline-block; width: 5px;"></span>
@@ -426,7 +385,8 @@
         userUpdateUnsuccessful: false,
         updatingUserId: '',
         showNewUserComponent: false,
-        createUser: {}
+        createUser: {},
+        showLoader: true
       }
     },
     components: {
@@ -464,12 +424,23 @@
           alert('Passwords mismatched.')
           return
         }
+        this.showLoader = true
         Http.POST('user', this.createUser)
           .then(({data}) => {
             console.log('Member created, response: ', data)
             this.accountCreationSuccessful = true
             $('#CreateNewUserModal').modal('hide')
             this.getUsers(this.userQuery.pageNumber, this.userQuery.pageSize)
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'User has been created successfully.'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
+            this.showLoader = false
           },
             error => {
               if (error.response) {
@@ -481,9 +452,11 @@
               console.log('Error in member creation, error: ', error)
               $('#CreateNewUserModal').modal('hide')
               this.getUsers(this.userQuery.pageNumber, this.userQuery.pageSize)
+              this.showLoader = false
             })
       },
       getUsers (requestQueryByFilter = true, _pageNumber = 0, _pageSize = 10) {
+        this.showLoader = true
         if (requestQueryByFilter) {
           this.userQuery.pageNumber = 0
         } else {
@@ -496,7 +469,9 @@
             this.totalPages = list.totalPages
             this.totalElements = list.totalElements
             console.log('Success, got the list of users:: ', this.users, ' here is the list: ', list)
+            this.showLoader = false
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
@@ -537,13 +512,25 @@
       },
       updateUser () {
         console.log('in update user, id: ', this.updatingUserId)
+        this.showLoader = true
         Http.PUT('user', this.updateRequest, [this.updatingUserId])
-          .then(() => {
-            console.log('User updated successfully.')
+          .then((data) => {
+            this.showLoader = false
+            console.log('User updated successfully.', data)
             this.userUpdateSuccessful = true
             this.userUpdateUnsuccessful = false
             this.init(this.userQuery.pageNumber, this.userQuery.pageSize)
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: data.data.message
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()

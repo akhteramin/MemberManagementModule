@@ -5,21 +5,19 @@
     <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
         <div class="row">
           <div class="gr-12">
+           <div class="gr-3">
+              <div class="form-group">
+                <label> Mobile Number: </label>
+                <input  name="mobilenumber" type="text" id="mobilenumber"
+                        v-model="query.mobileNumber" placeholder="+8801XXXXXXXXX"
+                        value=""/>
+              </div>
+            </div>
             <div class="gr-3">
               <div class="form-group">
                 <label> Name: </label>
                 <input  name="queryName" type="text" id="queryName" placeholder="Name"
                         v-model="query.name"
-                        value=""/>
-              </div>
-            </div>
-
-
-            <div class="gr-3">
-              <div class="form-group">
-                <label> Mobile Number: </label>
-                <input  name="mobilenumber" type="text" id="mobilenumber"
-                        v-model="query.mobileNumber" placeholder="+8801XXXXXXXXX"
                         value=""/>
               </div>
             </div>
@@ -55,21 +53,13 @@
           </div>
 
           <div>
-           <span style="display: inline-block; width: 10px;"></span>
-           <a @click="toggleAdvancedSearch">
-             <i class="fa fa-search-plus" aria-hidden="true" v-if="!doAdvancedSearch"></i>
-             <i class="fa fa-search-minus" aria-hidden="true" v-if="doAdvancedSearch"></i>
-             Advanced Search</a>
+           
           </div>
 
 
         <div v-if="doAdvancedSearch">
           <br>
           <div class="gr-12">
-            <div class="gr-5 text-center">
-              <label> Profile Completion Range: </label>
-              <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
-            </div>
 
             <div class="gr-3">
               <label class="offset-0.5">Sort by: </label>
@@ -101,31 +91,48 @@
               <input type="date" v-model="signUpDateTo"/>
             </div>
           </div>
-        </div>
+          <div class="gr-6 push-2 text-center">
+              <label> Profile Completion Range: </label>
+              <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
+          </div>
 
-        <div class="gr-4 push-4">
-          <div class="form-group">
-            <button type="submit" class="button-search">
-              <i class="fa fa-search" aria-hidden="true"></i>
-              Search
-            </button>
-            <button type="reset" class="button-reset">
-              <i class="fa fa-undo" aria-hidden="true"></i>
-              Reset
-            </button>
-          </div>
         </div>
-        <div id="container" class="gr-8" style="height: 40px;">
-          <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
-            <select v-model="query.pageSize" @change="filter">
-              <option disabled>Number of Entries</option>
-              <option selected value=10>10</option>
-              <option value=20>20</option>
-              <option value=30>30</option>
-              <option value=50>50</option>
-            </select>
-          </div>
+        <div class="gr-8 pointer">
+        <span style="display: inline-block; width: 10px;"></span>
+           <a @click="toggleAdvancedSearch">
+             <i class="fa fa-search-plus" aria-hidden="true" v-if="!doAdvancedSearch"></i>
+             <i class="fa fa-search-minus" aria-hidden="true" v-if="doAdvancedSearch"></i>
+             Advanced Search</a>
         </div>
+        <div class="gr-12">
+          <div class="gr-4 push-4">
+            <div class="form-group">
+              <button type="submit" class="button-search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Search
+              </button>
+              <button type="reset" class="button-reset">
+                <i class="fa fa-undo" aria-hidden="true"></i>
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="gr-1 push-7">
+            <div class="select select-sm">              
+              <select v-model="query.pageSize" @change="filter">
+                <option disabled>Number of Entries</option>
+                <option selected value=10>10</option>
+                <option value=20>20</option>
+                <option value=30>30</option>
+                <option value=50>50</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+        
+        
 
       </div>
     </form>
