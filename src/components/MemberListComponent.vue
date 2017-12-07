@@ -5,21 +5,21 @@
     <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
         <div class="row">
           <div class="gr-12">
-            <div class="gr-3">
-              <div class="form-group">
-                <label> Name: </label>
-                <input  name="queryName" type="text" id="queryName" placeholder="Name"
-                        v-model="query.name"
-                        value=""/>
-              </div>
-            </div>
-
 
             <div class="gr-3">
               <div class="form-group">
                 <label> Mobile Number: </label>
                 <input  name="mobilenumber" type="text" id="mobilenumber"
                         v-model="query.mobileNumber" placeholder="+8801XXXXXXXXX"
+                        value=""/>
+              </div>
+            </div>
+
+            <div class="gr-3">
+              <div class="form-group">
+                <label> Name: </label>
+                <input  name="queryName" type="text" id="queryName" placeholder="Name"
+                        v-model="query.name"
                         value=""/>
               </div>
             </div>

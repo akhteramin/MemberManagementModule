@@ -27,7 +27,7 @@
       <ul class="bottom-menu">
         <li>
           <i class="fa fa-user-circle" aria-hidden="true"></i>
-          <a v-on:click="logout">{{user.loginID}}</a>
+          <a v-on:click="goToUserProfile">{{user.loginID}}</a>
         </li>
         <li>
           <i class="fa fa-question-circle-o" aria-hidden="true"></i>
@@ -80,11 +80,13 @@
       goToWaitingForApprovalMemberList () {
         route.push('/member/waiting/approval')
       },
-      goToCreateUser () {
-        route.push('/create')
-      },
       goToUserList () {
         route.push('/user')
+      },
+      goToUserProfile () {
+        console.log('user information:: ', this.user)
+        let loginID = this.user.loginID
+        route.push(`/user/${loginID}`) // `${window.location.href}/profile/${value}/${accntType}`
       },
       init () {
         console.log('here it is')

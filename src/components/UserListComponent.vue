@@ -261,7 +261,7 @@
 
 
     <!--  --------------------------------- table pagination --------------------------- ------>
-    <div class="gr-12 push-5 card-footer text-muted" v-if="totalElements > 0 && totalPages > 1">
+    <div class="gr-12 push-2 card-footer text-muted" v-if="totalElements > 0 && totalPages > 1">
       <div class="row">
         <div class="gr-3">
           <div style="margin-top: 2.5rem;" v-if="users">
@@ -271,7 +271,7 @@
             </small>
           </div>
         </div>
-        <div class="gr-9">
+        <div class="gr-9 push-1">
           <div v-if="totalPages <= maxPaginationItem">
             <nav aria-label="ActivityPagination">
               <ul class="pagination pagination-sm justify-content-end">
@@ -348,7 +348,7 @@
             <form v-on:submit.prevent="updateUser"
                 v-on:reset.prevent="doNotUpdateUser">
 
-              <div class="row push-2">
+              <div class="row push-2" style="padding: 2px;">
                 <div class="gr-3">
                   <label for="name">Name: </label>
                 </div>
@@ -358,9 +358,9 @@
                 </div>
               </div>
 
-              <div class="row push-2">
+              <div class="row push-2" style="padding: 2px;">
                 <div class="gr-3">
-                  <label for="designation">Designationss: </label>
+                  <label for="designation">Designation: </label>
                 </div>
                 <div class="gr-3" style="align-items: flex-start;">
                   <input id="designation" placeholder="User's designation" v-model="updateRequest.designation"
@@ -368,7 +368,7 @@
                 </div>
               </div>
 
-              <div class="row push-2">
+              <div class="row push-2" style="padding: 2px;">
                 <div class="gr-3">
                   <label for="status">Status: </label>
                 </div>

@@ -9,6 +9,7 @@ import Home from '@/components/Home'
 import MemberIndividualComponent from '@/components/MemberIndividualComponent'
 import CreateNewMemberComponent from '@/components/CreateNewMemberComponent'
 import UserListComponent from '@/components/UserListComponent'
+import UserIndividualComponent from '@/components/UserIndividualComponent'
 
 Vue.use(Router)
 
@@ -81,6 +82,12 @@ export default new Router({
       path: '/user',
       name: 'UserListComponent',
       component: UserListComponent
+    },
+    {
+      path: '/user/:loginID',
+      name: 'UserIndividualComponent',
+      component: UserIndividualComponent,
+      props: true
     }
   ]
 })
