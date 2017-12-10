@@ -1,5 +1,22 @@
  <template>
     <div>
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
       <br>
       <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions"  @change="triggerSearchTransactions">
           <div class="form-group gr-12">
@@ -13,14 +30,20 @@
                      v-model="searchDateTo" />
             </div>
 
-            <div class="gr-3" > <!-- #8b9eb6; -->
-              <label>Type: </label>
-              <div class="select">
-                <select id="sort-by-select" v-model="transactionQuery.serviceID">
-                  <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
-                    <option value=null disabled selected>Select Transaction Type</option>
-                    <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
-                </select>
+
+
+            <div class="gr-4"> <!-- #8b9eb6; -->
+              <div class="form-group">
+                <label>Type: </label>
+                <div>
+                  <div class="select select-sm">
+                    <select id="sort-by-select" v-model="transactionQuery.serviceID">
+                      <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
+                      <option value=null disabled selected>Select Transaction Type</option>
+                      <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -35,8 +58,8 @@
                 <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
             </div>
 
-            <div id="container" class="gr-3" style="height: 40px;">
-              <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
+            <div class="gr-2 push-2">
+              <div class="select select-sm">
                 <select v-model="transactionQuery.pageSize">
                   <option disabled>Number of Entries</option>
                   <option selected value=10>10</option>
@@ -166,7 +189,8 @@
         maxPaginationItem: '',
         searchDateFrom: null,
         searchDateTo: null,
-        serviceList: Constants
+        serviceList: Constants,
+        showLoader: false
       }
     },
     methods: {
@@ -231,14 +255,17 @@
       },
 
       getTransactions (key = 'member') {
+        this.showLoader = true
         Http.GET(key, [this.id, 'transactions'], this.transactionQuery)
           .then(({data: transactions}) => {
+            this.showLoader = false
             console.log('Success, got transactions: ', transactions)
             console.log('same transaction data: ')
             this.transactions = transactions
             this.transactionTotalPages = Math.ceil(
               this.transactions.totalCount / this.transactionQuery.pageSize)
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()

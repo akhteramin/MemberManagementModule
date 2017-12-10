@@ -33,7 +33,7 @@
                   <div class="form-group">
                     <label for="designation">Designation</label>
                     <input type="text" class="form-control" id="designation"
-                           placeholder="Your designation" v-model="createUser.designation"
+                           placeholder="designation" v-model="createUser.designation"
                            required>
                   </div>
 
@@ -41,7 +41,7 @@
 
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Your email"
+                    <input type="email" class="form-control" id="email" placeholder="email"
                            v-model="createUser.email" required>
                   </div>
 
@@ -129,8 +129,8 @@
               </button>
             </div>
           </div>
-          <div class="gr-1 push-5">
-            <div class="select select-sm">              
+          <div class="gr-2 push-4">
+            <div class="select select-sm">
               <select  v-model="userQuery.pageSize" @change="getUsers">
                 <option disabled>Number of Entries</option>
                 <option selected value=10>10</option>
@@ -140,7 +140,7 @@
               </select>
             </div>
           </div>
-          
+
 
         </div>
       </form>
@@ -368,7 +368,6 @@
 <script>
   import Http from '../services/Http'
   import route from '../router'
-  import CreateNewMemberComponent from './CreateNewMemberComponent.vue'
 
   export default {
     name: 'UserListComponent',
@@ -430,7 +429,9 @@
             console.log('Member created, response: ', data)
             this.accountCreationSuccessful = true
             $('#CreateNewUserModal').modal('hide')
-            this.getUsers(this.userQuery.pageNumber, this.userQuery.pageSize)
+//            console.log('after modal hiding, userQuery: ', this.userQuery)
+            this.getUsers(false, this.userQuery.pageNumber, this.userQuery.pageSize)
+            this.showNewUserComponent = false
             $.notify({
               // options
               title: '<strong>Success!</strong>',
@@ -440,19 +441,31 @@
               type: 'success',
               delay: 3000
             })
+            this.createUser = {}
             this.showLoader = false
           },
             error => {
+              console.log('error is: ', error)
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
                 }
               }
               this.accountCreationSuccessful = false
-              console.log('Error in member creation, error: ', error)
+//              console.log('Error in member creation, error: ', error)
               $('#CreateNewUserModal').modal('hide')
-              this.getUsers(this.userQuery.pageNumber, this.userQuery.pageSize)
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message // 'User is not created.'
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
+              this.getUsers(false, this.userQuery.pageNumber, this.userQuery.pageSize)
               this.showLoader = false
+              this.showNewUserComponent = false
             })
       },
       getUsers (requestQueryByFilter = true, _pageNumber = 0, _pageSize = 10) {
@@ -463,6 +476,7 @@
           this.userQuery.pageNumber = _pageNumber
           this.userQuery.pageSize = _pageSize
         }
+//        console.log('in user list component.vue, userQuery: ', this.userQuery)
         Http.GET('user', this.userQuery)
           .then(({data: {data: list}}) => {
             this.users = list['list']
@@ -520,6 +534,7 @@
             this.userUpdateSuccessful = true
             this.userUpdateUnsuccessful = false
             this.init(this.userQuery.pageNumber, this.userQuery.pageSize)
+            $('#UserUpdateResponseModal').modal('hide')
             $.notify({
               // options
               title: '<strong>Success!</strong>',
@@ -536,6 +551,16 @@
                 this.logout()
               }
             }
+            $('#UserUpdateResponseModal').modal('hide')
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
             this.userUpdateUnsuccessful = true
             console.error('Error in getting users: ', error)
           })

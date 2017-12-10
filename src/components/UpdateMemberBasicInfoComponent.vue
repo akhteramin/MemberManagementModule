@@ -1,7 +1,23 @@
  <template>
 
     <div>
-        <form v-on:submit.prevent="updateMemberBasicProfile">
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <form v-on:submit.prevent="updateMemberBasicProfile">
             <div class="gr-2">
                 Name:
             </div>
@@ -108,7 +124,8 @@
     ],
     data () {
       return {
-        'dob': ''
+        'dob': '',
+        showLoader: false
       }
     },
     methods: {
@@ -133,14 +150,35 @@
         console.log(this.member.basicInfo)
         this.member.basicInfo.dob = Date.parse(this.dob)
         console.log('update member clicked, this.member.basicInfo: ', this.member.basicInfo)
+        this.showLoader = true
         Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
           .then(
             ({data: {data: memberUpdate}}) => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Basic details updated.'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               console.log('updated profile::', memberUpdate)
               this.init()
               this.editBasicInfo()
             },
             error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()

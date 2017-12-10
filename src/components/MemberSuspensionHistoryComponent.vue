@@ -1,5 +1,20 @@
 <template>
   <div>
+    <div class="loaders loading" v-if="showLoader">
+      <div class="loader">
+        <div class="loader-inner ball-grid-pulse">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
     <div class="form-group push-4">
       <!--<div class="gr-4">-->
         <!--<button type="submit" class="button-search">-->
@@ -10,14 +25,16 @@
 
       <div id="container" class="gr-8" style="height: 40px;">
         <!--<label class="gr-5" style="background-color: red; width: 250px;">Number of entries per page</label>-->
-        <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
-          <select v-model="suspensionHistoryQuery.pageSize" @change="getSuspensionHistory(true)">
-            <option disabled>Number of Entries</option>
-            <option selected value=10>10</option>
-            <option value=20>20</option>
-            <option value=30>30</option>
-            <option value=50>50</option>
-          </select>
+        <div class="gr-2 push-11">
+          <div class="select select-sm">
+            <select v-model="suspensionHistoryQuery.pageSize" @change="getSuspensionHistory(true)">
+              <option disabled>Number of Entries</option>
+              <option selected value=10>10</option>
+              <option value=20>20</option>
+              <option value=30>30</option>
+              <option value=50>50</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -123,7 +140,8 @@
         suspensionHistoryQuery: {},
         totalElements: 0,
         totalPages: 0,
-        hasNextPage: false
+        hasNextPage: false,
+        showLoader: false
       }
     },
     methods: {
@@ -161,14 +179,17 @@
         if (startEntryFromZero === true) {
           this.suspensionHistoryQuery.pageNumber = 0
         }
+        this.showLoader = true
         Http.GET('member', [this.id, 'suspension-history'], this.suspensionHistoryQuery)
           .then(({data: {data: history}}) => {
+            this.showLoader = false
             console.log('Success, got history: ', history)
             this.suspensionHistory = history.list
             this.totalElements = history.totalElements
             this.totalPages = history.totalPages
             console.log('suspension history: ', this.suspensionHistory)
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()

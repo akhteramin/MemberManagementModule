@@ -1,5 +1,22 @@
  <template>
     <div>
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
         <button class="update btn btn-sm btn-block btn-default btn-active-til"
         data-toggle="modal" data-target="#ChangeBusinessPpModal" title="Change Profile Picture" data-backdrop="false">
             <i class="glyphicon glyphicon-camera">
@@ -74,7 +91,8 @@
       return {
         imageBaseUrl: '',
         imageUrl: '',
-        profilePicture: ''
+        profilePicture: '',
+        showLoader: false
       }
     },
     methods: {
@@ -116,13 +134,34 @@
         console.log(this.profilePicture)
         var fd = new FormData()
         fd.append('imageFile', this.profilePicture)
+        this.showLoader = true
         Http.POST('member', fd, [this.id, 'business-owner', 'picture'])
         .then(
           ({data: propicData}) => {
+            this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'Picture updated successfully'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
             console.log('profile picture data: ', propicData)
             this.editProfilePic()
           },
           error => {
+            this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()

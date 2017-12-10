@@ -1,5 +1,23 @@
 <template>
   <div>
+
+    <div class="loaders loading" v-if="showLoader">
+      <div class="loader">
+        <div class="loader-inner ball-grid-pulse">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="gr-12">
       <h5><b>Verification</b></h5>
     </div>
@@ -293,7 +311,8 @@
         verificationComment: '',
         approvalComment: '',
         showVerificationHistory: true,
-        showApprovalHistory: false
+        showApprovalHistory: false,
+        showLoader: false
       }
     },
     created () {
@@ -354,15 +373,18 @@
           'status': 'ACCEPT'
         }
         console.log('verification request: ', request, ' this.id: ', this.id)
+        this.showLoader = true
         Http.PUT('verification', request, [this.id])
           .then(
             ({data: {data: verificationResponse}}) => {
+              this.showLoader = false
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -378,15 +400,18 @@
           'status': 'REJECT'
         }
         console.log('verification request: ', request)
+        this.showLoader = true
         Http.PUT('verification', request, [this.id])
           .then(
             ({data: {data: verificationResponse}}) => {
+              this.showLoader = false
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -402,15 +427,18 @@
           'status': 'ACCEPT'
         }
         console.log('approval request: ', request)
+        this.showLoader = true
         Http.PUT('verification', request, [this.id, 'approve'])
           .then(
             ({data: approvalResponse}) => {
+              this.showLoader = false
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
               this.approvalHistory.push(approvalResponse.data)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -426,15 +454,18 @@
           'status': 'REJECT'
         }
         console.log('approval request: ', request)
+        this.showLoader = true
         Http.PUT('verification', request, [this.id, 'approve'])
           .then(
             ({data: approvalResponse}) => {
+              this.showLoader = false
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
               this.approvalHistory.push(approvalResponse.data)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()

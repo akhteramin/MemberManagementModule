@@ -407,6 +407,23 @@
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
         </div>
       </div>
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
 </template>
 
@@ -492,7 +509,8 @@
           status: 'N/A',
           thanaId: 'N/A',
           type: 'PERMANENT'
-        }
+        },
+        showLoader: false
       }
     },
     created () {
@@ -535,9 +553,11 @@
           thanaId: 'N/A',
           type: 'PERMANENT'
         }
+        this.showLoader = true
         Http.GET('member', [this.id, 'basic-details'])
           .then(
             ({data: {data: member}}) => {
+              this.showLoader = false
               this.member = member
               console.log('Got, member success::')
               console.log('member basic info: ', this.member.basicInfo,
@@ -555,6 +575,7 @@
               this.getStaticNames()
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -564,13 +585,16 @@
             }
           )
 //         Http call for balance
+        this.showLoader = true
         Http.GET('member', [this.id, 'balance'])
           .then(
             ({data}) => {
+              this.showLoader = false
               this.balance = data.data
 //              console.log('balance is: ', this.balance)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()

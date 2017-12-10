@@ -1,5 +1,22 @@
 <template>
     <div class="custom-scrollable slider">
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
         <div class="gr-12" v-if="profileDetails">
             <div class="gr-6">
                     <h5>Update Profile</h5>
@@ -299,7 +316,8 @@
         memberDocumentDetail: {},
         profileDetails: true,
         documentDetails: {},
-        member: {}
+        member: {},
+        showLoader: false
       }
     },
     created () {
@@ -321,13 +339,16 @@
       },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
+        this.showLoader = true
         Http.GET('member', [this.memberProfile.accountId, 'basic-details'])
           .then(
             ({data: {data: member}}) => {
+              this.showLoader = false
               this.member = member
               console.log('In slider component, member basic details: ', this.member)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -338,13 +359,16 @@
           )
       },
       loadMemberIntroduced: function (accountId) {
+        this.showLoader = true
         Http.GET('member', [accountId, 'introduced'])
           .then(
             ({data: {data: introduced}}) => {
+              this.showLoader = false
               this.membersIntroduced = introduced
               console.log('Got the list of introduced: ', this.membersIntroduced)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -355,14 +379,17 @@
           )
       },
       loadMemberInvitedBy: function (accountId) {
+        this.showLoader = true
         Http.GET('member', [accountId, 'inviters'])
           .then(
             ({data: {data: invited}}) => {
+              this.showLoader = false
               this.membersInvitedBy = invited
               console.log('Got the list of inviters: ', this.membersInvitedBy)
             },
             error => {
               if (error.response) {
+                this.showLoader = false
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
                 }
@@ -372,14 +399,17 @@
           )
       },
       loadIdentificationDocument: function (accountId) {
+        this.showLoader = true
         Http.GET('member', [accountId, 'identification-documents'])
         .then(
             ({data: {data: documents}}) => {
+              this.showLoader = false
               this.memberDocuments = documents
               console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
               this.memberDocuments.length)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -390,13 +420,16 @@
         )
       },
       getDocumentDetails: function (documentID) {
+        this.showLoader = true
         Http.GET('member', ['identification-document', documentID])
         .then(
             ({data: {data: documentDetail}}) => {
+              this.showLoader = false
               this.documentDetails = documentDetail
               console.log('documentDetail:', documentDetail)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -417,13 +450,16 @@
       },
       verifyDocument () {
         console.log('param data ::', this.paramData)
+        this.showLoader = true
         Http.PUT('verification', this.paramData, [this.memberProfile.accountId, 'document', this.paramData.documentID])
         .then(
           ({data: documentData}) => {
+            this.showLoader = false
             console.log('document data::', documentData)
             this.loadIdentificationDocument(this.memberProfile.accountId)
           },
           error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()

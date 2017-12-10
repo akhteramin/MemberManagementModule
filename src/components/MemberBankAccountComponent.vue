@@ -3,7 +3,7 @@
       <div class="gr-10">
         <h5><b>Bank Info</b></h5>
         <div class="text-center" v-if="bankAccounts.length === 0">No Bank Added<br></div>
-        <div v-else-if="bankAccounts" class="pre-scrollable" style="height: 210px;">
+        <div v-else-if="bankAccounts" class="small-scrollable" style="height: 210px;">
           <table class="table table-hover table-sm">
             <thead class="thead-default">
             <tr>
@@ -29,6 +29,21 @@
         </div>
         <br>
       </div>
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
     </div>
 
 </template>
@@ -44,7 +59,8 @@
     data () {
       return {
         bankAccounts: {},
-        imageBaseUrl: ''
+        imageBaseUrl: '',
+        showLoader: false
       }
     },
     created () {
@@ -70,13 +86,16 @@
       },
       getBankAccount (key = 'member') {
             // Http call for affiliated bank accounts
+        this.showLoader = true
         Http.GET('member', [this.id, 'bank-accounts'])
            .then(
              ({data: {data: bankAccounts}}) => {
+               this.showLoader = false
                this.bankAccounts = bankAccounts
 //               console.log('Got the list of bank accounts: ', bankAccounts)
              },
              error => {
+               this.showLoader = false
                if (error.response) {
                  if (error.response.status === 401) { // unauthorized, logging out.
                    this.logout()

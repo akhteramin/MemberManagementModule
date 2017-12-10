@@ -3,7 +3,7 @@
         <h5><b>Introduced by</b></h5>
         <hr>
         <div class="text-center" v-if="introducers.length === 0">This member has no introducer.</div>
-        <div v-else class="pre-scrollable" style="height: 210px;">
+        <div v-else class="small-scrollable" style="height: 210px;">
             <div class="row" v-for="item in introducers">
                 <div class="gr-3">
                 <img class="img-rounded mx-auto d-block" :src="imageBaseUrl+item.profilePictureUrl"

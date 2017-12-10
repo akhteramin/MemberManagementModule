@@ -1,4 +1,22 @@
 <template>
+  <div>
+
+    <div class="loaders loading" v-if="showLoader">
+      <div class="loader">
+        <div class="loader-inner ball-grid-pulse">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+
     <div v-if="addressType==0">
         <form v-on:submit.prevent="updateMemberAddress(addressType)">
             <div class="gr-6">
@@ -8,7 +26,7 @@
                 <div class="gr-2">
                 Line 1:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 <input
                 id="presentAddrssLine1"
                 class="input-sm"
@@ -20,7 +38,7 @@
                 <div class="gr-2">
                 Line 2:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 <input class="input-sm"
                         type="text"
                         v-model="memberPresentAddress.addressLine2"/>
@@ -30,7 +48,7 @@
                 <div class="gr-2">
                 District:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 <div class="select select-sm">
                     <select id="districtSelection" v-model="memberPresentAddress.districtId" required>
                     <option value="" disabled>Select District</option>
@@ -43,7 +61,7 @@
                 <div class="gr-2">
                 Thana:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 <div class="select select-sm">
                     <select id="thanaSelection" v-model="memberPresentAddress.thanaId" required>
                     <option value="" disabled>Select Thana</option>
@@ -59,7 +77,7 @@
                 <div class="gr-2">
                 Country:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 {{ memberPresentAddress.country}}
                 </div>
             </div>
@@ -85,7 +103,7 @@
                 <div class="gr-2">
                 Line 1:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 <input class="input-sm"
                         type="text"
                         v-model="memberPermanentAddress.addressLine1"/>
@@ -95,7 +113,7 @@
                 <div class="gr-2">
                 Line 2:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 <input class="input-sm"
                         type="text"
                         v-model="memberPermanentAddress.addressLine2"/>
@@ -105,7 +123,7 @@
                 <div class="gr-2">
                 District:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 <div class="select select-sm">
                     <select v-model="memberPermanentAddress.districtId" required>
                     <option value="" disabled>Select District</option>
@@ -120,7 +138,7 @@
                 <div class="gr-2">
                 Thana:
                 </div>
-                <div class="gr-8">
+                <div class="gr-8 padding-2">
                 <div class="select select-sm">
                     <select  v-model="memberPermanentAddress.thanaId" required>
                     <option value="" disabled>Select Thana</option>
@@ -154,6 +172,8 @@
         </form>
     </div>
 
+  </div>
+
 </template>
 
 
@@ -171,7 +191,8 @@
     ],
     data () {
       return {
-        addressType: 0
+        addressType: 0,
+        showLoader: false
       }
     },
     methods: {
@@ -188,6 +209,7 @@
           )
       },
       init () {
+        console.log('update member address component initialized::, show loader: ', this.showLoader)
         if (this.memberPresentAddress) {
           this.addressType = 0
         } else {
@@ -214,9 +236,20 @@
         delete updatedAddress.address['districtId']
         delete updatedAddress.address['type']
         console.log('updatedAddress: ', updatedAddress)
+        this.showLoader = true
         Http.PUT('member', updatedAddress, [this.id, 'address'])
           .then(
             ({data: {data: addressUpdate}}) => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Address Updated successfully'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               console.log('updated address: ', addressUpdate)
               if (addressId === 0) {
                 this.editPresentAddress()
@@ -225,6 +258,16 @@
               }
             },
             error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()

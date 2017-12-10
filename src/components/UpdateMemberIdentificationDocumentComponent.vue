@@ -1,6 +1,21 @@
 <template>
     <div>
-        <div class="modal-dialog  modal-md">
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-dialog  modal-md">
           <!-- Modal content-->
 
           <div class="modal-content">
@@ -70,7 +85,8 @@
       return {
         documentBaseUrl: '',
         documentUrl: '',
-        memberDocument: {}
+        memberDocument: {},
+        showLoader: false
       }
     },
     methods: {
@@ -114,13 +130,34 @@
         fd.append('documentIdNumber', this.document.documentIdNumber)
         fd.append('documentType', this.document.documentType)
         console.log('document type::', this.document.documentType)
+        this.showLoader = true
         Http.POST('member', fd, [this.id, 'identification-document'])
           .then(
             ({data: documentdata}) => {
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Document Uploaded successfully'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
+              this.showLoader = false
               console.log('document data: ', documentdata)
               this.editIdentificationDocument()
             },
             error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()

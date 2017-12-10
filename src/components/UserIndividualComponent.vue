@@ -1,6 +1,22 @@
 <template>
+  <div>
+    <div class="loaders loading" v-if="showLoader">
+      <div class="loader">
+        <div class="loader-inner ball-grid-pulse">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
 
-  <div class="gr-10 push-2" v-if="user">
+    <div class="gr-10 push-2" v-if="user">
 
     <br>
     <div class="gr-12"> <!--offset-md-1-->
@@ -174,6 +190,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -223,7 +240,8 @@
         updatingUserId: '',
         imageBaseUrl: '',
         userUpdateSuccessful: false,
-        userUpdateUnsuccessful: false
+        userUpdateUnsuccessful: false,
+        showLoader: false
       }
     },
     created () {
@@ -257,9 +275,11 @@
           'pageNumber': 0,
           'pageSize': 10
         }
+        this.showLoader = true
         Http.GET('user', query)
           .then(
             ({data: {data: list}}) => {
+              this.showLoader = false
               this.user = list.list[0]
               this.updatingUserId = this.user.id
               this.updateRequest.name = this.user.name
@@ -268,6 +288,7 @@
               console.log('Successfully got the user: ', this.user)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -279,12 +300,35 @@
       },
       updateUser () {
         console.log('in update user, id: ', this.updatingUserId)
+        this.showLoader = true
         Http.PUT('user', this.updateRequest, [this.updatingUserId])
           .then(() => {
+            this.showLoader = false
+            $('#UserUpdateResponseModal').modal('hide')
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'User updated successfully'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
             console.log('User updated successfully.')
             this.userUpdateSuccessful = true
             this.userUpdateUnsuccessful = false
           }, error => {
+            this.showLoader = false
+            $('#UserUpdateResponseModal').modal('hide')
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()

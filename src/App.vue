@@ -14,7 +14,6 @@
   import Home from './components/Home.vue'
   import WaitingForApprovalList from './components/WaitingForApprovalListComponent.vue'
   import WaitingForVerificationList from './components/WaitingForVerificationListComponent.vue'
-  import CreateNewMemberComponent from './components/CreateNewMemberComponent.vue'
 
   export default {
     name: 'app',

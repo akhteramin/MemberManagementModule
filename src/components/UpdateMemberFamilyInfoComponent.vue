@@ -1,7 +1,24 @@
  <template>
 
     <div>
-        <form v-on:submit.prevent="updateMemberParents">
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
+      <form v-on:submit.prevent="updateMemberParents">
             <div class="gr-2">
             Father Name:
             </div>
@@ -56,6 +73,7 @@
     ],
     data () {
       return {
+        showLoader: false
       }
     },
     methods: {
@@ -74,14 +92,35 @@
       init () {
       },
       updateMemberParents () {
+        this.showLoader = true
         Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
           .then(
             ({data: {data: memberUpdate}}) => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Member basic details updated' // error.response.data.message
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               console.log('updated profile::', memberUpdate)
               this.init()
               this.editParents()
             },
             error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()

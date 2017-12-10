@@ -26,8 +26,8 @@
                 <button type="reset" class="button-reset">
                   <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
               </div>
-              <div id="container" class="gr-3" style="height: 40px;">
-                <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
+              <div class="gr-2 push-2">
+                <div class="select select-sm">
                   <select v-model="activityQuery.pageSize" @change="triggerSearchActivities">
                     <option disabled>Number of Entries</option>
                     <option selected value=10>10</option>
@@ -119,6 +119,23 @@
             </div>
             </div>
         </div>
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
 </template>
 
@@ -135,7 +152,8 @@
         activities: {},
         maxPaginationItem: '',
         searchFromDate: null,
-        searchToDate: null
+        searchToDate: null,
+        showLoader: false
       }
     },
     methods: {
@@ -198,11 +216,14 @@
         this.getActivities()
       },
       getActivities (key = 'member') {
+        this.showLoader = true
         Http.GET(key, [this.id, 'activities'], this.activityQuery)
           .then(({data: {data: activities}}) => {
+            this.showLoader = false
             console.log('Success, got activities: ', activities)
             this.activities = activities
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()

@@ -1,5 +1,22 @@
 <template>
   <div id = "list" class="ListRenderer gr-10 push-2 content-container">
+
+    <div class="loaders loading" v-if="showLoader">
+      <div class="loader">
+        <div class="loader-inner ball-grid-pulse">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+
     <h1>Members</h1>
     <hr>
     <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
@@ -344,7 +361,8 @@
         memberComment: '',
         memberAccountID: '',
         doAdvancedSearch: false,
-        memberSuspensionHistory: {}
+        memberSuspensionHistory: {},
+        showLoader: false
       }
     },
     methods: {
@@ -373,14 +391,17 @@
           this.sliderShow = false
         } else {
           this.memberProfile = member
+          this.showLoader = true
           Http.GET('member', [member.accountId, 'identification-documents'])
             .then(
               ({data: {data: documents}}) => {
+                this.showLoader = false
                 this.memberDocuments = documents
                 console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
                   this.memberDocuments.length)
               },
               error => {
+                this.showLoader = false
                 if (error.response) {
                   if (error.response.status === 401) { // unauthorized, logging out.
                     this.logout()
@@ -390,13 +411,16 @@
               }
             )
           // Http call for the introducers
+          this.showLoader = true
           Http.GET('member', [member.accountId, 'introducers'])
             .then(
               ({data: {data: introducers}}) => {
+                this.showLoader = false
                 this.memberIntroducers = introducers
                 console.log('Got the list of introducers: ', this.memberIntroducers)
               },
               error => {
+                this.showLoader = false
                 if (error.response) {
                   if (error.response.status === 401) { // unauthorized, logging out.
                     this.logout()
@@ -406,14 +430,17 @@
               }
             )
           // Http call for the missing information
+          this.showLoader = true
           Http.GET('member', [member.accountId, 'is-verifiable'])
             .then(
               ({data: {data: missingData}}) => {
+                this.showLoader = false
                 this.memberMissingInfo = missingData
                 console.log('Got the list of missing: ', this.memberMissingInfo)
               },
               error => {
                 if (error.response) {
+                  this.showLoader = false
                   if (error.response.status === 401) { // unauthorized, logging out.
                     this.logout()
                   }
@@ -428,11 +455,14 @@
         this.sliderShow = false
       },
       getMembers: function (key = 'member') {
+        this.showLoader = true
         Http.GET(key, this.query)
           .then(({data: {data}}) => {
+            this.showLoader = false
             console.log('Success, got members: ', data)
             this.members = data
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
@@ -450,11 +480,14 @@
           pageNumber: 0,
           pageSize: 3
         })
+        this.showLoader = true
         Http.GET('member', [accountID, 'suspension-history'], paramData)
             .then(({data: {data}}) => {
+              this.showLoader = false
               console.log('Success, got members: ', data)
               this.memberSuspensionHistory = data
             }, error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -470,13 +503,34 @@
           'message': this.memberComment,
           'effectiveFrom': new Date().getTime().toString()
         }
+        this.showLoader = true
         Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
           .then(
             ({data: statusData}) => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Account status changed successfully'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               console.log('document data::', statusData)
               this.init()
             },
             error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -538,11 +592,14 @@
         }
         console.log('query, signup from date: ', this.query.startSignUpDate, ' to date: ',
           this.query.endSignUpDate)
+        this.showLoader = true
         Http.GET('member', this.query)
           .then(({data: {data}}) => {
+            this.showLoader = false
             console.log('Success in getting filtered results, data: ', data)
             this.members = data
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()

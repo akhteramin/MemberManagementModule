@@ -5,7 +5,7 @@
             <div class="text-center" v-if="documents === null || documents.length === 0">
               No Document has been uploaded.
             </div>
-            <div v-else class="pre-scrollable">
+            <div v-else class="small-scrollable">
             <table class="table table-hover table-sm">
                 <thead class="thead-default">
                 <tr>
@@ -105,7 +105,6 @@
                     <option selected value = "">Select Document Type</option>
                     <option v-for="documentType in documentTypes" :value="documentType.type"
                             v-if="documentType.found == 'Not Found'">{{ documentType.type }}</option>
-                    </select>
                   </select>
                 </div>
               </div>
@@ -142,6 +141,21 @@
 
             <br>
         </div>
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -173,7 +187,8 @@
         showDocumentUploadData: false,
         docType: '',
         memberDocument: {},
-        documentID: ''
+        documentID: '',
+        showLoader: false
       }
     },
     methods: {
@@ -201,9 +216,11 @@
       },
       getIdentificationDocuments (key = 'member') {
         // Http call for identification documEnts
+        this.showLoader = true
         Http.GET('member', [this.id, 'identification-documents'])
            .then(
              ({data: {data: documents}}) => {
+               this.showLoader = false
                this.documents = documents
 //               console.log('docs::', this.documents)
                for (var i = 0; i < this.documentTypes.length; i++) {
@@ -218,6 +235,7 @@
 //               console.log('document types::', this.documentTypes)
              },
              error => {
+               this.showLoader = false
                if (error.response) {
                  if (error.response.status === 401) { // unauthorized, logging out.
                    this.logout()
@@ -250,13 +268,34 @@
       },
       verifyDocument () {
 //        console.log('param data ::', this.paramData)
+        this.showLoader = true
         Http.PUT('verification', this.paramData, [this.id, 'document', this.paramData.documentID])
         .then(
           ({data: documentData}) => {
 //            console.log('document data::', documentData)
+            this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'Document verified successfully'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
             this.init()
           },
           error => {
+            this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
@@ -284,14 +323,35 @@
         fd.append('documentIdNumber', this.documentID)
         fd.append('documentType', this.docType)
 //        console.log('document type::', this.docType)
+        this.showLoader = true
         Http.POST('member', fd, [this.id, 'identification-document'])
           .then(
             () => {
 //              console.log('document data: ', documentData)
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Document uploaded successfully'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               this.editIdentificationDocument()
               this.init()
             },
             error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()

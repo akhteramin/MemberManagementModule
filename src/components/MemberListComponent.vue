@@ -24,36 +24,40 @@
 
             <div class="gr-3">
               <div class="form-group">
-                <label>Account Type: </label>
-                <div class="select">
-                  <select id="personal-business-select"  v-model="query.accountType">
-                    <!--<option selected disabled>Select account type</option>-->
-                    <option selected value = "">Both</option>
-                    <option value="1">Personal</option>
-                    <option value="2">Business</option>
-                  </select>
+                <label class="push-2">Account Type: </label>
+                <div class="push-1">
+                  <div class="select select-sm">
+                    <select id="personal-business-select"  v-model="query.accountType">
+                      <!--<option selected disabled>Select account type</option>-->
+                      <option selected value = "">Both</option>
+                      <option value="1">Personal</option>
+                      <option value="2">Business</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div class="gr-3">
               <div class="form-group">
-                <label> Verified: </label>
-                <div class="select">
-                  <select id="verification-status" v-model="query.verificationStatus">
-                    <option selected value = "">All</option>
-                    <option value="VERIFIED">Verified</option>
-                    <option value="NOT_VERIFIED">Not Verified</option>
-                    <option value="IN_PROGRESS">In Progress</option>
-                    <option value="REJECTED">Rejected</option>
-                  </select>
+                <label class="push-2"> Verified: </label>
+                <div class="push-0">
+                  <div class="select select-sm">
+                    <select id="verification-status" v-model="query.verificationStatus">
+                      <option selected value = "">All</option>
+                      <option value="VERIFIED">Verified</option>
+                      <option value="NOT_VERIFIED">Not Verified</option>
+                      <option value="IN_PROGRESS">In Progress</option>
+                      <option value="REJECTED">Rejected</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div>
-           
+
           </div>
 
 
@@ -63,22 +67,26 @@
 
             <div class="gr-3">
               <label class="offset-0.5">Sort by: </label>
-              <div class="select">
-                <select id="sort-by-select"  v-model="query.sort">
-                  <!--<option selected disabled>Select account type</option>-->
-                  <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
-                  <option value="CREATION_DATE">Account Creation Date</option>
-                </select>
+              <div class="push-0">
+                <div class="select select-sm">
+                  <select id="sort-by-select"  v-model="query.sort">
+                    <!--<option selected disabled>Select account type</option>-->
+                    <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
+                    <option value="CREATION_DATE">Account Creation Date</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="gr-3">
               <label class="offset-2">Order by: </label>
-              <div class="select">
-                <select id="order-by-select"  v-model="query.order">
-                  <!--<option selected disabled>Select account type</option>-->
-                  <option selected value = "DESC">DESC</option>
-                  <option value="ASC">ASC</option>
-                </select>
+              <div class="push-0">
+                <div class="select select-sm">
+                  <select id="order-by-select"  v-model="query.order">
+                    <!--<option selected disabled>Select account type</option>-->
+                    <option selected value = "DESC">DESC</option>
+                    <option value="ASC">ASC</option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -92,6 +100,7 @@
             </div>
           </div>
           <div class="gr-6 push-2 text-center">
+            <br>
               <label> Profile Completion Range: </label>
               <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
           </div>
@@ -118,8 +127,8 @@
             </div>
           </div>
 
-          <div class="gr-1 push-7">
-            <div class="select select-sm">              
+          <div class="gr-2 push-5">
+            <div class="select select-sm">
               <select v-model="query.pageSize" @change="filter">
                 <option disabled>Number of Entries</option>
                 <option selected value=10>10</option>
@@ -131,8 +140,8 @@
           </div>
 
         </div>
-        
-        
+
+
 
       </div>
     </form>
@@ -317,8 +326,21 @@
             </div>
         </div>
 
-
+    <div class="loaders loading" v-if="showLoader">
+      <div class="loader">
+        <div class="loader-inner ball-grid-pulse">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -354,7 +376,8 @@
         signUpDateFrom: null,
         signUpDateTo: null,
         memberSuspensionHistory: {},
-        loadMemberBasicDetails: {}
+        loadMemberBasicDetails: {},
+        showLoader: false
       }
     },
     methods: {
@@ -384,14 +407,17 @@
           this.sliderShow = false
         } else {
           this.memberProfile = member
+          this.showLoader = true
           Http.GET('member', [member.accountId, 'identification-documents'])
             .then(
               ({data: {data: documents}}) => {
+                this.showLoader = false
                 this.memberDocuments = documents
                 console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
                 this.memberDocuments.length)
               },
               error => {
+                this.showLoader = false
                 if (error.response) {
                   if (error.response.status === 401) { // unauthorized, logging out.
                     this.logout()
@@ -401,13 +427,16 @@
               }
             )
           // Http call for the introducers
+          this.showLoader = true
           Http.GET('member', [member.accountId, 'introducers'])
             .then(
               ({data: {data: introducers}}) => {
+                this.showLoader = false
                 this.memberIntroducers = introducers
                 console.log('Got the list of introducers: ', this.memberIntroducers)
               },
               error => {
+                this.showLoader = false
                 if (error.response) {
                   if (error.response.status === 401) { // unauthorized, logging out.
                     this.logout()
@@ -417,13 +446,16 @@
               }
             )
           // Http call for the missing information
+          this.showLoader = true
           Http.GET('member', [member.accountId, 'is-verifiable'])
           .then(
             ({data: {data: missingData}}) => {
+              this.showLoader = false
               this.memberMissingInfo = missingData
               console.log('Got the list of missing: ', this.memberMissingInfo)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -432,13 +464,16 @@
               console.log('Error in getting the list of missing, error: ', error)
             }
           )
+          this.showLoader = true
           Http.GET('member', [member.accountId, 'basic-details'])
             .then(
               ({data: {data: member}}) => {
+                this.showLoader = false
                 console.log('In member list component, member basic details: ', member)
                 this.loadMemberBasicDetails = member
               },
               error => {
+                this.showLoader = false
                 if (error.response) {
                   if (error.response.status === 401) { // unauthorized, logging out.
                     this.logout()
@@ -454,11 +489,14 @@
         this.sliderShow = false
       },
       getMembers: function (key = 'member') {
+        this.showLoader = true
         Http.GET(key, this.query)
           .then(({data: {data}}) => {
+            this.showLoader = false
             console.log('Success, got members: ', data)
             this.members = data
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
@@ -476,11 +514,14 @@
           pageNumber: 0,
           pageSize: 3
         })
+        this.showLoader = true
         Http.GET('member', [accountID, 'suspension-history'], paramData)
           .then(({data: {data}}) => {
+            this.showLoader = false
             console.log('Success, got members: ', data)
             this.memberSuspensionHistory = data
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
@@ -496,14 +537,17 @@
           'message': this.memberComment,
           'effectiveFrom': new Date().getTime().toString()
         }
+        this.showLoader = true
         Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
         .then(
           ({data: statusData}) => {
+            this.showLoader = false
             console.log('document data::', statusData)
             this.init()
           },
           error => {
             if (error.response) {
+              this.showLoader = false
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
               }
@@ -566,11 +610,14 @@
         }
         console.log('query, signup from date: ', this.query.startSignUpDate, ' to date: ',
           this.query.endSignUpDate)
+        this.showLoader = true
         Http.GET('member', this.query)
           .then(({data: {data}}) => {
+            this.showLoader = false
             console.log('Success in getting filtered results, data: ', data)
             this.members = data
           }, error => {
+            this.showLoader = false
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
