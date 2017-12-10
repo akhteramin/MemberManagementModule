@@ -19,6 +19,10 @@
                     @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
                 <li class="gr-2 text-center" :class="{active: showSuspensionHistory}"
                     @click="setTab('suspensionHistory')"><a data-toggle="tab">Suspension History</a></li>
+                <li class="gr-2 text-center" :class="{active: showLikelyNames}"
+                    @click="setTab('likelyNames')"><a data-toggle="tab">Likely Names</a></li>
+                <li class="gr-2 text-center" :class="{active: showFriends}"
+                    @click="setTab('friends')"><a data-toggle="tab">Friends</a></li>
               </ul>
             </div>
 
@@ -405,6 +409,7 @@
             <member-activity v-if="showActivities" :id="id"></member-activity>
             <member-transaction v-if="showTransactions" :id="id"></member-transaction>
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
+            <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
         </div>
       </div>
 
@@ -438,6 +443,7 @@
   import MemberHasIntroduced from './MemberHasIntroducedComponent.vue'
   import MemberBankAccount from './MemberBankAccountComponent.vue'
   import MemberBasicInfoUpdate from './UpdateMemberBasicInfoComponent.vue'
+  import MemberLikelyNamesComponent from './MemberLikelyNamesComponent.vue'
   import UpdateMemberFamilyInfo from './UpdateMemberFamilyInfoComponent.vue'
   import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
   import UpdateMemberImage from './UpdateMemberImageComponent.vue'
@@ -451,12 +457,12 @@
       'accountType'
     ],
     components: {
-      MemberSuspensionHistory,
       'member-suspension-history': MemberSuspensionHistory,
       'member-activity': MemberActivity,
       'member-transaction': MemberTransaction,
       'member-identification-document': MemberIdentificationDocument,
       'member-introduced-by': MemberIntroducedBy,
+      'member-likely-names': MemberLikelyNamesComponent,
       'member-has-introduced': MemberHasIntroduced,
       'member-bank-account': MemberBankAccount,
       'member-basic-info-update': MemberBasicInfoUpdate,
@@ -481,6 +487,8 @@
         showActivities: false,
         showTransactions: false,
         showSuspensionHistory: false,
+        showLikelyNames: false,
+        showFriends: false,
         occupationName: '',
         editBasicProfileMode: false,
         editParentsMode: false,
@@ -648,14 +656,20 @@
         this.showActivities = false
         this.showTransactions = false
         this.showSuspensionHistory = false
+        this.showLikelyNames = false
+        this.showFriends = false
         if (tabName === 'basicDetails') {
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
           this.showActivities = true
         } else if (tabName === 'transactions') {
           this.showTransactions = true
-        } else {
+        } else if (tabName === 'suspensionHistory') {
           this.showSuspensionHistory = true
+        } else if (tabName === 'likelyNames') {
+          this.showLikelyNames = true
+        } else {
+          this.showFriends = true
         }
       },
       getStaticNames () {

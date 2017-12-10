@@ -24,6 +24,14 @@
         <div class="gr-12">
           <div class="gr-3">
             <div class="form-group">
+              <label> Mobile Number: </label>
+              <input  name="mobilenumber" type="text" id="mobilenumber"
+                      v-model="query.mobileNumber" placeholder="+8801XXXXXXXXX"
+                      value=""/>
+            </div>
+          </div>
+          <div class="gr-3">
+            <div class="form-group">
               <label> Name: </label>
               <input  name="queryName" type="text" id="queryName" placeholder="Name"
                       v-model="query.name"
@@ -31,120 +39,126 @@
             </div>
           </div>
 
-
           <div class="gr-3">
             <div class="form-group">
-              <label> Mobile Number: </label>
-              <input  name="mobilenumber" type="text" id="mobilenumber"
-                      v-model="query.mobileNumber" placeholder="+8801XXXXXXXXX"
-                      value=""/>
-            </div>
-          </div>
-
-          <div class="gr-3">
-            <div class="form-group">
-              <label>Account Type: </label>
-              <div class="select">
-                <select id="personal-business-select"  v-model="query.accountType">
-                  <!--<option selected disabled>Select account type</option>-->
-                  <option selected value = "">Both</option>
-                  <option value="1">Personal</option>
-                  <option value="2">Business</option>
-                </select>
+              <label class="push-2">Account Type: </label>
+              <div class="push-1">
+                <div class="select select-sm">
+                  <select id="personal-business-select"  v-model="query.accountType">
+                    <!--<option selected disabled>Select account type</option>-->
+                    <option selected value = "">Both</option>
+                    <option value="1">Personal</option>
+                    <option value="2">Business</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="gr-3">
             <div class="form-group">
-              <label> Verified: </label>
-              <div class="select">
-                <select id="verification-status" v-model="query.verificationStatus">
-                  <option selected value = "">All</option>
-                  <option value="VERIFIED">Verified</option>
-                  <option value="NOT_VERIFIED">Not Verified</option>
-                  <option value="IN_PROGRESS">In Progress</option>
-                  <option value="REJECTED">Rejected</option>
-                </select>
+              <label class="push-2"> Verified: </label>
+              <div class="push-0">
+                <div class="select select-sm">
+                  <select id="verification-status" v-model="query.verificationStatus">
+                    <option selected value = "">All</option>
+                    <option value="VERIFIED">Verified</option>
+                    <option value="NOT_VERIFIED">Not Verified</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="REJECTED">Rejected</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        <div>
 
-        <div v-if="!doAdvancedSearch">
-          <span style="display: inline-block; width: 10px;"></span>
-          <a @click="toggleAdvancedSearch"> <i class="fa fa-search-plus" aria-hidden="true"></i> Advanced Search</a>
         </div>
 
 
         <div v-if="doAdvancedSearch">
+          <br>
           <div class="gr-12">
-            <div class="gr-5 text-center">
-              <label> Profile Completion Range: </label>
-              <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
-            </div>
 
             <div class="gr-3">
               <label class="offset-0.5">Sort by: </label>
-              <div class="select">
-                <select id="sort-by-select"  v-model="query.sort">
-                  <!--<option selected disabled>Select account type</option>-->
-                  <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
-                  <option value="CREATION_DATE">Account Creation Date</option>
-                </select>
+              <div class="push-0">
+                <div class="select select-sm">
+                  <select id="sort-by-select"  v-model="query.sort">
+                    <!--<option selected disabled>Select account type</option>-->
+                    <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
+                    <option value="CREATION_DATE">Account Creation Date</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="gr-3">
               <label class="offset-2">Order by: </label>
-              <div class="select">
-                <select id="order-by-select"  v-model="query.order">
-                  <!--<option selected disabled>Select account type</option>-->
-                  <option selected value = "DESC">DESC</option>
-                  <option value="ASC">ASC</option>
-                </select>
+              <div class="push-0">
+                <div class="select select-sm">
+                  <select id="order-by-select"  v-model="query.order">
+                    <!--<option selected disabled>Select account type</option>-->
+                    <option selected value = "DESC">DESC</option>
+                    <option value="ASC">ASC</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             <div class="gr-3">
               <label>Signup From: </label>
-              <input type="date" v-model="query.startSignUpDate"/>
+              <input type="date" v-model="signUpDateFrom"/>
             </div>
             <div class="gr-3">
               <label>Signup To: </label>
-              <input type="date" v-model="query.endSignUpDate"/>
-            </div>
-            <br> <br> <br> <br> <br> <br>
-            <div v-if="doAdvancedSearch">
-              <span style="display: inline-block; width: 370px;"></span>
-              <a @click="toggleAdvancedSearch"> <i class="fa fa-search-minus" aria-hidden="true"></i> Advanced Search</a>
+              <input type="date" v-model="signUpDateTo"/>
             </div>
           </div>
+          <div class="gr-6 push-2 text-center">
+            <br>
+            <label> Profile Completion Range: </label>
+            <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
+          </div>
+
+        </div>
+        <div class="gr-8 pointer">
+          <span style="display: inline-block; width: 10px;"></span>
+          <a @click="toggleAdvancedSearch">
+            <i class="fa fa-search-plus" aria-hidden="true" v-if="!doAdvancedSearch"></i>
+            <i class="fa fa-search-minus" aria-hidden="true" v-if="doAdvancedSearch"></i>
+            Advanced Search</a>
+        </div>
+        <div class="gr-12">
+          <div class="gr-4 push-4">
+            <div class="form-group">
+              <button type="submit" class="button-search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Search
+              </button>
+              <button type="reset" class="button-reset">
+                <i class="fa fa-undo" aria-hidden="true"></i>
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="gr-2 push-5">
+            <div class="select select-sm">
+              <select v-model="query.pageSize" @change="filter">
+                <option disabled>Number of Entries</option>
+                <option selected value=10>10</option>
+                <option value=20>20</option>
+                <option value=30>30</option>
+                <option value=50>50</option>
+              </select>
+            </div>
+          </div>
+
         </div>
 
-        <div class="gr-4 push-4">
-          <div class="form-group">
-            <button type="submit" class="button-search">
-              <i class="fa fa-search" aria-hidden="true"></i>
-              Search
-            </button>
-            <button type="reset" class="button-reset">
-              <i class="fa fa-undo" aria-hidden="true"></i>
-              Reset
-            </button>
-          </div>
-        </div>
-        <div id="container" class="gr-8" style="height: 40px;">
-          <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
-            <select v-model="query.pageSize" @change="filter">
-              <option disabled>Number of Entries</option>
-              <option selected value=10>10</option>
-              <option value=20>20</option>
-              <option value=30>30</option>
-              <option value=50>50</option>
-            </select>
-          </div>
-        </div>
+
 
       </div>
     </form>
