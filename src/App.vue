@@ -20,7 +20,6 @@
     components: {
       'MenuComponent': MenuComponent,
       'MemberList': MemberList,
-      'CreateNewMemberComponent': CreateNewMemberComponent,
       'Home': Home,
       'WaitingForApprovalList': WaitingForApprovalList,
       'WaitingForVerificationList': WaitingForVerificationList

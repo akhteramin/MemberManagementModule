@@ -7,7 +7,6 @@ import WaitingForVerificationList from '@/components/WaitingForVerificationListC
 import WaitingForApprovalList from '@/components/WaitingForApprovalListComponent'
 import Home from '@/components/Home'
 import MemberIndividualComponent from '@/components/MemberIndividualComponent'
-import CreateNewMemberComponent from '@/components/CreateNewMemberComponent'
 import UserListComponent from '@/components/UserListComponent'
 import UserIndividualComponent from '@/components/UserIndividualComponent'
 
@@ -72,11 +71,6 @@ export default new Router({
       name: 'MemberIndividualComponent',
       component: MemberIndividualComponent,
       props: true
-    },
-    {
-      path: '/create',
-      name: 'CreateNewMemberComponent',
-      component: CreateNewMemberComponent
     },
     {
       path: '/user',

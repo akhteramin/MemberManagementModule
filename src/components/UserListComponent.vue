@@ -388,9 +388,6 @@
         showLoader: true
       }
     },
-    components: {
-      'create-new-user': CreateNewMemberComponent
-    },
     created () {
       console.log('User list component created::')
       this.init()
