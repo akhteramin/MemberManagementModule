@@ -19,8 +19,7 @@
 
         <button class="update btn btn-sm btn-block btn-default btn-active-til"
         data-toggle="modal" data-target="#ChangeBusinessPpModal" title="Change Profile Picture" data-backdrop="false">
-            <i class="glyphicon glyphicon-camera">
-            </i> <small>Change</small>
+            <i class="fa fa-camera" aria-hidden="true"></i> <small>Change</small>
         </button>
 
         <div id="ChangeBusinessPpModal" class="modal fade" role="dialog">

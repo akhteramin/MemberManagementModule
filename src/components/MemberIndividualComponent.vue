@@ -13,16 +13,19 @@
                 <li class="gr-2 text-center" :class="{active: showBasicDetails}"
                     @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
                 <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-                <li class="gr-2 text-center" :class="{active: showActivities}"
+                <li class="gr-1 text-center" :class="{active: showActivities}"
                     @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
-                <li class="gr-2 text-center" :class="{active: showTransactions}"
+                <li class="gr-1 text-center" :class="{active: showTransactions}"
                     @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
                 <li class="gr-2 text-center" :class="{active: showSuspensionHistory}"
                     @click="setTab('suspensionHistory')"><a data-toggle="tab">Suspension History</a></li>
                 <li class="gr-2 text-center" :class="{active: showLikelyNames}"
                     @click="setTab('likelyNames')"><a data-toggle="tab">Likely Names</a></li>
-                <li class="gr-2 text-center" :class="{active: showFriends}"
+                <li class="gr-1 text-center" :class="{active: showFriends}"
                     @click="setTab('friends')"><a data-toggle="tab">Friends</a></li>
+                <li v-if="member.basicInfo.accountType==2" class="gr-1 text-center" :class="{active: showOffer}"
+                    @click="setTab('offers')"><a data-toggle="tab">Offers</a></li>
+                
               </ul>
             </div>
 
@@ -410,6 +413,8 @@
             <member-transaction v-if="showTransactions" :id="id"></member-transaction>
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
             <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
+            <member-offer v-if="showOffer" :id="id"></member-offer>
+
         </div>
       </div>
 
@@ -448,6 +453,7 @@
   import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
   import UpdateMemberImage from './UpdateMemberImageComponent.vue'
   import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
+  import MemberOffer from './MemberOfferComponent.vue'
   import UpdateMemberBusinessImage from './UpdateMemberBusinessImageComponent.vue'
   import route from '../router'
   export default {
@@ -470,7 +476,8 @@
       'update-member-parents': UpdateMemberFamilyInfo,
       'update-member-address': UpdateMemberAddress,
       'update-member-image': UpdateMemberImage,
-      'update-member-business-image': UpdateMemberBusinessImage
+      'update-member-business-image': UpdateMemberBusinessImage,
+      'member-offer': MemberOffer
     },
     data () {
       return {
@@ -489,6 +496,7 @@
         showSuspensionHistory: false,
         showLikelyNames: false,
         showFriends: false,
+        showOffer: false,
         occupationName: '',
         editBasicProfileMode: false,
         editParentsMode: false,
@@ -658,6 +666,7 @@
         this.showSuspensionHistory = false
         this.showLikelyNames = false
         this.showFriends = false
+        this.showOffer = false
         if (tabName === 'basicDetails') {
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
@@ -668,8 +677,10 @@
           this.showSuspensionHistory = true
         } else if (tabName === 'likelyNames') {
           this.showLikelyNames = true
-        } else {
+        } else if (tabName === 'friends') {
           this.showFriends = true
+        } else if (tabName === 'offers') {
+          this.showOffer = true
         }
       },
       getStaticNames () {

@@ -32,7 +32,8 @@ const routes = {
   resource: `${API_URL}/resource/`,
   logout: `${AUTH_URL}/logout/`,
   verification: `${API_URL}/verify/member/`,
-  user: `${API_URL}/user/`
+  user: `${API_URL}/user/`,
+  offer: `${API_URL}/offer/business/member/`
 }
 
 const encodeQueryData = (data) => {
@@ -95,6 +96,17 @@ export default {
 
     const route = routes[key]
     return axios.put(route.concat(parameters), data)
+  },
+  DELETE (key, props = {}, data) {
+    let parameters = ''
+    if (Object.prototype.toString.call(props) === '[object Array]') {
+      parameters = props.length > 0 ? `${props.join('/')}` : ''
+    } else {
+      parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
+    }
+
+    const route = routes[key]
+    return axios.delete(route.concat(parameters), data)
   },
   IMAGE_URL
 }

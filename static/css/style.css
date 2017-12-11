@@ -4945,6 +4945,12 @@ table tr td:hover .fa-external-link { display: inline; }
 input[type=text] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
 input[type=text]:hover { border: 2px solid #1bb1a2; }
 
+input[type=number] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
+input[type=number]:hover { border: 2px solid #1bb1a2; }
+
+input[type=email] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
+input[type=email]:hover { border: 2px solid #1bb1a2; }
+
 input[type=email] { width: 100%; padding: 5px 5px; box-sizing: border-box; border: 3px solid #ccc; -webkit-transition: 0.5s; transition: 0.5s; outline: none; border-radius: 4px; }
 input[type=email]:hover { border: 2px solid #1bb1a2; }
 
@@ -4975,6 +4981,8 @@ select::-ms-expand { display: none; }
 .select::after { -webkit-transition: .25s all ease; -o-transition: .25s all ease; transition: .25s all ease; }
 
 .select-sm { padding-top: 0px !important; padding-bottom: 0px !important; width: 70% !important; }
+
+.select-md { padding-top: 0px !important; padding-bottom: 0px !important; width: 66% !important; }
 
 .fa-external-link { color: #1bb1a2; cursor: pointer; }
 
@@ -5173,30 +5181,30 @@ textarea:focus { /* sizes for the 2 images (focus state) */ background-size: 100
 @keyframes ball-grid-beat { 50% { opacity: 0.7; }
   100% { opacity: 1; } }
 .ball-grid-beat { width: 57px; }
-.ball-grid-beat > div:nth-child(1) { animation-delay: 0.19s; animation-duration: 0.82s; }
-.ball-grid-beat > div:nth-child(2) { animation-delay: 0.77s; animation-duration: 1.56s; }
-.ball-grid-beat > div:nth-child(3) { animation-delay: -0.19s; animation-duration: 0.62s; }
-.ball-grid-beat > div:nth-child(4) { animation-delay: 0.06s; animation-duration: 1.55s; }
-.ball-grid-beat > div:nth-child(5) { animation-delay: 0.53s; animation-duration: 0.92s; }
-.ball-grid-beat > div:nth-child(6) { animation-delay: 0.06s; animation-duration: 0.61s; }
-.ball-grid-beat > div:nth-child(7) { animation-delay: -0.13s; animation-duration: 1.14s; }
-.ball-grid-beat > div:nth-child(8) { animation-delay: 0.47s; animation-duration: 1.05s; }
-.ball-grid-beat > div:nth-child(9) { animation-delay: 0.64s; animation-duration: 1.53s; }
+.ball-grid-beat > div:nth-child(1) { animation-delay: 0.05s; animation-duration: 0.8s; }
+.ball-grid-beat > div:nth-child(2) { animation-delay: 0.38s; animation-duration: 1.35s; }
+.ball-grid-beat > div:nth-child(3) { animation-delay: -0.05s; animation-duration: 0.66s; }
+.ball-grid-beat > div:nth-child(4) { animation-delay: 0.71s; animation-duration: 1.18s; }
+.ball-grid-beat > div:nth-child(5) { animation-delay: 0.69s; animation-duration: 1.49s; }
+.ball-grid-beat > div:nth-child(6) { animation-delay: 0.41s; animation-duration: 1.43s; }
+.ball-grid-beat > div:nth-child(7) { animation-delay: 0.24s; animation-duration: 1.01s; }
+.ball-grid-beat > div:nth-child(8) { animation-delay: 0.7s; animation-duration: 0.82s; }
+.ball-grid-beat > div:nth-child(9) { animation-delay: 0.34s; animation-duration: 1.04s; }
 .ball-grid-beat > div { background-color: #1bb1a2; width: 15px; height: 15px; border-radius: 100%; margin: 2px; animation-fill-mode: both; display: inline-block; float: left; animation-name: ball-grid-beat; animation-iteration-count: infinite; animation-delay: 0; }
 
 @keyframes ball-grid-pulse { 0% { transform: scale(1); }
   50% { transform: scale(0.5); opacity: 0.7; }
   100% { transform: scale(1); opacity: 1; } }
 .ball-grid-pulse { width: 57px; }
-.ball-grid-pulse > div:nth-child(1) { animation-delay: 0.13s; animation-duration: 1.01s; }
-.ball-grid-pulse > div:nth-child(2) { animation-delay: 0.76s; animation-duration: 0.99s; }
-.ball-grid-pulse > div:nth-child(3) { animation-delay: -0.1s; animation-duration: 1.27s; }
-.ball-grid-pulse > div:nth-child(4) { animation-delay: -0.04s; animation-duration: 1.35s; }
-.ball-grid-pulse > div:nth-child(5) { animation-delay: 0.6s; animation-duration: 0.68s; }
-.ball-grid-pulse > div:nth-child(6) { animation-delay: 0.42s; animation-duration: 1.27s; }
-.ball-grid-pulse > div:nth-child(7) { animation-delay: 0.73s; animation-duration: 0.72s; }
-.ball-grid-pulse > div:nth-child(8) { animation-delay: 0.31s; animation-duration: 0.66s; }
-.ball-grid-pulse > div:nth-child(9) { animation-delay: 0.12s; animation-duration: 1.23s; }
+.ball-grid-pulse > div:nth-child(1) { animation-delay: 0.61s; animation-duration: 0.89s; }
+.ball-grid-pulse > div:nth-child(2) { animation-delay: 0.41s; animation-duration: 1.24s; }
+.ball-grid-pulse > div:nth-child(3) { animation-delay: 0.65s; animation-duration: 0.85s; }
+.ball-grid-pulse > div:nth-child(4) { animation-delay: 0.71s; animation-duration: 0.96s; }
+.ball-grid-pulse > div:nth-child(5) { animation-delay: 0.45s; animation-duration: 1.59s; }
+.ball-grid-pulse > div:nth-child(6) { animation-delay: 0.71s; animation-duration: 0.68s; }
+.ball-grid-pulse > div:nth-child(7) { animation-delay: 0.47s; animation-duration: 1.24s; }
+.ball-grid-pulse > div:nth-child(8) { animation-delay: 0.75s; animation-duration: 1.06s; }
+.ball-grid-pulse > div:nth-child(9) { animation-delay: 0.77s; animation-duration: 0.93s; }
 .ball-grid-pulse > div { background-color: #1bb1a2; width: 15px; height: 15px; border-radius: 100%; margin: 2px; animation-fill-mode: both; display: inline-block; float: left; animation-name: ball-grid-pulse; animation-iteration-count: infinite; animation-delay: 0; }
 
 @keyframes ball-spin-fade-loader { 50% { opacity: 0.3; transform: scale(0.4); }
@@ -5267,10 +5275,10 @@ textarea:focus { /* sizes for the 2 images (focus state) */ background-size: 100
 @keyframes line-scale-party { 0% { transform: scale(1); }
   50% { transform: scale(0.5); }
   100% { transform: scale(1); } }
-.line-scale-party > div:nth-child(1) { animation-delay: 0.73s; animation-duration: 0.32s; }
-.line-scale-party > div:nth-child(2) { animation-delay: 0.53s; animation-duration: 0.53s; }
-.line-scale-party > div:nth-child(3) { animation-delay: 0.03s; animation-duration: 0.69s; }
-.line-scale-party > div:nth-child(4) { animation-delay: -0.03s; animation-duration: 1.09s; }
+.line-scale-party > div:nth-child(1) { animation-delay: 0.35s; animation-duration: 1.03s; }
+.line-scale-party > div:nth-child(2) { animation-delay: 0.05s; animation-duration: 0.41s; }
+.line-scale-party > div:nth-child(3) { animation-delay: 0.23s; animation-duration: 0.36s; }
+.line-scale-party > div:nth-child(4) { animation-delay: 0.52s; animation-duration: 0.74s; }
 .line-scale-party > div { background-color: #1bb1a2; width: 4px; height: 35px; border-radius: 2px; margin: 2px; animation-fill-mode: both; display: inline-block; animation-name: line-scale-party; animation-iteration-count: infinite; animation-delay: 0; }
 
 @keyframes line-scale-pulse-out { 0% { transform: scaley(1); }
