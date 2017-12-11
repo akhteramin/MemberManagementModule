@@ -8,13 +8,13 @@
             <h3 class="card-header">
               <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
 
-            <div id = "nav-bar">
+            <div id = "nav-bar" style="cursor: pointer;">
               <ul class="nav nav-tabs">
                 <li class="gr-2 text-center" :class="{active: showBasicDetails}"
                     @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
                 <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
                 <li class="gr-2 text-center" :class="{active: showActivities}"
-                    @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
+                    @click="setTab('activities')"><a data-toggle="tab" >Activities</a></li>
                 <li class="gr-2 text-center" :class="{active: showTransactions}"
                     @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
                 <li class="gr-2 text-center" :class="{active: showSuspensionHistory}"
