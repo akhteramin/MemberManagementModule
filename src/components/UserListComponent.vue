@@ -129,7 +129,7 @@
               </button>
             </div>
           </div>
-          <div class="gr-2 push-4">
+          <div class="gr-1 push-5">
             <div class="select select-sm">
               <select  v-model="userQuery.pageSize" @change="getUsers">
                 <option disabled>Number of Entries</option>
