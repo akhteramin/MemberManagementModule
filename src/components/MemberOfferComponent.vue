@@ -16,10 +16,10 @@
         </div>
       </div>
 
-    <div class="padding-5 gr-1 push-10" v-if="!showMemberOfferUpdate">
-        <button type="button" class="btn btn-sm btn-default">Add Offer</button>
+    <div class="padding-5 gr-1 push-10" v-if="!showMemberOfferUpdate && !showMemberOfferAdd">
+        <button type="button" class="btn btn-sm btn-default" @click="memberOfferAdd()">Add Offer</button>
     </div>
-    <div class="gr-12" v-if="!showMemberOfferUpdate">
+    <div class="gr-12" v-if="!showMemberOfferUpdate && !showMemberOfferAdd">
         <table class="table table-striped" v-if="businessMemberOffers.length>0">
             <thead>
             <tr>
@@ -59,6 +59,11 @@
     @update="memberOfferUpdate"
     ></member-offer-update>
 
+    <member-offer-add
+    v-if="showMemberOfferAdd"
+    :id="id"
+    @update="memberOfferAdd"
+    ></member-offer-add>
     <div id="business_offer_delete_modal" modal-show-hide  class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -84,8 +89,8 @@
             </div>
         </div>  
 
-        <hr style="padding-top: 0;margin-top: 0;">
-        <div class="text-center" v-if="businessMemberOffers.length==0">
+        <hr>
+        <div class="gr-2 push-4 text-center padding-5" v-if="businessMemberOffers.length==0 && !showMemberOfferUpdate && !showMemberOfferAdd">
             <label>
                 No Data Found
             </label>
@@ -122,7 +127,12 @@ export default {
       businessMemberOffers: {},
       showMemberOfferUpdate: false,
       showMemberOfferAdd: false,
-      singleOfferInfo: {}
+      singleOfferInfo: {
+        name: '',
+        version: '',
+        variables: {},
+        isActive: true
+      }
     }
   },
   created () {
@@ -176,10 +186,10 @@ export default {
           type: 'success',
           delay: 3000
         })
-        this.memberOfferUpdate()
+        this.init()
       }, error => {
         this.showLoader = false
-        this.memberOfferUpdate()
+        this.init()
         if (error.response) {
           if (error.response.status === 401) { // unauthorized, logging out.
             this.logout()
@@ -207,6 +217,14 @@ export default {
       } else {
         this.singleOfferInfo = param
         this.showMemberOfferUpdate = true
+      }
+    },
+    memberOfferAdd (param = '') {
+      if (this.showMemberOfferAdd) {
+        this.showMemberOfferAdd = false
+        this.init()
+      } else {
+        this.showMemberOfferAdd = true
       }
     }
   }
