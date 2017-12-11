@@ -160,10 +160,28 @@
         Http.PUT('user', this.updateRequest, [this.updatingUserId])
           .then(() => {
             this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'Document Uploaded successfully'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
             console.log('User updated successfully.')
             this.$emit('update', true)
           }, error => {
             this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
