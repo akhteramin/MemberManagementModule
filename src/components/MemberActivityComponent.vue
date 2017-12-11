@@ -26,7 +26,7 @@
                 <button type="reset" class="button-reset">
                   <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
               </div>
-              <div class="gr-2 push-2">
+              <div class="gr-1 push-3">
                 <div class="select select-sm">
                   <select v-model="activityQuery.pageSize" @change="triggerSearchActivities">
                     <option disabled>Number of Entries</option>

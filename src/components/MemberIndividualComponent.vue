@@ -410,6 +410,7 @@
             <member-transaction v-if="showTransactions" :id="id"></member-transaction>
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
             <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
+            <member-friends v-if="showFriends" :mobileNumber="member.basicInfo.mobileNumber"></member-friends>
         </div>
       </div>
 
@@ -444,6 +445,7 @@
   import MemberBankAccount from './MemberBankAccountComponent.vue'
   import MemberBasicInfoUpdate from './UpdateMemberBasicInfoComponent.vue'
   import MemberLikelyNamesComponent from './MemberLikelyNamesComponent.vue'
+  import MemberFriendsComponent from './MemberFriendsComponent.vue'
   import UpdateMemberFamilyInfo from './UpdateMemberFamilyInfoComponent.vue'
   import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
   import UpdateMemberImage from './UpdateMemberImageComponent.vue'
@@ -463,6 +465,7 @@
       'member-identification-document': MemberIdentificationDocument,
       'member-introduced-by': MemberIntroducedBy,
       'member-likely-names': MemberLikelyNamesComponent,
+      'member-friends': MemberFriendsComponent,
       'member-has-introduced': MemberHasIntroduced,
       'member-bank-account': MemberBankAccount,
       'member-basic-info-update': MemberBasicInfoUpdate,
