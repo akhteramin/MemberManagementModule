@@ -1,5 +1,12 @@
 <template>
     <div>
+        <div class="gr-12">
+          <div class="gr-2">
+          <button type="button" class="button-search" title="go to list of offers" @click="memberOfferAdd()">
+              <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          </div>
+        </div>
         <br>
         <div class="row">
             <div class="gr-4 text-right">
@@ -76,7 +83,7 @@
         </div>
         <div class="row padding-5">
             <div class="text-center">
-                <button  type="button" class="btn btn-sm btn-default btn-active-til" @click="createNewOffer(singleOfferInfo,selectedTemplate)">Create</button>
+                <button  type="button" class="btn btn-sm btn-primary" @click="createNewOffer(singleOfferInfo,selectedTemplate)">Create</button>
                 <button type="button" v-show="offerEditFlag" class="btn btn-sm btn-default" @click="memberOfferAdd()">Cancel</button>
             </div>
         </div>
@@ -160,7 +167,7 @@ export default {
         $.notify({
             // options
           title: '<strong>Success!</strong>',
-          message: 'Offer Updated successfully'
+          message: 'Offer Created successfully'
         }, {
           // settings
           type: 'success',
@@ -177,7 +184,7 @@ export default {
         $.notify({
           // options
           title: '<strong>Fail!</strong>',
-          message: 'Offer Update failed'
+          message: 'Offer Creation failed'
         }, {
           // settings
           type: 'danger',
