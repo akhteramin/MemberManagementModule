@@ -14,7 +14,7 @@
   import Home from './components/Home.vue'
   import WaitingForApprovalList from './components/WaitingForApprovalListComponent.vue'
   import WaitingForVerificationList from './components/WaitingForVerificationListComponent.vue'
-
+  import MemberAclGroup from './components/MemberAclGroupComponent.vue'
   export default {
     name: 'app',
     components: {
@@ -22,7 +22,8 @@
       'MemberList': MemberList,
       'Home': Home,
       'WaitingForApprovalList': WaitingForApprovalList,
-      'WaitingForVerificationList': WaitingForVerificationList
+      'WaitingForVerificationList': WaitingForVerificationList,
+      'MemberAclGroup': MemberAclGroup
     }
   }
 </script>

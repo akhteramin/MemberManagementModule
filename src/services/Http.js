@@ -33,7 +33,8 @@ const routes = {
   logout: `${AUTH_URL}/logout/`,
   verification: `${API_URL}/verify/member/`,
   user: `${API_URL}/user/`,
-  offer: `${API_URL}/offer/business/member/`
+  offer: `${API_URL}/offer/business/member/`,
+  aclUserGroup: `${API_URL}/member/acl/user-group/`
 }
 
 const encodeQueryData = (data) => {

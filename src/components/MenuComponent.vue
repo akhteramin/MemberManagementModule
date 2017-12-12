@@ -1,5 +1,3 @@
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-
 <template>
   <div class="MenuComponent gr-2 menu-container">
     <div class="menu-header">
@@ -23,6 +21,10 @@
         <li>
           <a  v-on:click="goToWaitingForApprovalMemberList">Waiting For Approval</a>
         </li>
+        <li>
+          <a  v-on:click="goToMemberAcl">Ipay Member ACL</a>
+        </li>
+        
       </ul>
       <ul class="bottom-menu">
         <li>
@@ -87,6 +89,9 @@
         console.log('user information:: ', this.user)
         let loginID = this.user.loginID
         route.push(`/user/${loginID}`) // `${window.location.href}/profile/${value}/${accntType}`
+      },
+      goToMemberAcl () {
+        route.push(`/member/acl/group`)
       },
       init () {
         console.log('here it is')

@@ -9,7 +9,7 @@ import Home from '@/components/Home'
 import MemberIndividualComponent from '@/components/MemberIndividualComponent'
 import UserListComponent from '@/components/UserListComponent'
 import UserIndividualComponent from '@/components/UserIndividualComponent'
-
+import MemberAclGroup from '@/components/MemberAclGroupComponent'
 Vue.use(Router)
 
 // router.beforeEach((to, from, next) => {
@@ -82,6 +82,11 @@ export default new Router({
       name: 'UserIndividualComponent',
       component: UserIndividualComponent,
       props: true
+    },
+    {
+      path: '/member/acl/group',
+      name: 'MemberAclGroup',
+      component: MemberAclGroup
     }
   ]
 })

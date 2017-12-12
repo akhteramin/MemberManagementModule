@@ -264,7 +264,7 @@
                           <strong class="primary-font">{{ history.verificationStatus }}</strong> by
                           <strong class="primary-font">{{ history.actor ? history.actor.name : 'N/A' }}  </strong>
                           <small class="pull-right text-muted">
-                            <span class="glyphicon glyphicon-time"></span>
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>
                             {{ history.updateTime | date('MMM D, YYYY hh:mm') }}
                           </small>
                         </div>
