@@ -129,7 +129,7 @@
               </button>
             </div>
           </div>
-          <div class="gr-2 push-4">
+          <div class="gr-1 push-5">
             <div class="select select-sm">
               <select  v-model="userQuery.pageSize" @change="getUsers">
                 <option disabled>Number of Entries</option>
@@ -162,8 +162,8 @@
 
       <div>
         <span style="display:inline-block; width: 5px;"></span>
-        <button style="background-color: #31b0d5;" role="button" v-if="!showNewUserComponent"
-                @click="loadCreateNewUserComponent" class="push-2">
+        <button role="button" class="button-search push-2" v-if="!showNewUserComponent"
+                @click="loadCreateNewUserComponent">
           <i class="fa fa-plus" aria-hidden="true"></i> Create New User
         </button>
       </div>
