@@ -4,10 +4,18 @@
     <h3 style="text-align: center;">Branches</h3>
     <hr>
 
-    <div v-if="showAddBranchButton">
-      <button class="button-search" role="button" @click="showAddBranchModal">
-        <i class="fa fa-plus"></i> Add New Branch
-      </button>
+
+    <div>
+      <div class="gr-4" v-if="showAddBranchButton">
+        <button class="button-search" role="button" @click="showAddBranchModal">
+          <i class="fa fa-plus"></i> Add New Branch
+        </button>
+      </div>
+      <br><br>
+      <div>
+        <input class="gr-3 push-5" v-model="branchSearch" placeholder="Branch name"
+               style="height: 35px;"/>
+      </div>
       <br>
     </div>
 
@@ -24,7 +32,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="branch, index in branchList">
+        <tr v-for="branch, index in filterBranchEnabledList">
           <td>{{ index + 1}}</td>
           <td style="width: 400px;">{{ branch.branchName || 'N/A'}}</td>
           <td style="width: 300px;">{{ bankCodeToBankName[branch.bankCode] }}</td>
@@ -67,11 +75,21 @@
         branchList: {},
         showAddBranchButton: true,
         bankCodeToBankName: {},
-        showLoader: false
+        showLoader: false,
+        branchSearch: ''
       }
     },
     created () {
       this.init()
+    },
+    computed: {
+      filterBranchEnabledList () {
+        if (this.branchList.length > 0) {
+          return this.branchList.filter(branch => {
+            return branch.branchName.toLowerCase().includes(this.branchSearch.toLowerCase())
+          })
+        }
+      }
     },
     methods: {
       logout () {

@@ -4,10 +4,17 @@
     <h3 style="text-align: center;">Thanas</h3>
     <hr>
 
-    <div v-if="showAddNewThanaButton">
-      <button class="button-search" role="button" @click="showAddNewThanaModal">
-        <i class="fa fa-plus"></i> Add New Thana
-      </button>
+    <div>
+      <div class="gr-4" v-if="showAddNewThanaButton">
+        <button class="button-search" role="button" @click="showAddNewThanaModal">
+          <i class="fa fa-plus"></i> Add New Thana
+        </button>
+      </div>
+      <br><br>
+      <div>
+        <input class="gr-3 push-5" v-model="thanaSearch" placeholder="Thana name"
+               style="height: 35px;"/>
+      </div>
       <br>
     </div>
 
@@ -23,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="thana, index in thanaList">
+        <tr v-for="thana, index in filterThanaEnabledList">
           <td>{{ index + 1}}</td>
           <td>{{ thana.name || 'N/A'}}</td>
           <td>{{ districtIdToDistrictName[thana.districtId] }}</td>
@@ -65,11 +72,21 @@
         thanaList: {},
         showAddNewThanaButton: true,
         showLoader: false,
-        districtIdToDistrictName: {}
+        districtIdToDistrictName: {},
+        thanaSearch: ''
       }
     },
     created () {
       this.init()
+    },
+    computed: {
+      filterThanaEnabledList () {
+        if (this.thanaList.length > 0) {
+          return this.thanaList.filter(thana => {
+            return thana.name.toLowerCase().includes(this.thanaSearch.toLowerCase())
+          })
+        }
+      }
     },
     methods: {
       logout () {

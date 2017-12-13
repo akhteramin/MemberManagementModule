@@ -4,10 +4,17 @@
     <h3 style="text-align: center;">Districts</h3>
     <hr>
 
-    <div v-if="showAddNewDistrictButton">
-      <button class="button-search" role="button" @click="showAddNewDistrictModal">
-        <i class="fa fa-plus"></i> Add New District
-      </button>
+    <div>
+      <div class="gr-4" v-if="showAddNewDistrictButton">
+        <button class="button-search" role="button" @click="showAddNewDistrictModal">
+          <i class="fa fa-plus"></i> Add New District
+        </button>
+      </div>
+      <br><br>
+      <div>
+        <input class="gr-3 push-5" v-model="districtSearch" placeholder="District name"
+               style="height: 35px;"/>
+      </div>
       <br>
     </div>
 
@@ -22,7 +29,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="district, index in districtList">
+        <tr v-for="district, index in filterDistrictEnabledList">
           <td>{{ index + 1}}</td>
           <td>{{ district.name || 'N/A'}}</td>
           <td style="text-align: center;">Bangladesh</td>
@@ -62,11 +69,21 @@
       return {
         districtListList: {},
         showAddNewDistrictButton: true,
-        showLoader: false
+        showLoader: false,
+        districtSearch: ''
       }
     },
     created () {
       this.init()
+    },
+    computed: {
+      filterDistrictEnabledList () {
+        if (this.districtList.length > 0) {
+          return this.districtList.filter(district => {
+            return district.name.toLowerCase().includes(this.districtSearch.toLowerCase())
+          })
+        }
+      }
     },
     methods: {
       logout () {

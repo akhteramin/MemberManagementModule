@@ -1,12 +1,20 @@
 <template>
-  <div class="gr-8 push-3 padding-5">
+  <div class="gr-6 push-4 padding-5">
     <br>
     <h3 style="text-align: center;">Occupations</h3>
     <hr>
-    <div v-if="showCreateNewOccupationButton">
-      <button class="button-search" role="button" @click="showCreateNewOccupationModal">
-        <i class="fa fa-plus"></i> Create New Occupation
-      </button>
+
+    <div>
+      <div class="gr-4" v-if="showCreateNewOccupationButton">
+        <button class="button-search" role="button" @click="showCreateNewOccupationModal">
+          <i class="fa fa-plus"></i> Add New Occupation
+        </button>
+      </div>
+      <br><br>
+      <div>
+        <input class="gr-3 push-5" v-model="occupationSearch" placeholder="Occupation"
+               style="height: 35px;"/>
+      </div>
       <br>
     </div>
 
@@ -67,7 +75,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="occupation, index in occupationList">
+          <tr v-for="occupation, index in filterOccupationEnabledList">
             <td>{{ index + 1}}</td>
             <td>{{ occupation.name || 'N/A'}}</td>
             <td style="text-align: center;">{{ occupation.description || 'N/A' }}</td>
@@ -112,11 +120,21 @@
           'description': null,
           'name': null,
           'status': 'ACTIVE'
-        }
+        },
+        occupationSearch: ''
       }
     },
     created () {
       this.init()
+    },
+    computed: {
+      filterOccupationEnabledList () {
+        if (this.occupationList.length > 0) {
+          return this.occupationList.filter(occupation => {
+            return occupation.name.toLowerCase().includes(this.occupationSearch.toLowerCase())
+          })
+        }
+      }
     },
     methods: {
       logout () {

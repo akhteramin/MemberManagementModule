@@ -3,13 +3,20 @@
     <br>
     <h3 style="text-align: center;">Business Types</h3>
     <hr>
-
-    <div v-if="showAddNewBusinessTypeButton">
+  <div>
+    <div class="gr-4" v-if="showAddNewBusinessTypeButton">
       <button class="button-search" role="button" @click="showAddNewBusinessTypeModal">
         <i class="fa fa-plus"></i> Add New Business Type
       </button>
-      <br>
     </div>
+    <br><br>
+    <div>
+      <input class="gr-3 push-5" v-model="businessTypeSearch" placeholder="Business type"
+      style="height: 35px;"/>
+    </div>
+    <br>
+  </div>
+
 
     <div v-if="businessTypeList.length > 0">
       <table class="table table-striped">
@@ -22,7 +29,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="business, index in businessTypeList">
+          <tr v-for="business, index in filterBusinessTypeList">
             <td>{{ index + 1}}</td>
             <td>{{ business.name || 'N/A'}}</td>
             <td style="text-align: center;">{{ business.status || 'N/A' }}</td>
@@ -61,8 +68,18 @@
     data () {
       return {
         businessTypeList: {},
+        businessTypeSearch: '',
         showAddNewBusinessTypeButton: true,
         showLoader: false
+      }
+    },
+    computed: {
+      filterBusinessTypeList () {
+        if (this.businessTypeList.length > 0) {
+          return this.businessTypeList.filter(business => {
+            return business.name.toLowerCase().includes(this.businessTypeSearch.toLowerCase())
+          })
+        }
       }
     },
     created () {

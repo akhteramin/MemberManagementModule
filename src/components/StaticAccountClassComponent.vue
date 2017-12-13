@@ -4,10 +4,17 @@
     <h3 style="text-align: center;">Account Classes</h3>
     <hr>
 
-    <div v-if="showAddNewAccountClassButton">
-      <button class="button-search" role="button" @click="showAddNewAccountClassModal">
-        <i class="fa fa-plus"></i> Add New Account Class
-      </button>
+    <div>
+      <div class="gr-4" v-if="showAddNewAccountClassButton">
+        <button class="button-search" role="button" @click="showAddNewAccountClassModal">
+          <i class="fa fa-plus"></i> Add New Account Class
+        </button>
+      </div>
+      <br><br>
+      <div>
+        <input class="gr-3 push-5" v-model="accountClassSearch" placeholder="Account class"
+               style="height: 35px;"/>
+      </div>
       <br>
     </div>
 
@@ -23,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="account, index in accountClassList">
+        <tr v-for="account, index in filterAccountClassEnabledList">
           <td>{{ index + 1}}</td>
           <td>{{ account.name || 'N/A'}}</td>
           <td style="text-align: center;">{{ account.description || 'N/A' }}</td>
@@ -64,11 +71,21 @@
       return {
         accountClassList: {},
         showAddNewAccountClassButton: true,
-        showLoader: false
+        showLoader: false,
+        accountClassSearch: ''
       }
     },
     created () {
       this.init()
+    },
+    computed: {
+      filterAccountClassEnabledList () {
+        if (this.accountClassList.length > 0) {
+          return this.accountClassList.filter(account => {
+            return account.name.toLowerCase().includes(this.accountClassSearch.toLowerCase())
+          })
+        }
+      }
     },
     methods: {
       logout () {

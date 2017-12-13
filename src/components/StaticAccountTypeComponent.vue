@@ -4,10 +4,17 @@
     <h3 style="text-align: center;">Account Types</h3>
     <hr>
 
-    <div v-if="showAddNewAccountTypeButton">
-      <button class="button-search" role="button" @click="showAddNewAccountTypeModal">
-        <i class="fa fa-plus"></i> Add New Account Type
-      </button>
+    <div>
+      <div class="gr-4" v-if="showAddNewAccountTypeButton">
+        <button class="button-search" role="button" @click="showAddNewAccountTypeModal">
+          <i class="fa fa-plus"></i> Add New Account Type
+        </button>
+      </div>
+      <br><br>
+      <div>
+        <input class="gr-3 push-5" v-model="accountTypeSearch" placeholder="Account type"
+               style="height: 35px;"/>
+      </div>
       <br>
     </div>
 
@@ -23,7 +30,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="account, index in accountTypeList">
+          <tr v-for="account, index in filterAccountTypeEnabledList">
             <td>{{ index + 1}}</td>
             <td>{{ account.name || 'N/A'}}</td>
             <td style="text-align: center;">{{ account.description || 'N/A' }}</td>
@@ -64,11 +71,21 @@
       return {
         accountTypeList: {},
         showAddNewAccountTypeButton: true,
-        showLoader: false
+        showLoader: false,
+        accountTypeSearch: ''
       }
     },
     created () {
       this.init()
+    },
+    computed: {
+      filterAccountTypeEnabledList () {
+        if (this.accountTypeList.length > 0) {
+          return this.accountTypeList.filter(account => {
+            return account.name.toLowerCase().includes(this.accountTypeSearch.toLowerCase())
+          })
+        }
+      }
     },
     methods: {
       logout () {

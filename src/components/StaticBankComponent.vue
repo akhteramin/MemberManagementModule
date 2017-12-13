@@ -4,10 +4,17 @@
     <h3 style="text-align: center;">Banks</h3>
     <hr>
 
-    <div v-if="showAddBankButton">
-      <button class="button-search" role="button" @click="showAddBankModal">
-        <i class="fa fa-plus"></i> Add New Bank
-      </button>
+    <div>
+      <div class="gr-4" v-if="showAddBankButton">
+        <button class="button-search" role="button" @click="showAddBankModal">
+          <i class="fa fa-plus"></i> Add New Bank
+        </button>
+      </div>
+      <br><br>
+      <div>
+        <input class="gr-3 push-5" v-model="bankSearch" placeholder="Bank name"
+               style="height: 35px;"/>
+      </div>
       <br>
     </div>
 
@@ -23,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="bank, index in bankList">
+        <tr v-for="bank, index in filterBankEnabledList">
           <td>{{ index + 1}}</td>
           <td style="text-align: center;">{{ bank.bankCode || 'N/A'}}</td>
           <td>{{ bank.bankName || 'N/A'}}</td>
@@ -64,11 +71,21 @@
       return {
         bankList: {},
         showAddBankButton: true,
-        showLoader: false
+        showLoader: false,
+        bankSearch: ''
       }
     },
     created () {
       this.init()
+    },
+    computed: {
+      filterBankEnabledList () {
+        if (this.bankList.length > 0) {
+          return this.bankList.filter(bank => {
+            return bank.bankName.toLowerCase().includes(this.bankSearch.toLowerCase())
+          })
+        }
+      }
     },
     methods: {
       logout () {

@@ -4,10 +4,17 @@
     <h3 style="text-align: center;">Countries</h3>
     <hr>
 
-    <div v-if="showAddNewCountryButton">
-      <button class="button-search" role="button" @click="showAddNewCountryModal">
-        <i class="fa fa-plus"></i> Add New Country
-      </button>
+    <div>
+      <div class="gr-4" v-if="showAddNewCountryButton">
+        <button class="button-search" role="button" @click="showAddNewCountryModal">
+          <i class="fa fa-plus"></i> Add New Country
+        </button>
+      </div>
+      <br><br>
+      <div>
+        <input class="gr-3 push-5" v-model="countrySearch" placeholder="Country name"
+               style="height: 35px;"/>
+      </div>
       <br>
     </div>
 
@@ -17,12 +24,12 @@
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>code</th>
+          <th>Code</th>
           <th style="text-align: center;">Edit</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="country, index in countryList">
+        <tr v-for="country, index in filterCountryEnabledList">
           <td>{{ index + 1}}</td>
           <td>{{ country.name || 'N/A'}}</td>
           <td>{{ country.code }}</td>
@@ -62,11 +69,21 @@
       return {
         countryList: {},
         showAddNewCountryButton: true,
-        showLoader: false
+        showLoader: false,
+        countrySearch: ''
       }
     },
     created () {
       this.init()
+    },
+    computed: {
+      filterCountryEnabledList () {
+        if (this.countryList.length > 0) {
+          return this.countryList.filter(country => {
+            return country.name.toLowerCase().includes(this.countrySearch.toLowerCase())
+          })
+        }
+      }
     },
     methods: {
       logout () {
