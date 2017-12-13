@@ -21,6 +21,7 @@ axios.interceptors.response.use(
 
 // let apiUrl = 'http://10.10.10.199:8085/member-service/api/v1'
 // const API_URL = 'http://192.168.1.134:8085/member-service/api/v1' // nafisa
+// const API_URL = 'http://192.168.1.95:8085//member-service/api/v1' // muhit
 const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
 const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
 const IMAGE_URL = 'https://dev.ipay.com.bd'

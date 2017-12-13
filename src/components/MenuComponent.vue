@@ -23,6 +23,41 @@
         <li>
           <a  v-on:click="goToWaitingForApprovalMemberList">Waiting For Approval</a>
         </li>
+        <li>
+          <a @click="toggleConfigurationLists">
+            Configuration <i class="fa fa-angle-down"></i>
+          </a>
+        </li>
+        <div v-if="expandList" class="gr-10 push-1">
+          <li>
+            <a @click="goToOccupationList">Occupation</a>
+          </li>
+          <li>
+            <a @click="goToBankList">Bank</a>
+          </li>
+          <li>
+            <a @click="goToBranchList">Branch</a>
+          </li>
+          <li>
+            <a @click="goToDistrictList">District</a>
+          </li>
+          <li>
+            <a @click="goToThanaList">Thana</a>
+          </li>
+          <li>
+            <a @click="goToCountryList">Country</a>
+          </li>
+          <li>
+            <a @click="goToBusinessType">Business Type</a>
+          </li>
+          <li>
+            <a @click="goToAccountType">Account Type</a>
+          </li>
+          <li>
+            <a @click="goToAccountClass">Account Class</a>
+          </li>
+        </div>
+
       </ul>
       <ul class="bottom-menu">
         <li>
@@ -52,7 +87,8 @@
     name: 'MenuComponent',
     data () {
       return {
-        user: {}
+        user: {},
+        expandList: false
       }
     },
     methods: {
@@ -67,6 +103,13 @@
               route.push('/')
             }
           )
+      },
+      toggleConfigurationLists () {
+        if (this.expandList) {
+          this.expandList = false
+        } else {
+          this.expandList = true
+        }
       },
       goHome () {
         route.push('/home')
@@ -87,6 +130,33 @@
         console.log('user information:: ', this.user)
         let loginID = this.user.loginID
         route.push(`/user/${loginID}`) // `${window.location.href}/profile/${value}/${accntType}`
+      },
+      goToOccupationList () {
+        route.push('/occupation')
+      },
+      goToBankList () {
+        route.push('/bank')
+      },
+      goToBranchList () {
+        route.push('/branch')
+      },
+      goToDistrictList () {
+        route.push('/district')
+      },
+      goToThanaList () {
+        route.push('/thana')
+      },
+      goToCountryList () {
+        route.push('/country')
+      },
+      goToBusinessType () {
+        route.push('/business-type')
+      },
+      goToAccountType () {
+        route.push('/account-type')
+      },
+      goToAccountClass () {
+        route.push('/account-class')
       },
       init () {
         console.log('here it is')
