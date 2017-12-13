@@ -56,9 +56,9 @@
         Http.POST('login', credentials)
           .then(
             ({ data }) => {
-              console.log('SUCCESS, it worked!!!!!')
-              console.log('data.message: ' + data.message)
-              console.log('data token: ' + data.token)
+//              console.log('SUCCESS, it worked!!!!!')
+//              console.log('data.message: ' + data.message)
+//              console.log('data token: ' + data.token)
               localStorage.setItem('token', data.token)
               // Http get request for permission list
               Http.GET('permissions')
@@ -96,6 +96,8 @@
                   localStorage.setItem('country', JSON.stringify(country.data))
                   localStorage.setItem('occupation', JSON.stringify(occupation.data))
                   localStorage.setItem('bank', JSON.stringify(bank.data))
+                  this.hashBankCodeToBankNameAndStore(bank.data)
+                  this.hashDistrictIdToDistrictNameAndStore(district.data)
                 },
                 error => {
                   console.log('Error in getting thana list, ', error)
@@ -120,6 +122,26 @@
               localStorage.setItem('user', JSON.stringify(user))
             }
           )
+      },
+      hashBankCodeToBankNameAndStore (bankData) {
+        console.log('bankData: ', bankData)
+        let bankCodeToBankName = {}
+        for (let indx in bankData) {
+          let bank = bankData[indx]
+          bankCodeToBankName[bank.bankCode] = bank.bankName
+        }
+        bankCodeToBankName = JSON.stringify(bankCodeToBankName)
+        console.log('bankCodeToBankName: ', bankCodeToBankName)
+        localStorage.setItem('bankCodeToBankName', bankCodeToBankName)
+      },
+      hashDistrictIdToDistrictNameAndStore (districtData) {
+        let districtIdToDistrictName = {}
+        for (let indx in districtData) {
+          let district = districtData[indx]
+          districtIdToDistrictName[district.id] = district.name
+        }
+        districtIdToDistrictName = JSON.stringify(districtIdToDistrictName)
+        localStorage.setItem('districtIdToDistrictName', districtIdToDistrictName)
       }
     }
   }
