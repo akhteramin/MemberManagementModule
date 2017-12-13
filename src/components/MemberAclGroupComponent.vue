@@ -47,11 +47,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="gr-7 push-1">
+        <div class="gr-8">
             <div class="gr-2">
             <h4>Manage group</h4>
             </div>
-            <div class="gr-2 push-8">
+            <div class="gr-2 push-9">
                 <button type="reset" class="button-reset" @click="deactivate(group.id)">
                     <i class="fa fa-ban" aria-hidden="true"></i>
                 </button>
