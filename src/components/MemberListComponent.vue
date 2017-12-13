@@ -66,8 +66,17 @@
           <div class="gr-12">
 
             <div class="gr-3">
-              <label class="offset-0.5">Sort by: </label>
-              <div class="push-0">
+              <label>Signup From: </label>
+              <input type="date" v-model="signUpDateFrom"/>
+            </div>
+            <div class="gr-3">
+              <label>Signup To: </label>
+              <input type="date" v-model="signUpDateTo"/>
+            </div>
+
+            <div class="gr-3">
+              <label class="push-2">Sort by: </label>
+              <div class="push-1">
                 <div class="select select-sm">
                   <select id="sort-by-select"  v-model="query.sort">
                     <!--<option selected disabled>Select account type</option>-->
@@ -90,14 +99,7 @@
               </div>
             </div>
 
-            <div class="gr-3">
-              <label>Signup From: </label>
-              <input type="date" v-model="signUpDateFrom"/>
-            </div>
-            <div class="gr-3">
-              <label>Signup To: </label>
-              <input type="date" v-model="signUpDateTo"/>
-            </div>
+
           </div>
           <div class="gr-6 push-2 text-center">
             <br>
@@ -127,7 +129,7 @@
             </div>
           </div>
 
-          <div class="gr-1 push-5">
+          <div class="gr-1 push-7">
             <div class="select select-sm">
               <select v-model="query.pageSize" @change="filter">
                 <option disabled>Number of Entries</option>

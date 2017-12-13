@@ -83,8 +83,17 @@
           <div class="gr-12">
 
             <div class="gr-3">
-              <label class="offset-0.5">Sort by: </label>
-              <div class="push-0">
+              <label>Signup From: </label>
+              <input type="date" v-model="signUpDateFrom"/>
+            </div>
+            <div class="gr-3">
+              <label>Signup To: </label>
+              <input type="date" v-model="signUpDateTo"/>
+            </div>
+
+            <div class="gr-3">
+              <label class="push-2">Sort by: </label>
+              <div class="push-1">
                 <div class="select select-sm">
                   <select id="sort-by-select"  v-model="query.sort">
                     <!--<option selected disabled>Select account type</option>-->
@@ -95,7 +104,7 @@
               </div>
             </div>
             <div class="gr-3">
-              <label class="offset-2">Order by: </label>
+              <label class="push-2">Order by: </label>
               <div class="push-0">
                 <div class="select select-sm">
                   <select id="order-by-select"  v-model="query.order">
@@ -107,14 +116,7 @@
               </div>
             </div>
 
-            <div class="gr-3">
-              <label>Signup From: </label>
-              <input type="date" v-model="signUpDateFrom"/>
-            </div>
-            <div class="gr-3">
-              <label>Signup To: </label>
-              <input type="date" v-model="signUpDateTo"/>
-            </div>
+
           </div>
           <div class="gr-6 push-2 text-center">
             <br>
@@ -567,7 +569,8 @@
 //          name: 'MemberIndividualComponent',
 //          params: {id: value, accountType: accntType}
 //        })
-        window.open(`${window.location.href}/profile/${value}/${accntType}`, '_blank')
+        const host = window.location.href.split('/')[0]
+        window.open(`${host}/member/profile/${value}/${accntType}`, '_blank')
       },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
