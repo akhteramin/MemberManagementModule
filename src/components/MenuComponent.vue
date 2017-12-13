@@ -132,10 +132,9 @@
         let loginID = this.user.loginID
         route.push(`/user/${loginID}`) // `${window.location.href}/profile/${value}/${accntType}`
       },
-<<<<<<< HEAD
       goToMemberAcl () {
         route.push(`/member/acl/group`)
-=======
+      },
       goToOccupationList () {
         route.push('/occupation')
       },
@@ -162,7 +161,6 @@
       },
       goToAccountClass () {
         route.push('/account-class')
->>>>>>> configuration-lists
       },
       init () {
         console.log('here it is')
