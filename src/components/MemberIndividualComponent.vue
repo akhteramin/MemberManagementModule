@@ -25,6 +25,8 @@
                     @click="setTab('friends')"><a data-toggle="tab">Friends</a></li>
                 <li v-if="member.basicInfo.accountType==2" class="gr-1 text-center" :class="{active: showOffer}"
                     @click="setTab('offers')"><a data-toggle="tab">Offers</a></li>
+                <li class="gr-1 text-center" :class="{active: showAccessControl}"
+                    @click="setTab('accessControl')"><a data-toggle="tab">Access Control</a></li>   
                 
               </ul>
             </div>
@@ -414,7 +416,7 @@
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
             <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
             <member-offer v-if="showOffer" :id="id"></member-offer>
-
+            <member-access-control v-if="showAccessControl" :id="id"></member-access-control>
             <member-friends v-if="showFriends" :mobileNumber="member.basicInfo.mobileNumber"></member-friends>
         </div>
       </div>
@@ -457,6 +459,7 @@
   import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
   import MemberOffer from './MemberOfferComponent.vue'
   import UpdateMemberBusinessImage from './UpdateMemberBusinessImageComponent.vue'
+  import MemberAccessControl from './MemberAccessControlComponent.vue'
   import route from '../router'
   export default {
     name: 'MemberIndividualComponent',
@@ -480,7 +483,8 @@
       'update-member-address': UpdateMemberAddress,
       'update-member-image': UpdateMemberImage,
       'update-member-business-image': UpdateMemberBusinessImage,
-      'member-offer': MemberOffer
+      'member-offer': MemberOffer,
+      'member-access-control': MemberAccessControl
     },
     data () {
       return {
@@ -495,6 +499,7 @@
         serviceList: Constants,
         showBasicDetails: true,
         showActivities: false,
+        showAccessControl: false,
         showTransactions: false,
         showSuspensionHistory: false,
         showLikelyNames: false,
@@ -670,6 +675,7 @@
         this.showLikelyNames = false
         this.showFriends = false
         this.showOffer = false
+        this.showAccessControl = false
         if (tabName === 'basicDetails') {
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
@@ -684,6 +690,8 @@
           this.showFriends = true
         } else if (tabName === 'offers') {
           this.showOffer = true
+        } else if (tabName === 'accessControl') {
+          this.showAccessControl = true
         }
       },
       getStaticNames () {
