@@ -416,12 +416,8 @@
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
             <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
             <member-offer v-if="showOffer" :id="id"></member-offer>
-<<<<<<< HEAD
             <member-access-control v-if="showAccessControl" :id="id"></member-access-control>
-=======
-
             <member-friends v-if="showFriends" :mobileNumber="member.basicInfo.mobileNumber"></member-friends>
->>>>>>> 0831886ac601d2fd8bf5b71bf91617ba7cd4eb32
         </div>
       </div>
 
