@@ -46,19 +46,32 @@
             </table>
         </div>
         <div class="gr-7 push-1">
-            <div class="gr-3">
-            <h3>Manage groups</h3>
+            <div class="gr-2">
+            <h4>Manage group</h4>
             </div>
             <div class="gr-2 push-8">
-                <button type="reset" class="button-reset">
+                <button type="reset" class="button-reset" @click="deactivate(group.id)">
                     <i class="fa fa-ban" aria-hidden="true"></i>
                 </button>
-                <button type="search" class="button-search" @click="edit(tempGroup.id)">
+                <button type="search" class="button-search" @click="edit(group.id)">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
                 </button>
             </div>
+            <div class="gr-12">
+              <b>{{group.groupName}}</b>
+            </div>
             <table class="table table-bordered">
                 <thead>
+                    <tr>
+                      <th class="col-md-3">
+                        Enabled Services
+                      </th>
+                      <th class="col-md-1">
+                      </th>
+                      <th class="col-md-3">
+                        Disabled Services
+                      </th>
+                    </tr>
                     <tr>
                         <td class="col-md-3">
                             <div class="small-scrollable" style="height:500px">
@@ -124,7 +137,9 @@
 
             <div class="col-md-12">
                 <div class="col-md-2 col-md-offset-10 padding-5">
-                    <button type="button" class="btn btn-sm btn-default"> 
+                    <button type="button" class="btn btn-sm btn-default"
+                    data-toggle="modal"
+                    data-target="#member_add_remove_for_service_modal"> 
                     <i class="fa fa-plus" aria-hidden="true"></i> Add Member
                     </button>
                 </div>
@@ -160,6 +175,93 @@
         </div>
 
     </div>
+
+        <div id="member_add_remove_for_service_modal" modal-show-hide  class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add Members to Group</h4>
+                    </div>
+                    <!--  <form name="newUserForm" id="newUserForm"  ng-submit="submitUserData(userData)" novalidate> -->
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                              <div class="panel panel-default">
+                                  <div class="panel-heading iPay-white-panel-heading text-center">
+                                      All Members
+                                  </div>
+                                  <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-8 col-md-offset-2">
+                                            
+                                            <input type="text" class="input-sm" placeholder="Search by Mobile Number" v-model="targetMobileNumber"  />
+                                            
+                                            <!--div class="col-md-3" @click="loadMemberList(targetMobileNumber,0)"-->
+                                                <button class="btn btn-default" @click="loadMemberList(targetMobileNumber,0)"> <i class="fa fa-search" aria-hidden="true"></i></button>
+                                            <!--/div-->
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row scrollable-div">
+                                      <table class="table table-hover" v-if="allMemberList && allMemberList.length>0">
+                                          <tr class="tr-bg">
+                                              <th >Name</th>
+                                              <th >Phone</th>
+                                              <th >Acc. Type</th>
+                                              <th class="text-center">Status</th>
+                                              <th>Action</th>
+
+                                          </tr>
+                                          <tr v-for="(user,index) in allMemberList" >
+                                              <td>
+                                                  <a> {{user.name}} </a>
+                                              </td>
+                                              <td>
+                                                  {{user.mobileNumber}}
+                                              </td>
+                                              <td>
+                                                  {{user.accountType==1?'Personal':user.accountType==2?'Business':'N/A'}}
+                                              </td>
+                                              <td class="text-center">
+                                                      <p class="p-margin-2" style="color:green;" v-if="user.verificationStatus == 'VERIFIED'">
+                                                          <i class="fa fa-check" aria-hidden="true"></i></p>
+                                                      <p class="p-margin-2" style="color:red;" v-if="user.verificationStatus == 'NOT_VERIFIED'"><i class="fa fa-times-circle-o" aria-hidden="true"></i></p>
+                                                      <p class="p-margin-2" style="color:blue;" v-if="user.verificationStatus == 'IN_PROGRESS'"><i class="fa fa-refresh" aria-hidden="true"></i></p>
+                                              </td>
+                                              <td>
+                                                <button v-if="user.flag=='Not Added'" class="btn btn-sm btn-default" title="Add to black list or white list" @click="addOrRemoveMembersToGroup([user.accountId],[],index)">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+                                                <span v-if="user.flag == 'Added'" class="label label-success">
+                                                  Added
+                                                </span>
+                                              </td>
+
+                                          </tr>
+                                      </table>
+                                      <div class="text-center" v-if="allMemberList && allMemberList.length>0">
+                                          Showing top {{allMemberList.length}} out of {{totalMembers}} results
+                                          <br>
+                                          <a v-if="SeeMoreFlag" href="" @click="loadMemberList(targetMobileNumber,searchData.currentPageNumber+1)">See More</a>
+                                      </div>
+                                      <div class="text-center" v-if="allMemberList.length==0">
+                                          No Data Found!!!
+                                      </div>
+                                    </div>
+
+                                  </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal">Close</button>
+                        </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
 
         <div id="addGroupModal" class="modal fade" role="dialog" tabindex="-1">
             <div class="modal-dialog">
@@ -231,11 +333,11 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" v-click="tempGroup = null">Close</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
                         <button type="button"
-                                class="btn btn-sm btn-active-til"
-                                data-dismiss="modal" v-click="edit()">
-                            <i class="glyphicon glyphicon-ok"></i> Update
+                                class="btn btn-sm btn-primary"
+                                data-dismiss="modal" @click="edit()">
+                            <i class="fa fa-pencil"></i> Update
                         </button>
 
                     </div>
@@ -288,6 +390,37 @@
             </div>
         </div>
 
+        <!-- Deactive Group Modal -->
+        <div id="deactivateGroupModal" class="modal fade" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Deactivate Group</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <p class="lead text-center" style="margin-top: 20px;">
+                                Do you want to deactivate group <strong>{{tempGroup.groupName}}</strong>?
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" @click="tempGroup = null">Close</button>
+                        <button type="button"
+                                class="btn btn-sm btn-primary"
+                                data-dismiss="modal" @click="deactivate()">
+                            <i class="fa fa-pencil"></i> Yes
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 <script>
@@ -308,7 +441,6 @@ export default {
         access: ['Blocked', 'Closed', 'Open', 'Public'],
         accountType: ['Personal', 'Business']
       },
-      allMemberList: [],
       immutableServices: {},
       conflictObject: {
         conflictMessage: '',
@@ -320,7 +452,10 @@ export default {
         id: '',
         groupName: '',
         isActive: true
-      }
+      },
+      allMemberList: [],
+      targetMobileNumber: '',
+      SeeMoreFlag: true
     }
   },
   created () {
@@ -349,6 +484,7 @@ export default {
           console.log('Success, got group list: ', aclUserGroup)
           this.groups = aclUserGroup.data.groupList
           this.getService()
+          this.loadMemberList('', 0)
         }, error => {
           this.showLoader = false
           if (error.response) {
@@ -361,7 +497,6 @@ export default {
     },
     getService (param = 1) {
       this.showLoader = true
-      this.tempGroup = Object.assign({}, this.groups.find(x => x.id === param))
       Http.GET('aclUserGroup', [param, 'details'])
         .then(({data: aclService}) => {
           this.showLoader = false
@@ -501,11 +636,11 @@ export default {
             type: 'success',
             delay: 3000
           })
-          this.getService(this.group.id)
             // this porition is needed only commented out for not implemented loadmemberlist
-            // if(removedMembers.length==0){
-            //     this.allMemberList[index].flag = "Added"
-            //   }
+          if (removedMembers.length === 0) {
+            this.allMemberList[index].flag = 'Added'
+          }
+          this.getService(this.group.id)
         }, error => {
           if (error.response) {
             if (error.response.status === 401) { // unauthorized, logging out.
@@ -559,14 +694,21 @@ export default {
         })
     },
     edit (id = null) {
+      console.log('id==', id)
       if (id) {
         this.tempGroup = Object.assign({}, this.groups.find(x => x.id === id))
         $('#editGroupModal').modal('show')
       } else {
         // iPayAclServices.sendHttpRequest(vm.tempGroup, '13008')
-        Http.PUT('updateUserGroup', {}, this.tempGroup)
+        console.log(this.tempGroup)
+        Http.PUT('aclUserGroup', this.tempGroup)
             .then(({data: response}) => {
-              this.tempGroup = null
+              this.tempGroup = {
+                id: '',
+                groupName: '',
+                isActive: true
+              }
+              this.init()
               // notiService.showNotiFunc("Success!", "Group Edit Successfully", "alert alert-success");
               $.notify({
               // options
@@ -574,7 +716,7 @@ export default {
                 message: 'Group Edit Successfully'
               }, {
                     // settings
-                type: 'Success',
+                type: 'success',
                 delay: 3000
               })
             }, error => {
@@ -594,6 +736,90 @@ export default {
               })
             })
       }
+    },
+    deactivate (id = null) {
+      if (id) {
+        this.tempGroup = Object.assign({}, this.groups.find(x => x.id === id))
+        $('#deactivateGroupModal').modal('show')
+      } else {
+        Http.PUT('aclUserGroup', Object.assign(this.tempGroup, {isActive: false}))
+          .then(({data: response}) => {
+            this.groups = this.groups.filter(x => x.id !== this.tempGroup.id)
+            console.log('groups::', this.groups)
+            this.group = {}
+            this.tempGroup = null
+            // notiService.showNotiFunc("Success!", "Group Deactivate Successfully", "alert alert-success");
+            this.init()
+            $.notify({
+                // options
+              title: '<strong>Success!</strong>',
+              message: 'Group Deactivate Successfully.'
+            }, {
+                  // settings
+              type: 'success',
+              delay: 3000
+            })
+          }, error => {
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
+          //  notiService.showNotiFunc("Error!",data.description,"alert alert-danger")
+            $.notify({
+                  // options
+              title: '<strong>Error!</strong>',
+              message: 'Access Control of Group Changed Error.'
+            }, {
+                  // settings
+              type: 'danger',
+              delay: 3000
+            })
+          })
+      }
+    },
+    loadMemberList (mobileNumberToSearch, startPage) {
+      var searchData = {
+        name: '', // string
+        mobileNumber: mobileNumberToSearch, // string
+        accountType: '', // int: 1 = personal, 2 = business
+        verificationStatus: '', // string: VERIFIED, NOT_VERIFIED
+        profileCompletionScoreStartRange: '',
+        profileCompletionScoreEndRange: '',
+        startSignUpDate: '',
+        endSignUpDate: '',
+        sort: 'DOCUMENT_UPLOAD',
+        order: 'DESC',
+        pageNumber: startPage,
+        pageSize: 10
+      }
+      // var curData = (searchData.pageNumber + 1) * searchData.pageSize
+      Http.GET('member', searchData)
+      .then(({data: memberData}) => {
+        console.log('response from member get')
+        console.log(memberData)
+        this.allMemberList = Object.assign([], memberData.data.list)
+        if (startPage === 0) {
+          this.allMemberList = []
+        }
+        this.allMemberList.push.apply(this.allMemberList, memberData.data.list)
+        for (let i = 0; i < this.allMemberList.length; i++) {
+          this.allMemberList[i]['flag'] = 'Not Added'
+        }
+        // console.log('MemberList2: ')
+        // console.log(memberData)
+        this.totalMembers = memberData.data.totalElements
+        this.totalPages = Math.ceil((this.totalMembers / searchData.pageSize))
+        console.log('totalPages: ', this.totalPages)
+        // curData = (searchData.pageNumber + 1) * searchData.pageSize;
+        this.SeeMoreFlag = memberData.data.hasNextPage
+      }, error => {
+        if (error.response) {
+          if (error.response.status === 401) { // unauthorized, logging out.
+            this.logout()
+          }
+        }
+      })
     }
   }
 }
