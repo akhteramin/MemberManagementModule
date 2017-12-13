@@ -16,12 +16,13 @@
       </div>
     </div>
 
-    <div v-if="nameList.length > 0">
+    <div v-if="nameList.length > 0" class="gr-4 push-3">
+      <br>
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Frequency</th>
+            <th style="text-align: center;">Name</th>
+            <th style="text-align: center;">Frequency</th>
           </tr>
         </thead>
         <tbody>
@@ -79,7 +80,7 @@
         let parameter = {
           'mobileNumber': this.mobileNumber
         }
-        parameter.mobileNumber = '+8801930236786'
+        // parameter.mobileNumber = '+8801930236786'
         console.log('calling with mobileNumber: ', parameter)
         Http.GET('member', ['likely-names'], parameter)
           .then(({data: likely_names}) => {

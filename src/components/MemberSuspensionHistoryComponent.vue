@@ -25,7 +25,7 @@
 
       <div id="container" class="gr-8" style="height: 40px;">
         <!--<label class="gr-5" style="background-color: red; width: 250px;">Number of entries per page</label>-->
-        <div class="gr-2 push-11">
+        <div class="gr-2 push-10">
           <div class="select select-sm">
             <select v-model="suspensionHistoryQuery.pageSize" @change="getSuspensionHistory(true)">
               <option disabled>Number of Entries</option>

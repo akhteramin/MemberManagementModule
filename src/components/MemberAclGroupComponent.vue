@@ -33,11 +33,13 @@
                             data-target="#addGroupModal"> 
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New Group
                             </button>
+                            
+                            <input type="text" v-model="groupSearch" placeholder="Group..">
                         </th>
                     </tr>
                 </thead>
                 <tbody v-if="groups && groups.length > 0">
-                    <tr v-for="groupData in groups">
+                    <tr v-for="groupData in filteredGroup">
                         <td @click="getService(groupData.id)">
                              {{groupData.groupName}}
                         </td>
@@ -64,18 +66,18 @@
                 <thead>
                     <tr>
                       <th class="col-md-3">
-                        Enabled Services
+                        <input type="text" v-model="enabledSearch" placeholder="Enabled Service..">
                       </th>
                       <th class="col-md-1">
                       </th>
                       <th class="col-md-3">
-                        Disabled Services
+                        <input type="text" v-model="blockedSearch" placeholder="Disabled Service..">
                       </th>
                     </tr>
                     <tr>
                         <td class="col-md-3">
                             <div class="small-scrollable" style="height:500px">
-                                <div class="padding-2" v-for="service in group.enabledServices">
+                                <div class="padding-2" v-for="service in filteredEnabledList">
                                     <input type="checkbox"
                                             v-model="service.checked"
                                             :disabled="service.status == 0 || service.status == 3">
@@ -118,7 +120,7 @@
                         </td>
                         <td class="col-md-3">
                             <div class="small-scrollable">
-                                <div v-for="service in group.blockedServices">
+                                <div v-for="service in filteredBlockedList">
                                     <input type="checkbox"
                                             v-model="service.checked">
                                     <small>{{service.serviceName}}</small>
@@ -136,7 +138,10 @@
             </table>
 
             <div class="col-md-12">
-                <div class="col-md-2 col-md-offset-10 padding-5">
+                <div class="col-md-5">
+                  <input type="text" v-model="memberSearch" placeholder="Members..">
+                </div>
+                <div class="col-md-2 col-md-offset-5 padding-5">
                     <button type="button" class="btn btn-sm btn-default"
                     data-toggle="modal"
                     data-target="#member_add_remove_for_service_modal"> 
@@ -149,7 +154,7 @@
                 </span>
                 <table class="table table-condensed" v-if="group && group.userList.length > 0">
                     <tbody>
-                    <tr v-for="(user, index) in group.userList">
+                    <tr v-for="(user, index) in filteredMember">
                         <th scope="row">
                             <span v-if="user.profilePictureUrl">
                             <img :src="imageBaseUrl+user.profilePictureUrl" class="img-circle" alt="N/A" width="30" height="30">
@@ -455,7 +460,41 @@ export default {
       },
       allMemberList: [],
       targetMobileNumber: '',
-      SeeMoreFlag: true
+      SeeMoreFlag: true,
+      enabledSearch: '',
+      blockedSearch: '',
+      memberSearch: '',
+      groupSearch: ''
+    }
+  },
+  computed: {
+    filteredEnabledList () {
+      if (this.group.enabledServices) {
+        return this.group.enabledServices.filter(service => {
+          return service.serviceName.toLowerCase().includes(this.enabledSearch.toLowerCase())
+        })
+      }
+    },
+    filteredBlockedList () {
+      if (this.group.blockedServices) {
+        return this.group.blockedServices.filter(service => {
+          return service.serviceName.toLowerCase().includes(this.blockedSearch.toLowerCase())
+        })
+      }
+    },
+    filteredMember () {
+      if (this.group.userList) {
+        return this.group.userList.filter(user => {
+          return user.name.toLowerCase().includes(this.memberSearch.toLowerCase())
+        })
+      }
+    },
+    filteredGroup () {
+      if (this.groups) {
+        return this.groups.filter(group => {
+          return group.groupName.toLowerCase().includes(this.groupSearch.toLowerCase())
+        })
+      }
     }
   },
   created () {
@@ -584,23 +623,21 @@ export default {
         Http.POST('aclUserGroup', {enabledServices, removedServices}, [this.group.id, 'manage-acl'])
           .then(({data: aclService}) => {
             console.log(aclService)
-            if (status === 200) {
-              this.immutableServices = {
-                enabledServices: Object.assign([], this.group.enabledServices),
-                blockedServices: Object.assign([], this.group.blockedServices)
-              }
-              console.log(aclService)
-              $.notify({
-                // options
-                title: '<strong>Success!</strong>',
-                message: 'Changes have been made successfully.'
-              }, {
-                // settings
-                type: 'success',
-                delay: 3000
-              })
-              this.getService()
+            this.immutableServices = {
+              enabledServices: Object.assign([], this.group.enabledServices),
+              blockedServices: Object.assign([], this.group.blockedServices)
             }
+            console.log(aclService)
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'Changes have been made successfully.'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
+            this.getService()
           }, error => {
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.

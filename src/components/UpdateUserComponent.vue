@@ -1,22 +1,9 @@
 <template>
 
-  <div class="gr-10 push-2" v-if="user">
+  <div>
 
-    <br>
-    <div class="gr-12"> <!--offset-md-1-->
-      <div class="card"> <!-- class="card"-->
-        <h3 class="card-header">
-          <i class="fa fa-user" aria-hidden="true"></i> User Information
-        </h3>
-        <div class="gr-4 push-6">
-          <a @click="showUpdateUserModal">
-            <i class="fa fa-edit" aria-hidden="true"></i>
-          </a>
-        </div>
-        <div>
-          <div v-if="user">
+          <form v-if="user" v-on:submit.prevent="updateUserMethod" v-on:reset.prevent="doNotUpdateUser">
 
-            <br>
             <div class="row">
 
               <div class="gr-2">
@@ -37,120 +24,87 @@
                 <div class="gr-11">
                   <div class="gr-2">
                   </div>
-                  <!--<div class="gr-2 push-7" v-if="!editBasicProfileMode">-->
-                  <!--<button class="button-md-edit" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>-->
-                  <!--</div>-->
                 </div>
-                <div class="gr-10">
-                  <div class="gr-4">
+                <div class="gr-12">
+                  <div class="gr-4 padding-5">
                     Name:
                   </div>
-                  <div class="gr-4 text-left">
-                    <input value="updateRequest.name" v-model="updateRequest.name"/>
+                  <div class="gr-8 text-left padding-5">
+                    <input type="text" class="input-sm"  value="updateRequest.name" v-model="updateRequest.name"/>
                     <!--{{ user.name || 'N/A'}}-->
                   </div>
                   <br>
-                  <div class="gr-4">
+                  <div class="gr-4 padding-5">
                     Email:
                   </div>
-                  <div class="gr-4 text-left pull-.5">
+                  <div class="gr-8 text-left pull-.5 padding-5">
                     {{ user.email || 'N/A' }}
                   </div>
                   <br>
-                  <div class="gr-4">
+                  <div class="gr-4 padding-5">
                     Designation:
                   </div>
-                  <div class="gr-4 text-left">
-                    <input value="updateRequest.designation" v-model="updateRequest.designation"/>
+                  <div class="gr-8 text-left padding-5">
+                    <input type="text" class="input-sm" value="updateRequest.designation" v-model="updateRequest.designation"/>
                   </div>
                   <br>
-                  <div class="gr-4">
+                  <div class="gr-4 padding-5">
                     Status:
                   </div>
-                  <div class="gr-4 select">
-                    <select v-model="updateRequest.status">
-                      <option value="ACTIVE">ACTIVE</option>
-                      <option value="SUSPENDED">SUSPENDED</option>
-                    </select>
+                  <div class="gr-8 padding-5">
+                    <div class="select select-sm">
+                      <select v-model="updateRequest.status">
+                        <option value="ACTIVE">ACTIVE</option>
+                        <option value="SUSPENDED">SUSPENDED</option>
+                      </select>
+                    </div>
                   </div>
                   <br>
-                  <div class="gr-4">
+                  <div class="gr-4 padding-5">
                     <i class="fa fa-clock-o" aria-hidden="true"></i> User since:
                   </div>
-                  <div class="gr-4 text-left pull-.5">
+                  <div class="gr-8 padding-5 text-left pull-.5">
                     {{ user.creationTime | date('MMM D, YYYY') || 'N/A' }}
                   </div>
                   <br>
                 </div>
               </div>
+
+              <div class="gr-10 push-5">
+                <br>
+                <button type="submit" class="button-search">
+                  <i class="fa fa-refresh" aria-hidden="true"></i> Update</button>
+                <button type="reset" class="button-reset">
+                  <i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+              </div>
+
             </div>
 
             <hr>
-          </div>
+          </form>
         </div>
 
-
-
-
-
-
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
   import Http from '../services/Http'
-  //  import Constants from '../services/Constants'
-  //  import MemberSuspensionHistory from './MemberSuspensionHistoryComponent.vue'
-  //  import MemberActivity from './MemberActivityComponent.vue'
-  //  import MemberTransaction from './MemberTransactionComponent.vue'
-  //  import MemberIdentificationDocument from './MemberIdentificationDocumentComponent.vue'
-  //  import MemberIntroducedBy from './MemberIntroducedByComponent.vue'
-  //  import MemberHasIntroduced from './MemberHasIntroducedComponent.vue'
-  //  import MemberBankAccount from './MemberBankAccountComponent.vue'
-  //  import MemberBasicInfoUpdate from './UpdateMemberBasicInfoComponent.vue'
-  //  import UpdateMemberFamilyInfo from './UpdateMemberFamilyInfoComponent.vue'
-  //  import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
-  //  import UpdateMemberImage from './UpdateMemberImageComponent.vue'
-  //  import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
-  //  import UpdateMemberBusinessImage from './UpdateMemberBusinessImageComponent.vue'
   import route from '../router'
   export default {
-    name: 'MemberIndividualComponent',
+    name: 'UpdateUserComponent',
     props: [
       'loginID'
-//      'id',
-//      'accountType'
     ],
-//    components: {
-//      MemberSuspensionHistory,
-//      'member-suspension-history': MemberSuspensionHistory,
-//      'member-activity': MemberActivity,
-//      'member-transaction': MemberTransaction,
-//      'member-identification-document': MemberIdentificationDocument,
-//      'member-introduced-by': MemberIntroducedBy,
-//      'member-has-introduced': MemberHasIntroduced,
-//      'member-bank-account': MemberBankAccount,
-//      'member-basic-info-update': MemberBasicInfoUpdate,
-//      'member-verify-and-approve': MemberVerifyAndApproveComponent,
-//      'update-member-parents': UpdateMemberFamilyInfo,
-//      'update-member-address': UpdateMemberAddress,
-//      'update-member-image': UpdateMemberImage,
-//      'update-member-business-image': UpdateMemberBusinessImage
-//    },
     data () {
       return {
         user: {},
         updateRequest: {},
         updatingUserId: '',
         imageBaseUrl: '',
-        userUpdateSuccessful: false,
-        userUpdateUnsuccessful: false
+        showLoader: false
       }
     },
     created () {
-      console.log('created user  information..., user login id iss: ', this.loginID)
+      console.log('created user edit  information..., user login id iss: ', this.loginID)
       this.init()
     },
     methods: {
@@ -166,9 +120,6 @@
             }
           )
       },
-      showUpdateUserModal () {
-        $('#UserUpdateResponseModal').modal({backdrop: false})
-      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         // Http call for basic information of the member with the 'id'
@@ -180,9 +131,11 @@
           'pageNumber': 0,
           'pageSize': 10
         }
+        this.showLoader = true
         Http.GET('user', query)
           .then(
             ({data: {data: list}}) => {
+              this.showLoader = false
               this.user = list.list[0]
               this.updatingUserId = this.user.id
               this.updateRequest.name = this.user.name
@@ -191,6 +144,7 @@
               console.log('Successfully got the user: ', this.user)
             },
             error => {
+              this.showLoader = false
               if (error.response) {
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
@@ -200,27 +154,55 @@
             }
           )
       },
-      updateUser () {
+      updateUserMethod () {
         console.log('in update user, id: ', this.updatingUserId)
+        this.showLoader = true
         Http.PUT('user', this.updateRequest, [this.updatingUserId])
           .then(() => {
+            this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'Document Uploaded successfully'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
             console.log('User updated successfully.')
-            this.userUpdateSuccessful = true
-            this.userUpdateUnsuccessful = false
+            this.$emit('update', true)
           }, error => {
+            this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
             if (error.response) {
               if (error.response.status === 401) { // unauthorized, logging out.
                 this.logout()
               }
             }
-            this.userUpdateUnsuccessful = true
+            this.$emit('update', false)
             console.error('Error in getting users: ', error)
           })
       },
       doNotUpdateUser () {
         console.log('cancel button clicked...')
-        $('#UserUpdateResponseModal').modal('hide')
+        this.$emit('update', false)
       }
     }
   }
 </script>
+
+<style>
+   {
+    height: 40px;
+    width: 240px;
+    border-style: solid;
+  }
+</style>

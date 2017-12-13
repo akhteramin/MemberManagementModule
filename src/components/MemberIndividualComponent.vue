@@ -8,7 +8,7 @@
             <h3 class="card-header">
               <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
 
-            <div id = "nav-bar">
+            <div id = "nav-bar" style="cursor: pointer;">
               <ul class="nav nav-tabs">
                 <li class="gr-2 text-center" :class="{active: showBasicDetails}"
                     @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
@@ -416,7 +416,12 @@
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
             <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
             <member-offer v-if="showOffer" :id="id"></member-offer>
+<<<<<<< HEAD
             <member-access-control v-if="showAccessControl" :id="id"></member-access-control>
+=======
+
+            <member-friends v-if="showFriends" :mobileNumber="member.basicInfo.mobileNumber"></member-friends>
+>>>>>>> 0831886ac601d2fd8bf5b71bf91617ba7cd4eb32
         </div>
       </div>
 
@@ -451,6 +456,7 @@
   import MemberBankAccount from './MemberBankAccountComponent.vue'
   import MemberBasicInfoUpdate from './UpdateMemberBasicInfoComponent.vue'
   import MemberLikelyNamesComponent from './MemberLikelyNamesComponent.vue'
+  import MemberFriendsComponent from './MemberFriendsComponent.vue'
   import UpdateMemberFamilyInfo from './UpdateMemberFamilyInfoComponent.vue'
   import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
   import UpdateMemberImage from './UpdateMemberImageComponent.vue'
@@ -472,6 +478,7 @@
       'member-identification-document': MemberIdentificationDocument,
       'member-introduced-by': MemberIntroducedBy,
       'member-likely-names': MemberLikelyNamesComponent,
+      'member-friends': MemberFriendsComponent,
       'member-has-introduced': MemberHasIntroduced,
       'member-bank-account': MemberBankAccount,
       'member-basic-info-update': MemberBasicInfoUpdate,

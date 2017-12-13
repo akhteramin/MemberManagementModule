@@ -132,11 +132,11 @@
                   <div class="gr-5" style="text-align: left;">
                     Time:
                   </div>
-                  <div class="gr-7" v-if="approvalHistory.length > 0" style="text-align: left;">
+                  <div class="gr-7" v-if="approvalHistory && approvalHistory.length > 0" style="text-align: left;">
                     {{ approvalHistory && approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
-                  <div v-else class="gr-4 push-1">
+                  <div v-else class="gr-1">
                     N/A
                   </div>
                 </div>

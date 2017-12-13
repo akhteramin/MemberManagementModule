@@ -144,7 +144,7 @@
             </div>
           </div>
 
-          <div class="gr-2 push-5">
+          <div class="gr-1 push-7">
             <div class="select select-sm">
               <select v-model="query.pageSize" @change="filter">
                 <option disabled>Number of Entries</option>
