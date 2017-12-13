@@ -34,7 +34,9 @@ const routes = {
   verification: `${API_URL}/verify/member/`,
   user: `${API_URL}/user/`,
   offer: `${API_URL}/offer/business/member/`,
-  aclUserGroup: `${API_URL}/member/acl/user-group/`
+  aclUserGroup: `${API_URL}/member/acl/user-group/`,
+  memberAclUpdate: `${API_URL}/member/acl/member/`,
+  memberAclGet: `${API_URL}/member/acl/`
 }
 
 const encodeQueryData = (data) => {
