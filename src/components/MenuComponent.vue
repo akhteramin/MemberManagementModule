@@ -28,8 +28,8 @@
         </div>
       </ul>
       <ul class="bottom-menu">
-        <a v-on:click="goToUserProfile"><li><i class="fa fa-user-circle" aria-hidden="true"></i>{{user.loginID}}</li></a>
-        <a v-on:click="logout"><li><i class="fa fa-question-circle-o" aria-hidden="true"></i>Help</li></a>
+        <a v-on:click="goToUserProfile"><li><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
+        <a v-on:click="logout"><li><i class="fa fa-question-circle-o" aria-hidden="true"></i> Help</li></a>
         <a v-on:click="logout"><li>Logout</li></a>
       </ul>
 
