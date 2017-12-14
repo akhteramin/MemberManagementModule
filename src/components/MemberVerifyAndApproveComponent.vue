@@ -341,6 +341,7 @@
       }
     },
     created () {
+      console.log('verify and approve::', this.member)
       this.init()
       console.log('verification information component created, verification status: ', this.verificationStatus,
         ', verirification type: ', this.verificationType)
