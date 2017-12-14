@@ -371,7 +371,7 @@
           100
         ],
         sliderShow: false,
-        maxPaginationItem: 10,
+        maxPaginationItem: '',
         memberAccountStatus: 0,
         memberComment: '',
         memberAccountID: '',

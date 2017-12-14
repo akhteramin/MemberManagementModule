@@ -20,7 +20,7 @@
               <div class="modal-body">
                 <form role="form" @submit.prevent="createNewUser" id="loginForm">
 
-                  <div class="divider-form"></div>
+
 
                   <div class="form-group">
                     <label for="name">Name</label>
@@ -28,7 +28,7 @@
                            placeholder="Name" v-model="createUser.name" required>
                   </div>
 
-                  <div class="divider-form"></div>
+
 
                   <div class="form-group">
                     <label for="designation">Designation</label>
@@ -37,7 +37,7 @@
                            required>
                   </div>
 
-                  <div class="divider-form"></div>
+
 
                   <div class="form-group">
                     <label for="email">Email</label>
@@ -45,7 +45,7 @@
                            v-model="createUser.email" required>
                   </div>
 
-                  <div class="divider-form"></div>
+
 
                   <div class="form-group">
                     <label for="password">Password</label>
@@ -53,15 +53,13 @@
                            required placeholder="Choose a password" v-model="createUser.password">
                   </div>
 
-                  <div class="divider-form"></div>
+
 
                   <div class="form-group">
                     <label for="retypePassword">Retype Password</label>
                     <input type="password" class="form-control" id="retypePassword" placeholder="Retype password"
                            required v-model="createUser.passwordReTyped">
                   </div>
-
-                  <div class="divider-form"></div>
 
 
                   <button type="submit" class="btn-block btn btn-lg btn-primary">Create User</button>
