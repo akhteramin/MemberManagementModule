@@ -1,6 +1,6 @@
 <template>
   <div class="gr-10 push-1">
-    <div class="loaders loading" v-if="showLoader">
+    <div class="loaders loading" v-if="showLoader > 0">
       <div class="loader">
         <div class="loader-inner ball-grid-pulse">
           <div></div>
@@ -16,6 +16,8 @@
       </div>
     </div>
     <div class="gr-12">
+      <br>
+      <br>
       <h4>Manage Groups</h4>
       <table class="table table-bordered">
         <thead>
@@ -200,7 +202,7 @@ export default {
   ],
   data () {
     return {
-      showLoader: false,
+      showLoader: 0,
       mapper: {
         access: ['Blocked', 'Closed', 'Open', 'Public']
       },
@@ -235,6 +237,7 @@ export default {
       this.getServices()
     },
     getGroups () {
+      this.showLoader = this.showLoader + 1
       Http.GET('memberAclGet', [this.id, 'groups'])
       .then(
         ({data: {data}}) => {
@@ -244,6 +247,7 @@ export default {
             inActiveGroups: Object.assign([], data.inActiveGroups)
           }
           this.groups = data
+          this.showLoader = this.showLoader - 1
         },
         error => {
           if (error.response) {
@@ -252,10 +256,12 @@ export default {
             }
           }
           console.error('Error in offers: ', error)
+          this.showLoader = this.showLoader - 1
         }
       )
     },
     getServices () {
+      this.showLoader = this.showLoader + 1
       Http.GET('memberAclGet', [this.id])
       .then(
         ({data: {data}}) => {
@@ -265,6 +271,7 @@ export default {
             blockedServices: Object.assign([], data.blockedServices)
           }
           this.services = data
+          this.showLoader = this.showLoader - 1
         },
         error => {
           if (error.response) {
@@ -273,6 +280,7 @@ export default {
             }
           }
           console.error('Error in offers: ', error)
+          this.showLoader = this.showLoader - 1
         }
       )
     },
