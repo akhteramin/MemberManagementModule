@@ -142,6 +142,10 @@ export default new Router({
       path: '/account-class',
       name: 'StaticAccountClassComponent',
       component: StaticAccountClassComponent
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })
