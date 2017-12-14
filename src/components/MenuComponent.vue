@@ -6,72 +6,31 @@
     </div>
     <nav>
       <ul>
-        <li>
-          <a v-on:click="goHome">Home</a>
-        </li>
-        <li>
-          <a  v-on:click="goToMemberList">Member List</a>
-        </li>
-        <li>
-          <a v-on:click="goToUserList">User List</a>
-        </li>
-        <li>
-          <a  v-on:click="goToWaitingForVerificationMemberList">Waiting For Verification</a>
-        </li>
-        <li>
-          <a  v-on:click="goToWaitingForApprovalMemberList">Waiting For Approval</a>
-        </li>
-        <li>
-          <a  v-on:click="goToMemberAcl">Ipay Member ACL</a>
-        </li>
-        <li>
-          <a @click="toggleConfigurationLists">
-            Configuration <i class="fa fa-angle-down"></i>
-          </a>
-        </li>
+        <a v-on:click="goHome"><li>Home</li></a>
+        <a v-on:click="goToMemberList"><li>Member List</li></a>
+        <a v-on:click="goToUserList"><li>User List</li></a>
+        <a v-on:click="goToWaitingForVerificationMemberList"><li>Waiting For Verification</li></a>
+        <a v-on:click="goToWaitingForApprovalMemberList"><li>Waiting For Approval</li></a>
+        <a v-on:click="goToMemberAcl"><li>Ipay Member ACL</li></a>
+        <a @click="toggleConfigurationLists">
+          <li>Configuration <i class="fa fa-angle-down"></i></li>
+        </a>
         <div v-if="expandList" class="gr-10 push-1">
-          <li>
-            <a @click="goToOccupationList">Occupation</a>
-          </li>
-          <li>
-            <a @click="goToBankList">Bank</a>
-          </li>
-          <li>
-            <a @click="goToBranchList">Branch</a>
-          </li>
-          <li>
-            <a @click="goToDistrictList">District</a>
-          </li>
-          <li>
-            <a @click="goToThanaList">Thana</a>
-          </li>
-          <li>
-            <a @click="goToCountryList">Country</a>
-          </li>
-          <li>
-            <a @click="goToBusinessType">Business Type</a>
-          </li>
-          <li>
-            <a @click="goToAccountType">Account Type</a>
-          </li>
-          <li>
-            <a @click="goToAccountClass">Account Class</a>
-          </li>
+          <a @click="goToOccupationList"><li>Occupation</li></a>
+          <a @click="goToBankList"><li>Bank</li></a>
+          <a @click="goToBranchList"><li>Branch</li></a>
+          <a @click="goToDistrictList"><li>District</li></a>
+          <a @click="goToThanaList"><li>Thana</li></a>
+          <a @click="goToCountryList"><li>Country</li></a>
+          <a @click="goToBusinessType"><li>Business Type</li></a>
+          <a @click="goToAccountType"><li>Account Type</li></a>
+          <a @click="goToAccountClass"><li>Account Class</li></a>
         </div>
-
       </ul>
       <ul class="bottom-menu">
-        <li>
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
-          <a v-on:click="goToUserProfile">{{user.loginID}}</a>
-        </li>
-        <li>
-          <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-          <a v-on:click="logout">Help</a>
-        </li>
-        <li>
-          <a v-on:click="logout">Logout</a>
-        </li>
+        <a v-on:click="goToUserProfile"><li><i class="fa fa-user-circle" aria-hidden="true"></i>{{user.loginID}}</li></a>
+        <a v-on:click="logout"><li><i class="fa fa-question-circle-o" aria-hidden="true"></i>Help</li></a>
+        <a v-on:click="logout"><li>Logout</li></a>
       </ul>
 
     </nav>
