@@ -23,18 +23,18 @@
         <thead>
           <tr>
             <th class="col-md-3">
-              User Groups
+              <input type="text" v-model="activeSearch" placeholder="User Groups..">
             </th>
             <th class="col-md-1">
             </th>
             <th class="col-md-3">
-              Other Groups
+              <input type="text" v-model="inactiveSearch" placeholder="Other Groups..">
             </th>
           </tr>
           <tr>
             <td class="col-md-3">
               <div class="small-scrollable" style="height:500px">
-                <div class="padding-2" v-for="group in groups.activeGroups">
+                <div class="padding-2" v-for="group in filterActiveList">
                   <input type="checkbox"
                           v-model="group.checked">
                   <small>{{group.groupName}}</small>
@@ -66,7 +66,7 @@
             </td>
             <td class="col-md-3">
               <div class="small-scrollable">
-                <div v-for="group in groups.inActiveGroups">
+                <div v-for="group in filterInactiveList">
                   <input type="checkbox"
                           v-model="group.checked">
                   <small>{{group.groupName}}</small>
@@ -83,18 +83,18 @@
         <thead>
           <tr>
             <th class="col-md-3">
-              Permitted Services
+              <input type="text" v-model="enabledSearch" placeholder="Enabled Services..">
             </th>
             <th class="col-md-1">
             </th>
             <th class="col-md-3">
-              Blocked Services
+              <input type="text" v-model="blockedSearch" placeholder="Blocked Services..">
             </th>
           </tr>
           <tr>
             <td class="col-md-3">
               <div class="small-scrollable" style="height:500px">
-                <div class="padding-2" v-for="service in services.enabledServices">
+                <div class="padding-2" v-for="service in filterEnabledList">
                   <input type="checkbox"
                           v-model="service.checked"
                           :disabled="service.status == 0 || service.status == 3">
@@ -131,7 +131,7 @@
             </td>
             <td class="col-md-3">
               <div class="small-scrollable">
-                <div v-for="service in services.blockedServices">
+                <div v-for="service in filterBlockedList">
                   <input type="checkbox"
                           v-model="service.checked">
                   <small>{{service.serviceName}}</small>
@@ -213,6 +213,40 @@ export default {
       conflictObject: {
         conflictMessage: '',
         conflictList: []
+      },
+      activeSearch: '',
+      inactiveSearch: '',
+      enabledSearch: '',
+      blockedSearch: ''
+    }
+  },
+  computed: {
+    filterActiveList () {
+      if (this.groups.activeGroups) {
+        return this.groups.activeGroups.filter(
+          group => group.groupName.toLowerCase().includes(this.activeSearch.toLowerCase())
+        )
+      }
+    },
+    filterInactiveList () {
+      if (this.groups.inActiveGroups) {
+        return this.groups.inActiveGroups.filter(
+          group => group.groupName.toLowerCase().includes(this.inactiveSearch.toLowerCase())
+        )
+      }
+    },
+    filterEnabledList () {
+      if (this.services.enabledServices) {
+        return this.services.enabledServices.filter(
+          service => service.serviceName.toLowerCase().includes(this.enabledSearch.toLowerCase())
+        )
+      }
+    },
+    filterBlockedList () {
+      if (this.services.blockedServices) {
+        return this.services.blockedServices.filter(
+          service => service.serviceName.toLowerCase().includes(this.blockedSearch.toLowerCase())
+        )
       }
     }
   },
