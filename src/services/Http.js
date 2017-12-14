@@ -1,4 +1,5 @@
 import axios from 'axios'
+import route from '../router'
 
 axios.interceptors.request.use(
   (config) => {
@@ -15,6 +16,10 @@ axios.interceptors.response.use(
   },
   (error) => {
     console.log('intercepted http failure..., error is: ', error)
+    if (error.response.status === 401 || error.response.status === 403) {
+      localStorage.removeItem('token')
+      route.push('/')
+    }
     return Promise.reject(error)
   }
 )
