@@ -7,7 +7,7 @@
     <div>
       <div class="gr-4" v-if="showCreateNewOccupationButton">
         <button class="button-search" role="button" @click="showCreateNewOccupationModal">
-          <i class="fa fa-plus"></i> Add New Occupation
+          <i class="fa fa-plus"></i> Add Occupation
         </button>
       </div>
       <br><br>
@@ -49,13 +49,59 @@
 
 
               <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" placeholder="description"
-                       v-model="createNewOccupationRequest.description" required>
+                <label for="status">Status</label>
+                <div id = "status" class="select">
+                  <select v-model="createNewOccupationRequest.status" value="createNewOccupationRequest.status">
+                    <option value="Active" selected>ACTIVE</option>
+                    <option value="Suspended">SUSPENDED</option>
+                  </select>
+                </div>
               </div>
 
 
               <button type="submit" class="btn-block btn btn-lg btn-primary">Create Occupation</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="UpdateOccupationModal" class="modal fade" role="dialog">
+      <div class="modal-dialog  modal-md">
+        <!-- Modal content-->
+
+        <div class="modal-content">
+          <div class="modal-header" style="text-align: center;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3><i class="fa fa-user-edit" aria-hidden="true"></i>Update Occupation</h3>
+          </div>
+
+          <div class="modal-body">
+            <form role="form" @submit.prevent="updateOccupation" id="loginForm">
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text"  id="name" value="updateOccupationRequest.name"
+                       placeholder="Name" v-model="updateOccupationRequest.name" required>
+              </div>
+
+
+
+
+              <div class="form-group">
+                <label for="status">Status</label>
+                <div id = "status" class="select">
+                  <select v-model="updateOccupationRequest.status" value="updateOccupationRequest.status">
+                    <option value="Active">ACTIVE</option>
+                    <option value="Suspended">SUSPENDED</option>
+                  </select>
+                </div>
+              </div>
+
+
+              <button type="submit" class="btn-block btn btn-lg btn-primary">Update Occupation</button>
 
             </form>
           </div>
@@ -71,14 +117,20 @@
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th style="text-align: center;">Description</th>
+            <th style="text-align: left;">Code</th>
+            <th style="text-align: center;">Status</th>
+            <th style="text-align: center;">Update</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="occupation, index in filterOccupationEnabledList">
             <td>{{ index + 1}}</td>
             <td>{{ occupation.name || 'N/A'}}</td>
-            <td style="text-align: center;">{{ occupation.description || 'N/A' }}</td>
+            <td style="text-align: left;">{{ occupation.code || 'N/A' }}</td>
+            <td style="text-align: center;">{{ occupation.status }}</td>
+            <td style="text-align: center;">
+              <a @click="showUpdateOccupationModal(occupation)"> <i class="fa fa-edit"></i></a>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -117,11 +169,11 @@
         showLoader: false,
         createNewOccupationRequest: {
           'code': null,
-          'description': null,
           'name': null,
           'status': 'ACTIVE'
         },
-        occupationSearch: ''
+        occupationSearch: '',
+        updateOccupationRequest: {}
       }
     },
     created () {
@@ -167,14 +219,52 @@
         this.showCreateNewOccupationButton = false
         this.createNewOccupationRequest = {
           'code': null,
-          'description': null,
           'name': null,
-          'status': 'ACTIVE'
+          'status': 'Active'
         }
         $('#CreateNewOccupationModal').modal({backdrop: false})
       },
       setCreateNewOccupationButtonToTrue () {
         this.showCreateNewOccupationButton = true
+      },
+      showUpdateOccupationModal (occupation) {
+        this.updateOccupationRequest = {
+          'id': occupation.id,
+          'name': occupation.name,
+          'status': occupation.status
+        }
+        $('#UpdateOccupationModal').modal({backdrop: false})
+      },
+      updateOccupation () {
+        this.showLoader = true
+        Http.PUT('resource', this.updateOccupationRequest, ['occupation'])
+          .then(({data: response}) => {
+            this.showLoader = false
+            $('#UpdateOccupationModal').modal('hide')
+            this.init()
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: response.message
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
+          },
+          error => {
+            this.showLoader = false
+            $('#UpdateOccupationModal').modal('hide')
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
+          })
       },
       createNewOccupation () {
         console.log('create new occupation button clicked::::')
@@ -185,20 +275,19 @@
             this.showCreateNewOccupationButton = true
             Http.GET('resource', ['occupation'])
               .then(({data: occupation}) => {
-                this.showLoader = false
+                $('#CreateNewOccupationModal').modal('hide')
                 this.occupationList = occupation.data
                 console.log('got occupation list successfully, list: ', occupation)
               },
               error => {
-                this.showLoader = false
+                $('#CreateNewOccupationModal').modal('hide')
                 console.log('error in getting occupation list: ', error)
               })
             this.showLoader = false
-            $('#CreateNewOccupationModal').modal('hide')
             $.notify({
               // options
               title: '<strong>Success!</strong>',
-              message: 'User has been created successfully.'
+              message: 'Occupation created.'
             }, {
               // settings
               type: 'success',

@@ -4,6 +4,98 @@
     <h3 style="text-align: center;">Banks</h3>
     <hr>
 
+    <div id="UpdateBankModal" class="modal fade" role="dialog">
+      <div class="modal-dialog  modal-md">
+        <!-- Modal content-->
+
+        <div class="modal-content">
+          <div class="modal-header" style="text-align: center;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3><i class="fa fa-user-edit" aria-hidden="true"></i>Update Bank</h3>
+          </div>
+
+          <div class="modal-body">
+            <form role="form" @submit.prevent="updateBank">
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text"  id="name" value="updateOccupationRequest.name"
+                       placeholder="Name" v-model="updateRequest.name" required>
+              </div>
+
+
+
+
+              <div class="form-group">
+                <label for="status">Status</label>
+                <div id = "status" class="select">
+                  <select v-model="updateRequest.status" value="updateRequest.status">
+                    <option value="Active">ACTIVE</option>
+                    <option value="Inactive">INACTIVE</option>
+                    <option value="Archived">ARCHIVED</option>
+                  </select>
+                </div>
+              </div>
+
+
+              <button type="submit" class="btn-block btn btn-lg btn-primary">Update Bank</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="AddBankModal" class="modal fade" role="dialog">
+      <div class="modal-dialog  modal-md">
+        <!-- Modal content-->
+
+        <div class="modal-content">
+          <div class="modal-header" style="text-align: center;">
+            <button type="button" class="close" data-dismiss="modal" @click="setCreateNewBankButtonToTrue">&times;</button>
+            <h3>Add New Bank</h3>
+          </div>
+
+          <div class="modal-body">
+            <form role="form" @submit.prevent="addBank">
+
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name"
+                       placeholder="Name" v-model="createRequest.name" required>
+              </div>
+
+
+
+              <div class="form-group">
+                <label for="code">Code</label>
+                <input type="text" class="form-control" id="code"
+                       placeholder="code" v-model="createRequest.code"
+                       required>
+              </div>
+
+
+              <div class="form-group">
+                <label for="status">Status</label>
+                <div id = "status" class="select">
+                  <select v-model="createRequest.status" value="createRequest.status">
+                    <option value="Active" selected>ACTIVE</option>
+                    <option value="Archived">ARCHIVED</option>
+                    <option value="Inactive">INACTIVE</option>
+                  </select>
+                </div>
+              </div>
+
+
+              <button type="submit" class="btn-block btn btn-lg btn-primary">Add Bank</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div>
       <div class="gr-4" v-if="showAddBankButton">
         <button class="button-search" role="button" @click="showAddBankModal">
@@ -35,7 +127,7 @@
           <td style="text-align: center;">{{ bank.bankCode || 'N/A'}}</td>
           <td>{{ bank.bankName || 'N/A'}}</td>
           <td style="text-align: center;">{{ bank.status || 'N/A' }}</td>
-          <td style="text-align: center;"> <a @click="showEditBankModal"> <i class="fa fa-edit"></i> </a> </td>
+          <td style="text-align: center;"> <a @click="showUpdateBankModal(bank)"> <i class="fa fa-edit"></i> </a> </td>
         </tr>
         </tbody>
       </table>
@@ -71,8 +163,11 @@
       return {
         bankList: {},
         showAddBankButton: true,
+        createNewBankButtonToTrue: false,
         showLoader: false,
-        bankSearch: ''
+        bankSearch: '',
+        updateRequest: {},
+        createRequest: {}
       }
     },
     created () {
@@ -100,6 +195,14 @@
             }
           )
       },
+      setCreateNewBankButtonToTrue () {
+        this.showAddBankButton = true
+        this.createRequest = {
+          'name': null,
+          'code': null,
+          'status': 'Active'
+        }
+      },
       init () {
         this.showLoader = true
         Http.GET('resource', ['bank'])
@@ -116,11 +219,100 @@
             }
           })
       },
-      showEditBankModal () {
-        alert('Not implemented yet.')
+      showUpdateBankModal (bank) {
+        this.updateRequest = {
+          'id': bank.id,
+          'name': bank.bankName,
+          'status': bank.status
+        }
+        $('#UpdateBankModal').modal({backdrop: false})
+      },
+      addBank () {
+        Http.POST('resource', this.createRequest, ['bank'])
+          .then(({data: response}) => {
+            console.log('bank added successfully. response: ', response)
+            this.showAddBankButton = true
+            Http.GET('resource', ['bank'])
+              .then(({data: bank}) => {
+                $('#AddBankModal').modal('hide')
+                this.bankList = bank.data
+                console.log('got bank list successfully, list: ', bank)
+              },
+              error => {
+                $('#AddBankModal').modal('hide')
+                console.log('error in getting bank list: ', error)
+              })
+            this.showLoader = false
+            this.showAddBankButton = true
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'Occupation created.'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
+          },
+          error => {
+            this.showCreateNewOccupationButton = true
+            this.showLoader = false
+            if (error.response && error.response.data.status === 401) {
+              this.logout()
+            }
+            $('#AddBankModal').modal('hide')
+            console.log('occupation addition unsuccessful, error: ', error)
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
+            this.showAddBankButton = true
+          })
       },
       showAddBankModal () {
-        alert('Not implemented yet.')
+        this.createRequest = {
+          'name': null,
+          'code': null,
+          'status': 'Active'
+        }
+        this.showAddBankButton = false
+        $('#AddBankModal').modal({backdrop: false})
+      },
+      updateBank () {
+        this.showLoader = true
+        Http.PUT('resource', this.updateRequest, ['bank'])
+          .then(({data: response}) => {
+            this.showLoader = false
+            $('#UpdateBankModal').modal('hide')
+            this.init()
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: response.message
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
+          },
+          error => {
+            this.showLoader = false
+            $('#UpdateBankModal').modal('hide')
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
+          })
       }
     }
   }
