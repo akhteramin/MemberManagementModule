@@ -6,6 +6,7 @@ import App from './App'
 import router from './router'
 import vueSlider from 'vue-slider-component'
 import VueCookies from 'vue-cookies'
+import Restrict from './directives/restrict'
 // import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 
 // require('../node_modules/bootstrap/less/bootstrap.less')
@@ -20,6 +21,8 @@ Vue.config.productionTip = false
 Vue.component('vueSlider', vueSlider)
 
 Vue.use(VueCookies)
+
+Vue.directive('restrict', Restrict)
 
 Vue.filter('date', (value, formatStr = 'MMM D, YYYY - h:mm A') => moment(value).format(formatStr))
 Vue.filter('underscoreless', val => val.replace(/[_-]/g, ' '))

@@ -7,24 +7,24 @@
     <nav>
       <ul>
         <a v-on:click="goHome"><li>Home</li></a>
-        <a v-on:click="goToMemberList"><li>Member List</li></a>
-        <a v-on:click="goToUserList"><li>User List</li></a>
-        <a v-on:click="goToWaitingForVerificationMemberList"><li>Waiting For Verification</li></a>
-        <a v-on:click="goToWaitingForApprovalMemberList"><li>Waiting For Approval</li></a>
-        <a v-on:click="goToMemberAcl"><li>Ipay Member ACL</li></a>
-        <a @click="toggleConfigurationLists">
+        <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList"><li>Member List</li></a>
+        <a v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li>User List</li></a>
+        <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList"><li>Waiting For Verification</li></a>
+        <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList"><li>Waiting For Approval</li></a>
+        <a v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li>Ipay Member ACL</li></a>
+        <a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
           <li>Configuration <i class="fa fa-angle-down"></i></li>
         </a>
         <div v-if="expandList" class="gr-10 push-1">
-          <a @click="goToOccupationList"><li>Occupation</li></a>
-          <a @click="goToBankList"><li>Bank</li></a>
-          <a @click="goToBranchList"><li>Branch</li></a>
-          <a @click="goToDistrictList"><li>District</li></a>
-          <a @click="goToThanaList"><li>Thana</li></a>
-          <a @click="goToCountryList"><li>Country</li></a>
-          <a @click="goToBusinessType"><li>Business Type</li></a>
-          <a @click="goToAccountType"><li>Account Type</li></a>
-          <a @click="goToAccountClass"><li>Account Class</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="goToOccupationList"><li>Occupation</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="goToBankList"><li>Bank</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="goToBranchList"><li>Branch</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_DISTRICT_LIST'" @click="goToDistrictList"><li>District</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_THANA_LIST'" @click="goToThanaList"><li>Thana</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_COUNTRY_LIST'" @click="goToCountryList"><li>Country</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_BUSINESS_TYPE_LIST'" @click="goToBusinessType"><li>Business Type</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_TYPE_LIST'" @click="goToAccountType"><li>Account Type</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_CLASS_LIST'" @click="goToAccountClass"><li>Account Class</li></a>
         </div>
       </ul>
       <ul class="bottom-menu">

@@ -66,6 +66,9 @@
                   ({data: list}) => {
                     console.log(list)
                     // auth.setAccessControl(list)
+                    localStorage.setItem('accessControlList', list.map(x => x.serviceID))
+                    console.log(localStorage.getItem('accessControlList'))
+                    Util.getAccessibleMenu()
                     route.push('/home')
                   },
                   error => {
