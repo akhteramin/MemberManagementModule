@@ -17,7 +17,6 @@
       </div>
     </div>
 
-
     <div class="gr-12">
       <h5><b>Verification</b></h5>
     </div>
@@ -128,7 +127,7 @@
                     {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[verificationHistory.length - 1].actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
-                  <br>
+                  <br><br><br>
                   <div class="gr-5" style="text-align: left;">
                     Time:
                   </div>
@@ -136,7 +135,7 @@
                     {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
-                  <div v-else class="gr-1">
+                  <div v-else class="gr-1" style="text-align: left;">
                     N/A
                   </div>
                 </div>
@@ -163,7 +162,7 @@
                 {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
-              <br>
+              <br><br><br>
               <div class="gr-5" style="text-align: left;">
                 Time:
               </div>
@@ -171,7 +170,7 @@
                 {{ approvalHistory && approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY') }}
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
-              <div v-else class="gr-1">
+              <div v-else class="gr-1" style="text-align: left;">
                 N/A
               </div>
             </div>
@@ -327,6 +326,11 @@
       'id',
       'member'
     ],
+    watch: {
+      id: function (val) {
+        this.init()
+      }
+    },
     data () {
       return {
         verificationStatus: '',
@@ -341,7 +345,7 @@
       }
     },
     created () {
-      console.log('verify and approve::', this.member)
+      console.log('verify and approve component::', this.member)
       this.init()
       console.log('verification information component created, verification status: ', this.verificationStatus,
         ', verirification type: ', this.verificationType)

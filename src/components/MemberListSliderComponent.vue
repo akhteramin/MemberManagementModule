@@ -1,5 +1,6 @@
 <template>
     <div class="custom-scrollable slider">
+      <!--Here is memberProfile: {{ this.memberBasicDetails }}-->
 
       <div class="loaders loading" v-if="showLoader">
         <div class="loader">
@@ -162,11 +163,11 @@
                         </div>
                     </div>
                 </div>
-            <div class="gr-12 small-text" v-if="member.basicInfo">
+            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo">
               <hr>
               <member-verify-and-approve-component
-                :id = "member.basicInfo.accountId"
-                :member = "member">
+                :id = "memberBasicDetails.basicInfo.accountId"
+                :member = "memberBasicDetails">
 
               </member-verify-and-approve-component>
             </div>
@@ -274,10 +275,6 @@
             </div>
         </div>
 
-
-
-        </div>
-
     </div>
 </template>
 
@@ -292,6 +289,7 @@
     name: 'MemberListSlider',
     props: [
       'id',
+      'memberBasicDetails',
       'memberProfile',
       'memberDocuments',
       'memberIntroducers',
@@ -321,7 +319,7 @@
       }
     },
     created () {
-      console.log('document created::::')
+      console.log('member slider component created:: member profile is: ', this.memberProfile)
       this.init()
     },
     methods: {
