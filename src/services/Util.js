@@ -27,6 +27,26 @@ const Util = {
     const guid = `browser-${browserName.toLowerCase()}-${navigator.mimeTypes.length}_${nAgt.replace(/\D+/g, '')}_${navigator.plugins.length}_${screen.height || ''}_${screen.width || ''}_${screen.pixelDepth || ''}`
     console.log('Util.getDeviceID(): ', guid)
     return guid
+  },
+  findAnyOne: (haystack, arr) => arr.some(v => haystack.indexOf(v) >= 0),
+  getAccessibleMenu: () => {
+    const accessControlList = localStorage.getItem('accessControlList')
+
+    const menu = []
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_GET_ACCOUNT_CLASS_LIST',
+      'MS_STATIC_RESOURCE_GET_ACCOUNT_TYPE_LIST',
+      'MS_STATIC_RESOURCE_GET_BANK_LIST',
+      'MS_STATIC_RESOURCE_GET_BRANCH_LIST',
+      'MS_STATIC_RESOURCE_GET_BUSINESS_TYPE_LIST',
+      'MS_STATIC_RESOURCE_GET_COUNTRY_LIST',
+      'MS_STATIC_RESOURCE_GET_DISTRICT_LIST',
+      'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST',
+      'MS_STATIC_RESOURCE_GET_THANA_LIST'
+    ])) menu.push('Configuration')
+
+    localStorage.setItem('menu', menu)
+    console.log('menu_', menu)
   }
 }
 
