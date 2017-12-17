@@ -1,22 +1,5 @@
 <template>
   <div id = "list" class="ListRenderer gr-10 push-2 content-container">
-
-    <div class="loaders loading" v-if="showLoader">
-      <div class="loader">
-        <div class="loader-inner ball-grid-pulse">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    </div>
-
     <h1>Members</h1>
     <hr>
     <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
@@ -104,7 +87,7 @@
               </div>
             </div>
             <div class="gr-3">
-              <label class="push-2">Order by: </label>
+              <label class="offset-2">Order by: </label>
               <div class="push-0">
                 <div class="select select-sm">
                   <select id="order-by-select"  v-model="query.order">
@@ -205,7 +188,7 @@
                   <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
                 </span>
           </td>
-          <td>{{ member.verificationStatus }}</td>
+          <td>{{ member.verificationStatus | underscoreless }}</td>
           <td>{{ member.profileCompletionScore }}%</td>
           <td>
             <div class="select">
@@ -282,6 +265,8 @@
     </div>
     <!--========================================= slider ==================================================-->
     <member-list-slider  v-if="sliderShow"
+                         :id = "memberProfile.id"
+                         :memberBasicDetails = "loadMemberBasicDetails"
                          :memberProfile="memberProfile"
                          :memberDocuments="memberDocuments"
                          :memberIntroducers="memberIntroducers"
@@ -342,14 +327,30 @@
         </div>
       </div>
     </div>
+
+    <div class="loaders loading" v-if="showLoader">
+      <div class="loader">
+        <div class="loader-inner ball-grid-pulse">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import Http from '../services/Http'
+  import route from '../router'
   //  import router from '../router/index'
   import MemberListSlider from './MemberListSliderComponent.vue'
-  import route from '../router'
   export default {
     name: 'MemberList',
     components: {
@@ -374,7 +375,10 @@
         memberComment: '',
         memberAccountID: '',
         doAdvancedSearch: false,
+        signUpDateFrom: null,
+        signUpDateTo: null,
         memberSuspensionHistory: {},
+        loadMemberBasicDetails: {},
         showLoader: false
       }
     },
@@ -400,6 +404,7 @@
       },
       loadProfile: function (member) {
         console.log('accountID:', member)
+
         if (this.sliderShow === true && this.memberProfile.accountId === member.accountId) {
           this.sliderShow = false
         } else {
@@ -461,6 +466,24 @@
                 console.log('Error in getting the list of missing, error: ', error)
               }
             )
+          this.showLoader = true
+          Http.GET('member', [member.accountId, 'basic-details'])
+            .then(
+              ({data: {data: member}}) => {
+                this.showLoader = false
+                console.log('In member list component, member basic details: ', member)
+                this.loadMemberBasicDetails = member
+              },
+              error => {
+                this.showLoader = false
+                if (error.response) {
+                  if (error.response.status === 401) { // unauthorized, logging out.
+                    this.logout()
+                  }
+                }
+                console.log('Error in loading member basic details for slider... ', error)
+              }
+            )
           this.sliderShow = true
         }
       },
@@ -495,20 +518,19 @@
         })
         this.showLoader = true
         Http.GET('member', [accountID, 'suspension-history'], paramData)
-            .then(({data: {data}}) => {
-              this.showLoader = false
-              console.log('Success, got members: ', data)
-              this.memberSuspensionHistory = data
-            }, error => {
-              this.showLoader = false
-              if (error.response) {
-                if (error.response.status === 401) { // unauthorized, logging out.
-                  this.logout()
-                }
+          .then(({data: {data}}) => {
+            this.showLoader = false
+            console.log('Success, got members: ', data)
+            this.memberSuspensionHistory = data
+          }, error => {
+            this.showLoader = false
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
               }
-              console.error('Error in getting members: ', error)
             }
-          )
+            console.error('Error in getting members: ', error)
+          })
         $('#MemberAccountStatusModal').modal({backdrop: false})
       },
       changeAccountStatus: function (accountStatus) {
@@ -521,30 +543,12 @@
           .then(
             ({data: statusData}) => {
               this.showLoader = false
-              $.notify({
-                // options
-                title: '<strong>Success!</strong>',
-                message: 'Account status changed successfully'
-              }, {
-                // settings
-                type: 'success',
-                delay: 3000
-              })
               console.log('document data::', statusData)
               this.init()
             },
             error => {
-              this.showLoader = false
-              $.notify({
-                // options
-                title: '<strong>Failure!</strong>',
-                message: error.response.data.message
-              }, {
-                // settings
-                type: 'danger',
-                delay: 3000
-              })
               if (error.response) {
+                this.showLoader = false
                 if (error.response.status === 401) { // unauthorized, logging out.
                   this.logout()
                 }
@@ -554,7 +558,7 @@
           )
       },
       pageChange (number = 0) {
-        if (this.query.pageNumber !== number) {
+        if (number >= 0 && number < this.members.totalPages && this.query.pageNumber !== number) {
           this.query.pageNumber = number
           this.getMembers()
         }
@@ -568,6 +572,7 @@
 //        })
         const host = window.location.href.split('/')[0]
         window.open(`${host}/member/profile/${value}/${accntType}`, '_blank')
+        // window.open(`${window.location.href}/profile/${value}/${accntType}`, '_blank')
       },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
@@ -586,6 +591,8 @@
           pageSize: 10
         })
         this.value = [0, 100]
+        this.signUpDateFrom = null
+        this.signUpDateTo = null
         this.getMembers()
       },
       filter (key = 'member') {
@@ -594,13 +601,13 @@
         this.query.profileCompletionScoreEndRange = this.value[1]
         console.log('mobile number: ' + this.query.mobileNumber + ' accountType: ' + this.query.accountType +
           ' verified: ' + this.query.verificationStatus)
-        if (this.query.startSignUpDate !== null && this.query.startSignUpDate.length > 0) {
-          this.query.startSignUpDate = new Date(this.query.startSignUpDate).getTime() - 6 * 3600 * 1000
+        if (this.signUpDateFrom !== null && this.signUpDateFrom.length > 0) {
+          this.query.startSignUpDate = new Date(this.signUpDateFrom).getTime() - 6 * 3600 * 1000
         } else {
           this.query.startSignUpDate = 0
         }
-        if (this.query.endSignUpDate !== null && this.query.endSignUpDate.length > 0) {
-          this.query.endSignUpDate = new Date(this.query.endSignUpDate).getTime() - 6 * 60 * 60 * 1000
+        if (this.signUpDateTo !== null && this.signUpDateTo.length > 0) {
+          this.query.endSignUpDate = new Date(this.signUpDateTo).getTime() - 6 * 60 * 60 * 1000
         } else {
           this.query.endSignUpDate = new Date().getTime() - 6 * 3600 * 1000
         }
