@@ -119,15 +119,18 @@
 
                     <div class="row container side-nav">
                         <ul class="nav nav-tabs">
-                            <li class="text-center margin-left-15 active">
-                                <a class="black-text" data-toggle="tab" href="#introducedBy">Introduced By</a>
+                            <li class="text-center active">
+                                <a class="black-text" data-toggle="tab" href="#introducedBy">Introduced <br>By</a>
                             </li>
                             <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-                            <li class="text-center margin-left-15">
-                                <a class="black-text" data-toggle="tab" href="#hasIntroduced" @click="loadMemberIntroduced(memberProfile.accountId)">Has Introduced</a>
+                            <li class="text-center">
+                                <a class="black-text" data-toggle="tab" href="#hasIntroduced" @click="loadMemberIntroduced(memberProfile.accountId)">Has <br> Introduced</a>
                             </li>
-                            <li class="text-center margin-left-15">
-                                <a class="black-text" data-toggle="tab" href="#invitedBy" @click="loadMemberInvitedBy(memberProfile.accountId)">Invited By</a>
+                            <li class="text-center">
+                                <a class="black-text" data-toggle="tab" href="#invitedBy" @click="loadMemberInvitedBy(memberProfile.accountId)">Invited<br>By</a>
+                            </li>
+                            <li class="text-center">
+                              <a class="black-text" data-toggle="tab" href="#likelyNames" @click="loadMemberLikelyNames(memberProfile.mobileNumber)">Likely<br>Names</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -160,6 +163,28 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="likelyNames" class="tab-pane fade  padding-4">
+                              <div class="gr-4 text-center">
+                                  <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                      <th style="text-align: center;">Name</th>
+                                      <th style="text-align: center;">Frequency</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="entry in likelyNameList">
+
+                                      <td style="text-align: left;">{{ entry.name }}</td>
+
+                                      <td style="text-align: center">{{ entry.frequency }}</td>
+
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -173,7 +198,6 @@
             </div>
 
 
-        </div>
         <div class="gr-12" v-else>
             <div class="gr-2 padding-5">
             <i class="fa fa-arrow-left" aria-hidden="true" @click="showDocumentDetails(memberDocumentDetail)"></i>
@@ -305,6 +329,7 @@
         imageBaseUrl: '',
         membersIntroduced: '',
         membersInvitedBy: '',
+        likelyNameList: null,
         paramData: {
           comment: '',
           documentIdNumber: '',
@@ -416,6 +441,26 @@
               console.log('Error in getting list of identification documents, error: ', error)
             }
         )
+      },
+      loadMemberLikelyNames (mobileNumber) {
+        this.showLoader = true
+        let parameter = {
+          'mobileNumber': mobileNumber
+        }
+        Http.GET('member', ['likely-names'], parameter)
+          .then(({data: likely_names}) => {
+            this.showLoader = false
+            this.likelyNameList = likely_names.data.likelyNameList
+            console.log('Success, got likely names: ', this.nameList)
+          }, error => {
+            this.showLoader = false
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
+            console.error('Error in getting likely names: ', error)
+          })
       },
       getDocumentDetails: function (documentID) {
         this.showLoader = true
