@@ -52,8 +52,8 @@
             </thead>
             <tbody>
             <tr v-for="activity in activities.list" >
-                <td style="width: 200px;">{{ activity.description }}</td>
-                <td style="width: 300px;">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
+                <td style="width: 250px;">{{ activity.description }}</td>
+                <td style="width: 300px; text-align: center;">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
                 <td style="width: 800px; text-align: center;">{{ activity.userAgent }}</td>
                 <td style="text-align: center;">{{ activity.time | date('MMM D, YYYY') }}</td>
             </tr>
