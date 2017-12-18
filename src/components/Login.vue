@@ -189,7 +189,7 @@
                   localStorage.setItem('country', JSON.stringify(country.data))
                   localStorage.setItem('occupation', JSON.stringify(occupation.data))
                   localStorage.setItem('bank', JSON.stringify(bank.data))
-                  let authUri = AUTH_ACCOUNTS_URI + '?appID=2&token=' + data.token
+                  let authUri = Http.AUTH_ACCOUNTS_URI + '?appID=2&token=' + data.token
                   // auth URI problem
                   if (this.username && this.password) {
                     window.location.href = authUri

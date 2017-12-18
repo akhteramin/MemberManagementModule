@@ -122,5 +122,5 @@ export default {
   },
   IMAGE_URL,
   AUTH_ACCOUNTS_URI,
-  AUTH_HTTP_URI  
+  AUTH_HTTP_URI
 }

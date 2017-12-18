@@ -50,7 +50,7 @@
       return {
         user: {},
         appsData: {},
-        showApp: false
+        showApp: false,
         expandList: false
       }
     },
