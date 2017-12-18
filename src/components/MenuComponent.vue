@@ -2,7 +2,7 @@
   <div class="MenuComponent gr-2 menu-container">
     <div class="menu-header">
         <img class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="110" height="50">
-          Member Service
+         Admin
     </div>
     <nav>
       <ul>
@@ -12,10 +12,12 @@
         <a v-on:click="goToWaitingForVerificationMemberList"><li>Waiting For Verification</li></a>
         <a v-on:click="goToWaitingForApprovalMemberList"><li>Waiting For Approval</li></a>
         <a v-on:click="goToMemberAcl"><li>Ipay Member ACL</li></a>
+        <a v-on:click="goToManageServices"><li>Manage Services</li></a>
+        
         <a @click="toggleConfigurationLists">
           <li>Configuration <i class="fa fa-angle-down"></i></li>
         </a>
-        <div v-if="expandList" class="gr-10 push-1">
+        <div v-if="expandList" class="gr-10 push-1 small-scrollable">
           <a @click="goToOccupationList"><li>Occupation</li></a>
           <a @click="goToBankList"><li>Bank</li></a>
           <a @click="goToBranchList"><li>Branch</li></a>
@@ -120,6 +122,9 @@
       },
       goToAccountClass () {
         route.push('/account-class')
+      },
+      goToManageServices () {
+        route.push('/manage/services')
       },
       init () {
         console.log('here it is')
