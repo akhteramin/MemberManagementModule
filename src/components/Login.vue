@@ -1,7 +1,7 @@
 <template>
  <div class="col-md-4 col-md-offset-4 ">
 			<div class="box">
-        <h1>iPay Member Service</h1>
+        <h1>iPay Admin</h1>
 				<form role="form" @submit.prevent="login" id="loginForm">
 
 					<div class="divider-form"></div>
@@ -66,6 +66,9 @@
                   ({data: list}) => {
                     console.log(list)
                     // auth.setAccessControl(list)
+                    localStorage.setItem('accessControlList', list.map(x => x.serviceID))
+                    console.log(localStorage.getItem('accessControlList'))
+                    Util.getAccessibleMenu()
                     route.push('/home')
                   },
                   error => {

@@ -19,7 +19,7 @@ import StaticCountryComponent from '@/components/StaticCountryComponent'
 import StaticBusinessTypeComponent from '@/components/StaticBusinessTypeComponent'
 import StaticAccountTypeComponent from '@/components/StaticAccountTypeComponent'
 import StaticAccountClassComponent from '@/components/StaticAccountClassComponent'
-
+import ManageServicesComponent from '@/components/ManageServicesComponent'
 Vue.use(Router)
 
 // router.beforeEach((to, from, next) => {
@@ -142,6 +142,11 @@ export default new Router({
       path: '/account-class',
       name: 'StaticAccountClassComponent',
       component: StaticAccountClassComponent
+    },
+    {
+      path: '/manage/services',
+      name: 'ManageServicesComponent',
+      component: ManageServicesComponent
     },
     {
       path: '*',

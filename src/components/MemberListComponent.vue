@@ -1,5 +1,5 @@
 <template>
-  <div id = "list" class="ListRenderer gr-10 push-2 content-container">
+  <div id = "list" class="gr-10 push-2">
     <h1>Members</h1>
     <hr>
     <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
@@ -82,6 +82,7 @@
                     <!--<option selected disabled>Select account type</option>-->
                     <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
                     <option value="CREATION_DATE">Account Creation Date</option>
+                    <option value="PROFILE_COMPLETION">Profile Completion Score</option>
                   </select>
                 </div>
               </div>

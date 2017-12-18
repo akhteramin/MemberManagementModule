@@ -35,6 +35,7 @@
   -moz-osx-font-smoothing: black;
   color: #2c3e50;
   background: #ffffff;
+  min-height: 1000px;
 }
 
 
