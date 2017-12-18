@@ -239,7 +239,7 @@
         this.showLoader = true
         Http.PUT('member', updatedAddress, [this.id, 'address'])
           .then(
-            ({data: {data: addressUpdate}}) => {
+            ({data: {data: response}}) => {
               this.showLoader = false
               $.notify({
                 // options
@@ -250,7 +250,7 @@
                 type: 'success',
                 delay: 3000
               })
-              console.log('updated address: ', addressUpdate)
+              console.log('updated address: ', response)
               if (addressId === 0) {
                 this.editPresentAddress()
               } else {

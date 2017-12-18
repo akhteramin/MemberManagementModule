@@ -23,11 +23,11 @@
                     @click="setTab('likelyNames')"><a data-toggle="tab">Likely Names</a></li>
                 <li class="text-center" :class="{active: showFriends}"
                     @click="setTab('friends')"><a data-toggle="tab">Friends</a></li>
-                <li v-if="member.basicInfo.accountType==2" class="text-center" :class="{active: showOffer}"
+                <li v-if="member.basicInfo && member.basicInfo.accountType==2" class="text-center" :class="{active: showOffer}"
                     @click="setTab('offers')"><a data-toggle="tab">Offers</a></li>
                 <li class="text-center" :class="{active: showAccessControl}"
-                    @click="setTab('accessControl')"><a data-toggle="tab">Access Control</a></li>   
-                
+                    @click="setTab('accessControl')"><a data-toggle="tab">Access Control</a></li>
+
               </ul>
             </div>
 
@@ -332,8 +332,8 @@
                     <div class="gr-5" v-if="!editPermanentAddressMode">
                       <div class="gr-12">
                         <div class="gr-2">
-                          <h5 v-if="member.basicInfo.accountType===1"><b>Permanent</b></h5>
-                          <h5 v-if="member.basicInfo.accountType===2"><b>Business</b></h5>
+                          <h5 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h5>
+                          <h5 v-if="member.basicInfo && member.basicInfo.accountType===2"><b>Business</b></h5>
 
                         </div>
                         <div class="gr-2 push-6" v-if="!editPermanentAddressMode">
@@ -548,7 +548,7 @@
       }
     },
     created () {
-      console.log('created member basic information..., member id iss: ', this.id)
+//      console.log('created member basic information..., member id iss: ', this.id)
       this.init()
     },
     methods: {
@@ -598,14 +598,18 @@
                 ' member verification history: ', this.member.verificationHistory)
               this.dob = this.$options.filters.date(member.basicInfo.dateOfBirth, 'YYYY-MM-DD')
               // check for address
-              if (this.member.addresses.length === 2) {
-                this.memberPresentAddress = this.member.addresses[0]
-                this.memberPermanentAddress = this.member.addresses[1]
-              } else if (this.member.addresses.length === 1) {
-                this.memberPresentAddress = this.member.addresses[0]
+
+              for (let indx in this.member.addresses) {
+                let address = this.member.addresses[indx]
+                if (address.type === 'PRESENT') {
+                  this.memberPresentAddress = address
+                } else if (address.type === 'PERMANENT') {
+                  this.memberPermanentAddress = address
+                }
               }
               console.log('this.memberPresentAddress: ', this.memberPresentAddress)
               console.log('this.memberPermanentAddress: ', this.memberPermanentAddress)
+              console.log('response addresses: ', this.member.addresses)
               this.getStaticNames()
             },
             error => {
@@ -658,7 +662,7 @@
         this.init()
       },
       editPresentAddress (param = '') {
-        console.log('edit button of PRESENT address clicked... it was: ', this.editPresentAddressMode)
+//        console.log('edit button of PRESENT address clicked... it was: ', this.editPresentAddressMode)
         if (this.editPresentAddressMode) {
           this.init()
           this.editPresentAddressMode = false
@@ -668,14 +672,14 @@
         console.log('now editAddressMode is: ', this.editPresentAddressMode)
       },
       editPermanentAddress (param = '') {
-        console.log('edit button of PARMANENT address clicked... it was: ', this.editPermanentAddressMode)
+//        console.log('edit button of PARMANENT address clicked... it was: ', this.editPermanentAddressMode)
         if (this.editPermanentAddressMode) {
           this.editPermanentAddressMode = false
           this.init()
         } else {
           this.editPermanentAddressMode = true
         }
-        console.log('now edit Parmanent AddressMode is: ', this.editPermanentAddressMode)
+//        console.log('now edit Parmanent AddressMode is: ', this.editPermanentAddressMode)
       },
       setTab (tabName) {
         this.showBasicDetails = false
@@ -725,14 +729,14 @@
         }
         this.countryNamePresent = this.memberPresentAddress.country
 
-        console.log('Line 1322, thana id: ', this.thanaNamePermanent.thanaId)
+//        console.log('Line 1322, thana id: ', this.thanaNamePermanent.thanaId)
         this.thanaNamePermanent = this.thanaList.find(x => x.id === this.memberPermanentAddress.thanaId)
         if (this.thanaNamePermanent) {
           this.thanaNamePermanent = this.thanaNamePermanent.name
-          console.log('Line 1325, thana name permanent: ', this.thanaNamePermanent)
+//          console.log('Line 1325, thana name permanent: ', this.thanaNamePermanent)
         } else {
           this.thanaNamePermanent = 'N/A'
-          console.log('Line 1328, thana name permanent: ', this.thanaNamePermanent)
+//          console.log('Line 1328, thana name permanent: ', this.thanaNamePermanent)
         }
         this.districtNamePermanent = this.districtList.find(x => x.id === this.memberPermanentAddress.districtId)
         if (this.districtNamePermanent) {
