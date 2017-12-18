@@ -7,7 +7,19 @@ import WaitingForVerificationList from '@/components/WaitingForVerificationListC
 import WaitingForApprovalList from '@/components/WaitingForApprovalListComponent'
 import Home from '@/components/Home'
 import MemberIndividualComponent from '@/components/MemberIndividualComponent'
-
+import UserListComponent from '@/components/UserListComponent'
+import UserIndividualComponent from '@/components/UserIndividualComponent'
+import MemberAclGroup from '@/components/MemberAclGroupComponent'
+import StaticOccupationComponent from '@/components/StaticOccupationComponent'
+import StaticBankComponent from '@/components/StaticBankComponent'
+import StaticBranchComponent from '@/components/StaticBranchComponent'
+import StaticDistrictComponent from '@/components/StaticDistrictComponent'
+import StaticThanaComponent from '@/components/StaticThanaComponent'
+import StaticCountryComponent from '@/components/StaticCountryComponent'
+import StaticBusinessTypeComponent from '@/components/StaticBusinessTypeComponent'
+import StaticAccountTypeComponent from '@/components/StaticAccountTypeComponent'
+import StaticAccountClassComponent from '@/components/StaticAccountClassComponent'
+import ManageServicesComponent from '@/components/ManageServicesComponent'
 Vue.use(Router)
 
 // router.beforeEach((to, from, next) => {
@@ -65,10 +77,80 @@ export default new Router({
       component: Home
     },
     {
-      path: '/member/profile',
+      path: '/member/profile/:id/:accountType',
       name: 'MemberIndividualComponent',
       component: MemberIndividualComponent,
       props: true
+    },
+    {
+      path: '/user',
+      name: 'UserListComponent',
+      component: UserListComponent
+    },
+    {
+      path: '/user/:loginID',
+      name: 'UserIndividualComponent',
+      component: UserIndividualComponent,
+      props: true
+    },
+    {
+      path: '/member/acl/group',
+      name: 'MemberAclGroup',
+      component: MemberAclGroup
+    },
+    {
+      path: '/occupation',
+      name: 'StaticOccupationComponent',
+      component: StaticOccupationComponent
+    },
+    {
+      path: '/bank',
+      name: 'StaticBankComponent',
+      component: StaticBankComponent
+    },
+    {
+      path: '/branch',
+      name: 'StaticBranchComponent',
+      component: StaticBranchComponent
+    },
+    {
+      path: '/district',
+      name: 'StaticDistrictComponent',
+      component: StaticDistrictComponent
+    },
+    {
+      path: '/thana',
+      name: 'StaticThanaComponent',
+      component: StaticThanaComponent
+    },
+    {
+      path: '/country',
+      name: 'StaticCountryComponent',
+      component: StaticCountryComponent
+    },
+    {
+      path: '/business-type',
+      name: 'StaticBusinessTypeComponent',
+      component: StaticBusinessTypeComponent
+    },
+    {
+      path: '/account-type',
+      name: 'StaticAccountTypeComponent',
+      component: StaticAccountTypeComponent
+    },
+    {
+      path: '/account-class',
+      name: 'StaticAccountClassComponent',
+      component: StaticAccountClassComponent
+    },
+    {
+      path: '/manage/services',
+      name: 'ManageServicesComponent',
+      component: ManageServicesComponent
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })

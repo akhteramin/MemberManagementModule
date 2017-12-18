@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="row">
-      <MenuComponent v-if="$route.name !== 'Login'"></MenuComponent>      
+      <MenuComponent v-if="$route.name !== 'Login'"></MenuComponent>
       <router-view></router-view>
     </div>
     <!--<router-view></router-view>-->
@@ -14,6 +14,7 @@
   import Home from './components/Home.vue'
   import WaitingForApprovalList from './components/WaitingForApprovalListComponent.vue'
   import WaitingForVerificationList from './components/WaitingForVerificationListComponent.vue'
+  import MemberAclGroup from './components/MemberAclGroupComponent.vue'
   export default {
     name: 'app',
     components: {
@@ -21,7 +22,8 @@
       'MemberList': MemberList,
       'Home': Home,
       'WaitingForApprovalList': WaitingForApprovalList,
-      'WaitingForVerificationList': WaitingForVerificationList
+      'WaitingForVerificationList': WaitingForVerificationList,
+      'MemberAclGroup': MemberAclGroup
     }
   }
 </script>
@@ -33,6 +35,7 @@
   -moz-osx-font-smoothing: black;
   color: #2c3e50;
   background: #ffffff;
+  min-height: 1000px;
 }
 
 

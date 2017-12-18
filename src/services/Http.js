@@ -1,4 +1,5 @@
 import axios from 'axios'
+import route from '../router'
 
 axios.interceptors.request.use(
   (config) => {
@@ -10,23 +11,28 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
-    console.log('intercepted http success...')
+    // console.log('intercepted http success...')
     return response
   },
   (error) => {
-    console.log('intercepted http failure...')
+    console.log('intercepted http failure..., error is: ', error)
+    if (error.response.status === 401 || error.response.status === 403) {
+      localStorage.removeItem('token')
+      route.push('/')
+    }
     return Promise.reject(error)
   }
 )
 
 // let apiUrl = 'http://10.10.10.199:8085/member-service/api/v1'
 // const API_URL = 'http://192.168.1.134:8085/member-service/api/v1' // nafisa
+// const API_URL = 'http://192.168.1.95:8085//member-service/api/v1' // muhit
 const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
 const AUTH_URL = 'http://localhost:9000/auth/api/v1'
 const IMAGE_URL = 'https://dev.ipay.com.bd'
 const AUTH_HTTP_URI = 'http://localhost:8000/admin-auth/'
-
+const AUTH_ACCOUNTS_URI = 'http://localhost:8000/admin-auth/accounts'
 const routes = {
   apps: `${AUTH_URL}/user/get`,
   member: `${API_URL}/member/`,
@@ -34,7 +40,12 @@ const routes = {
   permissions: `${AUTH_URL}/permissions/`,
   resource: `${API_URL}/resource/`,
   logout: `${AUTH_URL}/logout/`,
-  verification: `${API_URL}/verify/member/`
+  verification: `${API_URL}/verify/member/`,
+  user: `${API_URL}/user/`,
+  offer: `${API_URL}/offer/business/member/`,
+  aclUserGroup: `${API_URL}/member/acl/user-group/`,
+  memberAclUpdate: `${API_URL}/member/acl/member/`,
+  memberAclGet: `${API_URL}/member/acl/`
 }
 
 const encodeQueryData = (data) => {
@@ -62,7 +73,7 @@ export default {
       parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
     }
 
-    console.log('Http.js 54, parameters: ', parameters, ' I have shown the parameters')
+    // console.log('Http.js 54, parameters: ', parameters, ' I have shown the parameters')
 
     let additionalParams = ''
     if (Object.prototype.toString.call(params) === '[object Array]') {
@@ -84,6 +95,7 @@ export default {
     }
 
     const route = routes[key]
+    console.log('Http POST, parameters:: ', route.concat(parameters), '\tdata: ', data)
     return axios.post(route.concat(parameters), data)
   },
   PUT (key, data, props = {}) {
@@ -97,6 +109,18 @@ export default {
     const route = routes[key]
     return axios.put(route.concat(parameters), data)
   },
+  DELETE (key, props = {}, data) {
+    let parameters = ''
+    if (Object.prototype.toString.call(props) === '[object Array]') {
+      parameters = props.length > 0 ? `${props.join('/')}` : ''
+    } else {
+      parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
+    }
+
+    const route = routes[key]
+    return axios.delete(route.concat(parameters), data)
+  },
   IMAGE_URL,
-  AUTH_HTTP_URI
+  AUTH_ACCOUNTS_URI,
+  AUTH_HTTP_URI  
 }

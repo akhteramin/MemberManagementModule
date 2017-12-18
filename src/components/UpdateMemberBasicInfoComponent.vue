@@ -1,8 +1,23 @@
  <template>
 
     <div>
-        <form v-on:submit.prevent="updateMemberBasicProfile">
 
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <form v-on:submit.prevent="updateMemberBasicProfile">
             <div class="gr-2">
                 Name:
             </div>
@@ -21,8 +36,7 @@
                 Email:
             </div>
             <div class="gr-4 text-left">
-            <input  name="memberEmail" class="input-sm" type="email" id="memberEmail" placeholder="Email"
-                v-model="member.emails[0].emailAddress"/>
+            {{ member.emails.length > 0 ? member.emails[0].emailAddress : 'N/A' }}
             </div>
             <div class="gr-2">
                 Date of Birth:
@@ -83,7 +97,7 @@
                 v-model="member.basicInfo.organizationName"/>
             </div>
 
-            <div class="gr-4 push-4">
+            <div class="gr-5 push-2">
                 <div class="form-group">
                 <button type="submit" class="button-search">
                     <i class="fa fa-edit" aria-hidden="true"></i>
@@ -101,6 +115,7 @@
 
 <script>
   import Http from '../services/Http'
+  import route from '../router'
   export default {
     name: 'MemberBasicInfoUpdate',
     props: [
@@ -109,28 +124,66 @@
     ],
     data () {
       return {
-        'dob': ''
+        'dob': '',
+        showLoader: false
       }
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         this.dob = this.$options.filters.date(this.member.basicInfo.dob, 'YYYY-MM-DD')
         console.log(this.member)
       },
       updateMemberBasicProfile () {
-        console.log('update basic profile info:')
         this.member.basicInfo.dateOfBirth = Date.parse(this.dob)
         console.log(this.member.basicInfo)
         this.member.basicInfo.dob = Date.parse(this.dob)
         console.log('update member clicked, this.member.basicInfo: ', this.member.basicInfo)
+        this.showLoader = true
         Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
           .then(
             ({data: {data: memberUpdate}}) => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Basic details updated.'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               console.log('updated profile::', memberUpdate)
               this.init()
               this.editBasicInfo()
             },
             error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting list of identification documents, error: ', error)
             }
           )
@@ -140,6 +193,7 @@
       }
     },
     created () {
+      console.log('update member basic information created::::::')
       this.init()
     }
 }

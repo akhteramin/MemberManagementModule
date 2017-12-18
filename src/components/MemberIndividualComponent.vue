@@ -8,15 +8,26 @@
             <h3 class="card-header">
               <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
 
-            <div id = "nav-bar">
+            <div id = "nav-bar" style="cursor: pointer;">
               <ul class="nav nav-tabs">
-                <li class="gr-3 text-center" :class="{active: showBasicDetails}"
+                <li class="text-center" :class="{active: showBasicDetails}"
                     @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
                 <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-                <li class="gr-3 text-center" :class="{active: showActivities}"
+                <li class="text-center" :class="{active: showActivities}"
                     @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
-                <li class="gr-3 text-center" :class="{active: showTransactions}"
+                <li class="text-center" :class="{active: showTransactions}"
                     @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
+                <li class="text-center" :class="{active: showSuspensionHistory}"
+                    @click="setTab('suspensionHistory')"><a data-toggle="tab">Suspension History</a></li>
+                <li class="text-center" :class="{active: showLikelyNames}"
+                    @click="setTab('likelyNames')"><a data-toggle="tab">Likely Names</a></li>
+                <li class="text-center" :class="{active: showFriends}"
+                    @click="setTab('friends')"><a data-toggle="tab">Friends</a></li>
+                <li v-if="member.basicInfo && member.basicInfo.accountType==2" class="text-center" :class="{active: showOffer}"
+                    @click="setTab('offers')"><a data-toggle="tab">Offers</a></li>
+                <li class="text-center" :class="{active: showAccessControl}"
+                    @click="setTab('accessControl')"><a data-toggle="tab">Access Control</a></li>
+
               </ul>
             </div>
 
@@ -26,30 +37,40 @@
               <div v-if="member.basicInfo">
 
                     <div class="row">
-                      <div class="gr-2 push-7">
-                        <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
-                        <span v-else>Balance: N/A BDT </span>
+                      <div class="gr-4 push-7">
+                       
+                        
+
                       </div>
                     </div>
                     <br>
                     <div class="row">
 
-                      <div class="gr-2">
+                      <div class="gr-2 text-center">
                         <img v-if="member.basicInfo.mmUserPictures[0]"
-                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'" 
+                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
                               class="img-circle img-responsive" width="250" height="250">
 
                         <img v-else src="static/images/default-original.jpg" class="img-circle img-responsive"
-                            alt="N/A" width="30" height="30">
+                            alt="N/A" width="250" height="250">
                         <update-member-image
                           :member="member"
                           :id="id"
                           @update="editProfilePic">
                         </update-member-image>
-
+                        <b>{{member.basicInfo.name}}</b>
+                        <span class="banner-text" v-if="member.basicInfo.accountType == 1">(Personal)</span>
+                        <span class="banner-text" v-else>(Business)</span>
+                        <br>{{member.basicInfo.mobileNumber}}
+                        <br><span>{{member.basicInfo.profileCompletionScore}}%</span>
+                        <br>General
+                        <button class="button-md-balance padding-2" >
+                          <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
+                          <span v-else>Balance: N/A </span>                        
+                        </button>
                       </div>
 
-                      
+
 
                       <div class="gr-9 text-left push-.5">
                         <div class="gr-1" v-if="member.basicInfo.accountType===2">
@@ -72,7 +93,7 @@
                           <div class="gr-2">
                             <h5><b>Basic Information</b></h5>
                           </div>
-                          <div class="gr-2 push-6" v-if="!editBasicProfileMode">
+                          <div class="gr-2 push-7" v-if="!editBasicProfileMode">
                               <button class="button-md-edit" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                           </div>
                         </div>
@@ -143,18 +164,18 @@
                             @update="editBasicInfo">
                           </member-basic-info-update>
                         </div>
-                        
+
                         <hr>
                       <div v-if="member.basicInfo.accountType===1">
-                        <div class="gr-12">
+                        <div class="gr-11">
                           <div class="gr-2">
                               <h5><b>Family Information</b></h5>
                             </div>
-                            <div class="gr-2 push-6" v-if="!editParentsMode">
+                            <div class="gr-2 push-7" v-if="!editParentsMode">
                                 <button class="button-md-edit" @click="editParents()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                             </div>
                         </div>
-                        <div v-if="!editParentsMode">
+                        <div v-if="!editParentsMode" class="gr-10">
                           <div class="gr-2">
                           Father Name:
                           </div>
@@ -193,7 +214,7 @@
                           <div class="gr-2">
                               <h5><b>Business Information</b></h5>
                             </div>
-                            
+
                         </div>
                         <div>
                           <div class="gr-2">
@@ -222,7 +243,7 @@
                             {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
                           </div>
                         </div>
-                        
+
                       </div>
 
                     </div>
@@ -311,9 +332,9 @@
                     <div class="gr-5" v-if="!editPermanentAddressMode">
                       <div class="gr-12">
                         <div class="gr-2">
-                          <h5 v-if="member.basicInfo.accountType===1"><b>Permanent</b></h5>
-                          <h5 v-if="member.basicInfo.accountType===2"><b>Business</b></h5>
-                          
+                          <h5 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h5>
+                          <h5 v-if="member.basicInfo && member.basicInfo.accountType===2"><b>Business</b></h5>
+
                         </div>
                         <div class="gr-2 push-6" v-if="!editPermanentAddressMode">
                           <button class="button-md-edit" @click="editPermanentAddress">
@@ -402,14 +423,37 @@
             </div>
             <member-activity v-if="showActivities" :id="id"></member-activity>
             <member-transaction v-if="showTransactions" :id="id"></member-transaction>
+            <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
+            <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
+            <member-offer v-if="showOffer" :id="id"></member-offer>
+            <member-access-control v-if="showAccessControl" :id="id"></member-access-control>
+            <member-friends v-if="showFriends" :mobileNumber="member.basicInfo.mobileNumber"></member-friends>
         </div>
       </div>
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
 </template>
 
 <script>
   import Http from '../services/Http'
   import Constants from '../services/Constants'
+  import MemberSuspensionHistory from './MemberSuspensionHistoryComponent.vue'
   import MemberActivity from './MemberActivityComponent.vue'
   import MemberTransaction from './MemberTransactionComponent.vue'
   import MemberIdentificationDocument from './MemberIdentificationDocumentComponent.vue'
@@ -417,11 +461,16 @@
   import MemberHasIntroduced from './MemberHasIntroducedComponent.vue'
   import MemberBankAccount from './MemberBankAccountComponent.vue'
   import MemberBasicInfoUpdate from './UpdateMemberBasicInfoComponent.vue'
+  import MemberLikelyNamesComponent from './MemberLikelyNamesComponent.vue'
+  import MemberFriendsComponent from './MemberFriendsComponent.vue'
   import UpdateMemberFamilyInfo from './UpdateMemberFamilyInfoComponent.vue'
   import UpdateMemberAddress from './UpdateMemberAddressComponent.vue'
   import UpdateMemberImage from './UpdateMemberImageComponent.vue'
   import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
+  import MemberOffer from './MemberOfferComponent.vue'
   import UpdateMemberBusinessImage from './UpdateMemberBusinessImageComponent.vue'
+  import MemberAccessControl from './MemberAccessControlComponent.vue'
+  import route from '../router'
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -429,10 +478,13 @@
       'accountType'
     ],
     components: {
+      'member-suspension-history': MemberSuspensionHistory,
       'member-activity': MemberActivity,
       'member-transaction': MemberTransaction,
       'member-identification-document': MemberIdentificationDocument,
       'member-introduced-by': MemberIntroducedBy,
+      'member-likely-names': MemberLikelyNamesComponent,
+      'member-friends': MemberFriendsComponent,
       'member-has-introduced': MemberHasIntroduced,
       'member-bank-account': MemberBankAccount,
       'member-basic-info-update': MemberBasicInfoUpdate,
@@ -440,7 +492,9 @@
       'update-member-parents': UpdateMemberFamilyInfo,
       'update-member-address': UpdateMemberAddress,
       'update-member-image': UpdateMemberImage,
-      'update-member-business-image': UpdateMemberBusinessImage
+      'update-member-business-image': UpdateMemberBusinessImage,
+      'member-offer': MemberOffer,
+      'member-access-control': MemberAccessControl
     },
     data () {
       return {
@@ -455,7 +509,12 @@
         serviceList: Constants,
         showBasicDetails: true,
         showActivities: false,
+        showAccessControl: false,
         showTransactions: false,
+        showSuspensionHistory: false,
+        showLikelyNames: false,
+        showFriends: false,
+        showOffer: false,
         occupationName: '',
         editBasicProfileMode: false,
         editParentsMode: false,
@@ -484,14 +543,27 @@
           status: 'N/A',
           thanaId: 'N/A',
           type: 'PERMANENT'
-        }
+        },
+        showLoader: false
       }
     },
     created () {
-      console.log('created member basic information..., member id iss: ', this.id)
+//      console.log('created member basic information..., member id iss: ', this.id)
       this.init()
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         // Http call for basic information of the member with the 'id'
@@ -515,37 +587,57 @@
           thanaId: 'N/A',
           type: 'PERMANENT'
         }
+        this.showLoader = true
         Http.GET('member', [this.id, 'basic-details'])
           .then(
             ({data: {data: member}}) => {
+              this.showLoader = false
               this.member = member
               console.log('Got, member success::')
               console.log('member basic info: ', this.member.basicInfo,
                 ' member verification history: ', this.member.verificationHistory)
               this.dob = this.$options.filters.date(member.basicInfo.dateOfBirth, 'YYYY-MM-DD')
               // check for address
-              if (this.member.addresses.length === 2) {
-                this.memberPresentAddress = this.member.addresses[0]
-                this.memberPermanentAddress = this.member.addresses[1]
-              } else if (this.member.addresses.length === 1) {
-                this.memberPresentAddress = this.member.addresses[0]
+
+              for (let indx in this.member.addresses) {
+                let address = this.member.addresses[indx]
+                if (address.type === 'PRESENT') {
+                  this.memberPresentAddress = address
+                } else if (address.type === 'PERMANENT') {
+                  this.memberPermanentAddress = address
+                }
               }
               console.log('this.memberPresentAddress: ', this.memberPresentAddress)
               console.log('this.memberPermanentAddress: ', this.memberPermanentAddress)
+              console.log('response addresses: ', this.member.addresses)
               this.getStaticNames()
             },
             error => {
+              this.showLoader = false
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error occured getting details of the member, error: ', error)
             }
           )
 //         Http call for balance
+        this.showLoader = true
         Http.GET('member', [this.id, 'balance'])
           .then(
             ({data}) => {
+              this.showLoader = false
               this.balance = data.data
 //              console.log('balance is: ', this.balance)
             },
             error => {
+              this.showLoader = false
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in retrieving balance... ', error)
             }
           )
@@ -570,7 +662,7 @@
         this.init()
       },
       editPresentAddress (param = '') {
-        console.log('edit button of PRESENT address clicked... it was: ', this.editPresentAddressMode)
+//        console.log('edit button of PRESENT address clicked... it was: ', this.editPresentAddressMode)
         if (this.editPresentAddressMode) {
           this.init()
           this.editPresentAddressMode = false
@@ -580,25 +672,40 @@
         console.log('now editAddressMode is: ', this.editPresentAddressMode)
       },
       editPermanentAddress (param = '') {
-        console.log('edit button of PARMANENT address clicked... it was: ', this.editPermanentAddressMode)
+//        console.log('edit button of PARMANENT address clicked... it was: ', this.editPermanentAddressMode)
         if (this.editPermanentAddressMode) {
           this.editPermanentAddressMode = false
           this.init()
         } else {
           this.editPermanentAddressMode = true
         }
-        console.log('now edit Parmanent AddressMode is: ', this.editPermanentAddressMode)
+//        console.log('now edit Parmanent AddressMode is: ', this.editPermanentAddressMode)
       },
       setTab (tabName) {
         this.showBasicDetails = false
         this.showActivities = false
         this.showTransactions = false
+        this.showSuspensionHistory = false
+        this.showLikelyNames = false
+        this.showFriends = false
+        this.showOffer = false
+        this.showAccessControl = false
         if (tabName === 'basicDetails') {
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
           this.showActivities = true
-        } else {
+        } else if (tabName === 'transactions') {
           this.showTransactions = true
+        } else if (tabName === 'suspensionHistory') {
+          this.showSuspensionHistory = true
+        } else if (tabName === 'likelyNames') {
+          this.showLikelyNames = true
+        } else if (tabName === 'friends') {
+          this.showFriends = true
+        } else if (tabName === 'offers') {
+          this.showOffer = true
+        } else if (tabName === 'accessControl') {
+          this.showAccessControl = true
         }
       },
       getStaticNames () {
@@ -622,14 +729,14 @@
         }
         this.countryNamePresent = this.memberPresentAddress.country
 
-        console.log('Line 1322, thana id: ', this.thanaNamePermanent.thanaId)
+//        console.log('Line 1322, thana id: ', this.thanaNamePermanent.thanaId)
         this.thanaNamePermanent = this.thanaList.find(x => x.id === this.memberPermanentAddress.thanaId)
         if (this.thanaNamePermanent) {
           this.thanaNamePermanent = this.thanaNamePermanent.name
-          console.log('Line 1325, thana name permanent: ', this.thanaNamePermanent)
+//          console.log('Line 1325, thana name permanent: ', this.thanaNamePermanent)
         } else {
           this.thanaNamePermanent = 'N/A'
-          console.log('Line 1328, thana name permanent: ', this.thanaNamePermanent)
+//          console.log('Line 1328, thana name permanent: ', this.thanaNamePermanent)
         }
         this.districtNamePermanent = this.districtList.find(x => x.id === this.memberPermanentAddress.districtId)
         if (this.districtNamePermanent) {

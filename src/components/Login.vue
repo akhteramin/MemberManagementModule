@@ -1,7 +1,7 @@
 <template>
  <div class="col-md-4 col-md-offset-4 ">
 			<div class="box">
-        <h1>iPay Member Service</h1>
+        <h1>iPay Admin</h1>
 				<form role="form" @submit.prevent="login" id="loginForm">
 
 					<div class="divider-form"></div>
@@ -146,9 +146,9 @@
         Http.POST('login', credentials)
           .then(
             ({ data }) => {
-              console.log('SUCCESS, it worked!!!!!')
-              console.log('data.message: ' + data.message)
-              console.log('data token: ' + data.token)
+//              console.log('SUCCESS, it worked!!!!!')
+//              console.log('data.message: ' + data.message)
+//              console.log('data token: ' + data.token)
               localStorage.setItem('token', data.token)
               // Http get request for permission list
               Http.GET('permissions')
@@ -156,6 +156,9 @@
                   ({data: list}) => {
                     console.log(list)
                     // auth.setAccessControl(list)
+                    localStorage.setItem('accessControlList', list.map(x => x.serviceID))
+                    console.log(localStorage.getItem('accessControlList'))
+                    Util.getAccessibleMenu()
                     route.push('/home')
                   },
                   error => {
@@ -186,11 +189,13 @@
                   localStorage.setItem('country', JSON.stringify(country.data))
                   localStorage.setItem('occupation', JSON.stringify(occupation.data))
                   localStorage.setItem('bank', JSON.stringify(bank.data))
-                  let authUri = 'http://localhost:8000/admin-auth/accounts/?appID=2&token=' + data.token
+                  let authUri = AUTH_ACCOUNTS_URI + '?appID=2&token=' + data.token
                   // auth URI problem
                   if (this.username && this.password) {
                     window.location.href = authUri
                   }
+                  this.hashBankCodeToBankNameAndStore(bank.data)
+                  this.hashDistrictIdToDistrictNameAndStore(district.data)
                 },
                 error => {
                   console.log('Error in getting thana list, ', error)
@@ -215,6 +220,26 @@
               localStorage.setItem('user', JSON.stringify(user))
             }
           )
+      },
+      hashBankCodeToBankNameAndStore (bankData) {
+        console.log('bankData: ', bankData)
+        let bankCodeToBankName = {}
+        for (let indx in bankData) {
+          let bank = bankData[indx]
+          bankCodeToBankName[bank.bankCode] = bank.bankName
+        }
+        bankCodeToBankName = JSON.stringify(bankCodeToBankName)
+        console.log('bankCodeToBankName: ', bankCodeToBankName)
+        localStorage.setItem('bankCodeToBankName', bankCodeToBankName)
+      },
+      hashDistrictIdToDistrictNameAndStore (districtData) {
+        let districtIdToDistrictName = {}
+        for (let indx in districtData) {
+          let district = districtData[indx]
+          districtIdToDistrictName[district.id] = district.name
+        }
+        districtIdToDistrictName = JSON.stringify(districtIdToDistrictName)
+        localStorage.setItem('districtIdToDistrictName', districtIdToDistrictName)
       }
     }
   }

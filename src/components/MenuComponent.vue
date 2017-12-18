@@ -2,47 +2,36 @@
   <div class="MenuComponent gr-2 menu-container">
     <div class="menu-header">
         <img class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="110" height="50">
-          Member Service
+         Admin
     </div>
     <nav>
       <ul>
-        <li>
-          <a v-on:click="goHome">Home</a>
-        </li>
-        <li>
-          <a  v-on:click="goToMemberList">Member List</a>
-        </li>
-        <li>
-          <a  v-on:click="goToWaitingForVerificationMemberList">Waiting For Verification</a>
-        </li>
-        <li>
-          <a  v-on:click="goToWaitingForApprovalMemberList">Waiting For Approval</a>
-        </li>
+        <a v-on:click="goHome"><li><i class="fa fa-home fa-2x" aria-hidden="true"></i> Home</li></a>
+        <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList"><li><i class="fa fa-users fa-2x" aria-hidden="true"></i> Members</li></a>
+        <a v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li> <i class="fa fa-user fa-2x" aria-hidden="true"></i> Users</li></a>
+        <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList"><li><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i> Waiting For Verification</li></a>
+        <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList"><li><i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i> Waiting For Approval</li></a>
+        <a v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li><i class="fa fa-lock fa-2x" aria-hidden="true"></i> Ipay Member ACL</li></a>
+        <a v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices"><li><i class="fa fa-tasks fa-2x" aria-hidden="true"></i> Manage Services</li></a>
+        <a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
+          <li> <i class="fa fa-cog fa-2x" aria-hidden="true"></i> Configuration <i class="fa fa-angle-down"></i></li>
+        </a>
+        <div v-if="expandList" class="gr-10 push-1 small-scrollable" style="height:120px">
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="goToOccupationList"><li>Occupation</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="goToBankList"><li>Bank</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="goToBranchList"><li>Branch</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_DISTRICT_LIST'" @click="goToDistrictList"><li>District</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_THANA_LIST'" @click="goToThanaList"><li>Thana</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_COUNTRY_LIST'" @click="goToCountryList"><li>Country</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_BUSINESS_TYPE_LIST'" @click="goToBusinessType"><li>Business Type</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_TYPE_LIST'" @click="goToAccountType"><li>Account Type</li></a>
+          <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_CLASS_LIST'" @click="goToAccountClass"><li>Account Class</li></a>
+        </div>
       </ul>
       <ul class="bottom-menu">
-        <li>
-          <i class="fa fa-folder-o" aria-hidden="true"></i>
-          <a @click="toggleShowApp()">Applications</a>
-        </li>
-        <li v-if="showApp"  v-for="app in appsData">
-            <var v-if="app.appID === 2">
-              <a href="http://localhost:8000/admin-auth" target="_blank">Auth</a>
-            </var>
-            <var v-if="app.appID === 3">
-              <a href="#">CRM</a>
-            </var>            
-        </li>
-        <li>
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
-          <a v-on:click="logout">{{user.loginID}}</a>
-        </li>
-        <li>
-          <i class="fa fa-question-circle-o" aria-hidden="true"></i>
-          <a v-on:click="logout">Help</a>
-        </li>
-        <li>
-          <a v-on:click="logout">Logout</a>
-        </li>
+        <a v-on:click="goToUserProfile"><li><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
+        <a v-on:click="logout"><li><i class="fa fa-question-circle-o" aria-hidden="true"></i> Help</li></a>
+        <a v-on:click="logout"><li>Logout</li></a>
       </ul>
 
     </nav>
@@ -62,6 +51,7 @@
         user: {},
         appsData: {},
         showApp: false
+        expandList: false
       }
     },
     methods: {
@@ -78,6 +68,13 @@
               // route.push('/')
             }
           )
+      },
+      toggleConfigurationLists () {
+        if (this.expandList) {
+          this.expandList = false
+        } else {
+          this.expandList = true
+        }
       },
       goHome () {
         route.push('/home')
@@ -97,6 +94,47 @@
         } else {
           this.showApp = true
         }
+      },
+      goToUserList () {
+        route.push('/user')
+      },
+      goToUserProfile () {
+        console.log('user information:: ', this.user)
+        let loginID = this.user.loginID
+        route.push(`/user/${loginID}`) // `${window.location.href}/profile/${value}/${accntType}`
+      },
+      goToMemberAcl () {
+        route.push(`/member/acl/group`)
+      },
+      goToOccupationList () {
+        route.push('/occupation')
+      },
+      goToBankList () {
+        route.push('/bank')
+      },
+      goToBranchList () {
+        route.push('/branch')
+      },
+      goToDistrictList () {
+        route.push('/district')
+      },
+      goToThanaList () {
+        route.push('/thana')
+      },
+      goToCountryList () {
+        route.push('/country')
+      },
+      goToBusinessType () {
+        route.push('/business-type')
+      },
+      goToAccountType () {
+        route.push('/account-type')
+      },
+      goToAccountClass () {
+        route.push('/account-class')
+      },
+      goToManageServices () {
+        route.push('/manage/services')
       },
       init () {
         console.log('here it is')

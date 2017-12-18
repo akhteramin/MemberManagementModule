@@ -26,8 +26,8 @@
                 <button type="reset" class="button-reset">
                   <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
               </div>
-              <div id="container" class="gr-3" style="height: 40px;">
-                <div id="select-box" style="border: 0.5px solid #C0C0C0; width: 50px; float: right; "> <!-- border: 0.5px solid #C0C0C0; -->
+              <div class="gr-1 push-3">
+                <div class="select select-sm">
                   <select v-model="activityQuery.pageSize" @change="triggerSearchActivities">
                     <option disabled>Number of Entries</option>
                     <option selected value=10>10</option>
@@ -52,16 +52,16 @@
             </thead>
             <tbody>
             <tr v-for="activity in activities.list" >
-                <td style="width: 200px;">{{ activity.description }}</td>
-                <td style="width: 200px;">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
-                <td style="width: 500px;">{{ activity.userAgent }}</td>
-                <td>{{ activity.time | date('MMM D, YYYY') }}</td>
+                <td style="width: 250px;">{{ activity.description }}</td>
+                <td style="width: 300px; text-align: center;">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
+                <td style="width: 800px; text-align: center;">{{ activity.userAgent }}</td>
+                <td style="text-align: center;">{{ activity.time | date('MMM D, YYYY') }}</td>
             </tr>
             </tbody>
             </table>
         </div>
 
-        <div class="card-footer text-muted" v-if="activities.totalElements > 0">
+        <div class="card-footer text-muted" v-if="activities.totalElements > 0 && activities.totalPages > 1">
             <div class="row">
             <div class="gr-3">
                 <div style="margin-top: 0.2rem;" v-if="activities.list">
@@ -119,11 +119,29 @@
             </div>
             </div>
         </div>
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
 </template>
 
 <script>
   import Http from '../services/Http'
+  import route from '../router'
   export default {
     name: 'MemberActivity',
     props: [
@@ -134,10 +152,23 @@
         activities: {},
         maxPaginationItem: '',
         searchFromDate: null,
-        searchToDate: null
+        searchToDate: null,
+        showLoader: false
       }
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         // Http call for basic information of the member with the 'id'
@@ -185,16 +216,24 @@
         this.getActivities()
       },
       getActivities (key = 'member') {
+        this.showLoader = true
         Http.GET(key, [this.id, 'activities'], this.activityQuery)
           .then(({data: {data: activities}}) => {
+            this.showLoader = false
             console.log('Success, got activities: ', activities)
             this.activities = activities
           }, error => {
+            this.showLoader = false
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             console.error('Error in getting members: ', error)
           })
       },
       pageChange (number = 0, activeQuery = true) {
-        if (activeQuery && this.activityQuery.pageNumber !== number) { // activity query
+        if (number > 0 && number < this.activities.totalPages && activeQuery && this.activityQuery.pageNumber !== number) { // activity query
           this.activityQuery.pageNumber = number
           this.getActivities()
         }

@@ -1,5 +1,23 @@
 <template>
-    <div class="slider">
+    <div class="custom-scrollable slider">
+      <!--Here is memberProfile: {{ this.memberBasicDetails }}-->
+
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
         <div class="gr-12" v-if="profileDetails">
             <div class="gr-6">
                     <h5>Update Profile</h5>
@@ -48,7 +66,7 @@
                             -{{missingInfo | underscoreless}}
                         </span>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="gr-12 small-text min-height-slider" v-if="memberDocuments">
@@ -56,9 +74,9 @@
                 <hr>
                 <div class="row margin-5" v-for="memberDocument in memberDocuments">
                     <div class="gr-5 text-center padding-2">
-                        <img :src="imageBaseUrl+memberDocument.documentUrl" 
+                        <img :src="imageBaseUrl+memberDocument.documentUrl"
                         v-if="!isPdf(memberDocument.documentUrl)"
-                        class="img-rounded" alt="Documents" width="140" height="80" 
+                        class="img-rounded" alt="Documents" width="140" height="80"
                         @click="showDocumentDetails(memberDocument)">
 
                         <i v-if="isPdf(memberDocument.documentUrl)"
@@ -74,11 +92,11 @@
                         <br>Updated On:12/05/2017
                         <br>
                         <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">
-                            <button class="button-small-edit" 
-                             data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocument.id}`" 
+                            <button class="button-small-edit"
+                             data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocument.id}`"
                              data-backdrop="false">
-                             <i class="fa fa-pencil-square-o"></i> 
-                             Edit 
+                             <i class="fa fa-pencil-square-o"></i>
+                             Edit
                             </button>
                             <div :id="`ChangeDocumentModal${memberDocument.id}`" class="modal fade modal-slider" role="dialog">
                                 <update-member-identification-document
@@ -87,10 +105,10 @@
                                 @update="editIdentificationDocument">
                                 </update-member-identification-document>
                             </div>
-                            <button class="button-small-verify" 
-                            data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false" 
+                            <button class="button-small-verify"
+                            data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
                             @click= "setDocument(memberDocument)">
-                            Verify 
+                            Verify
                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                             </button>
                         </span>
@@ -101,15 +119,18 @@
 
                     <div class="row container side-nav">
                         <ul class="nav nav-tabs">
-                            <li class="text-center margin-left-15 active">
-                                <a class="black-text" data-toggle="tab" href="#introducedBy">Introduced By</a>
+                            <li class="text-center active">
+                                <a class="black-text" data-toggle="tab" href="#introducedBy">Introduced <br>By</a>
                             </li>
                             <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-                            <li class="text-center margin-left-15">
-                                <a class="black-text" data-toggle="tab" href="#hasIntroduced" @click="loadMemberIntroduced(memberProfile.accountId)">Has Introduced</a>
+                            <li class="text-center">
+                                <a class="black-text" data-toggle="tab" href="#hasIntroduced" @click="loadMemberIntroduced(memberProfile.accountId)">Has <br> Introduced</a>
                             </li>
-                            <li class="text-center margin-left-15">
-                                <a class="black-text" data-toggle="tab" href="#invitedBy" @click="loadMemberInvitedBy(memberProfile.accountId)">Invited By</a>
+                            <li class="text-center">
+                                <a class="black-text" data-toggle="tab" href="#invitedBy" @click="loadMemberInvitedBy(memberProfile.accountId)">Invited<br>By</a>
+                            </li>
+                            <li class="text-center">
+                              <a class="black-text" data-toggle="tab" href="#likelyNames" @click="loadMemberLikelyNames(memberProfile.mobileNumber)">Likely<br>Names</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -142,10 +163,41 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="likelyNames" class="tab-pane fade  padding-4">
+                              <div class="gr-4 text-center">
+                                  <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                      <th style="text-align: center;">Name</th>
+                                      <th style="text-align: center;">Frequency</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="entry in likelyNameList">
+
+                                      <td style="text-align: left;">{{ entry.name }}</td>
+
+                                      <td style="text-align: center">{{ entry.frequency }}</td>
+
+                                    </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-        </div>
+            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails">
+              <hr>
+              <member-verify-and-approve-component
+                :id = "memberBasicDetails.basicInfo.accountId"
+                :member = "memberBasicDetails">
+
+              </member-verify-and-approve-component>
+            </div>
+
+
         <div class="gr-12" v-else>
             <div class="gr-2 padding-5">
             <i class="fa fa-arrow-left" aria-hidden="true" @click="showDocumentDetails(memberDocumentDetail)"></i>
@@ -156,10 +208,10 @@
             <hr>
             <div class="gr-12">
                 <img v-if="!isPdf(memberDocumentDetail.documentUrl)"
-                :src="imageBaseUrl+memberDocumentDetail.documentUrl" 
+                :src="imageBaseUrl+memberDocumentDetail.documentUrl"
                 class="img-rounded" alt="Documents" width="350" height="200">
-                
-                <iframe v-if="isPdf(memberDocumentDetail.documentUrl)" 
+
+                <iframe v-if="isPdf(memberDocumentDetail.documentUrl)"
                 :src="imageBaseUrl+memberDocumentDetail.documentUrl" width="350" height="200"></iframe>
 
             </div>
@@ -190,10 +242,10 @@
                 <br>
                 <span v-if="memberDocumentDetail.documentVerificationStatus=='NOT_VERIFIED'">
                 <button class="button-md-edit"
-                data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocumentDetail.id}`" 
+                data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocumentDetail.id}`"
                              data-backdrop="false">
-                             <i class="fa fa-pencil-square-o"></i> 
-                             Edit 
+                             <i class="fa fa-pencil-square-o"></i>
+                             Edit
                 </button>
                 <div :id="`ChangeDocumentModal${memberDocumentDetail.id}`" class="modal-slider modal fade" role="dialog">
                     <update-member-identification-document
@@ -203,9 +255,9 @@
                     </update-member-identification-document>
                 </div>
                 <button class="button-md-verify"
-                        data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false" 
+                        data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
                         @click= "setDocument(memberDocumentDetail)">
-                        Verify 
+                        Verify
                         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                 </button>
                 </span>
@@ -230,7 +282,7 @@
                         <div class="comment">
                             <!--<span>Browse</span>-->
                             Comment:
-                            <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea> 
+                            <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
                         </div>
                         <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
                         </span>
@@ -247,33 +299,37 @@
             </div>
         </div>
 
-        
-
-        </div>
-
     </div>
 </template>
 
 <script>
   import Http from '../services/Http'
-  import router from '../router/index'
+//  import router from '../router/index'
   import UpdateMemberIdentificationDocument from './UpdateMemberIdentificationDocumentComponent.vue'
+  import MemberVerifyAndApproveComponent from './MemberVerifyAndApproveComponent.vue'
+  import route from '../router'
+
   export default {
     name: 'MemberListSlider',
     props: [
+      'id',
+      'memberBasicDetails',
       'memberProfile',
       'memberDocuments',
       'memberIntroducers',
       'memberMissingInfo'
     ],
     components: {
-      'update-member-identification-document': UpdateMemberIdentificationDocument
+      MemberVerifyAndApproveComponent,
+      'update-member-identification-document': UpdateMemberIdentificationDocument,
+      'member-verify-and-approve-component': MemberVerifyAndApproveComponent
     },
     data () {
       return {
         imageBaseUrl: '',
         membersIntroduced: '',
         membersInvitedBy: '',
+        likelyNameList: null,
         paramData: {
           comment: '',
           documentIdNumber: '',
@@ -282,62 +338,146 @@
         },
         memberDocumentDetail: {},
         profileDetails: true,
-        documentDetails: {}
+        documentDetails: {},
+        member: {},
+        showLoader: false
       }
     },
     created () {
-      console.log('document created::::')
+      console.log('member slider component created:: member profile is: ', this.memberProfile)
       this.init()
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
+        this.showLoader = true
+        Http.GET('member', [this.memberProfile.accountId, 'basic-details'])
+          .then(
+            ({data: {data: member}}) => {
+              this.showLoader = false
+              this.member = member
+              console.log('In slider component, member basic details: ', this.member)
+            },
+            error => {
+              this.showLoader = false
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
+              console.log('Error in loading member basic details for slider... ', error)
+            }
+          )
       },
       loadMemberIntroduced: function (accountId) {
+        this.showLoader = true
         Http.GET('member', [accountId, 'introduced'])
           .then(
             ({data: {data: introduced}}) => {
+              this.showLoader = false
               this.membersIntroduced = introduced
               console.log('Got the list of introduced: ', this.membersIntroduced)
             },
             error => {
+              this.showLoader = false
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting the list of introduced, error: ', error)
             }
           )
       },
       loadMemberInvitedBy: function (accountId) {
+        this.showLoader = true
         Http.GET('member', [accountId, 'inviters'])
           .then(
             ({data: {data: invited}}) => {
+              this.showLoader = false
               this.membersInvitedBy = invited
               console.log('Got the list of inviters: ', this.membersInvitedBy)
             },
             error => {
+              if (error.response) {
+                this.showLoader = false
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting the list of inviters, error: ', error)
             }
           )
       },
       loadIdentificationDocument: function (accountId) {
+        this.showLoader = true
         Http.GET('member', [accountId, 'identification-documents'])
         .then(
             ({data: {data: documents}}) => {
+              this.showLoader = false
               this.memberDocuments = documents
               console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
               this.memberDocuments.length)
             },
             error => {
+              this.showLoader = false
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting list of identification documents, error: ', error)
             }
         )
       },
+      loadMemberLikelyNames (mobileNumber) {
+        this.showLoader = true
+        let parameter = {
+          'mobileNumber': mobileNumber
+        }
+        Http.GET('member', ['likely-names'], parameter)
+          .then(({data: likely_names}) => {
+            this.showLoader = false
+            this.likelyNameList = likely_names.data.likelyNameList
+            console.log('Success, got likely names: ', this.nameList)
+          }, error => {
+            this.showLoader = false
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
+            console.error('Error in getting likely names: ', error)
+          })
+      },
       getDocumentDetails: function (documentID) {
+        this.showLoader = true
         Http.GET('member', ['identification-document', documentID])
         .then(
             ({data: {data: documentDetail}}) => {
+              this.showLoader = false
               this.documentDetails = documentDetail
               console.log('documentDetail:', documentDetail)
             },
             error => {
+              this.showLoader = false
+              if (error.response) {
+                if (error.response.status === 401) { // unauthorized, logging out.
+                  this.logout()
+                }
+              }
               console.log('Error in getting list of identification documents, error: ', error)
             }
         )
@@ -353,13 +493,21 @@
       },
       verifyDocument () {
         console.log('param data ::', this.paramData)
+        this.showLoader = true
         Http.PUT('verification', this.paramData, [this.memberProfile.accountId, 'document', this.paramData.documentID])
         .then(
           ({data: documentData}) => {
+            this.showLoader = false
             console.log('document data::', documentData)
             this.loadIdentificationDocument(this.memberProfile.accountId)
           },
           error => {
+            this.showLoader = false
+            if (error.response) {
+              if (error.response.status === 401) { // unauthorized, logging out.
+                this.logout()
+              }
+            }
             console.log('Error vrification of document: ', error)
           }
         )
@@ -380,7 +528,7 @@
       memberDetails (value, accntType) {
         console.log('Okay, I am doing it now!!!, value: ', value, accntType)
         // router.push(`./member/${value}`)
-        router.push({
+        route.push({
           name: 'MemberIndividualComponent',
           params: {id: value, accountType: accntType}
         })
