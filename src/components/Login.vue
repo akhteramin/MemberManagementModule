@@ -126,7 +126,7 @@
         route.push('/home')
       } else if (!localStorage.getItem('token')) {
         console.log('no token available in localstorage.')
-        let authUri = Http.AUTH_HTTP_URI + '/accounts/?appID=6'
+        let authUri = Http.AUTH_HTTP_URI + 'accounts/?appID=6'
         window.location.href = authUri
       }
     },
