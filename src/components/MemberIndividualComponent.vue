@@ -37,27 +37,37 @@
               <div v-if="member.basicInfo">
 
                     <div class="row">
-                      <div class="gr-2 push-7">
-                        <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
-                        <span v-else>Balance: N/A </span>
+                      <div class="gr-4 push-7">
+                       
+                        
+
                       </div>
                     </div>
                     <br>
                     <div class="row">
 
-                      <div class="gr-2">
+                      <div class="gr-2 text-center">
                         <img v-if="member.basicInfo.mmUserPictures[0]"
                               :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
                               class="img-circle img-responsive" width="250" height="250">
 
                         <img v-else src="static/images/default-original.jpg" class="img-circle img-responsive"
-                            alt="N/A" width="30" height="30">
+                            alt="N/A" width="250" height="250">
                         <update-member-image
                           :member="member"
                           :id="id"
                           @update="editProfilePic">
                         </update-member-image>
-
+                        <b>{{member.basicInfo.name}}</b>
+                        <span class="banner-text" v-if="member.basicInfo.accountType == 1">(Personal)</span>
+                        <span class="banner-text" v-else>(Business)</span>
+                        <br>{{member.basicInfo.mobileNumber}}
+                        <br><span>{{member.basicInfo.profileCompletionScore}}%</span>
+                        <br>General
+                        <button class="button-md-balance padding-2" >
+                          <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
+                          <span v-else>Balance: N/A </span>                        
+                        </button>
                       </div>
 
 
@@ -157,15 +167,15 @@
 
                         <hr>
                       <div v-if="member.basicInfo.accountType===1">
-                        <div class="gr-12">
+                        <div class="gr-11">
                           <div class="gr-2">
                               <h5><b>Family Information</b></h5>
                             </div>
-                            <div class="gr-2 push-6" v-if="!editParentsMode">
+                            <div class="gr-2 push-7" v-if="!editParentsMode">
                                 <button class="button-md-edit" @click="editParents()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                             </div>
                         </div>
-                        <div v-if="!editParentsMode">
+                        <div v-if="!editParentsMode" class="gr-10">
                           <div class="gr-2">
                           Father Name:
                           </div>

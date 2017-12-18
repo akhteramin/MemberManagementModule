@@ -16,7 +16,7 @@
         <a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
           <li> <i class="fa fa-cog fa-2x" aria-hidden="true"></i> Configuration <i class="fa fa-angle-down"></i></li>
         </a>
-        <div v-if="expandList" class="gr-10 push-1 small-scrollable">
+        <div v-if="expandList" class="gr-10 push-1 small-scrollable" style="height:120px">
           <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="goToOccupationList"><li>Occupation</li></a>
           <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="goToBankList"><li>Bank</li></a>
           <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="goToBranchList"><li>Branch</li></a>
