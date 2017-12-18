@@ -19,7 +19,7 @@
 
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text"  id="name" value="updateOccupationRequest.name"
+                <input type="text"  id="name" value="updateRequest.name"
                        placeholder="Name" v-model="updateRequest.name" required>
               </div>
 
@@ -62,7 +62,7 @@
 
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name"
+                <input type="text" id="name"
                        placeholder="Name" v-model="createRequest.name" required>
               </div>
 
@@ -70,7 +70,7 @@
 
               <div class="form-group">
                 <label for="code">Code</label>
-                <input type="text" class="form-control" id="code"
+                <input type="text" id="code"
                        placeholder="code" v-model="createRequest.code"
                        required>
               </div>
@@ -97,7 +97,7 @@
     </div>
 
     <div>
-      <div class="gr-4" v-if="showAddBankButton">
+      <div class="gr-4">
         <button class="button-search" role="button" @click="showAddBankModal">
           <i class="fa fa-plus"></i> Add New Bank
         </button>
@@ -247,7 +247,7 @@
             $.notify({
               // options
               title: '<strong>Success!</strong>',
-              message: 'Occupation created.'
+              message: 'Bank Added.'
             }, {
               // settings
               type: 'success',
@@ -261,7 +261,7 @@
               this.logout()
             }
             $('#AddBankModal').modal('hide')
-            console.log('occupation addition unsuccessful, error: ', error)
+            console.log('Bank addition unsuccessful, error: ', error)
             $.notify({
               // options
               title: '<strong>Failure!</strong>',

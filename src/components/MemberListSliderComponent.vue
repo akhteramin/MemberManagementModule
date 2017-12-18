@@ -188,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo">
+            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails">
               <hr>
               <member-verify-and-approve-component
                 :id = "memberBasicDetails.basicInfo.accountId"

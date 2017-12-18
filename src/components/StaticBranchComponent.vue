@@ -6,7 +6,7 @@
 
 
     <div>
-      <div class="gr-4" v-if="showAddBranchButton">
+      <div class="gr-4">
         <button class="button-search" role="button" @click="showAddBranchModal">
           <i class="fa fa-plus"></i> Add New Branch
         </button>
@@ -17,6 +17,48 @@
                style="height: 35px;"/>
       </div>
       <br>
+    </div>
+
+    <div id="UpdateBranchModal" class="modal fade" role="dialog">
+      <div class="modal-dialog  modal-md">
+        <!-- Modal content-->
+
+        <div class="modal-content">
+          <div class="modal-header" style="text-align: center;">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3><i class="fa fa-user-edit" aria-hidden="true"></i>Update Branch</h3>
+          </div>
+
+          <div class="modal-body">
+            <form role="form" @submit.prevent="updateBranch">
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text"  id="name" value="updateRequest.name"
+                       placeholder="Name" v-model="updateRequest.name" required>
+              </div>
+
+
+
+
+              <div class="form-group">
+                <label for="status">Status</label>
+                <div id = "status" class="select">
+                  <select v-model="updateRequest.status" value="updateRequest.status">
+                    <option value="Active">ACTIVE</option>
+                    <option value="Inactive">INACTIVE</option>
+                    <option value="Archived">ARCHIVED</option>
+                  </select>
+                </div>
+              </div>
+
+
+              <button type="submit" class="btn-block btn btn-lg btn-primary">Update Branch</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div v-if="branchList.length > 0">
@@ -38,7 +80,7 @@
           <td style="width: 300px;">{{ bankCodeToBankName[branch.bankCode] }}</td>
           <td style="width: 200px;">{{ branch.routingNumber || 'N/A' }}</td>
           <td style="width: 200px;"> {{ branch.districtName }}</td>
-          <td style="text-align: center;"> <a @click="showEditBranchModal"> <i class="fa fa-edit"></i> </a> </td>
+          <td style="text-align: center;"> <a @click="showUpdateBranchModal(branch)"> <i class="fa fa-edit"></i> </a> </td>
         </tr>
         </tbody>
       </table>
@@ -76,7 +118,8 @@
         showAddBranchButton: true,
         bankCodeToBankName: {},
         showLoader: false,
-        branchSearch: ''
+        branchSearch: '',
+        updateRequest: {}
       }
     },
     created () {
@@ -121,11 +164,47 @@
             }
           })
       },
-      showEditBranchModal () {
-        alert('Not implemented yet.')
+      showUpdateBranchModal (branch) {
+        this.updateRequest = {
+          'id': branch.id,
+          'name': branch.branchName,
+          'status': branch.status
+        }
+        $('#UpdateBranchModal').modal({backdrop: false})
       },
       showAddBranchModal () {
         alert('Not implemented yet.')
+      },
+      updateBranch () {
+        this.showLoader = true
+        Http.PUT('resource', this.updateRequest, ['branch'])
+          .then(({data: response}) => {
+            this.showLoader = false
+            $('#UpdateBranchModal').modal('hide')
+            this.init()
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: response.message
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
+          },
+          error => {
+            this.showLoader = false
+            $('#UpdateBranchModal').modal('hide')
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: error.response.data.message
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
+          })
       }
     }
   }

@@ -5,7 +5,7 @@
     <hr>
 
     <div>
-      <div class="gr-4" v-if="showCreateNewOccupationButton">
+      <div class="gr-4">
         <button class="button-search" role="button" @click="showCreateNewOccupationModal">
           <i class="fa fa-plus"></i> Add Occupation
         </button>
@@ -34,7 +34,7 @@
 
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name"
+                <input type="text" id="name"
                        placeholder="Name" v-model="createNewOccupationRequest.name" required>
               </div>
 
@@ -42,7 +42,7 @@
 
               <div class="form-group">
                 <label for="code">Code</label>
-                <input type="text" class="form-control" id="code"
+                <input type="text" id="code"
                        placeholder="code" v-model="createNewOccupationRequest.code"
                        required>
               </div>
