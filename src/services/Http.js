@@ -34,13 +34,16 @@ const AUTH_URL = 'http://localhost:9000/auth/api/v1'
 const IMAGE_URL = 'https://dev.ipay.com.bd'
 const AUTH_HTTP_URI = 'http://localhost:8000/admin-auth/'
 const AUTH_ACCOUNTS_URI = 'http://localhost:8000/admin-auth/accounts'
+const ADMIN_URI = 'http://localhost:8080'
+const CRM_URI = 'http://localhost:8085/crm'
+
 const routes = {
   apps: `${AUTH_URL}/user/get`,
-  member: `${API_URL}/member/`,
   login: `${AUTH_URL}/login/`,
   permissions: `${AUTH_URL}/permissions/`,
-  resource: `${API_URL}/resource/`,
   logout: `${AUTH_URL}/logout/`,
+  resource: `${API_URL}/resource/`,
+  member: `${API_URL}/member/`,
   verification: `${API_URL}/verify/member/`,
   user: `${API_URL}/user/`,
   offer: `${API_URL}/offer/business/member/`,
@@ -123,5 +126,7 @@ export default {
   },
   IMAGE_URL,
   AUTH_ACCOUNTS_URI,
-  AUTH_HTTP_URI
+  AUTH_HTTP_URI,
+  ADMIN_URI,
+  CRM_URI
 }

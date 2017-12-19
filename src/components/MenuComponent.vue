@@ -29,8 +29,17 @@
         </div>
       </ul>
       <ul class="bottom-menu">
+
+          <li>
+            <div class="dropup">
+              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-th fa-2x" aria-hidden="true"></i></button>
+              <ul class="dropdown-menu">
+                <li v-if="appList[app.appID] != 'Admin'" v-for="app in appsData"><a :href="appURL[app.appID]" target="_blank">{{appList[app.appID]}}</a></li>
+              </ul>
+            </div>
+          </li>
+
         <a v-on:click="goToUserProfile"><li><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
-        <a v-on:click="logout"><li><i class="fa fa-question-circle-o" aria-hidden="true"></i> Help</li></a>
         <a v-on:click="logout"><li>Logout</li></a>
       </ul>
 
@@ -49,9 +58,11 @@
     data () {
       return {
         user: {},
-        appsData: {},
+        appsData: [],
         showApp: false,
-        expandList: false
+        expandList: false,
+        appList: { '2': 'Auth', '7': 'CRM', '6': 'Admin' },
+        appURL: {'2': Http.AUTH_HTTP_URI, '7': Http.CRM_URI, '6': Http.ADMIN_URI}
       }
     },
     methods: {
