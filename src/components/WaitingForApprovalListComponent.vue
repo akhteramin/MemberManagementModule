@@ -40,7 +40,7 @@
 
           <div class="gr-3">
             <div class="form-group">
-              <label class="push-2"> Verified: </label>
+              <label class="push-2"> Verification Status: </label>
               <div class="push-0">
                 <div class="select select-sm">
                   <select id="verification-status" v-model="query.verificationStatus">
@@ -348,8 +348,7 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
-  //  import router from '../router/index'
+  // import route from '../router'
   import MemberListSlider from './MemberListSliderComponent.vue'
   export default {
     name: 'MemberList',
@@ -383,18 +382,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       toggleAdvancedSearch () {
         if (this.doAdvancedSearch) {
           this.doAdvancedSearch = false
@@ -439,11 +426,6 @@
               },
               error => {
                 this.showLoader = false
-                if (error.response) {
-                  if (error.response.status === 401) { // unauthorized, logging out.
-                    this.logout()
-                  }
-                }
                 console.log('Error in getting the list of introducers, error: ', error)
               }
             )
@@ -458,11 +440,6 @@
               },
               error => {
                 this.showLoader = false
-                if (error.response) {
-                  if (error.response.status === 401) { // unauthorized, logging out.
-                    this.logout()
-                  }
-                }
                 console.log('Error in getting the list of missing, error: ', error)
               }
             )
@@ -476,11 +453,6 @@
               },
               error => {
                 this.showLoader = false
-                if (error.response) {
-                  if (error.response.status === 401) { // unauthorized, logging out.
-                    this.logout()
-                  }
-                }
                 console.log('Error in loading member basic details for slider... ', error)
               }
             )
@@ -499,11 +471,6 @@
             this.members = data
           }, error => {
             this.showLoader = false
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
             console.error('Error in getting members: ', error)
           })
       },
@@ -524,11 +491,6 @@
             this.memberSuspensionHistory = data
           }, error => {
             this.showLoader = false
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
             console.error('Error in getting members: ', error)
           })
         $('#MemberAccountStatusModal').modal({backdrop: false})
@@ -547,12 +509,7 @@
               this.init()
             },
             error => {
-              if (error.response) {
-                this.showLoader = false
-                if (error.response.status === 401) { // unauthorized, logging out.
-                  this.logout()
-                }
-              }
+              this.showLoader = false
               console.log('Error vrification of document: ', error)
             }
           )
@@ -621,11 +578,6 @@
             this.members = data
           }, error => {
             this.showLoader = false
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
             console.log('Error in getting filtered results: ', error)
           })
       }

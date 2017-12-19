@@ -430,7 +430,6 @@
 </template>
 <script>
 import Http from '../services/Http'
-import route from '../router'
 export default {
   name: 'MemberOffer',
   components: {
@@ -501,18 +500,6 @@ export default {
     this.init()
   },
   methods: {
-    logout () {
-      Http.GET('logout')
-        .then(
-        ({data: list}) => {
-          console.log(list)
-          console.log('hey')
-          // auth.setAccessControl(list)
-          localStorage.removeItem('token')
-          route.push('/')
-        }
-      )
-    },
     init () {
       this.imageBaseUrl = Http.IMAGE_URL
       console.log('Hello')
@@ -526,11 +513,6 @@ export default {
           this.loadMemberList('', 0)
         }, error => {
           this.showLoader = false
-          if (error.response) {
-            if (error.response.status === 401) { // unauthorized, logging out.
-              this.logout()
-            }
-          }
           console.error('Error in offers: ', error)
         })
     },
@@ -549,11 +531,6 @@ export default {
         //   this.groupList = aclUserGroup.data.groupList
         }, error => {
           this.showLoader = false
-          if (error.response) {
-            if (error.response.status === 401) { // unauthorized, logging out.
-              this.logout()
-            }
-          }
           console.error('Error in offers: ', error)
         })
     },
@@ -639,11 +616,6 @@ export default {
             })
             this.getService()
           }, error => {
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
             if (error.response.status === 409) {
               this.conflictObject.conflictedServiceList = error.response.data.serviceList
               this.conflictObject.conflictMessage = error.response.data.message
@@ -679,11 +651,7 @@ export default {
           }
           this.getService(this.group.id)
         }, error => {
-          if (error.response) {
-            if (error.response.status === 401) { // unauthorized, logging out.
-              this.logout()
-            }
-          }
+          console.error('Error in offers: ', error)
         //  notiService.showNotiFunc("Error!",data.description,"alert alert-danger")
           $.notify({
                 // options
@@ -713,11 +681,7 @@ export default {
             delay: 3000
           })
         }, error => {
-          if (error.response) {
-            if (error.response.status === 401) { // unauthorized, logging out.
-              this.logout()
-            }
-          }
+          console.error('Error in offers: ', error)
         //  notiService.showNotiFunc("Error!",data.description,"alert alert-danger")
           $.notify({
                 // options
@@ -757,11 +721,7 @@ export default {
                 delay: 3000
               })
             }, error => {
-              if (error.response) {
-                if (error.response.status === 401) { // unauthorized, logging out.
-                  this.logout()
-                }
-              }
+              console.error('Error in offers: ', error)
               $.notify({
               // options
                 title: '<strong>Error!</strong>',
@@ -797,11 +757,7 @@ export default {
               delay: 3000
             })
           }, error => {
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
+            console.error('Error in offers: ', error)
           //  notiService.showNotiFunc("Error!",data.description,"alert alert-danger")
             $.notify({
                   // options
@@ -851,11 +807,7 @@ export default {
         // curData = (searchData.pageNumber + 1) * searchData.pageSize;
         this.SeeMoreFlag = memberData.data.hasNextPage
       }, error => {
-        if (error.response) {
-          if (error.response.status === 401) { // unauthorized, logging out.
-            this.logout()
-          }
-        }
+        console.error('Error in offers: ', error)
       })
     }
   }

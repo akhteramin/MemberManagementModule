@@ -79,7 +79,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
   export default {
     name: 'UpdateMemberBusinessImage',
     props: [
@@ -95,18 +94,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         if (this.member.businessDetails.businessOwnerPictures[0]) {
@@ -161,11 +148,6 @@
               type: 'danger',
               delay: 3000
             })
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
             console.log('Error in address update, error: ', error)
           }
         )

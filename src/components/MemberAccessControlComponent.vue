@@ -193,7 +193,6 @@
 
 <script>
 import Http from '../services/Http'
-import route from '../router/index'
 
 export default {
   name: 'MemberAccessControl',
@@ -254,18 +253,6 @@ export default {
     this.init()
   },
   methods: {
-    logout () {
-      Http.GET('logout')
-        .then(
-        ({data: list}) => {
-          console.log(list)
-          console.log('hey')
-          // auth.setAccessControl(list)
-          localStorage.removeItem('token')
-          route.push('/')
-        }
-      )
-    },
     init () {
       this.getGroups()
       this.getServices()
@@ -284,11 +271,6 @@ export default {
           this.showLoader = this.showLoader - 1
         },
         error => {
-          if (error.response) {
-            if (error.response.status === 401) { // unauthorized, logging out.
-              this.logout()
-            }
-          }
           console.error('Error in offers: ', error)
           this.showLoader = this.showLoader - 1
         }
@@ -308,11 +290,6 @@ export default {
           this.showLoader = this.showLoader - 1
         },
         error => {
-          if (error.response) {
-            if (error.response.status === 401) { // unauthorized, logging out.
-              this.logout()
-            }
-          }
           console.error('Error in offers: ', error)
           this.showLoader = this.showLoader - 1
         }
@@ -422,11 +399,17 @@ export default {
             })
             this.getGroups()
           }, error => {
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
+            console.error('Error in offers: ', error)
+            $.notify({
+              // options
+              title: '<strong>Failure!</strong>',
+              message: 'Changes not saved.'
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
+            console.log('error occurred member acl UPDATE')
           })
       }
     },
@@ -480,9 +463,7 @@ export default {
             this.getServices()
           }, error => {
             if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              } else if (error.response.status === 409) {
+              if (error.response.status === 409) {
                 this.conflictObject.conflictedServiceList = error.response.data.serviceList
                 this.conflictObject.conflictMessage = error.response.data.message
                 $('#service_permission_conflict_modal').modal()

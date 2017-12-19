@@ -102,7 +102,6 @@
 </template>
 <script>
 import Http from '../services/Http'
-import route from '../router'
 export default {
   name: 'MemberOfferUpdate',
   props: [
@@ -128,18 +127,6 @@ export default {
     this.init()
   },
   methods: {
-    logout () {
-      Http.GET('logout')
-        .then(
-        ({data: list}) => {
-          console.log(list)
-          console.log('hey')
-          // auth.setAccessControl(list)
-          localStorage.removeItem('token')
-          route.push('/')
-        }
-      )
-    },
     init () {
       console.log('Hello')
       console.log(this.singleOfferInfo)
@@ -154,11 +141,6 @@ export default {
           this.templates = templates.data
         }, error => {
           this.showLoader = false
-          if (error.response) {
-            if (error.response.status === 401) { // unauthorized, logging out.
-              this.logout()
-            }
-          }
           console.error('Error in offers: ', error)
         })
     },
@@ -188,11 +170,7 @@ export default {
         // this.memberOfferAddtion()
       }, error => {
         this.showLoader = false
-        if (error.response) {
-          if (error.response.status === 401) { // unauthorized, logging out.
-            this.logout()
-          }
-        }
+        console.error('Error in offers: ', error)
         $.notify({
           // options
           title: '<strong>Fail!</strong>',
@@ -223,12 +201,8 @@ export default {
         this.memberOfferUpdate()
       }, error => {
         this.showLoader = false
+        console.error('Error in offers: ', error)
         this.memberOfferUpdate()
-        if (error.response) {
-          if (error.response.status === 401) { // unauthorized, logging out.
-            this.logout()
-          }
-        }
         $.notify({
           // options
           title: '<strong>Fail!</strong>',

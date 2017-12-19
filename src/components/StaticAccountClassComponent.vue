@@ -157,7 +157,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
 
   export default {
     name: 'StaticAccountClassComponent',
@@ -184,18 +183,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       init () {
         this.showLoader = true
         Http.GET('resource', ['account-class'])
@@ -205,9 +192,15 @@
         },
         error => {
           this.showLoader = false
-          if (error.response && error.response.data.status === 401) {
-            this.logout()
-          }
+          $.notify({
+            // options
+            title: '<strong>Failure!</strong>',
+            message: error.response.data.message
+          }, {
+            // settings
+            type: 'danger',
+            delay: 3000
+          })
         })
       },
       showUpdateAccountClassModal (account) {
@@ -282,9 +275,6 @@
           },
           error => {
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
             $('#AddAccountClassModal').modal('hide')
             console.log('Account class addition unsuccessful, error: ', error)
             $.notify({

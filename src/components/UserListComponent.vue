@@ -365,7 +365,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
 
   export default {
     name: 'UserListComponent',
@@ -391,18 +390,6 @@
       this.init()
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       setShowNewUserComponentToFalse () {
         this.showNewUserComponent = false
         this.init()
@@ -441,11 +428,6 @@
           },
             error => {
               console.log('error is: ', error)
-              if (error.response) {
-                if (error.response.status === 401) { // unauthorized, logging out.
-                  this.logout()
-                }
-              }
               this.accountCreationSuccessful = false
 //              console.log('Error in member creation, error: ', error)
               $('#CreateNewUserModal').modal('hide')
@@ -481,11 +463,6 @@
             this.showLoader = false
           }, error => {
             this.showLoader = false
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
             console.error('Error in getting users: ', error)
           })
       },
@@ -541,11 +518,6 @@
             })
           }, error => {
             this.showLoader = false
-            if (error.response) {
-              if (error.response.status === 401) { // unauthorized, logging out.
-                this.logout()
-              }
-            }
             $('#UserUpdateResponseModal').modal('hide')
             $.notify({
               // options

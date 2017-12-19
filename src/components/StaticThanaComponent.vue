@@ -170,7 +170,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
 
   export default {
     name: 'StaticDistrictComponent',
@@ -199,18 +198,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       init () {
         Http.GET('resource', ['thana'])
         .then(({data: response}) => {
@@ -223,9 +210,6 @@
         error => {
           console.log('error in receiving thana list ', error)
           this.showLoader = false
-          if (error.response && error.response.data.status === 401) {
-            this.logout()
-          }
         })
         this.districtList = JSON.parse(localStorage.getItem('district'))
         this.districtIdToDistrictName = JSON.parse(localStorage.getItem('districtIdToDistrictName'))
@@ -304,9 +288,6 @@
           },
           error => {
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
             $('#AddThanaModal').modal('hide')
             console.log('Thana addition unsuccessful, error: ', error)
             $.notify({

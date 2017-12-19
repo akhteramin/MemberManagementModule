@@ -470,7 +470,6 @@
   import MemberOffer from './MemberOfferComponent.vue'
   import UpdateMemberBusinessImage from './UpdateMemberBusinessImageComponent.vue'
   import MemberAccessControl from './MemberAccessControlComponent.vue'
-  import route from '../router'
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -552,18 +551,6 @@
       this.init()
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         // Http call for basic information of the member with the 'id'
@@ -614,11 +601,6 @@
             },
             error => {
               this.showLoader = false
-              if (error.response) {
-                if (error.response.status === 401) { // unauthorized, logging out.
-                  this.logout()
-                }
-              }
               console.log('Error occured getting details of the member, error: ', error)
             }
           )
@@ -633,11 +615,6 @@
             },
             error => {
               this.showLoader = false
-              if (error.response) {
-                if (error.response.status === 401) { // unauthorized, logging out.
-                  this.logout()
-                }
-              }
               console.log('Error in retrieving balance... ', error)
             }
           )

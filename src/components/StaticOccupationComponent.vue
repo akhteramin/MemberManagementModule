@@ -158,7 +158,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
 
   export default {
     name: 'StaticOccupationComponent',
@@ -189,18 +188,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       init () {
         console.log('Static occupation component created:::')
         this.showLoader = true
@@ -297,9 +284,6 @@
           error => {
             this.showCreateNewOccupationButton = true
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
             $('#CreateNewOccupationModal').modal('hide')
             console.log('occupation addition unsuccessful, error: ', error)
             $.notify({

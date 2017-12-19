@@ -118,7 +118,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
   import UpdateUserComponent from '../components/UpdateUserComponent.vue'
 
   export default {
@@ -145,18 +144,6 @@
       this.init()
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       showUpdateUserFields () {
         this.updateUser = true
       },
@@ -185,11 +172,6 @@
             },
             error => {
               this.showLoader = false
-              if (error.response) {
-                if (error.response.status === 401) { // unauthorized, logging out.
-                  this.logout()
-                }
-              }
               console.log('Error occurred getting details of the user, error: ', error)
             }
           )

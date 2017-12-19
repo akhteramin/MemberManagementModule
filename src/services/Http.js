@@ -1,6 +1,4 @@
 import axios from 'axios'
-import route from '../router'
-
 axios.interceptors.request.use(
   (config) => {
     config.headers.common.token = localStorage.getItem('token')
@@ -18,7 +16,10 @@ axios.interceptors.response.use(
     console.log('intercepted http failure..., error is: ', error)
     if (error.response.status === 401 || error.response.status === 403) {
       localStorage.removeItem('token')
-      route.push('/')
+      console.log('console interceptor')
+      let authUri = AUTH_HTTP_URI + 'accountslogout/?appID=6'
+      window.location.href = authUri
+      // route.push('/')
     }
     return Promise.reject(error)
   }

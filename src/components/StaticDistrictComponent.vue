@@ -147,7 +147,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
 
   export default {
     name: 'StaticDistrictComponent',
@@ -174,18 +173,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       setAddDistrictButtonToTrue () {
         this.showAddNewDistrictButton = true
       },
@@ -202,9 +189,6 @@
           error => {
             console.log('error in receiving district list ', error)
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
           })
       },
       updateDistrict () {
@@ -277,9 +261,6 @@
           error => {
             this.showAddNewDistrictButton = true
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
             $('#AddDistrictModal').modal('hide')
             console.log('District addition unsuccessful, error: ', error)
             $.notify({

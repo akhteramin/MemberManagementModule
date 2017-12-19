@@ -155,7 +155,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
 
   export default {
     name: 'StaticBankComponent',
@@ -183,18 +182,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       setCreateNewBankButtonToTrue () {
         this.showAddBankButton = true
         this.createRequest = {
@@ -214,9 +201,6 @@
           error => {
             console.log('error in receiving bank list ', error)
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
           })
       },
       showUpdateBankModal (bank) {
@@ -257,9 +241,6 @@
           error => {
             this.showCreateNewOccupationButton = true
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
             $('#AddBankModal').modal('hide')
             console.log('Bank addition unsuccessful, error: ', error)
             $.notify({

@@ -136,7 +136,6 @@
 </template>
 <script>
 import Http from '../services/Http'
-import route from '../router/index'
 export default {
   name: 'ManageServices',
   props: [
@@ -157,18 +156,6 @@ export default {
     this.init()
   },
   methods: {
-    logout () {
-      Http.GET('logout')
-        .then(
-        ({data: list}) => {
-          console.log(list)
-          console.log('hey')
-          // auth.setAccessControl(list)
-          localStorage.removeItem('token')
-          route.push('/')
-        }
-      )
-    },
     init () {
       this.showLoader = true
       Http.GET('memberAclGet', ['service'])
@@ -178,11 +165,6 @@ export default {
           this.aclServiceList = aclServices.data.serviceList
         }, error => {
           this.showLoader = false
-          if (error.response) {
-            if (error.response.status === 401) { // unauthorized, logging out.
-              this.logout()
-            }
-          }
           console.error('Error in offers: ', error)
         }
       )
@@ -209,11 +191,6 @@ export default {
         console.log('response from change access level of service:')
         console.log(response)
       }, error => {
-        if (error.response) {
-          if (error.response.status === 401) { // unauthorized, logging out.
-            this.logout()
-          }
-        }
         if (error.response.status === 409) {
           this.conflictObject.conflictedServiceList = error.response.data.serviceList
           this.conflictObject.conflictMessage = error.response.data.message

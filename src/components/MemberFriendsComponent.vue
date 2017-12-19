@@ -129,7 +129,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
 
   export default {
     name: 'MemberFriendsComponent',
@@ -148,18 +147,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       init () {
         this.query = Object.assign({}, {
           'mobileNumber': this.mobileNumber,
@@ -183,9 +170,6 @@
           },
           error => {
             this.showLoader = false
-            if (error.response && error.response.status === 401) {
-              this.logout()
-            }
             console.log('error in retrieving contact list: ', error)
           })
       },
@@ -203,9 +187,6 @@
           },
           error => {
             this.showLoader = false
-            if (error.response && error.response.status === 401) {
-              this.logout()
-            }
             console.log('error in retrieving contact list: ', error)
           })
       },
@@ -222,9 +203,6 @@
           },
           error => {
             this.showLoader = false
-            if (error.response && error.response.status === 401) {
-              this.logout()
-            }
             console.log('error in retrieving contact list: ', error)
           })
       }

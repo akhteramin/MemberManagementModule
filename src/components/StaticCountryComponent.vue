@@ -156,7 +156,6 @@
 
 <script>
   import Http from '../services/Http'
-  import route from '../router'
 
   export default {
     name: 'StaticCountryComponent',
@@ -183,18 +182,6 @@
       }
     },
     methods: {
-      logout () {
-        Http.GET('logout')
-          .then(
-            ({data: list}) => {
-              console.log(list)
-              console.log('hey')
-              // auth.setAccessControl(list)
-              localStorage.removeItem('token')
-              route.push('/')
-            }
-          )
-      },
       init () {
         Http.GET('resource', ['country'])
           .then(({data: response}) => {
@@ -207,9 +194,6 @@
           error => {
             console.log('error in receiving country list ', error)
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
           })
       },
       showUpdateCountryModal (country) {
@@ -277,9 +261,6 @@
           },
           error => {
             this.showLoader = false
-            if (error.response && error.response.data.status === 401) {
-              this.logout()
-            }
             $('#AddCountryModal').modal('hide')
             console.log('Country addition unsuccessful, error: ', error)
             $.notify({
