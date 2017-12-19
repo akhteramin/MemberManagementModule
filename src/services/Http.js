@@ -28,13 +28,24 @@ axios.interceptors.response.use(
 // let apiUrl = 'http://10.10.10.199:8085/member-service/api/v1'
 // const API_URL = 'http://192.168.1.134:8085/member-service/api/v1' // nafisa
 // const API_URL = 'http://192.168.1.95:8085//member-service/api/v1' // muhit
-const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
+
+// const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
+const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
+
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
-const AUTH_URL = 'http://localhost:9000/auth/api/v1'
+// const AUTH_URL = 'http://localhost:9000/auth/api/v1'
+const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1'
+
 const IMAGE_URL = 'https://dev.ipay.com.bd'
-const AUTH_HTTP_URI = 'http://localhost:8000/'
-const AUTH_ACCOUNTS_URI = 'http://localhost:8000/accounts'
-const ADMIN_URI = 'http://localhost:8080'
+// const AUTH_HTTP_URI = 'http://localhost:8000/'
+const AUTH_HTTP_URI = 'http://10.10.40.31:8080'
+
+// const AUTH_ACCOUNTS_URI = 'http://localhost:8000/accounts'
+const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
+
+// const ADMIN_URI = 'http://localhost:8080'
+const ADMIN_URI = 'http://10.15.40.11:80/'
+
 const CRM_URI = 'http://localhost:8085/crm'
 
 const routes = {
