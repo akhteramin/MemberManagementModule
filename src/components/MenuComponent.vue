@@ -61,8 +61,8 @@
         appsData: [],
         showApp: false,
         expandList: false,
-        appList: { '2': 'Auth', '7': 'CRM', '6': 'Admin' },
-        appURL: {'2': Http.AUTH_HTTP_URI, '7': Http.CRM_URI, '6': Http.ADMIN_URI}
+        appList: { '2': 'Auth', '3': 'CRM', '6': 'Admin' },
+        appURL: {'2': Http.AUTH_HTTP_URI, '3': Http.CRM_URI, '6': Http.ADMIN_URI}
       }
     },
     methods: {

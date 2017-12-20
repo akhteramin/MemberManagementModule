@@ -49,7 +49,7 @@ const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1'
 
 const IMAGE_URL = 'https://dev.ipay.com.bd'
 // const AUTH_HTTP_URI = 'http://localhost:8000/'
-const AUTH_HTTP_URI = 'http://10.10.40.31:8080'
+const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
 
 // const AUTH_ACCOUNTS_URI = 'http://localhost:8000/accounts'
 const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
