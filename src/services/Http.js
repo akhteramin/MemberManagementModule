@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Http from '../services/Http'
 axios.interceptors.request.use(
   (config) => {
     config.headers.common.token = localStorage.getItem('token')
@@ -15,10 +16,19 @@ axios.interceptors.response.use(
   (error) => {
     console.log('intercepted http failure..., error is: ', error)
     if (error.response.status === 401 || error.response.status === 403) {
-      localStorage.removeItem('token')
       console.log('console interceptor')
-      let authUri = AUTH_HTTP_URI + 'accountslogout/?appID=6'
-      window.location.href = authUri
+      Http.GET('logout')
+      .then(
+        ({data: list}) => {
+          console.log(list)
+          console.log('hey')
+          // auth.setAccessControl(list)
+          localStorage.removeItem('token')
+          let authUri = Http.AUTH_HTTP_URI + 'accountslogout/?appID=6'
+          window.location.href = authUri
+          // route.push('/')
+        }
+      )
       // route.push('/')
     }
     return Promise.reject(error)
@@ -29,6 +39,7 @@ axios.interceptors.response.use(
 // const API_URL = 'http://192.168.1.134:8085/member-service/api/v1' // nafisa
 // const API_URL = 'http://192.168.1.95:8085//member-service/api/v1' // muhit
 
+// const API_URL = 'http://192.168.1.95:8085/member-service/api/v1'
 // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
 const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 
