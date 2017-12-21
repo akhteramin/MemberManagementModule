@@ -29,7 +29,8 @@
             <hr>
             <div class="gr-2">
             <span v-if="memberProfile.mmUserPictures[0]">
-                <img :src="imageBaseUrl+memberProfile.mmUserPictures[0].document.url" class="img-rounded" alt="Profile Picture" width="70" height="80">
+                <img :src="imageBaseUrl+memberProfile.mmUserPictures[0].document.url" class="img-rounded" alt="Profile Picture" width="70" height="80"
+                onerror="onerror=null; src='static/images/default-original.jpg';">
             </span>
             <span v-else>
                 <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
@@ -54,7 +55,7 @@
                 </div>
 
             </div>
-            <div class="gr-12 small-text">
+            <div class="gr-12 small-text" v-restrict="'MS_MM_USER_IS_VERIFIABLE'">
                 <b>Missing Information</b>
                 <hr>
                 <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
@@ -69,7 +70,8 @@
 
                 </div>
             </div>
-            <div class="gr-12 small-text min-height-slider" v-if="memberDocuments">
+            <div class="gr-12 small-text min-height-slider" v-if="memberDocuments"
+                 v-restrict="'MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS'">
                 <b>Identification Document</b>
                 <hr>
                 <div class="row margin-5" v-for="memberDocument in memberDocuments">
@@ -115,7 +117,8 @@
                     </div>
                 </div>
             </div>
-            <div class="gr-12 small-text" v-if="memberDocuments">
+            <div class="gr-12 small-text" v-if="memberDocuments"
+              v-restrict="''">
 
                     <div class="row container side-nav">
                         <ul class="nav nav-tabs">
@@ -188,7 +191,8 @@
                         </div>
                     </div>
                 </div>
-            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails">
+            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails"
+              v-restrict="'MS_MM_USER_VERIFICATION_VERIFY'">
               <hr>
               <member-verify-and-approve-component
                 :id = "memberBasicDetails.basicInfo.accountId"

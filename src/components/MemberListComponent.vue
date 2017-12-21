@@ -171,17 +171,19 @@
                 <span v-if="member.mmUserPictures[0]">
                   <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"
                        width="30" height="30" onerror="this.src='static/images/default-profile-180x180.png'">
-                  <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
-                       <!--width="30" height="30">-->
+                    <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
+                    <!--width="30" height="30">-->
                 </span>
                 <span v-else>
                   <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
-
-                <a href=""  @click="memberDetails(member.accountId,member.accountType)">
-                  {{ member.name }}
-                </a>
-                <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
+                <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
+                  <a href=""  @click="memberDetails(member.accountId,member.accountType)">
+                    {{ member.name }}
+                  </a>
+                  <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
+                </span>
+                <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
               </td>
               <td>{{ member.mobileNumber }}</td>
               <td style="text-align: center;">
@@ -381,10 +383,14 @@
         signUpDateTo: null,
         memberSuspensionHistory: {},
         loadMemberBasicDetails: {},
+        accessControlList: {},
         showLoader: false
       }
     },
     methods: {
+      containsPermission (permission) {
+        return this.accessControlList.indexOf(permission) > -1
+      },
       toggleAdvancedSearch () {
         if (this.doAdvancedSearch) {
           this.doAdvancedSearch = false
@@ -544,6 +550,9 @@
           pageNumber: 0,
           pageSize: 10
         })
+        this.accessControlList = localStorage.getItem('accessControlList')
+        this.accessControlList = this.accessControlList.split(',')
+        // this.containsPermission()
         this.value = [0, 100]
         this.signUpDateFrom = null
         this.signUpDateTo = null

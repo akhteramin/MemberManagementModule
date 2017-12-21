@@ -7,7 +7,8 @@
             <div class="row" v-for="item in introducers">
                 <div class="gr-3">
                 <img class="img-rounded mx-auto d-block" :src="imageBaseUrl+item.profilePictureUrl"
-                        data-holder-rendered="true" style="width: 50px;">
+                        data-holder-rendered="true" style="width: 50px;"
+                     onerror="this.onerror=null;this.src='static/images/default-profile-180x180.png'">
                 </div>
                 <div class="gr-9">
                 {{item.name}}<br>

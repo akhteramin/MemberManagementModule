@@ -1,4 +1,6 @@
 import axios from 'axios'
+// import Http from '../services/Http'
+// import route from '../router'
 
 axios.interceptors.request.use(
   (config) => {
@@ -16,29 +18,30 @@ axios.interceptors.response.use(
   (error) => {
     console.log('intercepted http failure..., error is: ', error)
     if (error.response.status === 401 || error.response.status === 403) {
-      console.log('console interceptor')
-      $.notify({
-        // options
-        title: '<strong>Access denied!</strong>',
-        message: 'You don\'t have permission to proceed.'
-      }, {
-        // settings
-        type: 'danger',
-        delay: 3000
-      })
-      // Http.GET('logout')
-      // .then(
-      //   ({data: list}) => {
-      //     console.log(list)
-      //     console.log('hey')
-      //     // auth.setAccessControl(list)
-      //     localStorage.removeItem('token')
-      //     let authUri = Http.AUTH_HTTP_URI + 'accountslogout/?appID=6'
-      //     window.location.href = authUri
-      //     // route.push('/')
-      //   }
-      // )
-      // route.push('/')
+      console.log('401 or 403')
+    //   console.log('console interceptor')
+    //   $.notify({
+    //     // options
+    //     title: '<strong>Access denied!</strong>',
+    //     message: 'You don\'t have permission to proceed.'
+    //   }, {
+    //     // settings
+    //     type: 'danger',
+    //     delay: 3000
+    //   })
+    //   Http.GET('logout')
+    //   .then(
+    //     ({data: list}) => {
+    //       console.log(list)
+    //       console.log('hey')
+    //       // auth.setAccessControl(list)
+    //       localStorage.removeItem('token')
+    //       let authUri = Http.AUTH_HTTP_URI + 'accountslogout/?appID=6'
+    //       window.location.href = authUri
+    //       // route.push('/')
+    //     }
+    //   )
+    //   route.push('/')
     }
     return Promise.reject(error)
   }

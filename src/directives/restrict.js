@@ -21,7 +21,9 @@ const Restrict = {
 
     // if (allowedList.indexOf(serviceList[service]) === -1) {
     if (allowedList.indexOf(service) === -1) {
-      if (action === 'DISABLED') {
+      if (action === 'UNLINK') {
+        element.onclick = false
+      } else if (action === 'DISABLED') {
         element.disabled = true
       } else {
         // for (let i = 0; i < element.children.length; i += 1) {

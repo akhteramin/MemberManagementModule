@@ -30,10 +30,10 @@
                             </div>
                             <button type="button" class="btn btn-sm btn-default"
                             data-toggle="modal"
-                            data-target="#addGroupModal"> 
+                            data-target="#addGroupModal">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New Group
                             </button>
-                            
+
                             <input type="text" v-model="groupSearch" placeholder="Group..">
                         </th>
                     </tr>
@@ -89,29 +89,29 @@
                                     <span v-if="service.status == 1" class="label label-warning">{{mapper.access[service.status]}}</span>
                                     <span v-if="service.status == 2" class="label label-info">{{mapper.access[service.status]}}</span>
                                     <span v-if="service.status == 3" class="label label-success">{{mapper.access[service.status]}}</span>
-                                    
+
                                 </div>
                             </div>
                         </td>
                         <td class="col-md-1">
                             <div class="col-md-12 padding-5 text-center">
-                            <button type="button" 
-                                    class="btn btn-sm btn-default" 
+                            <button type="button"
+                                    class="btn btn-sm btn-default"
                                     :disabled="group === null"
                                     @click="swap('enabled-blocked')">
                                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
                             </button>
                             </div>
                             <div class="col-md-12 padding-5 text-center">
-                            <button type="button" 
-                                    class="btn btn-sm btn-default" 
+                            <button type="button"
+                                    class="btn btn-sm btn-default"
                                     :disabled="group === null"
                                     @click="swap('blocked-enabled')">
                                 <i class="fa fa-chevron-left" aria-hidden="true"></i>
                             </button>
                             </div>
                             <div class="col-md-12 padding-5 text-center">
-                                <button type="button" 
+                                <button type="button"
                                 class="btn btn-primary btn-sm"
                                 @click="applyChanges()">
                                     Apply Changes
@@ -128,11 +128,11 @@
                                     <span v-if="service.status == 1" class="label label-warning">{{mapper.access[service.status]}}</span>
                                     <span v-if="service.status == 2" class="label label-info">{{mapper.access[service.status]}}</span>
                                     <span v-if="service.status == 3" class="label label-success">{{mapper.access[service.status]}}</span>
-                                    
+
                                 </div>
                             </div>
                         </td>
-                        
+
                     </tr>
                 </thead>
             </table>
@@ -144,7 +144,7 @@
                 <div class="col-md-2 col-md-offset-5 padding-5">
                     <button type="button" class="btn btn-sm btn-default"
                     data-toggle="modal"
-                    data-target="#member_add_remove_for_service_modal"> 
+                    data-target="#member_add_remove_for_service_modal">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add Member
                     </button>
                 </div>
@@ -157,10 +157,14 @@
                     <tr v-for="(user, index) in filteredMember">
                         <th scope="row">
                             <span v-if="user.profilePictureUrl">
-                            <img :src="imageBaseUrl+user.profilePictureUrl" class="img-circle" alt="N/A" width="30" height="30">
+                            <img :src="imageBaseUrl+user.profilePictureUrl" class="img-circle"
+                                 alt="N/A" width="30" height="30"
+                                 onerror="this.onerror=null; this.src='/static/images/default-profile-64x64.png';">
                             </span>
                             <span v-else>
-                            <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
+                            <img src="static/images/default-original.jpg"
+                                 onerror="this.onerror=null; this.src='/static/images/default-profile-64x64.png';"
+                                 class="img-circle" alt="N/A" width="30" height="30">
                             </span>
                         </th>
                         <td>{{user.name}}</td>
@@ -199,9 +203,9 @@
                                   <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-8 col-md-offset-2">
-                                            
+
                                             <input type="text" class="input-sm" placeholder="Search by Mobile Number" v-model="targetMobileNumber"  />
-                                            
+
                                             <!--div class="col-md-3" @click="loadMemberList(targetMobileNumber,0)"-->
                                                 <button class="btn btn-default" @click="loadMemberList(targetMobileNumber,0)"> <i class="fa fa-search" aria-hidden="true"></i></button>
                                             <!--/div-->
@@ -287,7 +291,7 @@
                                             <input type="text"
                                                    class="form-control" id="groupName"
                                                    v-model="name"
-                                                   placeholder="For e.g. Allow Bill Payment, Block Withdraw Money">
+                                                   placeholder="For example, Allow Bill Payment, Block Withdraw Money">
                                         </div>
                                     </div>
                                 </form>
@@ -296,7 +300,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-default" 
+                        <button type="button" class="btn btn-sm btn-default"
                         data-dismiss="modal">
                         <i class="fa fa-times" aria-hidden="true"></i>Close</button>
                         <button type="button"

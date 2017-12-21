@@ -45,6 +45,10 @@ const Util = {
       'MS_STATIC_RESOURCE_GET_THANA_LIST'
     ])) menu.push('Configuration')
 
+    if (Util.findAnyOne(accessControlList, [
+      'MS_MM_USER_BASIC_DETAILS'
+    ])) menu.push('MemberIndividual')
+
     localStorage.setItem('menu', menu)
     console.log('menu_', menu)
   }
