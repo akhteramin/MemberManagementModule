@@ -99,13 +99,6 @@
       goToWaitingForApprovalMemberList () {
         route.push('/member/waiting/approval')
       },
-      toggleShowApp () {
-        if (this.showApp) {
-          this.showApp = false
-        } else {
-          this.showApp = true
-        }
-      },
       goToUserList () {
         route.push('/user')
       },

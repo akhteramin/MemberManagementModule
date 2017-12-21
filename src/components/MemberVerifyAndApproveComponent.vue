@@ -395,12 +395,31 @@
           .then(
             ({data: {data: verificationResponse}}) => {
               this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Verification successful.'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
             },
             error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Verification failed!</strong>',
+                message: 'Please try again.'
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               console.log('Error in putting verification request, error: ', error)
             }
           )
@@ -416,6 +435,15 @@
           .then(
             ({data: {data: verificationResponse}}) => {
               this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Verification rejected.'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
@@ -423,6 +451,15 @@
             },
             error => {
               this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Rejection failed!</strong>',
+                message: 'Please try again.'
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               console.log('Error in putting verification request, error: ', error)
             }
           )
@@ -437,6 +474,15 @@
         Http.PUT('verification', request, [this.id, 'approve'])
           .then(
             ({data: approvalResponse}) => {
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Account approved.'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
               this.showLoader = false
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
@@ -445,6 +491,15 @@
             },
             error => {
               this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Rejection failed!</strong>',
+                message: 'Please try again.'
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               console.log('Error in putting approval request, error: ', error)
             }
           )

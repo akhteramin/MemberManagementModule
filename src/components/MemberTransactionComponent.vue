@@ -81,10 +81,10 @@
                         <th style="text-align: center;">Date</th>
                         <th style="text-align: center;">Transaction Type</th>
                         <th style="text-align: center;">Description</th>
-                        <th style="text-align: center;">Amount</th>
-                        <th style="text-align: center;">Fee</th>
-                        <th style="text-align: center;">Net Amount</th>
-                        <th style="text-align: center;">Balance</th>
+                        <th style="text-align: right;">Amount</th>
+                        <th style="text-align: right;">Fee</th>
+                        <th style="text-align: right;">Net Amount</th>
+                        <th style="text-align: right;">Balance</th>
                         <th style="text-align: center;">Status</th>
                     </tr>
                     </thead>
@@ -94,11 +94,11 @@
                         <td>{{ transaction.time | date('MMM D, YYYY') }}</td>
                         <td> {{ transaction.serviceID | static_mapper(serviceList) | underscoreless }}</td>
                         <td>{{ transaction.description }}</td>
-                        <td>{{ transaction.amount }}</td>
-                        <td>{{ transaction.fee }}</td>
-                        <td>{{ transaction.netAmount }}</td>
-                        <td>{{ transaction.balance }}</td>
-                        <td>{{ transaction.statusCode == 200 ? 'Success' :
+                        <td style="text-align: right;">{{ transaction.amount }}</td>
+                        <td style="text-align: right;">{{ transaction.fee }}</td>
+                        <td style="text-align: right;">{{ transaction.netAmount }}</td>
+                        <td style="text-align: right;">{{ transaction.balance }}</td>
+                        <td style="text-align: center;">{{ transaction.statusCode == 200 ? 'Success' :
                             transaction.statusCode == 102 ? 'In Progress' : 'Fail'}}</td>
                     </tr>
                 </tbody>

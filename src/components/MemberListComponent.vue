@@ -169,7 +169,10 @@
 
               <td class="member-name">
                 <span v-if="member.mmUserPictures[0]">
-                  <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A" width="30" height="30">
+                  <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"
+                       width="30" height="30" onerror="this.src='static/images/default-profile-180x180.png'">
+                  <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
+                       <!--width="30" height="30">-->
                 </span>
                 <span v-else>
                   <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
@@ -189,8 +192,8 @@
                   <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
                 </span>
               </td>
-              <td>{{ member.verificationStatus | underscoreless }}</td>
-              <td>{{ member.profileCompletionScore }}%</td>
+              <td style="text-align: center;">{{ member.verificationStatus | underscoreless }}</td>
+              <td style="text-align: center;">{{ member.profileCompletionScore }}%</td>
               <td>
                 <div class="select">
                   <select id="order-by-select"  v-model="member.accountStatus" @change="statusChange( member.accountId,member.accountStatus)">
