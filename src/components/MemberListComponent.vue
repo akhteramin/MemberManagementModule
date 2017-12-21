@@ -157,10 +157,10 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Mobile Number</th>
-                <th>A/C Type</th>
-                <th>Verification</th>
-                <th>Profile Completed</th>
-                <th>Account Status</th>
+                <th style="text-align: center;">A/C Type</th>
+                <th style="text-align: center;">Verification</th>
+                <th style="text-align: center;">Profile Completed</th>
+                <th style="text-align: center;">Account Status</th>
               </tr>
             </thead>
             <tbody>
@@ -184,7 +184,7 @@
                 <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
               </td>
               <td>{{ member.mobileNumber }}</td>
-              <td>
+              <td style="text-align: center;">
                 <span v-if="member.accountType == 1">
                   <i class="fa fa-user fa-2" aria-hidden="true"></i>
                 </span>
