@@ -83,7 +83,7 @@
                 <div id = "status" class="select">
                   <select v-model="createRequest.districtId" value="createRequest.districtId">
                     <option v-for="district in districtList"
-                    :value="district.id">{{ district.name }}</option>
+                            :value="district.id">{{ district.name }}</option>
                   </select>
                 </div>
               </div>
@@ -137,11 +137,12 @@
         </thead>
         <tbody>
         <tr v-for="thana, index in filterThanaEnabledList">
-          <td>{{ index + 1}}</td>
+          <!--<td>{{ thana }}</td>-->
+          <td>{{ index + 1 || 'N/A'}}</td>
           <td>{{ thana.name || 'N/A'}}</td>
-          <td>{{ districtIdToDistrictName[thana.districtId] }}</td>
+          <td>{{ districtIdToDistrictName[thana.districtId] || 'N/A' }}</td>
           <td style="text-align: center;">Bangladesh</td>
-          <td style="text-align: center;">{{ thana.status }}</td>
+          <td style="text-align: center;">{{ thana.status || 'N/A' }}</td>
           <td style="text-align: center;"> <a @click="showUpdateThanaModal(thana)"> <i class="fa fa-edit"></i> </a> </td>
         </tr>
         </tbody>
@@ -170,9 +171,10 @@
 
 <script>
   import Http from '../services/Http'
+  import route from '../router'
 
   export default {
-    name: 'StaticDistrictComponent',
+    name: 'StaticThanaComponent',
     data () {
       return {
         thanaList: {},
@@ -198,19 +200,34 @@
       }
     },
     methods: {
+      logout () {
+        Http.GET('logout')
+          .then(
+            ({data: list}) => {
+              console.log(list)
+              console.log('hey')
+              // auth.setAccessControl(list)
+              localStorage.removeItem('token')
+              route.push('/')
+            }
+          )
+      },
       init () {
         Http.GET('resource', ['thana'])
-        .then(({data: response}) => {
-          this.showLoader = false
-          this.thanaList = response.data
-          console.log('successfully got the list of thana: ', response)
-          localStorage.removeItem('thana')
-          localStorage.setItem('thana', JSON.stringify(this.thanaList))
-        },
-        error => {
-          console.log('error in receiving thana list ', error)
-          this.showLoader = false
-        })
+          .then(({data: response}) => {
+            this.showLoader = false
+            this.thanaList = response.data
+            console.log('successfully got the list of thana: ', response)
+            localStorage.removeItem('thana')
+            localStorage.setItem('thana', JSON.stringify(this.thanaList))
+          },
+          error => {
+            console.log('error in receiving thana list ', error)
+            this.showLoader = false
+            if (error.response && error.response.data.status === 401) {
+              this.logout()
+            }
+          })
         this.districtList = JSON.parse(localStorage.getItem('district'))
         this.districtIdToDistrictName = JSON.parse(localStorage.getItem('districtIdToDistrictName'))
       },
@@ -225,9 +242,6 @@
         console.log('updateRequest: ', this.updateRequest)
         console.log('districtList: ', this.districtList)
         $('#UpdateThanaModal').modal({backdrop: false})
-      },
-      showAddNewThanaModal () {
-        alert('Not implemented yet.')
       },
       updateThana () {
         this.showLoader = true
@@ -286,20 +300,23 @@
               delay: 3000
             })
           },
-          error => {
-            this.showLoader = false
-            $('#AddThanaModal').modal('hide')
-            console.log('Thana addition unsuccessful, error: ', error)
-            $.notify({
-              // options
-              title: '<strong>Failure!</strong>',
-              message: error.response.data.message
-            }, {
-              // settings
-              type: 'danger',
-              delay: 3000
+            error => {
+              this.showLoader = false
+              if (error.response && error.response.data.status === 401) {
+                this.logout()
+              }
+              $('#AddThanaModal').modal('hide')
+              console.log('Thana addition unsuccessful, error: ', error)
+              $.notify({
+                // options
+                title: '<strong>Failure!</strong>',
+                message: error.response.data.message
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
             })
-          })
       }
     }
   }
