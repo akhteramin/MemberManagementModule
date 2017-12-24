@@ -50,10 +50,11 @@
                         <img v-if="member.basicInfo.mmUserPictures[0]"
                               :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
                               class="img-circle img-responsive" width="250" height="250"
-                             onerror="this.src='static/images/default-profile-180x180.png'">
+                             onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
 
-                        <img v-else src="static/images/default-original.jpg" class="img-circle img-responsive"
-                            alt="N/A" width="250" height="250">
+                        <img v-else src="/static/images/default-original.jpg" class="img-circle img-responsive"
+                            alt="N/A" width="250" height="250"
+                             onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
                         <update-member-image
                           :member="member"
                           :id="id"
