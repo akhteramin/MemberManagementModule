@@ -1,30 +1,32 @@
 <template>
  <div class="col-md-4 col-md-offset-4 ">
-			<div class="box">
-        <h1>iPay Admin</h1>
-				<form role="form" @submit.prevent="login" id="loginForm">
+   <div v-if="showComponent">
+     <div class="box">
+       <h1>iPay Admin</h1>
+       <form role="form" @submit.prevent="login" id="loginForm">
 
-					<div class="divider-form"></div>
+         <div class="divider-form"></div>
 
-					<div class="form-group">
-						<label for="username">Username</label>
-						<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Username" v-model="username">
-					</div>
+         <div class="form-group">
+           <label for="username">Username</label>
+           <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Username" v-model="username">
+         </div>
 
-					<div class="divider-form"></div>
+         <div class="divider-form"></div>
 
-					<div class="form-group">
-						<label for="password">Password</label>
-						<input type="password" class="form-control" id="password" placeholder="Password" v-model="password">
-					</div>
+         <div class="form-group">
+           <label for="password">Password</label>
+           <input type="password" class="form-control" id="password" placeholder="Password" v-model="password">
+         </div>
 
-					<div class="divider-form"></div>
+         <div class="divider-form"></div>
 
 
-					<button type="submit" class="btn-block btn btn-lg btn-primary">Login</button>
+         <button type="submit" class="btn-block btn btn-lg btn-primary">Login</button>
 
-				</form>
-			</div>
+       </form>
+     </div>
+   </div>
 	</div>
 </template>
 
@@ -39,7 +41,8 @@
     data () {
       return {
         username: '',
-        password: ''
+        password: '',
+        showComponent: false
       }
     },
     created () {

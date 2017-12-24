@@ -62,10 +62,14 @@
         showApp: false,
         expandList: false,
         appList: { '2': 'Auth', '3': 'CRM', '6': 'Admin' },
+        accessControlList: [],
         appURL: {'2': Http.AUTH_HTTP_URI, '3': Http.CRM_URI, '6': Http.ADMIN_URI}
       }
     },
     methods: {
+      containsPermission (permission) {
+        return this.accessControlList.indexOf(permission) > -1
+      },
       logout () {
         Http.GET('logout')
           .then(
@@ -144,6 +148,8 @@
         console.log('here it is')
         this.user = JSON.parse(localStorage.getItem('user'))
         this.appsData = JSON.parse(localStorage.getItem('appsData'))
+        this.accessControlList = JSON.parse(localStorage.getItem('accessControlList'))
+        this.accessControlList = this.accessControlList.split(',')
       }
     },
     created () {

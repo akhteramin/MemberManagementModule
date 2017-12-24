@@ -47,8 +47,81 @@ const Util = {
 
     if (Util.findAnyOne(accessControlList, [
       'MS_MM_USER_BASIC_DETAILS'
-    ])) menu.push('MemberIndividual')
+    ])) menu.push('MemberIndividualComponent')
+    menu.push('Home')
 
+    if (Util.findAnyOne(accessControlList, [
+      'MS_MM_USER_GET_ALL'
+    ])) {
+      menu.push('MemberList')
+      menu.push('WaitingForVerificationList')
+      menu.push('WaitingForApprovalList')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_USER_GET_ALL'
+    ])) {
+      menu.push('UserListComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_IPAY_ACL_GET_USER_GROUPS'
+    ])) {
+      menu.push('MemberAclGroup')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_IPAY_ACL_SERVICES'
+    ])) {
+      menu.push('ManageServicesComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'
+    ])) {
+      menu.push('StaticOccupationComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_GET_BANK_LIST'
+    ])) {
+      menu.push('StaticBankComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_GET_BRANCH_LIST'
+    ])) {
+      menu.push('StaticBranchComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_GET_DISTRICT_LIST'
+    ])) {
+      menu.push('StaticDistrictComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_GET_THANA_LIST'
+    ])) {
+      menu.push('StaticThanaComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_GET_COUNTRY_LIST'
+    ])) {
+      menu.push('StaticCountryComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_ACCOUNT_TYPE_LIST'
+    ])) {
+      menu.push('StaticAccountTypeComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_ACCOUNT_CLASS_LIST'
+    ])) {
+      menu.push('StaticAccountClassComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_STATIC_RESOURCE_BUSINESS_TYPE_LIST'
+    ])) {
+      menu.push('StaticBusinessTypeComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_USER_GET_ALL'
+    ])) {
+      menu.push('UserListComponent')
+    }
     localStorage.setItem('menu', menu)
     console.log('menu_', menu)
   }

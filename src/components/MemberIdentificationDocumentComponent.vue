@@ -13,7 +13,7 @@
                 <th class = "text-center">Document No.</th>
                 <th class = "text-center">URL</th>
                 <th class = "text-center">Verification</th>
-                <th class = "text-center" v-restrict="'MS_MM_USER_ADD_DOC'">Action</th>
+                <th class = "text-center" v-if="containsPermission('MS_MM_USER_ADD_DOC')">Action</th>
 
                 </tr>
                 </thead>
@@ -37,7 +37,7 @@
                     </button>
                 </td>
                 <td>{{ item.documentVerificationStatus | underscoreless }}</td>
-                <td v-restrict="'MS_MM_USER_ADD_DOC'">
+                <td v-if="containsPermission('MS_MM_USER_ADD_DOC')">
                   <span>
 
                   <button data-toggle="modal" :data-target="`#ChangeDocumentModal${item.id}`"
@@ -97,7 +97,7 @@
 
             </div>
 
-            <div class="gr-3 push-4"  v-restrict="'MS_MM_USER_ADD_DOC'">
+            <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC')">
               <div class="form-group">
                 <br>
                 <label>Document Type: </label>
@@ -112,7 +112,7 @@
               </div>
             </div>
 
-            <div class="gr-10 push-2" v-if="showDocumentUploadData" v-restrict="'MS_MM_USER_ADD_DOC'">
+            <div class="gr-10 push-2" v-if="showDocumentUploadData && containsPermission('MS_MM_USER_ADD_DOC')">
               <div class="gr-4">
                 <div class="form-group">
                   <label> Document ID: </label>
@@ -169,7 +169,8 @@
     name: 'MemberIdentificationDocument',
     props: [
       'id',
-      'accountType'
+      'accountType',
+      'boom'
     ],
     components: {
       'update-member-identification-document': UpdateMemberIdentificationDocument
@@ -189,11 +190,16 @@
         docType: '',
         memberDocument: {},
         documentID: '',
-        showLoader: false
+        showLoader: false,
+        accessControlList: []
       }
     },
     methods: {
+      containsPermission (permission) {
+        return this.accessControlList.indexOf(permission) > -1
+      },
       init () {
+        console.log('member identification component called.... boom: ', this.boom)
         this.showDocumentUploadData = false
         this.documentBaseUrl = Http.IMAGE_URL
         if (this.accountType === 1) {
@@ -201,6 +207,8 @@
         } else {
           this.documentTypes = GLOBAL_VARS.DOCUMENT_TYPE_BUSINESS
         }
+        this.accessControlList = localStorage.getItem('accessControlList')
+        this.accessControlList = this.accessControlList.split(',')
         this.getIdentificationDocuments()
       },
       getIdentificationDocuments (key = 'member') {

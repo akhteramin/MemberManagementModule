@@ -21,9 +21,7 @@ const Restrict = {
 
     // if (allowedList.indexOf(serviceList[service]) === -1) {
     if (allowedList.indexOf(service) === -1) {
-      if (action === 'UNLINK') {
-        element.onclick = false
-      } else if (action === 'DISABLED') {
+      if (action === 'DISABLED') {
         element.disabled = true
       } else {
         // for (let i = 0; i < element.children.length; i += 1) {
@@ -32,6 +30,7 @@ const Restrict = {
         element.remove()
       }
       console.log('ACCESS DENIED TO', service)
+      return
     }
 
     console.log('ACCESS ALLOWED TO', service)

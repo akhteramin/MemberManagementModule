@@ -7,7 +7,8 @@
 
 
 
-      <div id="CreateNewUserModal" class="modal fade" role="dialog">
+      <div id="CreateNewUserModal"
+           class="modal fade" role="dialog">
           <div class="modal-dialog  modal-md">
             <!-- Modal content-->
 
@@ -160,7 +161,8 @@
 
       <div>
         <span style="display:inline-block; width: 5px;"></span>
-        <button role="button" class="button-search push-2" v-if="!showNewUserComponent"
+        <button role="button" class="button-search push-2"
+                v-if="!showNewUserComponent && containsPermission('MS_USER_CREATE')"
                 @click="loadCreateNewUserComponent">
           <i class="fa fa-plus" aria-hidden="true"></i> Create New User
         </button>
@@ -382,7 +384,8 @@
         updatingUserId: '',
         showNewUserComponent: false,
         createUser: {},
-        showLoader: true
+        showLoader: true,
+        accessControlList: []
       }
     },
     created () {
@@ -390,6 +393,9 @@
       this.init()
     },
     methods: {
+      containsPermission (permission) {
+        return this.accessControlList.indexOf(permission) > -1
+      },
       setShowNewUserComponentToFalse () {
         this.showNewUserComponent = false
         this.init()
@@ -482,6 +488,8 @@
           password: null,
           passwordReTyped: null
         })
+        this.accessControlList = localStorage.getItem('accessControlList')
+        this.accessControlList = this.accessControlList.split(',')
         this.showNewUserComponent = false
         this.getUsers()
       },

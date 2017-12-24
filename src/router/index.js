@@ -20,6 +20,8 @@ import StaticBusinessTypeComponent from '@/components/StaticBusinessTypeComponen
 import StaticAccountTypeComponent from '@/components/StaticAccountTypeComponent'
 import StaticAccountClassComponent from '@/components/StaticAccountClassComponent'
 import ManageServicesComponent from '@/components/ManageServicesComponent'
+import auth from '../services/auth'
+
 Vue.use(Router)
 
 // router.beforeEach((to, from, next) => {
@@ -48,7 +50,7 @@ Vue.use(Router)
 //   }
 // })
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -59,94 +61,130 @@ export default new Router({
     {
       path: '/member',
       name: 'MemberList',
-      component: MemberList
+      component: MemberList,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/member/waiting/verification',
       name: 'WaitingForVerificationList',
-      component: WaitingForVerificationList
+      component: WaitingForVerificationList,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/member/waiting/approval',
       name: 'WaitingForApprovalList',
-      component: WaitingForApprovalList
+      component: WaitingForApprovalList,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      component: Home,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/member/profile/:id/:accountType',
       name: 'MemberIndividualComponent',
       component: MemberIndividualComponent,
-      props: true
+      props: true,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/user',
       name: 'UserListComponent',
-      component: UserListComponent
+      component: UserListComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/user/:loginID',
       name: 'UserIndividualComponent',
       component: UserIndividualComponent,
-      props: true
+      props: true,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/member/acl/group',
       name: 'MemberAclGroup',
-      component: MemberAclGroup
+      component: MemberAclGroup,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/occupation',
       name: 'StaticOccupationComponent',
-      component: StaticOccupationComponent
+      component: StaticOccupationComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/bank',
       name: 'StaticBankComponent',
-      component: StaticBankComponent
+      component: StaticBankComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/branch',
       name: 'StaticBranchComponent',
-      component: StaticBranchComponent
+      component: StaticBranchComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/district',
       name: 'StaticDistrictComponent',
-      component: StaticDistrictComponent
+      component: StaticDistrictComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/thana',
       name: 'StaticThanaComponent',
-      component: StaticThanaComponent
+      component: StaticThanaComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/country',
       name: 'StaticCountryComponent',
-      component: StaticCountryComponent
+      component: StaticCountryComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/business-type',
       name: 'StaticBusinessTypeComponent',
-      component: StaticBusinessTypeComponent
+      component: StaticBusinessTypeComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/account-type',
       name: 'StaticAccountTypeComponent',
-      component: StaticAccountTypeComponent
+      component: StaticAccountTypeComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/account-class',
       name: 'StaticAccountClassComponent',
-      component: StaticAccountClassComponent
+      component: StaticAccountClassComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/manage/services',
       name: 'ManageServicesComponent',
-      component: ManageServicesComponent
+      component: ManageServicesComponent,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '*',
@@ -154,3 +192,29 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  console.log('before route change...', from.name, '->', to.name)
+  const authRequired = to.matched.some(route => route.meta.requiresAuth)
+  if (authRequired && !auth.isAuthenticated()) {
+    console.log('unauthorized. redirecting to login...')
+    next('/login')
+  } else if (authRequired && auth.isAuthenticated()) {
+    const menuList = localStorage.getItem('menu')
+    console.log('menu list: ')
+    if (menuList.indexOf(to.name) === -1) {
+      console.log('access denied to:', to.name)
+      auth.logout()
+    } else {
+      // default route
+      console.log('going with provided route...')
+      next()
+    }
+  } else {
+    // default route
+    console.log('going with provided route...')
+    next()
+  }
+})
+
+export default router

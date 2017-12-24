@@ -13,19 +13,19 @@
                 <li class="text-center" :class="{active: showBasicDetails}"
                     @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
                 <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-                <li v-restrict="'MS_MM_USER_GET_ACTIVITIES'" class="text-center" :class="{active: showActivities}"
+                <li v-if="containsPermission('MS_MM_USER_GET_ACTIVITIES')" class="text-center" :class="{active: showActivities}"
                     @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
-                <li v-restrict="'MS_MM_USER_GET_TRANSACTION_HISTORY'" class="text-center" :class="{active: showTransactions}"
+                <li v-if="containsPermission('MS_MM_USER_GET_TRANSACTION_HISTORY')" class="text-center" :class="{active: showTransactions}"
                     @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
-                <li v-restrict="'MS_MM_USER_SUSPENSION_HISTORY'" class="text-center" :class="{active: showSuspensionHistory}"
+                <li v-if="containsPermission('MS_MM_USER_SUSPENSION_HISTORY')" class="text-center" :class="{active: showSuspensionHistory}"
                     @click="setTab('suspensionHistory')"><a data-toggle="tab">Suspension History</a></li>
-                <li v-restrict="'MS_MM_USER_GET_LIKELY_NAMES'" class="text-center" :class="{active: showLikelyNames}"
+                <li v-if="containsPermission('MS_MM_USER_GET_LIKELY_NAMES')" class="text-center" :class="{active: showLikelyNames}"
                     @click="setTab('likelyNames')"><a data-toggle="tab">Likely Names</a></li>
-                <li v-restrict="'MS_MM_USER_GET_CONTACTS'" class="text-center" :class="{active: showFriends}"
+                <li v-if="containsPermission('MS_MM_USER_GET_CONTACTS')" class="text-center" :class="{active: showFriends}"
                     @click="setTab('friends')"><a data-toggle="tab">Friends</a></li>
                 <li v-if="member.basicInfo && member.basicInfo.accountType==2" class="text-center" :class="{active: showOffer}"
                     @click="setTab('offers')"><a data-toggle="tab">Offers</a></li>
-                <li v-restrict="''" class="text-center" :class="{active: showAccessControl}"
+                <li v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" class="text-center" :class="{active: showAccessControl}"
                     @click="setTab('accessControl')"><a data-toggle="tab">Access Control</a></li>
 
               </ul>
@@ -58,7 +58,7 @@
                           :member="member"
                           :id="id"
                           @update="editProfilePic"
-                          v-restrict="'MS_MM_USER_UPLOAD_PROFILE_PIC'">
+                          v-if="containsPermission('MS_MM_USER_UPLOAD_PROFILE_PIC')">
                         </update-member-image>
                         <b>{{member.basicInfo.name}}</b>
                         <span class="banner-text" v-if="member.basicInfo.accountType == 1">(Personal)</span>
@@ -95,7 +95,7 @@
                           <div class="gr-2">
                             <h5><b>Basic Information</b></h5>
                           </div>
-                          <div class="gr-2 push-7" v-if="!editBasicProfileMode" v-restrict="'MS_MM_USER_UPDATE_BASIC_DETAILS'">
+                          <div class="gr-2 push-7" v-if="!editBasicProfileMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
                               <button class="button-md-edit" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                           </div>
                         </div>
@@ -173,8 +173,8 @@
                           <div class="gr-2">
                               <h5><b>Family Information</b></h5>
                             </div>
-                            <div class="gr-2 push-7" v-if="!editParentsMode"
-                              v-restrict="'MS_MM_USER_UPDATE_BASIC_DETAILS'">
+                            <div class="gr-2 push-7"
+                                 v-if="!editParentsMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
                                 <button class="button-md-edit" @click="editParents()">
                                   <i class="fa fa-pencil-square-o"></i> Edit </button>
                             </div>
@@ -257,7 +257,7 @@
               </div>
 
 
-              <div id="addresses" class="gr-12" v-restrict="'MS_MM_USER_BASIC_DETAILS'">
+              <div id="addresses" class="gr-12" v-if="containsPermission('MS_MM_USER_BASIC_DETAILS')">
                   <div class="gr-12">
                     <h5><b>Address</b></h5>
                   </div>
@@ -274,8 +274,8 @@
                         <div class="gr-2">
                           <h5><b>Present</b></h5>
                         </div>
-                        <div class="gr-2 push-6" v-if="!editPresentAddressMode"
-                             v-restrict="'MS_MM_USER_UPDATE_ADDRESS'">
+                        <div class="gr-2 push-6"
+                             v-if="!editPresentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
                           <button class="button-md-edit" @click="editPresentAddress">
                             <i class="fa fa-pencil-square-o"></i> Edit </button>
                         </div>
@@ -322,7 +322,7 @@
                       </div>
                     </div>
 
-                    <div v-else id="editPresentAddress" v-restrict="'MS_MM_USER_UPDATE_ADDRESS'">
+                    <div v-else id="editPresentAddress" v-else-if="containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
                       <update-member-address
                             :id= "id"
                             :memberPresentAddress="memberPresentAddress"
@@ -341,8 +341,8 @@
                           <h5 v-if="member.basicInfo && member.basicInfo.accountType===2"><b>Business</b></h5>
 
                         </div>
-                        <div class="gr-2 push-6" v-if="!editPermanentAddressMode"
-                             v-restrict="'MS_MM_USER_UPDATE_ADDRESS'">
+                        <div class="gr-2 push-6"
+                             v-if="!editPermanentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
                           <button class="button-md-edit" @click="editPermanentAddress">
                             <i class="fa fa-pencil-square-o"></i> Edit </button>
                         </div>
@@ -391,7 +391,7 @@
                       </div>
                     </div>
 
-                    <div v-else id="editPermanentAddress" v-restrict="'MS_MM_USER_UPDATE_ADDRESS'">
+                    <div v-else id="editPermanentAddress" v-if="containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
                       <update-member-address
                             :id= "id"
                             :memberPermanentAddress="memberPermanentAddress"
@@ -401,28 +401,38 @@
                       </update-member-address>
                     </div>
                   </div>
+                  <hr>
                 </div>
 
-              <hr>
 
               <div>
                 <div class="verification">
                   <div>
-                    <member-identification-document v-restrict="'MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS'"
-                      :id="id" :accountType="accountType"></member-identification-document>
-                    <member-bank-account :id="id" v-restrict="'MS_MM_USER_GET_BANK_LIST'">
+                    <div v-if="containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
+                      Yes, inside identification documents...
+                      <member-identification-document
+                        :id="id" :accountType="accountType" :boom="2">
+                      </member-identification-document>
+                    </div>
 
-                    </member-bank-account>
-                    <div class="row justify-content-center">
-                      <member-introduced-by :id="id" v-restrict="'MS_MM_USER_GET_INTRODUCER_LIST'"></member-introduced-by>
-                      <member-has-introduced :id="id" v-restrict="'MS_MM_USER_GET_INTRODUCER_LIST'">
+                    <div v-if="containsPermission('MS_MM_USER_GET_BANK_LIST')">
+                      <member-bank-account :id="id">
+                      </member-bank-account>
+                    </div>
 
+                    <div class="row justify-content-center"
+                         v-if="containsPermission('MS_MM_USER_GET_INTRODUCER_LIST')">
+                      <member-introduced-by :id="id">
+                      </member-introduced-by>
+
+                      <member-has-introduced :id="id">
                       </member-has-introduced>
                     </div>
 
                   </div>
 
-                  <div class="row justify-content-center" v-restrict="'MS_MM_USER_VERIFICATION_VERIFY'">
+                  <div class="row justify-content-center"
+                       v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY')">
                      {{ member.basicInfo.verificationStatus ? '' : '' }}
                     <member-verify-and-approve :id="id" :member="member">
 
@@ -534,6 +544,7 @@
         thanaList: {},
         districtList: {},
         profilePicture: {},
+        accessControlList: [],
         memberPresentAddress: {
           addressLine1: 'N/A',
           addressLine2: 'N/A',
@@ -562,6 +573,9 @@
       this.init()
     },
     methods: {
+      containsPermission (permission) {
+        return this.accessControlList.indexOf(permission) > -1
+      },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
         // Http call for basic information of the member with the 'id'
@@ -585,6 +599,8 @@
           thanaId: 'N/A',
           type: 'PERMANENT'
         }
+        this.accessControlList = localStorage.getItem('accessControlList')
+        this.accessControlList = this.accessControlList.split(',')
         this.showLoader = true
         Http.GET('member', [this.id, 'basic-details'])
           .then(
@@ -612,7 +628,7 @@
             },
             error => {
               this.showLoader = false
-              console.log('Error occured getting details of the member, error: ', error)
+              console.log('Error occurred getting details of the member, error: ', error)
             }
           )
 //         Http call for balance
