@@ -3,8 +3,8 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import MemberList from '@/components/MemberListComponent'
-import WaitingForVerificationList from '@/components/WaitingForVerificationListComponent'
-import WaitingForApprovalList from '@/components/WaitingForApprovalListComponent'
+// import WaitingForVerificationList from '@/components/WaitingForVerificationListComponent'
+// import WaitingForApprovalList from '@/components/WaitingForApprovalListComponent'
 import Home from '@/components/Home'
 import MemberIndividualComponent from '@/components/MemberIndividualComponent'
 import UserListComponent from '@/components/UserListComponent'
@@ -50,6 +50,9 @@ Vue.use(Router)
 //   }
 // })
 
+// const waiting_approval = 'waiting-approval'
+// const waiting_verification = 'waiting-verification'
+
 const router = new Router({
   mode: 'history',
   routes: [
@@ -59,26 +62,31 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/member',
+      path: '/member/:listType',
       name: 'MemberList',
       component: MemberList,
+      props: true,
       // auth check
       meta: { requiresAuth: true }
     },
-    {
-      path: '/member/waiting/verification',
-      name: 'WaitingForVerificationList',
-      component: WaitingForVerificationList,
-      // auth check
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/member/waiting/approval',
-      name: 'WaitingForApprovalList',
-      component: WaitingForApprovalList,
-      // auth check
-      meta: { requiresAuth: true }
-    },
+    // {
+    //   path: '/member/{waiting_verification}',
+    //   name: 'WaitingForVerificationList',
+    //   component: MemberList,
+    //   props: true,
+    //   // component: WaitingForVerificationList,
+    //   // auth check
+    //   meta: { requiresAuth: true }
+    // },
+    // {
+    //   path: '/member/:listType',
+    //   name: 'WaitingForApprovalList',
+    //   component: MemberList,
+    //   props: true,
+    //   // component: WaitingForApprovalList,
+    //   // auth check
+    //   meta: { requiresAuth: true }
+    // },
     {
       path: '/home',
       name: 'Home',
@@ -201,7 +209,6 @@ router.beforeEach((to, from, next) => {
     next('/login')
   } else if (authRequired && auth.isAuthenticated()) {
     const menuList = localStorage.getItem('menu')
-    console.log('menu list: ')
     if (menuList.indexOf(to.name) === -1) {
       console.log('access denied to:', to.name)
       auth.logout()

@@ -95,13 +95,16 @@
         route.push('/home')
       },
       goToMemberList () {
-        route.push('/member')
+        route.push('/member/default')
       },
       goToWaitingForVerificationMemberList () {
-        route.push('/member/waiting/verification')
+        route.push('/member/waiting-verification')
+        // route.push('/member/waiting/verification')
       },
       goToWaitingForApprovalMemberList () {
-        route.push('/member/waiting/approval')
+        console.log('waiting for approval clicked in menu component')
+        route.push('/member/waiting-approval')
+//        route.push('/member/waiting/approval')
       },
       goToUserList () {
         route.push('/user')
@@ -148,7 +151,7 @@
         console.log('here it is')
         this.user = JSON.parse(localStorage.getItem('user'))
         this.appsData = JSON.parse(localStorage.getItem('appsData'))
-        this.accessControlList = JSON.parse(localStorage.getItem('accessControlList'))
+        this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
       }
     },

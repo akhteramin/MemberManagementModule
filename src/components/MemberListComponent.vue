@@ -24,7 +24,7 @@
 
             <div class="gr-3">
               <div class="form-group">
-                <label class="push-2">Account Type: </label>
+                <label class="push-1">Account Type: </label>
                 <div class="push-1">
                   <div class="select select-sm">
                     <select id="personal-business-select"  v-model="query.accountType">
@@ -40,7 +40,7 @@
 
             <div class="gr-3">
               <div class="form-group">
-                <label class="push-2"> Verification Status: </label>
+                <label class="push-0"> Verification Status: </label>
                 <div class="push-0">
                   <div class="select select-sm">
                     <select id="verification-status" v-model="query.verificationStatus">
@@ -170,12 +170,14 @@
               <td class="member-name">
                 <span v-if="member.mmUserPictures[0]">
                   <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"
-                       width="30" height="30" onerror="this.src='static/images/default-profile-180x180.png'">
+                       width="30" height="30"
+                       onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
                     <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
                     <!--width="30" height="30">-->
                 </span>
                 <span v-else>
-                  <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
+                  <img src="/static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30"
+                       onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
                 </span>
                 <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
                   <a href=""  @click="memberDetails(member.accountId,member.accountType)">
@@ -355,10 +357,19 @@
 <script>
   import Http from '../services/Http'
   import MemberListSlider from './MemberListSliderComponent.vue'
+
   export default {
     name: 'MemberList',
+    props: [
+      'listType'
+    ],
     components: {
       'member-list-slider': MemberListSlider
+    },
+    watch: {
+      listType: function () {
+        this.init()
+      }
     },
     data () {
       return {
@@ -506,15 +517,16 @@
           'message': this.memberComment,
           'effectiveFrom': new Date().getTime().toString()
         }
-        this.showLoader = true
+//        this.showLoader = true
         Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
         .then(
           ({data: statusData}) => {
-            this.showLoader = false
+//            this.showLoader = false
             console.log('document data::', statusData)
             this.init()
           },
           error => {
+//            this.showLoader = false
             console.log('Error vrification of document: ', error)
           }
         )
@@ -550,6 +562,12 @@
           pageNumber: 0,
           pageSize: 10
         })
+        console.log('this.listType: ', this.listType)
+        if (this.listType === 'waiting-verification') {
+          this.query.verificationStatus = 'NOT_VERIFIED'
+        } else if (this.listType === 'waiting-approval') {
+          this.query.verificationStatus = 'IN_PROGRESS'
+        }
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
         // this.containsPermission()
