@@ -391,8 +391,7 @@
                         </div>
                       </div>
                     </div>
-
-                    <div v-else id="editPermanentAddress" v-if="containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
+                    <div v-else id="editPermanentAddress" v-else-if="containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
                       <update-member-address
                             :id= "id"
                             :memberPermanentAddress="memberPermanentAddress"
@@ -410,7 +409,6 @@
                 <div class="verification">
                   <div>
                     <div v-if="containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
-                      Yes, inside identification documents...
                       <member-identification-document
                         :id="id" :accountType="accountType" :boom="2">
                       </member-identification-document>
