@@ -279,7 +279,9 @@
           :memberDocuments="memberDocuments"
           :memberIntroducers="memberIntroducers"
           :memberMissingInfo="memberMissingInfo"
-          @update="hideProfile"></member-list-slider>
+          @update="hideProfile">
+
+          </member-list-slider>
 
           <div id="MemberAccountStatusModal" class="modal fade" role="dialog">
             <div class="modal-dialog  modal-md">
@@ -416,61 +418,77 @@
           this.sliderShow = false
         } else {
           this.memberProfile = member
-          this.showLoader = true
-          Http.GET('member', [member.accountId, 'identification-documents'])
-            .then(
-              ({data: {data: documents}}) => {
-                this.showLoader = false
-                this.memberDocuments = documents
-                console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
-                this.memberDocuments.length)
-              },
-              error => {
-                this.showLoader = false
-                console.log('Error in getting list of identification documents, error: ', error)
-              }
-            )
-          // Http call for the introducers
-          this.showLoader = true
-          Http.GET('member', [member.accountId, 'introducers'])
-            .then(
-              ({data: {data: introducers}}) => {
-                this.showLoader = false
-                this.memberIntroducers = introducers
-                console.log('Got the list of introducers: ', this.memberIntroducers)
-              },
-              error => {
-                this.showLoader = false
-                console.log('Error in getting the list of introducers, error: ', error)
-              }
-            )
-          // Http call for the missing information
-          this.showLoader = true
-          Http.GET('member', [member.accountId, 'is-verifiable'])
-          .then(
-            ({data: {data: missingData}}) => {
-              this.showLoader = false
-              this.memberMissingInfo = missingData
-              console.log('Got the list of missing: ', this.memberMissingInfo)
-            },
-            error => {
-              this.showLoader = false
-              console.log('Error in getting the list of missing, error: ', error)
-            }
-          )
-          this.showLoader = true
-          Http.GET('member', [member.accountId, 'basic-details'])
-            .then(
-              ({data: {data: member}}) => {
-                this.showLoader = false
-                console.log('In member list component, member basic details: ', member)
-                this.loadMemberBasicDetails = member
-              },
-              error => {
-                this.showLoader = false
-                console.log('Error in loading member basic details for slider... ', error)
-              }
-            )
+          if (!this.containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')) {
+            this.memberDocuments = null
+          } else {
+            this.showLoader = true
+            Http.GET('member', [member.accountId, 'identification-documents'])
+              .then(
+                ({data: {data: documents}}) => {
+                  this.showLoader = false
+                  this.memberDocuments = documents
+                  console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
+                    this.memberDocuments.length)
+                },
+                error => {
+                  this.showLoader = false
+                  console.log('Error in getting list of identification documents, error: ', error)
+                }
+              )
+          }
+          if (!this.containsPermission('MS_MM_USER_GET_INTRODUCER_LIST')) {
+            this.memberIntroducers = null
+          } else {
+            // Http call for the introducers
+            this.showLoader = true
+            Http.GET('member', [member.accountId, 'introducers'])
+              .then(
+                ({data: {data: introducers}}) => {
+                  this.showLoader = false
+                  this.memberIntroducers = introducers
+                  console.log('Got the list of introducers: ', this.memberIntroducers)
+                },
+                error => {
+                  this.showLoader = false
+                  console.log('Error in getting the list of introducers, error: ', error)
+                }
+              )
+          }
+          if (!this.containsPermission('MS_MM_USER_IS_VERIFIABLE')) {
+            this.memberMissingInfo = null
+          } else {
+            // Http call for the missing information
+            this.showLoader = true
+            Http.GET('member', [member.accountId, 'is-verifiable'])
+              .then(
+                ({data: {data: missingData}}) => {
+                  this.showLoader = false
+                  this.memberMissingInfo = missingData
+                  console.log('Got the list of missing: ', this.memberMissingInfo)
+                },
+                error => {
+                  this.showLoader = false
+                  console.log('Error in getting the list of missing, error: ', error)
+                }
+              )
+          }
+          if (!this.containsPermission('MS_MM_USER_BASIC_DETAILS')) {
+            this.loadMemberBasicDetails = null
+          } else {
+            this.showLoader = true
+            Http.GET('member', [member.accountId, 'basic-details'])
+              .then(
+                ({data: {data: member}}) => {
+                  this.showLoader = false
+                  console.log('In member list component, member basic details: ', member)
+                  this.loadMemberBasicDetails = member
+                },
+                error => {
+                  this.showLoader = false
+                  console.log('Error in loading member basic details for slider... ', error)
+                }
+              )
+          }
           this.sliderShow = true
         }
       },
@@ -544,7 +562,11 @@
 //          name: 'MemberIndividualComponent',
 //          params: {id: value, accountType: accntType}
 //        })
-        window.open(`${window.location.href}/profile/${value}/${accntType}`, '_blank')
+        console.log('window')
+        let path = window.location.href.split('/')
+        path = path[path.length - 2]
+        console.log('opening path is: ', path)
+        window.open(`/member/profile/${value}/${accntType}`, '_blank')
       },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL

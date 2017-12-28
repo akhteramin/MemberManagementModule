@@ -30,10 +30,11 @@
             <div class="gr-2">
             <span v-if="memberProfile.mmUserPictures[0]">
                 <img :src="imageBaseUrl+memberProfile.mmUserPictures[0].document.url" class="img-rounded" alt="Profile Picture" width="70" height="80"
-                onerror="onerror=null; src='static/images/default-original.jpg';">
+                     onerror="onerror=null; src='/static/images/default-original.jpg';">
             </span>
             <span v-else>
-                <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
+                <img src="/static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80"
+                     onerror="onerror=null; src='/static/images/default-original.jpg';">
             </span>
             </div>
             <div class="gr-10">
@@ -55,7 +56,7 @@
                 </div>
 
             </div>
-            <div class="gr-12 small-text" v-restrict="'MS_MM_USER_IS_VERIFIABLE'">
+            <div class="gr-12 small-text" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE')">
                 <b>Missing Information</b>
                 <hr>
                 <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
@@ -70,9 +71,9 @@
 
                 </div>
             </div>
-            <div class="gr-12 small-text min-height-slider" v-if="memberDocuments"
-                 v-restrict="'MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS'">
-                <b>Identification Document</b>
+            <div class="gr-12 small-text min-height-slider"
+                 v-if="memberDocuments && containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
+                <b>Identification Documents</b>
                 <hr>
                 <div class="row margin-5" v-for="memberDocument in memberDocuments">
                     <div class="gr-5 text-center padding-2">
@@ -117,8 +118,10 @@
                     </div>
                 </div>
             </div>
-            <div class="gr-12 small-text" v-if="memberDocuments"
-              v-restrict="''">
+            <div class="gr-12 small-text" v-if="
+              containsPermission('MS_MM_USER_GET_INTRODUCER_LIST') &&
+              containsPermission('MS_MM_USER_GET_LIKELY_NAMES') &&
+              containsPermission('MS_MM_USER_GET_INVITED_LIST')">
 
                     <div class="row container side-nav">
                         <ul class="nav nav-tabs">
@@ -191,8 +194,8 @@
                         </div>
                     </div>
                 </div>
-            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails"
-              v-restrict="'MS_MM_USER_VERIFICATION_VERIFY'">
+            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails &&
+              containsPermission('MS_MM_USER_VERIFICATION_VERIFY')">
               <hr>
               <member-verify-and-approve-component
                 :id = "memberBasicDetails.basicInfo.accountId"
@@ -202,7 +205,7 @@
             </div>
 
 
-        <div class="gr-12" v-else>
+        <div class="gr-12" v-else-if="containsPermission('MS_MM_USER_GET_SPECIFIC_DOCUMENTS')">
             <div class="gr-2 padding-5">
             <i class="fa fa-arrow-left" aria-hidden="true" @click="showDocumentDetails(memberDocumentDetail)"></i>
             </div>
@@ -342,6 +345,7 @@
         memberDocumentDetail: {},
         profileDetails: true,
         documentDetails: {},
+        accessControlList: [],
         member: {},
         showLoader: false
       }
@@ -350,10 +354,21 @@
       console.log('member slider component created:: member profile is: ', this.memberProfile)
       this.init()
     },
+    watch: {
+      id: function () {
+        this.init()
+      }
+    },
     methods: {
+      containsPermission (permission) {
+        return this.accessControlList.indexOf(permission) > -1
+      },
       init () {
+        console.log('Slider loaded....')
         this.imageBaseUrl = Http.IMAGE_URL
         this.showLoader = true
+        this.accessControlList = localStorage.getItem('accessControlList')
+        this.accessControlList = this.accessControlList.split(',')
         Http.GET('member', [this.memberProfile.accountId, 'basic-details'])
           .then(
             ({data: {data: member}}) => {
@@ -398,6 +413,8 @@
       },
       loadIdentificationDocument: function (accountId) {
         this.showLoader = true
+        console.log('has permission for identification document: ',
+          this.containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS'))
         Http.GET('member', [accountId, 'identification-documents'])
         .then(
             ({data: {data: documents}}) => {
