@@ -108,15 +108,15 @@
     </div>
     <br><br>
     <div>
-      <input class="gr-3 push-5" v-model="businessTypeSearch" placeholder="Business type"
+      <input class="gr-3 push-9" v-model="businessTypeSearch" placeholder="Business type"
       style="height: 35px;"/>
     </div>
-    <br>
+    <br><br><br>
   </div>
 
 
     <div v-if="businessTypeList.length > 0">
-      <table class="table table-striped">
+      <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th>#</th>

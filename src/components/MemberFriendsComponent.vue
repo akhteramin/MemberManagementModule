@@ -74,7 +74,7 @@
       </form>
       <!-- ================================ Filter ============================== -->
       <br>
-      <table class="table table-striped">
+      <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th>#</th>

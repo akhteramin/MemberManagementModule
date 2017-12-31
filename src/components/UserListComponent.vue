@@ -173,7 +173,7 @@
     <!-- ------------------------------ Main table for users ---------------------------------- -->
     <div class="table-responsive gr-10 push-2">
       <br>
-      <table class="table table-striped">
+      <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
         <tr>
           <th style="text-align: center;">#</th>

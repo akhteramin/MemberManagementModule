@@ -151,11 +151,11 @@
 
           <!--========================================= my filters ==================================================-->
         <div class="table-responsive gr-12">
-          <table class="table table-striped">
+          <table id="memberlist-table" class="table ui celled" cellspacing="0" width="100%">
             <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
+                <th style="width: 400px;">Name</th>
                 <th>Mobile Number</th>
                 <th style="text-align: center;">A/C Type</th>
                 <th style="text-align: center;">Verification</th>
@@ -169,7 +169,7 @@
 
               <td class="member-name">
                 <span v-if="member.mmUserPictures[0]">
-                  <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"
+                  <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle"
                        width="30" height="30"
                        onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
                     <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
@@ -359,6 +359,10 @@
 <script>
   import Http from '../services/Http'
   import MemberListSlider from './MemberListSliderComponent.vue'
+
+  $(document).ready(function () {
+    $('#memberlist-table').DataTable()
+  })
 
   export default {
     name: 'MemberList',

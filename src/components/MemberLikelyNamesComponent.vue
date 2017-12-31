@@ -18,7 +18,7 @@
 
     <div v-if="nameList.length > 0" class="gr-4 push-3">
       <br>
-      <table class="table table-striped">
+      <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th style="text-align: center;">Name</th>

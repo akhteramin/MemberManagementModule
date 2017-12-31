@@ -12,10 +12,10 @@
       </div>
       <br><br>
       <div>
-        <input class="gr-3 push-5" v-model="occupationSearch" placeholder="Occupation"
+        <input class="gr-3 push-9" v-model="occupationSearch" placeholder="Occupation"
                style="height: 35px;"/>
       </div>
-      <br>
+      <br><br><br>
     </div>
 
     <div id="CreateNewOccupationModal" class="modal fade" role="dialog">
@@ -112,7 +112,7 @@
 
     <div>
       <div v-if="occupationList.length > 0">
-        <table class="table table-striped">
+        <table class="table ui celled" cellspacing="0" width="100%">
           <thead>
           <tr>
             <th>#</th>

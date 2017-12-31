@@ -6,7 +6,7 @@
               No Document has been uploaded.
             </div>
             <div v-else class="small-scrollable">
-            <table class="table table-hover table-sm">
+            <table class="table ui celled hover" cellspacing="0" width="100%">
                 <thead class="thead-default">
                 <tr>
                 <th class = "text-center">Type</th>

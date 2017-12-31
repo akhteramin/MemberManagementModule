@@ -193,7 +193,7 @@
     <!-- ====================== Filter ============================= -->
 
     <div v-if="branchList.length > 0">
-      <table class="table table-striped">
+      <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
         <tr>
           <th style="width: 40px;">#</th>

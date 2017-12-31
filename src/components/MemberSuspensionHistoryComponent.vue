@@ -40,7 +40,7 @@
     </div>
 
     <div>
-      <table class="table table-hover table-sm ">
+      <table class="table ui celled" cellspacing="0" width="100%">
         <thead class="thead-default">
         <tr>
           <th style="text-align: center;">#</th>

@@ -112,7 +112,7 @@
     </div>
 
     <div v-if="countryList.length > 0">
-      <table class="table table-striped">
+      <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
         <tr>
           <th>#</th>

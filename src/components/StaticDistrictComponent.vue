@@ -96,14 +96,14 @@
       </div>
       <br><br>
       <div>
-        <input class="gr-3 push-5" v-model="districtSearch" placeholder="District name"
+        <input class="gr-3 push-9" v-model="districtSearch" placeholder="District name"
                style="height: 35px;"/>
       </div>
-      <br>
+      <br><br><br>
     </div>
 
     <div v-if="districtList.length > 0">
-      <table class="table table-striped">
+      <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
         <tr>
           <th>#</th>
