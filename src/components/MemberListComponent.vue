@@ -82,7 +82,7 @@
                     <!--<option selected disabled>Select account type</option>-->
                     <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
                     <option value="CREATION_DATE">Account Creation Date</option>
-                    <option value="profileCompletionScore">Profile Completion Score</option>
+                    <option value="PROFILE_COMPLETION_SCORE">Profile Completion Score</option>
                   </select>
                 </div>
               </div>
