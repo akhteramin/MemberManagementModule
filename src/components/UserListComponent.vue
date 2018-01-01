@@ -1,6 +1,10 @@
 <template>
   <div>
     <!--I am user list component................................. users:: {{ users ? users : 'N/A' }}-->
+    <div class="gr-10 push-2">
+      <h1>Users</h1>
+      <hr>
+    </div>
     <div class="gr-12 push-2">
       <br>
       <!--showNewUserComponent: {{ showNewUserComponent }}-->

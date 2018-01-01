@@ -105,10 +105,10 @@
       </div>
       <br><br>
       <div>
-        <input class="gr-3 push-5" v-model="countrySearch" placeholder="Country name"
+        <input class="gr-3 push-9" v-model="countrySearch" placeholder="Country name"
                style="height: 35px;"/>
       </div>
-      <br>
+      <br><br><br>
     </div>
 
     <div v-if="countryList.length > 0">
