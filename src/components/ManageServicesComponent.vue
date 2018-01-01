@@ -16,11 +16,11 @@
           </div>
         </div>
       </div>
-      <div class="gr-6 push-4">
-        <h1>Manage Service</h1>
+      <div class="gr-6 push-5">
+        <h1>Manage Service</h1> <br>
       </div>
             <div class="gr-12">
-                <table class="table table-striped table-hover">
+                <table  class="table ui celled" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th>
@@ -32,7 +32,7 @@
                             <th>
                                Status
                             </th>
-                            
+
                         </tr>
                     </thead>
                     <tbody v-if="aclServiceList && aclServiceList.length > 0">
