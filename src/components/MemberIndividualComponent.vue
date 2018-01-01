@@ -168,7 +168,7 @@
                           </member-basic-info-update>
                         </div>
 
-                        <hr>
+                        <!--<hr>-->
                       <div v-if="member.basicInfo.accountType===1">
                         <div class="gr-11">
                           <div class="gr-2">

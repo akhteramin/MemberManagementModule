@@ -143,7 +143,9 @@
                             <div id="introducedBy" class="tab-pane fade in active padding-4">
                                 <div class="gr-4 text-center" v-if="memberIntroducers">
                                     <div class="gr-6 padding-5" v-for="memberIntroducer in memberIntroducers">
-                                            <img :src="imageBaseUrl+memberIntroducer.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
+                                            <img :src="imageBaseUrl+memberIntroducer.profilePictureUrl"
+                                                 class="img-circle" alt="Profile Picture" width="80" height="80"
+                                                 onerror="this.onerror=null;this.src='/static/images/default-profile-180x180.png'">
                                             <br><b>{{memberIntroducer.name}}</b>
                                             <br>{{memberIntroducer.mobileNumber}}
                                     </div>
@@ -152,7 +154,9 @@
                             <div id="hasIntroduced" class="tab-pane fade  padding-4">
                                 <div class="gr-4 text-center" v-if="membersIntroduced">
                                     <div class="gr-6 padding-5" v-for="memberIntroduced in membersIntroduced">
-                                            <img :src="imageBaseUrl+memberIntroduced.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
+                                            <img :src="imageBaseUrl+memberIntroduced.profilePictureUrl" class="img-circle"
+                                                 alt="Profile Picture" width="80" height="80"
+                                                 onerror="this.onerror=null;this.src='/static/images/default-profile-180x180.png'">
                                             <br><b>{{memberIntroduced.name}}</b>
                                             <br>{{memberIntroduced.mobileNumber}}
 
@@ -162,7 +166,9 @@
                             <div id="invitedBy" class="tab-pane fade  padding-4">
                                 <div class="gr-4 text-center" v-if="membersInvitedBy">
                                     <div class="gr-6 padding-5" v-for="memberInvitedBy in membersInvitedBy">
-                                            <img :src="imageBaseUrl+memberInvitedBy.profilePictureUrl" class="img-circle" alt="Profile Picture" width="80" height="80">
+                                            <img :src="imageBaseUrl+memberInvitedBy.profilePictureUrl"
+                                                 class="img-circle" alt="Profile Picture" width="80" height="80"
+                                                 onerror="this.onerror=null;this.src='/static/images/default-profile-180x180.png'">
                                             <br><b>{{memberInvitedBy.name}}</b>
                                             <br>{{memberInvitedBy.mobileNumber}}
 
@@ -171,7 +177,7 @@
                             </div>
                             <div id="likelyNames" class="tab-pane fade  padding-4">
                               <div class="gr-4 text-center">
-                                  <table class="table table-striped">
+                                  <table lass="table ui celled hover" cellspacing="0" width="100%">
                                     <thead>
                                     <tr>
                                       <th style="text-align: center;">Name</th>
