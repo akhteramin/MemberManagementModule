@@ -2,7 +2,8 @@
   <div id = "list" class="gr-10 push-2">
     <h1>Members</h1>
     <hr>
-    <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
+    <form v-on:submit.prevent="filter"
+          v-on:reset.prevent="init">
         <div class="row">
           <div class="gr-12">
            <div class="gr-3">
@@ -150,69 +151,97 @@
     </form>
 
           <!--========================================= my filters ==================================================-->
-        <div class="table-responsive gr-12">
-          <table id="memberlist-table" class="table ui celled" cellspacing="0" width="100%">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th style="width: 400px;">Name</th>
-                <th>Mobile Number</th>
-                <th style="text-align: center;">A/C Type</th>
-                <th style="text-align: center;">Verification</th>
-                <th style="text-align: center;">Profile Completed</th>
-                <th style="text-align: center;">Account Status</th>
-              </tr>
-            </thead>
-            <tbody>
-            <tr v-for="member,index in members.list">
-              <td>{{query.pageNumber * query.pageSize + index + 1}}</td>
+    <div class="table-responsive gr-12">
+      <table id="memberlist-table" class="table ui celled" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th style="width: 250px;">Name</th>
+            <th>Father</th>
+            <th>Mother</th>
+            <th style="text-align: center;">A/C Type</th>
+            <th style="text-align: center;" v-if="listType === 'default'">
+              Verification
+            </th>
+            <th style="text-align: center;">Profile Completed</th>
+            <th style="text-align: center;"
+                v-if="listType === 'default'">Account Status</th>
+            <th v-else style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr v-for="member,index in members.list" style="height: 10px;">
+          <td>{{query.pageNumber * query.pageSize + index + 1}}</td>
 
-              <td class="member-name">
-                <span v-if="member.mmUserPictures[0]">
-                  <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle"
-                       width="30" height="30"
-                       onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
-                    <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
-                    <!--width="30" height="30">-->
-                </span>
-                <span v-else>
-                  <img src="/static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30"
-                       onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
-                </span>
-                <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
-                  <a href=""  @click="memberDetails(member.accountId,member.accountType)">
-                    {{ member.name }}
-                  </a>
-                  <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
-                </span>
-                <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
-              </td>
-              <td>{{ member.mobileNumber }}</td>
-              <td style="text-align: center;">
-                <span v-if="member.accountType == 1">
-                  <i class="fa fa-user fa-2" aria-hidden="true"></i>
-                </span>
-                <span v-else>
-                  <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
-                </span>
-              </td>
-              <td style="text-align: center;">{{ member.verificationStatus | underscoreless }}</td>
-              <td style="text-align: center;">{{ member.profileCompletionScore }}%</td>
-              <td>
-                <div class="select">
-                  <select id="order-by-select"  v-model="member.accountStatus" @change="statusChange( member.accountId,member.accountStatus)">
-                    <option value = "1">Active</option>
-                    <option value = "2">Suspended</option>
-                  </select>
-                </div>
+          <td class="member-name">
+            <span v-if="member.mmUserPictures[0]">
+              <img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle"
+                   width="30" height="30"
+                   onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
+                <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
+                <!--width="30" height="30">-->
+            </span>
+            <span v-else>
+              <img src="/static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30"
+                   onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
+            </span>
+            <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
+              <a href=""  @click="memberDetails(member.accountId,member.accountType)">
+                {{ member.name }}
+                <small>
+                  <br>
+                  {{ member.mobileNumber }}
+                </small>
+              </a>
+              <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
+            </span>
+            <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
+          </td>
+          <td>
+            {{ member.father ? member.father : 'N/A' }}
+            <small v-if="member.fatherMobileNumber">
+              <br>
+              {{ member.fatherMobileNumber }}
+            </small>
+          </td>
+          <td>
+            {{ member.mother ? member.mother : 'N/A' }}
+            <small v-if="member.motherMobileNumber">
+              <br>
+              {{ member.motherMobileNumber }}
+            </small>
+          </td>
+          <td style="text-align: center;">
+            <span v-if="member.accountType == 1">
+              <i class="fa fa-user fa-2" aria-hidden="true"></i>
+            </span>
+            <span v-else>
+              <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
+            </span>
+          </td>
+          <td style="text-align: center;" v-if="listType === 'default'">
+            {{ member.verificationStatus | underscoreless }}
+          </td>
+          <td style="text-align: center;">{{ member.profileCompletionScore }}%</td>
+          <td v-if="listType === 'default'">
+            <div class="select">
+              <select id="order-by-select"  v-model="member.accountStatus" @change="statusChange( member.accountId,member.accountStatus)">
+                <option value = "1">Active</option>
+                <option value = "2">Suspended</option>
+              </select>
+            </div>
 
-              </td>
+          </td>
+          <td v-else style="text-align: center;">
+            <input type="checkbox" @change="verificationBoxClicked(member)"
+              v-model="member.uncheckVerificationActionBox">
+          </td>
 
-            </tr>
-            </tbody>
-          </table>
-        </div>
-          <div class="gr-12" v-if="members.totalElements > 0">
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="gr-12" v-if="members.totalElements > 0">
             <div class="row">
               <div class="gr-3">
                 <div v-if="members.list">
@@ -271,19 +300,90 @@
               </div>
             </div>
           </div>
-          <!--========================================= slider ==================================================-->
-          <member-list-slider  v-if="sliderShow"
-          :id = "memberProfile.id"
-          :memberBasicDetails = "loadMemberBasicDetails"
-          :memberProfile="memberProfile"
-          :memberDocuments="memberDocuments"
-          :memberIntroducers="memberIntroducers"
-          :memberMissingInfo="memberMissingInfo"
-          @update="hideProfile">
 
-          </member-list-slider>
+    <div id="VerifyOrApproveMemberModal"
+         class="modal fade" role="dialog">
+      <div class="modal-dialog  modal-md">
+        <!-- Modal content-->
 
-          <div id="MemberAccountStatusModal" class="modal fade" role="dialog">
+        <div class="modal-content" style="height: 650px; width: 500px;">
+          <div class="modal-header" style="text-align: center;">
+            <button type="button" class="close" data-dismiss="modal"
+                    @click="$('#VerifyOrApproveMemberModal').modal('hide')">&times;</button>
+            <h3><i class="fa fa-check" aria-hidden="true"></i> Member Verification</h3>
+          </div>
+
+          <div class="modal-body">
+            <form role="form" @submit.prevent="verifyOrApproveMembers('ACCEPT')"
+                  @reset.prevent="verifyOrApproveMembers('REJECT')"
+                  id="verificationForm">
+
+              <div class="small-scrollable">
+                <table class="table ui celled" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Member</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="name, index in memberListForVerificationNames">
+                      <td>{{ name }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr>
+              </div>
+
+
+              <div class="form-group">
+                <br>
+                <label for="comment">Comment</label>
+                <textarea type="email" class="form-control" id="comment" placeholder="Enter comment"
+                        required style="height: 150px;" v-model="verificationComment">
+                </textarea>
+              </div>
+
+              <div class="gr-6 push-6">
+                <button type="submit" class="button-md-verify" style="width: 100px;"
+                  :disabled="this.disableModalVerificationAndRejectionButton">
+                  <i class="fa fa-check"></i> {{ listType === 'waiting-verification'? 'Verify': 'Approve' }}
+                </button>
+                <button type="reset" class="button-reset"
+                  :disabled="this.disableModalVerificationAndRejectionButton">
+                  <i class="fa fa-times"></i> Reject
+                </button>
+              </div>
+
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="gr-10 push-5" v-if="listType !== 'default'">
+      <form v-on:submit.prevent="showVerificationModal">
+        <button type="submit" class="button-md-verify" style="width: 100px;"
+        :disabled="memberVerificationListEmpty">
+          <i class="fa fa-check" aria-hidden="true"></i>
+          {{listType === 'waiting-verification' ? 'Verify' : 'Approve'}}
+        </button>
+      </form>
+    </div>
+      <!--========================================= slider ==================================================-->
+    <member-list-slider  v-if="sliderShow"
+      :id = "memberProfile.id"
+      :memberBasicDetails = "loadMemberBasicDetails"
+      :memberProfile="memberProfile"
+      :memberDocuments="memberDocuments"
+      :memberIntroducers="memberIntroducers"
+      :memberMissingInfo="memberMissingInfo"
+      @update="hideProfile">
+
+      </member-list-slider>
+
+    <div id="MemberAccountStatusModal" class="modal fade" role="dialog">
             <div class="modal-dialog  modal-md">
             <!-- Modal content-->
 
@@ -360,10 +460,6 @@
   import Http from '../services/Http'
   import MemberListSlider from './MemberListSliderComponent.vue'
 
-  $(document).ready(function () {
-    $('#memberlist-table').DataTable()
-  })
-
   export default {
     name: 'MemberList',
     props: [
@@ -385,6 +481,12 @@
         memberDocuments: {},
         memberIntroducers: {},
         memberMissingInfo: {},
+        memberListForVerification: {},
+        memberListForVerificationNames: [],
+        memberVerificationListEmpty: true,
+        uncheckVerificationActionBox: null,
+        disableModalVerificationAndRejectionButton: false,
+        verificationComment: '',
         imageBaseUrl: '',
         value: [
           0,
@@ -414,6 +516,118 @@
         } else {
           this.doAdvancedSearch = true
         }
+      },
+      showVerificationModal () {
+        this.memberListForVerificationNames = []
+        this.verificationComment = null
+        for (let key in this.memberListForVerification) {
+          this.memberListForVerificationNames.push(this.memberListForVerification[key])
+        }
+        $('#VerifyOrApproveMemberModal').modal({backdrop: false})
+      },
+      verifyOrApproveMembers (status) {
+        this.disableModalVerificationAndRejectionButton = true
+        console.log('verify button clicked::::')
+        let request = {
+          'comment': this.verificationComment,
+          'status': status
+        }
+        let totalSelected = this.memberListForVerificationNames.length
+        console.log('total selected: ', totalSelected)
+        for (let key in this.memberListForVerification) {
+          console.log('verification requesting for: ', this.memberListForVerification[key])
+          if (this.listType === 'waiting-verification') {
+            Http.PUT('verification', request, [key])
+              .then(
+                ({data: {data: verificationResponse}}) => {
+                  totalSelected -= 1
+                  if (totalSelected < 1) {
+                    $('#VerifyOrApproveMemberModal').modal('hide')
+                    this.filter()
+                  }
+                  $.notify({
+                    title: '<strong>Success!</strong>',
+                    message: 'Verification successful.'
+                  }, {
+                    // settings
+                    type: 'success',
+                    delay: 1500
+                  })
+                  console.log('verification request response::', verificationResponse)
+                },
+                error => {
+                  totalSelected -= 1
+                  if (totalSelected < 1) {
+                    $('#VerifyOrApproveMemberModal').modal('hide')
+                    this.filter()
+                  }
+                  $.notify({
+                    // options
+                    title: '<strong>Verification failed!</strong>',
+                    message: 'Please try again.'
+                  }, {
+                    // settings
+                    type: 'danger',
+                    delay: 1500
+                  })
+                  console.log('Error in putting verification request, error: ', error)
+                }
+              )
+          } else {
+            Http.PUT('verification', request, [key, 'approve'])
+              .then(
+                ({data: approvalResponse}) => {
+                  totalSelected -= 1
+                  if (totalSelected < 1) {
+                    $('#VerifyOrApproveMemberModal').modal('hide')
+                    this.filter()
+                  }
+                  $.notify({
+                    // options
+                    title: '<strong>Success!</strong>',
+                    message: 'Account approved.'
+                  }, {
+                    // settings
+                    type: 'success',
+                    delay: 1500
+                  })
+                  console.log('approval request response::', approvalResponse)
+                },
+                error => {
+                  totalSelected -= 1
+                  if (totalSelected < 1) {
+                    $('#VerifyOrApproveMemberModal').modal('hide')
+                    this.filter()
+                  }
+                  $.notify({
+                    // options
+                    title: '<strong>Member approval failed!</strong>',
+                    message: 'Please try again.'
+                  }, {
+                    // settings
+                    type: 'danger',
+                    delay: 1500
+                  })
+                  console.log('Error in putting approval request, error: ', error)
+                }
+              )
+          }
+        }
+      },
+      verificationBoxClicked: function (member) {
+        if (this.memberListForVerification.hasOwnProperty(member.accountId)) {
+          delete this.memberListForVerification[member.accountId]
+          console.log('unchecked accountId: ', member.accountId)
+          this.memberVerificationListEmpty = true
+          for (let v in this.memberListForVerification) {
+            this.memberVerificationListEmpty = false
+          }
+        } else {
+          this.memberListForVerification[member.accountId] = member.name
+          this.memberVerificationListEmpty = false
+          console.log('checked accountId: ', member.accountId)
+        }
+        console.log('verification list empty? ', this.memberVerificationListEmpty)
       },
       loadProfile: function (member) {
         console.log('accountID:', member)
@@ -555,6 +769,10 @@
       },
       pageChange (number = 0) {
         if (number >= 0 && number < this.members.totalPages && this.query.pageNumber !== number) {
+          this.memberListForVerification = {}
+          this.memberListForVerificationNames = []
+          this.memberVerificationListEmpty = true
+          this.disableModalVerificationAndRejectionButton = false
           this.query.pageNumber = number
           this.getMembers()
         }
@@ -588,6 +806,10 @@
           pageNumber: 0,
           pageSize: 10
         })
+        this.memberListForVerification = {}
+        this.memberListForVerificationNames = []
+        this.memberVerificationListEmpty = true
+        this.disableModalVerificationAndRejectionButton = false
         console.log('this.listType: ', this.listType)
         if (this.listType === 'waiting-verification') {
           this.query.verificationStatus = 'NOT_VERIFIED'
@@ -626,6 +848,10 @@
             this.showLoader = false
             console.log('Success in getting filtered results, data: ', data)
             this.members = data
+            this.memberListForVerification = {}
+            this.memberListForVerificationNames = []
+            this.memberVerificationListEmpty = true
+            this.disableModalVerificationAndRejectionButton = false
           }, error => {
             console.log('Error in getting filtered results: ', error)
           })

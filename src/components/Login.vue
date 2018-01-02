@@ -56,7 +56,7 @@
       } else if (this.$route.query.token) {
         localStorage.setItem('token', this.$route.query.token)
         // Http get request for permission list
-        let paramData = '?login_id=' + this.$route.query.loginID + '&app_id=&limit=100&offset=0'
+        let paramData = '?login_id=' + this.$route.query.loginID + '&is_active=True&app_id=&limit=100&offset=0'
         Http.GET('apps', [paramData])
           .then(
             ({data: appsData}) => {

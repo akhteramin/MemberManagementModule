@@ -80,7 +80,9 @@
                         <img :src="imageBaseUrl+memberDocument.documentUrl"
                         v-if="!isPdf(memberDocument.documentUrl)"
                         class="img-rounded" alt="Documents" width="140" height="80"
-                        @click="showDocumentDetails(memberDocument)">
+                        @click="showDocumentDetails(memberDocument)"
+                             onerror="this.onerror=null;"
+                        >
 
                         <i v-if="isPdf(memberDocument.documentUrl)"
                         class="fa fa-file-pdf-o"
