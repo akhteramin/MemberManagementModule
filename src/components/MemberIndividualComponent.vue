@@ -66,7 +66,7 @@
                         <span class="banner-text" v-else>(Business)</span>
                         <br>{{member.basicInfo.mobileNumber}}
                         <br><span>{{member.basicInfo.profileCompletionScore}}%</span>
-                        <br>General
+                        <br>{{ memberAccountClass }}
                         <button class="button-md-balance padding-2" >
                           <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
                           <span v-else>Balance: N/A </span>
@@ -544,6 +544,7 @@
         districtList: {},
         profilePicture: {},
         accessControlList: [],
+        memberAccountClass: 'REGULAR',
         memberPresentAddress: {
           addressLine1: 'N/A',
           addressLine2: 'N/A',
@@ -623,6 +624,15 @@
               console.log('this.memberPresentAddress: ', this.memberPresentAddress)
               console.log('this.memberPermanentAddress: ', this.memberPermanentAddress)
               console.log('response addresses: ', this.member.addresses)
+
+              if (member.basicInfo.accountClass === 5) {
+                this.memberAccountClass = 'VERIFIED GENERAL'
+              } else if (member.basicInfo.accountClass === 3) {
+                this.memberAccountClass = 'PLATINUM'
+              } else if (member.basicInfo.accountClass === 2) {
+                this.memberAccountClass = 'GOLD'
+              }
+
               this.getStaticNames()
             },
             error => {
