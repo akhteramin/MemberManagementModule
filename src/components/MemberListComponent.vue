@@ -1,5 +1,6 @@
 <template>
   <div id = "list" class="gr-10 push-2">
+    <!--<br>-->
     <h1>Members</h1>
     <hr>
     <form v-on:submit.prevent="filter"
@@ -188,12 +189,12 @@
             <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
               <a href=""  @click="memberDetails(member.accountId,member.accountType)">
                 {{ member.name }}
-                <small>
-                  <br>
-                  {{ member.mobileNumber }}
-                </small>
               </a>
               <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
+              <small>
+                <br>
+                {{ member.mobileNumber }}
+              </small>
             </span>
             <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
           </td>
@@ -306,7 +307,7 @@
       <div class="modal-dialog  modal-md">
         <!-- Modal content-->
 
-        <div class="modal-content" style="height: 650px; width: 500px;">
+        <div class="modal-content" style="min-height: 500px; width: 500px;">
           <div class="modal-header" style="text-align: center;">
             <button type="button" class="close" data-dismiss="modal"
                     @click="$('#VerifyOrApproveMemberModal').modal('hide')">&times;</button>
@@ -339,11 +340,11 @@
                 <br>
                 <label for="comment">Comment</label>
                 <textarea type="email" class="form-control" id="comment" placeholder="Enter comment"
-                        required style="height: 150px;" v-model="verificationComment">
+                        required style="height: 150px; resize: none;" v-model="verificationComment">
                 </textarea>
               </div>
 
-              <div class="gr-6 push-6">
+              <div class="push-3">
                 <button type="submit" class="button-md-verify" style="width: 100px;"
                   :disabled="this.disableModalVerificationAndRejectionButton">
                   <i class="fa fa-check"></i> {{ listType === 'waiting-verification'? 'Verify': 'Approve' }}

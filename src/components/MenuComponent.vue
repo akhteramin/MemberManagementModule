@@ -96,7 +96,7 @@
     </div>
     <br>
     <button v-if="!collapseMenuComponent" class="gr-0.5 push-2" @click="collapseMenuComponent = true;"
-    style="background-color: #1bb1a2;">
+      style="background-color: #1bb1a2;">
       <i class="fa fa-arrow-left" aria-hidden="true" style="color: white;"></i>
     </button>
     <button v-else class="gr-0.5 push-1" @click="collapseMenuComponent = false;"
