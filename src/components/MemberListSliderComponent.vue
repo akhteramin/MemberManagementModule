@@ -28,8 +28,8 @@
             </div>
             <hr>
             <div class="gr-2">
-            <span v-if="memberProfile.mmUserPictures[0]">
-                <img :src="imageBaseUrl+memberProfile.mmUserPictures[0].document.url" class="img-rounded" alt="Profile Picture" width="70" height="80"
+            <span v-if="memberProfile.userPictureResponses[0]">
+                <img :src="imageBaseUrl+memberProfile.userPictureResponses[0].url" class="img-rounded" alt="Profile Picture" width="70" height="80"
                      onerror="onerror=null; src='/static/images/default-original.jpg';">
             </span>
             <span v-else>

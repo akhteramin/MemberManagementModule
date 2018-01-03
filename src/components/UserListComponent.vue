@@ -11,69 +11,67 @@
 
 
 
-      <div id="CreateNewUserModal"
-           class="modal fade" role="dialog">
-          <div class="modal-dialog  modal-md">
-            <!-- Modal content-->
+      <div id="CreateNewUserModal" class="modal fade" role="dialog">
+        <div class="modal-dialog  modal-md">
+          <!-- Modal content-->
+          <div class="modal-content" style="height: 650px; width: 500px;">
+            <div class="modal-header" style="text-align: center;">
+              <button type="button" class="close" data-dismiss="modal" @click="setShowNewUserComponentToFalse">&times;</button>
+              <h3><i class="fa fa-user-plus" aria-hidden="true"></i> Create New User</h3>
+            </div>
 
-            <div class="modal-content" style="height: 650px; width: 500px;">
-              <div class="modal-header" style="text-align: center;">
-                <button type="button" class="close" data-dismiss="modal" @click="setShowNewUserComponentToFalse">&times;</button>
-                <h3><i class="fa fa-user-plus" aria-hidden="true"></i> Create New User</h3>
-              </div>
-
-              <div class="modal-body">
-                <form role="form" @submit.prevent="createNewUser" id="loginForm">
+            <div class="modal-body">
+              <form role="form" @submit.prevent="createNewUser" id="loginForm">
 
 
 
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name"
-                           placeholder="Name" v-model="createUser.name" required>
-                  </div>
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name"
+                         placeholder="Name" v-model="createUser.name" required>
+                </div>
 
 
 
-                  <div class="form-group">
-                    <label for="designation">Designation</label>
-                    <input type="text" class="form-control" id="designation"
-                           placeholder="designation" v-model="createUser.designation"
-                           required>
-                  </div>
+                <div class="form-group">
+                  <label for="designation">Designation</label>
+                  <input type="text" class="form-control" id="designation"
+                         placeholder="designation" v-model="createUser.designation"
+                         required>
+                </div>
 
 
 
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="email"
-                           v-model="createUser.email" required>
-                  </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="email"
+                         v-model="createUser.email" required>
+                </div>
 
 
 
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password"
-                           required placeholder="Choose a password" v-model="createUser.password">
-                  </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password"
+                         required placeholder="Choose a password" v-model="createUser.password">
+                </div>
 
 
 
-                  <div class="form-group">
-                    <label for="retypePassword">Retype Password</label>
-                    <input type="password" class="form-control" id="retypePassword" placeholder="Retype password"
-                           required v-model="createUser.passwordReTyped">
-                  </div>
+                <div class="form-group">
+                  <label for="retypePassword">Retype Password</label>
+                  <input type="password" class="form-control" id="retypePassword" placeholder="Retype password"
+                         required v-model="createUser.passwordReTyped">
+                </div>
 
 
-                  <button type="submit" class="btn-block btn btn-lg btn-primary">Create User</button>
+                <button type="submit" class="btn-block btn btn-lg btn-primary">Create User</button>
 
-                </form>
-              </div>
+              </form>
             </div>
           </div>
         </div>
+      </div>
 
     </div>
 

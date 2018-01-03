@@ -23,7 +23,7 @@
                 <td>{{ item.documentIdNumber ? item.documentIdNumber : 'N/A' }}</td>
                 <td>
                     <button>
-                    <img default-src="images/default-news-feed.jpg"
+                    <img default-src="/images/default-news-feed.jpg"
                     v-if="!isPdf(item.documentUrl)"
                     :src="documentBaseUrl + item.documentUrl"
                     alt="Profile Picture"
@@ -169,8 +169,7 @@
     name: 'MemberIdentificationDocument',
     props: [
       'id',
-      'accountType',
-      'boom'
+      'accountType'
     ],
     components: {
       'update-member-identification-document': UpdateMemberIdentificationDocument
@@ -199,7 +198,8 @@
         return this.accessControlList.indexOf(permission) > -1
       },
       init () {
-        console.log('member identification component called.... boom: ', this.boom)
+        console.log('member identification component called.... id: ', this.id,
+          ' account type: ', this.accountType)
         this.showDocumentUploadData = false
         this.documentBaseUrl = Http.IMAGE_URL
         if (this.accountType === 1) {
