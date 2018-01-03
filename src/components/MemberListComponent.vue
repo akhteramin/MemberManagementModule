@@ -669,6 +669,13 @@
           this.memberVerificationListEmpty = false
           this.checkBoxTicked[index] = 'checked'
           console.log('checked accountId: ', member.accountId)
+          let count = 0
+          for (let _ in this.memberListForVerification) {
+            count += 1
+          }
+          if (count === this.members.list.length) {
+            this.headerCheckBox = 'checked'
+          }
         }
         console.log('verification list empty? ', this.memberVerificationListEmpty)
       },
@@ -821,6 +828,7 @@
           this.memberVerificationListEmpty = true
           this.disableModalVerificationAndRejectionButton = false
           this.query.pageNumber = number
+          this.headerCheckBox = false
           this.getMembers()
         }
       },
@@ -880,6 +888,7 @@
         this.query.profileCompletionScoreStartRange = this.value[0]
         this.query.profileCompletionScoreEndRange = this.value[1]
         this.checkBoxTicked = []
+        this.headerCheckBox = false
         for (let i = 0; i < 100; i++) {
           this.checkBoxTicked.push(false)
         }
