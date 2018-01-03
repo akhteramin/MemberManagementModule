@@ -829,6 +829,7 @@
           this.disableModalVerificationAndRejectionButton = false
           this.query.pageNumber = number
           this.headerCheckBox = false
+          this.sliderShow = false
           this.getMembers()
         }
       },
@@ -846,6 +847,7 @@
         window.open(`/member/profile/${value}/${accntType}`, '_blank')
       },
       init () {
+        this.sliderShow = false
         this.imageBaseUrl = Http.IMAGE_URL
         this.query = Object.assign({}, {
           name: '', // string
@@ -884,6 +886,7 @@
         this.getMembers()
       },
       filter (key = 'member') {
+        this.sliderShow = false
         this.query.pageNumber = 0
         this.query.profileCompletionScoreStartRange = this.value[0]
         this.query.profileCompletionScoreEndRange = this.value[1]
