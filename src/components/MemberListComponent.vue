@@ -167,7 +167,11 @@
             <th style="text-align: center;">Profile Completed</th>
             <th style="text-align: center;"
                 v-if="listType === 'default'">Account Status</th>
-            <th v-else style="text-align: center;">Action</th>
+            <th v-else style="text-align: center;">
+              Action
+              <input type="checkbox" @click="allMemberSelectAndDeselect"
+                v-model="headerCheckBox"/>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -234,8 +238,8 @@
 
           </td>
           <td v-else style="text-align: center;">
-            <input type="checkbox" @change="verificationBoxClicked(member)"
-              v-model="member.uncheckVerificationActionBox">
+            <input type="checkbox" @change="verificationBoxClicked(member, index)"
+              v-model="checkBoxTicked[index]"> <!-- member.uncheckVerificationActionBox -->
           </td>
 
         </tr>
@@ -486,7 +490,10 @@
         memberListForVerificationNames: [],
         memberVerificationListEmpty: true,
         uncheckVerificationActionBox: null,
+        allMembersSelected: null,
         disableModalVerificationAndRejectionButton: false,
+        checkBoxTicked: [],
+        headerCheckBox: false,
         verificationComment: '',
         imageBaseUrl: '',
         value: [
@@ -524,7 +531,39 @@
         for (let key in this.memberListForVerification) {
           this.memberListForVerificationNames.push(this.memberListForVerification[key])
         }
+        if (this.memberListForVerificationNames.length === this.members.list.length) {
+          this.headerCheckBox = 'checked'
+        }
+        console.log('total selected items: ', this.memberListForVerificationNames.length)
         $('#VerifyOrApproveMemberModal').modal({backdrop: false})
+      },
+      allMemberSelectAndDeselect () {
+        let counter = 0
+        for (let key in this.memberListForVerification) {
+          counter++
+        }
+        console.log('counter: ', counter, ' member list length: ', this.members.list.length)
+        if (counter < this.members.list.length) { // select all members in the display
+          this.memberListForVerification = {}
+          for (let idx in this.members.list) {
+            console.log('member.accountId: ', this.members.list[idx].accountId,
+              ' member.name: ', this.members.list[idx].name)
+            this.memberListForVerification[this.members.list[idx].accountId] = this.members.list[idx].name
+            this.memberVerificationListEmpty = false
+          }
+          for (let i = 0; i < 100; i++) {
+            this.checkBoxTicked[i] = 'checked'
+          }
+        } else {
+          this.memberListForVerification = {}
+          this.memberVerificationListEmpty = true
+          this.allMembersSelected = false
+          this.headerCheckBox = false
+          for (let i = 0; i < 100; i++) {
+            this.checkBoxTicked[i] = false
+          }
+        }
+        console.log('all members selected? ', this.allMembersSelected)
       },
       verifyOrApproveMembers (status) {
         this.disableModalVerificationAndRejectionButton = true
@@ -615,7 +654,7 @@
           }
         }
       },
-      verificationBoxClicked: function (member) {
+      verificationBoxClicked: function (member, index) {
         if (this.memberListForVerification.hasOwnProperty(member.accountId)) {
           delete this.memberListForVerification[member.accountId]
           console.log('unchecked accountId: ', member.accountId)
@@ -623,9 +662,12 @@
           for (let v in this.memberListForVerification) {
             this.memberVerificationListEmpty = false
           }
+          this.checkBoxTicked[index] = false
+          this.headerCheckBox = false
         } else {
           this.memberListForVerification[member.accountId] = member.name
           this.memberVerificationListEmpty = false
+          this.checkBoxTicked[index] = 'checked'
           console.log('checked accountId: ', member.accountId)
         }
         console.log('verification list empty? ', this.memberVerificationListEmpty)
@@ -716,6 +758,10 @@
         this.init()
       },
       getMembers: function (key = 'member') {
+        this.checkBoxTicked = []
+        for (let i = 0; i < 100; i++) {
+          this.checkBoxTicked.push(false)
+        }
         this.showLoader = true
         Http.GET(key, this.query)
           .then(({data: {data}}) => {
@@ -807,6 +853,10 @@
           pageNumber: 0,
           pageSize: 10
         })
+        this.checkBoxTicked = []
+        for (let i = 0; i < 100; i++) {
+          this.checkBoxTicked.push(false)
+        }
         this.memberListForVerification = {}
         this.memberListForVerificationNames = []
         this.memberVerificationListEmpty = true
@@ -829,6 +879,10 @@
         this.query.pageNumber = 0
         this.query.profileCompletionScoreStartRange = this.value[0]
         this.query.profileCompletionScoreEndRange = this.value[1]
+        this.checkBoxTicked = []
+        for (let i = 0; i < 100; i++) {
+          this.checkBoxTicked.push(false)
+        }
         console.log('mobile number: ' + this.query.mobileNumber + ' accountType: ' + this.query.accountType +
           ' verified: ' + this.query.verificationStatus)
         if (this.signUpDateFrom !== null && this.signUpDateFrom.length > 0) {
