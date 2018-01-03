@@ -88,21 +88,21 @@
             </div>
           </li>
 
-          <a v-on:click="goToUserProfile"><li><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
+          <a v-on:click="goToUserProfile"><li><i class="fa fa-user-circle" aria-hidden="true"></i></li></a>
           <a v-on:click="logout"><li><i class="fa fa-sign-out" aria-hidden="true"></i></li></a>
         </ul>
 
       </nav>
     </div>
     <br>
-    <button v-if="!collapseMenuComponent" class="gr-0.5 push-2" @click="collapseMenuComponent = true;"
-      style="background-color: #1bb1a2;">
-      <i class="fa fa-arrow-left" aria-hidden="true" style="color: white;"></i>
-    </button>
-    <button v-else class="gr-0.5 push-1" @click="collapseMenuComponent = false;"
-            style="background-color: #1bb1a2;">
-      <i class="fa fa-arrow-right" aria-hidden="true" style="color: white;"></i>
-    </button>
+    <!--<button v-if="!collapseMenuComponent" class="gr-0.5 push-2" @click="collapseMenuComponent = true;"-->
+      <!--style="background-color: #1bb1a2;">-->
+      <!--<i class="fa fa-arrow-left" aria-hidden="true" style="color: white;"></i>-->
+    <!--</button>-->
+    <!--<button v-else class="gr-0.5 push-1" @click="collapseMenuComponent = false;"-->
+            <!--style="background-color: #1bb1a2;">-->
+      <!--<i class="fa fa-arrow-right" aria-hidden="true" style="color: white;"></i>-->
+    <!--</button>-->
   </div>
 </template>
 

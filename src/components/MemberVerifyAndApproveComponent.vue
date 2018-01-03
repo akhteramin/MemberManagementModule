@@ -67,7 +67,7 @@
                     : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
-                  <br>
+                  <br><br>
                   <div class="gr-4 push-1" style="text-align: left;">
                     Time:
                   </div>
@@ -82,7 +82,8 @@
 
                 </div>
 
-                <div v-else-if="verificationStatus === 'REJECTED' || verificationStatus === 'REJECT'"
+                <div v-else-if="(verificationStatus === 'REJECTED' && verificationType === null)
+                 || (verificationStatus === 'REJECT' && verificationType === 'VERIFY')"
                      class="row justify-content-center text-center">
                   <div style="color: red;">
                     <i class="fa fa-times"></i> REJECTED
@@ -98,7 +99,7 @@
                     : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
-                  <br>
+                  <br> <br>
                   <div class="gr-5 text-left" style="text-align: left;">
                     Time:
                   </div>
@@ -106,9 +107,37 @@
                     {{ verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
-                  <div v-else class="gr-4 push-1">
+                  <div v-else class="gr-7" style="text-align: left;">
                     N/A
                   </div>
+                </div>
+
+                <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT')
+                    && verificationType === 'APPROVE'">
+                  <div style="color: #eb9316;" class="text-center">
+
+                  </div>
+                  <br>
+                  <div class="gr-4 push-1" style="text-align: left;">
+                    Verified By:
+                  </div>
+                  <div class="gr-4 push-1">
+                    {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
+                    : 'N/A' }}
+                    <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
+                  </div>
+                  <br><br>
+                  <div class="gr-4 push-1" style="text-align: left;">
+                    Time:
+                  </div>
+                  <div class="gr-4 push-1" v-if="verificationHistory && verificationHistory.length > 0">
+                    {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY') }}
+                    <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
+                  </div>
+                  <div v-else class="gr-6 push-1">
+                    N/A
+                  </div>
+                  <br>
                 </div>
 
 
@@ -171,6 +200,32 @@
                 <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
               </div>
               <div v-else class="gr-1" style="text-align: left;">
+                N/A
+              </div>
+            </div>
+
+            <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT')
+            && verificationType === 'APPROVE'">
+              <div style="color: red; text-align: center;">
+                <i class="fa fa-times"></i> APPROVAL REJECTED
+              </div>
+              <br>
+              <div class="gr-5" style="text-align: left;">
+                Rejected By:
+              </div>
+              <div class="gr-7" style="text-align: left;">
+                {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
+                <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
+              </div>
+              <br><br>
+              <div class="gr-5" style="text-align: left;">
+                Time:
+              </div>
+              <div class="gr-7" v-if="approvalHistory && approvalHistory.length > 0" style="text-align: left;">
+                {{ approvalHistory && approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY') }}
+                <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
+              </div>
+              <div v-else class="gr-7" style="text-align: left;">
                 N/A
               </div>
             </div>
@@ -334,8 +389,8 @@
       return {
         verificationStatus: '',
         verificationType: '',
-        approvalHistory: {},
-        verificationHistory: {},
+        approvalHistory: [],
+        verificationHistory: [],
         verificationComment: '',
         approvalComment: '',
         showVerificationHistory: true,
@@ -354,12 +409,12 @@
         if (this.member.approveHistory && this.member.approveHistory.length > 0) {
           this.approvalHistory = this.member.approveHistory
         } else {
-          this.approvalHistory = null
+          this.approvalHistory = []
         }
         if (this.member.verificationHistory && this.member.verificationHistory.length > 0) {
           this.verificationHistory = this.member.verificationHistory
         } else {
-          this.verificationHistory = null
+          this.verificationHistory = []
         }
         this.verificationStatus = this.member.basicInfo.verificationStatus
         this.verificationType = this.approvalHistory && this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
@@ -408,6 +463,7 @@
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
+              console.log('now, verification history: ', this.verificationHistory)
             },
             error => {
               this.showLoader = false
@@ -448,6 +504,7 @@
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
+              console.log('now, verification history: ', this.verificationHistory)
             },
             error => {
               this.showLoader = false
@@ -488,6 +545,7 @@
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
               this.approvalHistory.push(approvalResponse.data)
+              console.log('now, approval history: ', this.approvalHistory)
             },
             error => {
               this.showLoader = false
@@ -519,6 +577,7 @@
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
               this.approvalHistory.push(approvalResponse.data)
+              console.log('now, approval history: ', this.approvalHistory)
             },
             error => {
               this.showLoader = false
