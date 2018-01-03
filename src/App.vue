@@ -2,12 +2,12 @@
   <div id="app">
     <div class="row">
       <MenuComponent v-if="$route.name !== 'Login'"></MenuComponent>
-      <div>
-        <button class="gr-0.5 push-2"
-                style="background-color: #1bb1a2;">
-          <i class="fa fa-arrow-left" aria-hidden="true" style="color: white;"></i>
-        </button>
-      </div>
+      <!--<div>-->
+        <!--<button class="gr-0.5 push-2"-->
+                <!--style="background-color: #1bb1a2;">-->
+          <!--<i class="fa fa-arrow-left" aria-hidden="true" style="color: white;"></i>-->
+        <!--</button>-->
+      <!--</div>-->
       <router-view></router-view>
     </div>
     <!--<router-view></router-view>-->
