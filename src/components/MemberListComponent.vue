@@ -399,7 +399,7 @@
           </td>
 
           <td style="text-align: center">
-            <div v-if="member.userCards.length > 0">
+            <div v-if="member.userCards">
               <a @click="showCardsModal(member.userCards)"
                  style="cursor: pointer;">
                 {{ member.userCards.length }} cards

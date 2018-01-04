@@ -419,6 +419,12 @@
                       </member-bank-account>
                     </div>
 
+                    <div>
+                      <member-bank-card :id="id">
+                      </member-bank-card>
+                    </div>
+
+
                     <div class="row justify-content-center"
                          v-if="containsPermission('MS_MM_USER_GET_INTRODUCER_LIST')">
                       <member-introduced-by :id="id">
@@ -490,6 +496,7 @@
   import MemberOffer from './MemberOfferComponent.vue'
   import UpdateMemberBusinessImage from './UpdateMemberBusinessImageComponent.vue'
   import MemberAccessControl from './MemberAccessControlComponent.vue'
+  import MemberBankCard from './MemberBankCardComponent.vue'
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -513,7 +520,8 @@
       'update-member-image': UpdateMemberImage,
       'update-member-business-image': UpdateMemberBusinessImage,
       'member-offer': MemberOffer,
-      'member-access-control': MemberAccessControl
+      'member-access-control': MemberAccessControl,
+      'member-bank-card': MemberBankCard
     },
     data () {
       return {
