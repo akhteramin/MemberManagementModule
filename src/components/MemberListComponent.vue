@@ -305,7 +305,7 @@
           <tr>
             <th>#</th>
             <th style="width: 250px;">Name</th>
-            <!--<th>Father</th>-->
+            <th>Basic Info</th>
             <!--<th>Mother</th>-->
             <th style="text-align: center;">A/C Type</th>
             <th style="text-align: center;">Identification Documents</th>
@@ -366,6 +366,11 @@
               <!--{{ member.motherMobileNumber }}-->
             <!--</small>-->
           <!--</td>-->
+          <td>
+            {{ getStaticNames(member.occupation) }}
+            </br>
+            <small>{{ member.organizationName }}</small>
+          </td>
           <td style="text-align: center;">
             <span v-if="member.accountType == 1">
               <i class="fa fa-user fa-2" aria-hidden="true"></i>
@@ -703,7 +708,8 @@
         memberSuspensionHistory: {},
         loadMemberBasicDetails: {},
         accessControlList: {},
-        showLoader: false
+        showLoader: false,
+        occupationList: {}
       }
     },
     methods: {
@@ -998,6 +1004,13 @@
             console.error('Error in getting members: ', error)
           })
       },
+      getStaticNames (id) {
+        let occupationName = this.occupationList.find(x => x.id === id)
+        if(occupationName)
+          return occupationName.name
+        else 
+          return "N/A"
+      },
       statusChange: function (accountID, accountStatus) {
         console.log(accountStatus)
         this.memberAccountStatus = accountStatus
@@ -1081,6 +1094,7 @@
           pageNumber: 0,
           pageSize: 10
         })
+        this.occupationList = JSON.parse(localStorage.getItem('occupation'))
         this.checkBoxTicked = []
         for (let i = 0; i < 100; i++) {
           this.checkBoxTicked.push(false)
