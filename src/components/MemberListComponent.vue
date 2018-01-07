@@ -1,5 +1,5 @@
 <template>
-  <div id = "list" class="gr-10">
+  <div id = "list">
 
 
     <div id="IdentificationDocumentModal" class="modal fade" role="dialog">
@@ -149,7 +149,6 @@
 
 
     <h1>Members</h1>
-    Here it is: {{ doCollapseOrNot }}
     <h1 v-if="menuComponent.data().collapseMenuComponent">A kmn bichar!!!</h1>
     <hr>
     <form v-on:submit.prevent="filter"

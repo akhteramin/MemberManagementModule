@@ -3,8 +3,8 @@
     <div class="row">
       <MenuComponent v-if="$route.name !== 'Login'"
       @update="learnMenuComponentCollapsedOrNot"></MenuComponent>
-      <router-view v-if="!isMenuCollapsed" class="push-2"></router-view>
-      <router-view v-else class="push-1"></router-view>
+      <router-view v-if="!isMenuCollapsed" class="gr-10 push-2"></router-view>
+      <router-view v-else class="gr-11 push-1"></router-view>
     </div>
     <!--<router-view></router-view>-->
   </div>
