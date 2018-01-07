@@ -8,6 +8,13 @@
             <h3 class="card-header">
               <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
 
+            <!--div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-default" :class="{'btn-active-til': showBasicDetails}">Basic Details</button>
+              <button type="button" class="btn btn-default">Profile2</button>
+              <button type="button" class="btn btn-default">Profile3</button>
+              <button type="button" class="btn btn-default">Profile4</button>
+              
+            </div-->
             <div id = "nav-bar" style="cursor: pointer;">
               <ul class="nav nav-tabs">
                 <li class="text-center" :class="{active: showBasicDetails}"
@@ -49,10 +56,10 @@
                       <div class="gr-2 text-center">
                         <img v-if="member.basicInfo.mmUserPictures[0]"
                               :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
-                              class="img-circle img-responsive" width="250" height="250"
+                              class="img-rounded img-responsive" width="250" height="250"
                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
 
-                        <img v-else src="/static/images/default-original.jpg" class="img-circle img-responsive"
+                        <img v-else src="/static/images/default-original.jpg" class="img-rounded img-responsive"
                             alt="N/A" width="250" height="250"
                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
                         <update-member-image
@@ -92,12 +99,12 @@
                         </div>
 
 
-                        <div class="gr-11">
+                        <div class="gr-12 panel-label">
                           <div class="gr-2">
-                            <h5><b>Basic Information</b></h5>
+                            <label class="text-label"><b>Basic Information</b></label>
                           </div>
                           <div class="gr-2 push-7" v-if="!editBasicProfileMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
-                              <button class="button-md-edit" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>
+                              <button class="button-md-verify" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                           </div>
                         </div>
                         <div class="gr-10" v-if="!editBasicProfileMode">
@@ -160,7 +167,7 @@
                           {{ member.basicInfo.organizationName || 'N/A' }}
                           </div>
                         </div>
-                        <div class="gr-11" v-else>
+                        <div class="gr-12" v-else>
                           <member-basic-info-update
                             :member="member"
                             :occupationList="occupationList"
@@ -170,13 +177,13 @@
 
                         <!--<hr>-->
                       <div v-if="member.basicInfo.accountType===1">
-                        <div class="gr-11">
+                        <div class="gr-12 panel-label">
                           <div class="gr-2">
-                              <h5><b>Family Information</b></h5>
+                              <label class="text-label"><b>Family Information</b></label>
                             </div>
                             <div class="gr-2 push-7"
                                  v-if="!editParentsMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
-                                <button class="button-md-edit" @click="editParents()">
+                                <button class="button-md-verify" @click="editParents()">
                                   <i class="fa fa-pencil-square-o"></i> Edit </button>
                             </div>
                         </div>
@@ -215,9 +222,9 @@
                         </div>
                       </div>
                       <div v-if="member.basicInfo.accountType===2">
-                        <div class="gr-12">
+                        <div class="gr-11 panel-label">
                           <div class="gr-2">
-                              <h5><b>Business Information</b></h5>
+                              <label class="test-label"><b>Business Information</b></label>
                             </div>
 
                         </div>
@@ -259,8 +266,8 @@
 
 
               <div id="addresses" class="gr-12" v-if="containsPermission('MS_MM_USER_BASIC_DETAILS')">
-                  <div class="gr-12">
-                    <h5><b>Address</b></h5>
+                  <div class="gr-11 panel-label">
+                    <label class="text-label"><b>Address</b></label>
                   </div>
                   <!--<div class="gr-2 push-6" v-if="!editAddressMode">-->
                     <!--<button class="button-md-edit" @click="editAddress"><i class="fa fa-pencil-square-o"></i> Edit </button>-->
@@ -277,7 +284,7 @@
                         </div>
                         <div class="gr-2 push-6"
                              v-if="!editPresentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
-                          <button class="button-md-edit" @click="editPresentAddress">
+                          <button class="button-md-verify" @click="editPresentAddress">
                             <i class="fa fa-pencil-square-o"></i> Edit </button>
                         </div>
                       </div>
@@ -344,7 +351,7 @@
                         </div>
                         <div class="gr-2 push-6"
                              v-if="!editPermanentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
-                          <button class="button-md-edit" @click="editPermanentAddress">
+                          <button class="button-md-verify" @click="editPermanentAddress">
                             <i class="fa fa-pencil-square-o"></i> Edit </button>
                         </div>
                       </div>

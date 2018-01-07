@@ -1,7 +1,9 @@
  <template>
-    <div class="row justify-content-center">
-        <div class="gr-10">
-            <h5><b>Identification Documents</b></h5>
+    <div class="justify-content-center">
+        <div class="gr-11 panel-label">
+          <label class="text-label"><b>Identification Documents</b></label>
+        </div>
+        <div class="gr-10 padding-5">
             <div class="text-center" v-if="documents === null || documents.length === 0">
               No Document has been uploaded.
             </div>
@@ -41,7 +43,7 @@
                   <span>
 
                   <button data-toggle="modal" :data-target="`#ChangeDocumentModal${item.id}`"
-                  class="button-md-edit" data-backdrop="false"><i class="fa fa-pencil-square-o"></i> Edit </button>
+                  class="button-md-verify" data-backdrop="false"><i class="fa fa-pencil-square-o"></i> Edit </button>
                     <div :id="`ChangeDocumentModal${item.id}`" class="modal fade" role="dialog">
                       <update-member-identification-document
                       :document="item"

@@ -1,7 +1,9 @@
  <template>
     <div class="row justify-content-center">
-      <div class="gr-10">
-        <h5><b>Card Info</b></h5>
+      <div class="gr-11 panel-label">
+        <label class="text-label"><b>Card Info</b></label>
+      </div>
+      <div class="gr-10 padding-5">
         <div class="text-center" v-if="bankCards.length === 0">No Card Added<br></div>
         <div v-else-if="bankCards" class="small-scrollable" style="height: 210px;">
           <table class="table ui celled" cellspacing="0" width="100%">

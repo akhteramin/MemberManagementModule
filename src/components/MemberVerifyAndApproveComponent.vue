@@ -17,8 +17,8 @@
       </div>
     </div>
 
-    <div class="gr-12">
-      <h5><b>Verification</b></h5>
+    <div class="gr-11 panel-label">
+          <label class="text-label"><b>Verification</b></label>
     </div>
     <div class="gr-12">
       <table class="table">
@@ -285,17 +285,21 @@
 
 
       <div id = "nav-bar">
-        <h5><b>Verification History</b></h5>
-        <ul class="nav nav-tabs">
-          <li class="gr-6 text-center" :class="{active: showVerificationHistory}"
-              @click="setTab('tabVerificationHistory')"><a data-toggle="tab">Verification</a></li>
-          <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-          <li class="gr-6 text-center" :class="{active: showApprovalHistory}"
-              @click="setTab('tabApprovalHistory')"><a data-toggle="tab">Approval</a></li>
-        </ul>
+        <div class="gr-11 panel-label">
+          <label class="text-label"><b>Verification History</b></label>
+        </div>
+        <div class="gr-11 padding-5">
+          <ul class="nav nav-tabs">
+            <li class="gr-6 text-center" :class="{active: showVerificationHistory}"
+                @click="setTab('tabVerificationHistory')"><a data-toggle="tab">Verification</a></li>
+            <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
+            <li class="gr-5 text-center" :class="{active: showApprovalHistory}"
+                @click="setTab('tabApprovalHistory')"><a data-toggle="tab">Approval</a></li>
+          </ul>
+        </div>
         <br>
       </div>
-      <div class="small-scrollable padding-5">
+      <div class="small-scrollable padding-5 col-md-11">
         <div v-if="showApprovalHistory">
           <div class="card-block" v-if="approvalHistory && approvalHistory.length > 0">
             <div class="col-md-12">

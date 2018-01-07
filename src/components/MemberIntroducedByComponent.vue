@@ -1,6 +1,8 @@
  <template>
-    <div class="gr-5">
-        <h5><b>Introduced by</b></h5>
+    <div class="gr-6">
+        <div class="gr-12 panel-label">
+          <label class="text-label"><b>Introduced by</b></label>
+        </div>
         <hr>
         <div class="text-center" v-if="introducers.length === 0">This member has no introducer.</div>
         <div v-else class="small-scrollable" style="height: 210px;">
