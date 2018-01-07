@@ -95,11 +95,11 @@
       </nav>
     </div>
     <br>
-    <button v-if="!collapseMenuComponent" class="gr-0.5 push-2" @click="collapseMenuComponent = true;"
+    <button v-if="!collapseMenuComponent" class="gr-0.5 push-2" @click="toggleCollapse"
       style="background-color: #1bb1a2;">
       <i class="fa fa-arrow-left" aria-hidden="true" style="color: white;"></i>
     </button>
-    <button v-else class="gr-0.5 push-1" @click="collapseMenuComponent = false;"
+    <button v-else class="gr-0.5 push-1" @click="toggleCollapse"
             style="background-color: #1bb1a2;">
       <i class="fa fa-arrow-right" aria-hidden="true" style="color: white;"></i>
     </button>
@@ -127,6 +127,15 @@
       }
     },
     methods: {
+      toggleCollapse () {
+        if (this.collapseMenuComponent === false) {
+          this.collapseMenuComponent = true
+          this.$emit('update', 'true')
+        } else {
+          this.collapseMenuComponent = false
+          this.$emit('update', 'false')
+        }
+      },
       containsPermission (permission) {
         return this.accessControlList.indexOf(permission) > -1
       },

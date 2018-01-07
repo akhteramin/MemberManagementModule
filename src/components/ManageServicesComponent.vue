@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="gr-10 push-2">
+      <div class="gr-10">
         <div class="loaders loading" v-if="showLoader">
         <div class="loader">
           <div class="loader-inner ball-grid-pulse">

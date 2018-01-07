@@ -1,11 +1,11 @@
 <template>
   <div>
     <!--I am user list component................................. users:: {{ users ? users : 'N/A' }}-->
-    <div class="gr-10 push-2">
+    <div class="gr-10">
       <h1>Users</h1>
       <hr>
     </div>
-    <div class="gr-12 push-2">
+    <div class="gr-12">
       <br>
       <!--showNewUserComponent: {{ showNewUserComponent }}-->
 
@@ -82,7 +82,7 @@
 
 
       <form v-on:submit.prevent="getUsers" v-on:reset.prevent="init">
-        <div class="row push-2">
+        <div class="row">
           <div class="gr-12">
             <div class="gr-3">
               <div class="form-group">
@@ -163,7 +163,7 @@
 
       <div>
         <span style="display:inline-block; width: 5px;"></span>
-        <button role="button" class="button-search push-2"
+        <button role="button" class="button-search"
                 v-if="!showNewUserComponent && containsPermission('MS_USER_CREATE')"
                 @click="loadCreateNewUserComponent">
           <i class="fa fa-plus" aria-hidden="true"></i> Create New User
@@ -173,7 +173,7 @@
     </div>
 
     <!-- ------------------------------ Main table for users ---------------------------------- -->
-    <div class="table-responsive gr-10 push-2">
+    <div class="table-responsive gr-10">
       <br>
       <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
