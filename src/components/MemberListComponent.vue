@@ -1,5 +1,5 @@
 <template>
-  <div id = "list" class="gr-10 push-2">
+  <div id = "list">
 
 
     <div id="IdentificationDocumentModal" class="modal fade" role="dialog">
@@ -149,6 +149,7 @@
 
 
     <h1>Members</h1>
+    <h1 v-if="menuComponent.data().collapseMenuComponent">A kmn bichar!!!</h1>
     <hr>
     <form v-on:submit.prevent="filter"
           v-on:reset.prevent="init">
@@ -368,7 +369,7 @@
           <!--</td>-->
           <td>
             {{ getStaticNames(member.occupation) }}
-            </br>
+            <br>
             <small>{{ member.organizationName }}</small>
           </td>
           <td style="text-align: center;">
@@ -404,7 +405,7 @@
           </td>
 
           <td style="text-align: center">
-            <div v-if="member.userCards">
+            <div v-if="member.userCards.length > 0">
               <a @click="showCardsModal(member.userCards)"
                  style="cursor: pointer;">
                 {{ member.userCards.length }} cards
@@ -656,6 +657,7 @@
   import Http from '../services/Http'
   import MemberListSlider from './MemberListSliderComponent.vue'
   import MemberIdentificationDocument from './MemberIdentificationDocumentComponent.vue'
+  import MenuComponent from './MenuComponent.vue'
 
   export default {
     name: 'MemberList',
@@ -663,9 +665,9 @@
       'listType'
     ],
     components: {
-      MemberIdentificationDocument,
       'member-list-slider': MemberListSlider,
-      'member-identification-document': MemberIdentificationDocument
+      'member-identification-document': MemberIdentificationDocument,
+      MenuComponent
     },
     watch: {
       listType: function () {
@@ -674,6 +676,7 @@
     },
     data () {
       return {
+        menuComponent: MenuComponent,
         members: [],
         query: {},
         memberProfile: {},
@@ -710,6 +713,11 @@
         accessControlList: {},
         showLoader: false,
         occupationList: {}
+      }
+    },
+    computed: {
+      doCollapseOrNot () {
+        return MenuComponent.data().collapseMenuComponent
       }
     },
     methods: {
@@ -1006,10 +1014,10 @@
       },
       getStaticNames (id) {
         let occupationName = this.occupationList.find(x => x.id === id)
-        if(occupationName)
+        if (occupationName) {
           return occupationName.name
-        else 
-          return "N/A"
+        }
+        return 'N/A'
       },
       statusChange: function (accountID, accountStatus) {
         console.log(accountStatus)
@@ -1116,6 +1124,7 @@
         this.signUpDateFrom = null
         this.signUpDateTo = null
         this.getMembers()
+        console.log('Menu component appList value: ', MenuComponent.data().appList)
       },
       filter (key = 'member') {
         this.sliderShow = false

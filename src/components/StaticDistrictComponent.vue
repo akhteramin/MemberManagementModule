@@ -1,5 +1,5 @@
 <template>
-  <div class="gr-5 push-4 padding-5">
+  <div class="gr-5 padding-5">
     <br>
     <h3 style="text-align: center;">Districts</h3>
     <hr>

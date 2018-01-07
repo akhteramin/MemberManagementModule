@@ -1,5 +1,5 @@
 <template>
-  <div class="gr-6 push-4 padding-5">
+  <div class="gr-6 padding-5">
     <br>
     <h3 style="text-align: center;">Occupations</h3>
     <hr>

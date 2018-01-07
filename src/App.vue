@@ -1,14 +1,10 @@
 <template>
   <div id="app">
     <div class="row">
-      <MenuComponent v-if="$route.name !== 'Login'"></MenuComponent>
-      <!--<div>-->
-        <!--<button class="gr-0.5 push-2"-->
-                <!--style="background-color: #1bb1a2;">-->
-          <!--<i class="fa fa-arrow-left" aria-hidden="true" style="color: white;"></i>-->
-        <!--</button>-->
-      <!--</div>-->
-      <router-view></router-view>
+      <MenuComponent v-if="$route.name !== 'Login'"
+      @update="learnMenuComponentCollapsedOrNot"></MenuComponent>
+      <router-view v-if="!isMenuCollapsed" class="gr-10 push-2"></router-view>
+      <router-view v-else class="gr-11 push-1"></router-view>
     </div>
     <!--<router-view></router-view>-->
   </div>
@@ -23,6 +19,11 @@
   import MemberAclGroup from './components/MemberAclGroupComponent.vue'
   export default {
     name: 'app',
+    data () {
+      return {
+        'isMenuCollapsed': false
+      }
+    },
     components: {
       'MenuComponent': MenuComponent,
       'MemberList': MemberList,
@@ -30,6 +31,15 @@
       'WaitingForApprovalList': WaitingForApprovalList,
       'WaitingForVerificationList': WaitingForVerificationList,
       'MemberAclGroup': MemberAclGroup
+    },
+    methods: {
+      learnMenuComponentCollapsedOrNot () {
+        if (!this.isMenuCollapsed) {
+          this.isMenuCollapsed = true
+        } else {
+          this.isMenuCollapsed = false
+        }
+      }
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="gr-8 push-3 padding-5">
+  <div class="gr-8 padding-5">
     <br>
     <h3 style="text-align: center;">Branches</h3>
     <hr>
