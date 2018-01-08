@@ -1,9 +1,9 @@
  <template>
     <div class="row justify-content-center">
-      <div class="gr-11 panel-label">
+      <div class="gr-12 panel-label">
         <label class="text-label"><b>Bank Info</b></label>
       </div>
-      <div class="gr-10 padding-5">
+      <div class="gr-11 padding-5">
         
         <div class="text-center" v-if="bankAccounts.length === 0">No Bank Added<br></div>
         <div v-else-if="bankAccounts" class="small-scrollable" style="height: 210px;">

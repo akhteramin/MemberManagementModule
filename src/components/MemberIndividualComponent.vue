@@ -1,59 +1,62 @@
 <template>
 
-    <div class="gr-10 push-2" v-if="member">
+    <div class="member-list" v-if="member">
 
         <br>
         <div class="gr-12"> <!--offset-md-1-->
           <div class="card"> <!-- class="card"-->
             <h3 class="card-header">
               <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
-
-            <!--div class="btn-group btn-group-sm">
-              <button type="button" class="btn btn-default" :class="{'btn-active-til': showBasicDetails}">Basic Details</button>
-              <button type="button" class="btn btn-default">Profile2</button>
-              <button type="button" class="btn btn-default">Profile3</button>
-              <button type="button" class="btn btn-default">Profile4</button>
-              
-            </div-->
-            <div id = "nav-bar" style="cursor: pointer;">
-              <ul class="nav nav-tabs">
-                <li class="text-center" :class="{active: showBasicDetails}"
-                    @click="setTab('basicDetails')"><a data-toggle="tab">Basic Details</a></li>
-                <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-                <li v-if="containsPermission('MS_MM_USER_GET_ACTIVITIES')" class="text-center" :class="{active: showActivities}"
-                    @click="setTab('activities')"><a data-toggle="tab">Activities</a></li>
-                <li v-if="containsPermission('MS_MM_USER_GET_TRANSACTION_HISTORY')" class="text-center" :class="{active: showTransactions}"
-                    @click="setTab('transactions')"><a data-toggle="tab">Transactions</a></li>
-                <li v-if="containsPermission('MS_MM_USER_SUSPENSION_HISTORY')" class="text-center" :class="{active: showSuspensionHistory}"
-                    @click="setTab('suspensionHistory')"><a data-toggle="tab">Suspension History</a></li>
-                <li v-if="containsPermission('MS_MM_USER_GET_LIKELY_NAMES')" class="text-center" :class="{active: showLikelyNames}"
-                    @click="setTab('likelyNames')"><a data-toggle="tab">Likely Names</a></li>
-                <li v-if="containsPermission('MS_MM_USER_GET_CONTACTS')" class="text-center" :class="{active: showFriends}"
-                    @click="setTab('friends')"><a data-toggle="tab">Friends</a></li>
-                <li v-if="member.basicInfo && member.basicInfo.accountType==2" class="text-center" :class="{active: showOffer}"
-                    @click="setTab('offers')"><a data-toggle="tab">Offers</a></li>
-                <li v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" class="text-center" :class="{active: showAccessControl}"
-                    @click="setTab('accessControl')"><a data-toggle="tab">Access Control</a></li>
-
-              </ul>
+            <div class="w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round">
+              <div class="gr-12">
+                <div class="gr-2 margin-10">
+                <p><b>
+                  <span v-if="balance">Current Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
+                  <span v-else>Current Balance: N/A </span>
+                </b></p>
+                </div>
+                <div class="gr-6 push-7">
+                  <div class="gr-2 padding-5 margin-10" align="right">
+                    <span><b>{{member.basicInfo.name}}</b></span>
+                    <br><b>{{member.basicInfo.mobileNumber}}</b>
+                    <br><b><span>{{member.basicInfo.profileCompletionScore}}%</span></b>
+                  </div>
+                  <div class="gr-6 margin-5">
+                    <img v-if="member.basicInfo.mmUserPictures[0]"
+                                :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
+                                class="img-circle img-responsive" width="70" height="70"
+                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
+                    <img v-else src="/static/images/default-original.jpg" class="img-circle img-responsive"
+                        alt="N/A" width="70" height="70"
+                          onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
+                  </div>
+                </div>
+              </div>
+              <div class="btn-group btn-group-sm padding-5 margin-5">
+                <button type="button" class="btn btn-default" :class="{'btn-active-til': showBasicDetails}"
+                @click="setTab('basicDetails')">Basic Details</button>
+                <button v-if="containsPermission('MS_MM_USER_GET_ACTIVITIES')" type="button" class="btn btn-default" 
+                :class="{'btn-active-til': showActivities}" @click="setTab('activities')">Activities</button>
+                <button v-if="containsPermission('MS_MM_USER_GET_TRANSACTION_HISTORY')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showTransactions}" @click="setTab('transactions')">Transactions</button>
+                <button v-if="containsPermission('MS_MM_USER_SUSPENSION_HISTORY')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showSuspensionHistory}" @click="setTab('suspensionHistory')">Suspension History</button>
+                <button v-if="containsPermission('MS_MM_USER_GET_LIKELY_NAMES')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showLikelyNames}" @click="setTab('likelyNames')">Likely Names</button>
+                <button v-if="containsPermission('MS_MM_USER_GET_CONTACTS')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showFriends}" @click="setTab('friends')">Friends</button>
+                <button v-if="member.basicInfo && member.basicInfo.accountType==2" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showOffer}" @click="setTab('offers')">Offers</button>
+                <button v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button>
+              </div>
             </div>
-
-
-
-            <div  v-if="showBasicDetails">
-              <div v-if="member.basicInfo">
-
-                    <div class="row">
-                      <div class="gr-4 push-7">
-
-
-
-                      </div>
-                    </div>
-                    <br>
+            
+            <div v-if="showBasicDetails">
+              <div class="w3-header-card" v-if="member.basicInfo">
                     <div class="row">
 
-                      <div class="gr-2 text-center">
+                      <div class="gr-2 text-center margin-top-10">
                         <img v-if="member.basicInfo.mmUserPictures[0]"
                               :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250"
@@ -74,32 +77,17 @@
                         <br>{{member.basicInfo.mobileNumber}}
                         <br><span>{{member.basicInfo.profileCompletionScore}}%</span>
                         <br>{{ memberAccountClass }}
-                        <button class="button-md-balance padding-2" >
+                        <!--button class="button-md-balance padding-2" >
                           <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
                           <span v-else>Balance: N/A </span>
-                        </button>
+                        </button-->
                       </div>
 
 
 
-                      <div class="gr-9 text-left push-.5">
-                        <div class="gr-1" v-if="member.basicInfo.accountType===2">
-                          <span v-if="member.businessDetails.businessOwnerPictures[0]">
-                              <img :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
-                              class="img-rounded img-responsive" alt="Profile Picture" width="130" height="100">
-                          </span>
-                          <span v-else>
-                              <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
-                          </span>
-                          <update-member-business-image
-                            :member="member"
-                            :id="id"
-                            @update="editProfilePic">
-                          </update-member-business-image>
-                        </div>
-
-
-                        <div class="gr-12 panel-label">
+                      <div class="gr-10 text-left">
+                        
+                        <div class="gr-12 panel-label margin-5">
                           <div class="gr-2">
                             <label class="text-label"><b>Basic Information</b></label>
                           </div>
@@ -177,7 +165,7 @@
 
                         <!--<hr>-->
                       <div v-if="member.basicInfo.accountType===1">
-                        <div class="gr-12 panel-label">
+                        <div class="gr-12 panel-label margin-5">
                           <div class="gr-2">
                               <label class="text-label"><b>Family Information</b></label>
                             </div>
@@ -221,38 +209,55 @@
                           </update-member-parents>
                         </div>
                       </div>
-                      <div v-if="member.basicInfo.accountType===2">
-                        <div class="gr-11 panel-label">
-                          <div class="gr-2">
-                              <label class="test-label"><b>Business Information</b></label>
+                      <div class="gr-12" v-if="member.basicInfo.accountType===2">
+                        <div class="gr-1">
+                          <span v-if="member.businessDetails.businessOwnerPictures[0]">
+                              <img :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
+                              class="img-rounded img-responsive" alt="Profile Picture" width="130" height="100">
+                          </span>
+                          <span v-else>
+                              <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
+                          </span>
+                          <update-member-business-image
+                            :member="member"
+                            :id="id"
+                            @update="editProfilePic">
+                          </update-member-business-image>
+                        </div>
+                        <div class="gr-11">
+                          <div class="gr-12 panel-label margin-5">
+
+                            <div class="gr-3">
+                              <label class="text-label"><b>Business Information</b></label>
                             </div>
 
-                        </div>
-                        <div>
-                          <div class="gr-2">
-                          Business Name:
                           </div>
-                          <div class="gr-4 text-left">
-                            {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
+                          <div>
+                            <div class="gr-2">
+                            Business Name:
+                            </div>
+                            <div class="gr-4 text-left">
+                              {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
 
-                          </div>
-                          <div class="gr-2">
-                          Business Type:
-                          </div>
-                          <div class="gr-4 text-left">
-                            {{ member.businessDetails.businessBasicInfo.businessType || 'N/A' }}
-                          </div>
-                          <div class="gr-2">
-                          Email:
-                          </div>
-                          <div class="gr-4 text-left">
-                            {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
-                          </div>
-                          <div class="gr-2">
-                          Mobile Number:
-                          </div>
-                          <div class="gr-4 text-left">
-                            {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                            </div>
+                            <div class="gr-2">
+                            Business Type:
+                            </div>
+                            <div class="gr-4 text-left">
+                              {{ member.businessDetails.businessBasicInfo.businessType || 'N/A' }}
+                            </div>
+                            <div class="gr-2">
+                            Email:
+                            </div>
+                            <div class="gr-4 text-left">
+                              {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
+                            </div>
+                            <div class="gr-2">
+                            Mobile Number:
+                            </div>
+                            <div class="gr-4 text-left">
+                              {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                            </div>
                           </div>
                         </div>
 
@@ -261,12 +266,11 @@
                     </div>
                   </div>
 
-                  <hr>
               </div>
 
 
-              <div id="addresses" class="gr-12" v-if="containsPermission('MS_MM_USER_BASIC_DETAILS')">
-                  <div class="gr-11 panel-label">
+              <div id="addresses" class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_BASIC_DETAILS')">
+                  <div class="gr-12 panel-label">
                     <label class="text-label"><b>Address</b></label>
                   </div>
                   <!--<div class="gr-2 push-6" v-if="!editAddressMode">-->
@@ -274,10 +278,10 @@
                   <!--</div>-->
 
                 <!--<br>-->
-                  <div class="row justify-content-left">
+                  <div class="justify-content-left">
                     <!-- ================================= present address =============================================== -->
 
-                    <div class="gr-5" v-if="!editPresentAddressMode">
+                    <div class="gr-6 margin-10" v-if="!editPresentAddressMode">
                       <div class="gr-12">
                         <div class="gr-2">
                           <h5><b>Present</b></h5>
@@ -342,7 +346,7 @@
 
                     <!-- ================================= permanent address =============================================== -->
 
-                    <div class="gr-5" v-if="!editPermanentAddressMode" >
+                    <div class="gr-5 margin-10" v-if="!editPermanentAddressMode" >
                       <div class="gr-12">
                         <div class="gr-2">
                           <h5 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h5>
@@ -408,31 +412,30 @@
                       </update-member-address>
                     </div>
                   </div>
-                  <hr>
                 </div>
 
 
               <div>
                 <div class="verification">
                   <div>
-                    <div v-if="containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
+                    <div class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
                       <member-identification-document
                         :id="id" :accountType="accountType" :boom="2">
                       </member-identification-document>
                     </div>
 
-                    <div v-if="containsPermission('MS_MM_USER_GET_BANK_LIST')">
+                    <div class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_BANK_LIST')">
                       <member-bank-account :id="id">
                       </member-bank-account>
                     </div>
 
-                    <div>
+                    <div class="gr-12 w3-header-card">
                       <member-bank-card :id="id">
                       </member-bank-card>
                     </div>
 
 
-                    <div class="row justify-content-center"
+                    <div class="gr-12 justify-content-center w3-header-card"
                          v-if="containsPermission('MS_MM_USER_GET_INTRODUCER_LIST')">
                       <member-introduced-by :id="id">
                       </member-introduced-by>
@@ -443,7 +446,7 @@
 
                   </div>
 
-                  <div class="row justify-content-center"
+                  <div class="justify-content-center"
                        v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY')">
                      {{ member.basicInfo.verificationStatus ? '' : '' }}
                     <member-verify-and-approve :id="id" :member="member">

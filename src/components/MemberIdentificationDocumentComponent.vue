@@ -1,9 +1,9 @@
  <template>
     <div class="justify-content-center">
-        <div class="gr-11 panel-label">
+        <div class="gr-12 panel-label">
           <label class="text-label"><b>Identification Documents</b></label>
         </div>
-        <div class="gr-10 padding-5">
+        <div class="gr-11 padding-5">
             <div class="text-center" v-if="documents === null || documents.length === 0">
               No Document has been uploaded.
             </div>

@@ -1,5 +1,5 @@
  <template>
-    <div class="gr-5">
+    <div class="gr-6">
         <div class="gr-12 panel-label">
           <label class="text-label"><b>Has Introduced</b></label>
         </div>
