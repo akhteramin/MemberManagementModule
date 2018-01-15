@@ -12,11 +12,11 @@
 
 <script>
   import MenuComponent from './components/MenuComponent.vue'
-  import MemberList from './components/MemberListComponent.vue'
+  import MemberList from './components/MemberList/MemberListComponent.vue'
   import Home from './components/Home.vue'
-  import WaitingForApprovalList from './components/WaitingForApprovalListComponent.vue'
-  import WaitingForVerificationList from './components/WaitingForVerificationListComponent.vue'
-  import MemberAclGroup from './components/MemberAclGroupComponent.vue'
+  import WaitingForApprovalList from './components/MemberList/WaitingForApprovalListComponent.vue'
+  import WaitingForVerificationList from './components/MemberList/WaitingForVerificationListComponent.vue'
+  import MemberAclGroup from './components/ACL/MemberAclGroupComponent.vue'
   export default {
     name: 'app',
     data () {
