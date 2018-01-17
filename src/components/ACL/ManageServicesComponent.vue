@@ -1,59 +1,59 @@
 <template>
     <div>
-      <div class="gr-10">
-        <div class="loaders loading" v-if="showLoader">
-        <div class="loader">
-          <div class="loader-inner ball-grid-pulse">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
-      <div class="gr-6 push-5">
-        <h1>Manage Service</h1> <br>
-      </div>
-            <div class="gr-12">
-                <table  class="table ui celled" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th>
-                               <b>S/N</b>
-                            </th>
-                            <th>
-                               Name
-                            </th>
-                            <th>
-                               Status
-                            </th>
-
-                        </tr>
-                    </thead>
-                    <tbody v-if="aclServiceList && aclServiceList.length > 0">
-                        <tr v-for="(serviceData,index) in aclServiceList">
-                            <td>
-                                {{index+1}}
-                            </td>
-                            <td>
-                                {{serviceData.serviceName}}
-                            </td>
-                            <td>
-                                <div class="select">
-                                <select id="order-by-select"  v-model="serviceData.status" @change="openModal( serviceData )">
-                                    <option v-for="(indexMapper,mapper) in statusMapper" :value = "mapper+1">{{indexMapper}}</option>
-                                </select>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="gr-10">
+            <div class="loaders loading" v-if="showLoader">
+            <div class="loader">
+            <div class="loader-inner ball-grid-pulse">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
+            </div>
+        </div>
+        <div class="gr-6 push-5">
+            <h1>Manage Service</h1> <br>
+        </div>
+        <div class="gr-12">
+            <table  class="table ui celled" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>
+                            <b>S/N</b>
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody v-if="aclServiceList && aclServiceList.length > 0">
+                    <tr v-for="(serviceData,index) in aclServiceList">
+                        <td>
+                            {{index+1}}
+                        </td>
+                        <td>
+                            {{serviceData.serviceName}}
+                        </td>
+                        <td>
+                            <div class="select">
+                            <select id="order-by-select"  v-model="serviceData.status" @change="openModal( serviceData )">
+                                <option v-for="(indexMapper,mapper) in statusMapper" :value = "mapper+1">{{indexMapper}}</option>
+                            </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
       </div>
 
       <div id="service_change_access_level_modal" modal-show-hide  class="modal fade" role="dialog">

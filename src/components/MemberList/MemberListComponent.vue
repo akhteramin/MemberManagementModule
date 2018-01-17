@@ -148,9 +148,14 @@
 
 
 
-    <h1>Members</h1>
-    <h1 v-if="menuComponent.data().collapseMenuComponent">A kmn bichar!!!</h1>
-    <hr>
+    <div class="gr-6 push-5">
+      <h1>Members</h1>
+    </div>
+    <div class="gr-12">
+            <hr>
+    </div>
+    <h1 v-if="menuComponent.data().collapseMenuComponent"></h1>
+    
     <form v-on:submit.prevent="filter"
           v-on:reset.prevent="init">
         <div class="row">

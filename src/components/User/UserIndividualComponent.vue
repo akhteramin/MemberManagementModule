@@ -141,6 +141,7 @@
     },
     created () {
       console.log('created user  information..., user login id iss: ', this.loginID)
+      console.log("get the data")
       this.init()
     },
     methods: {

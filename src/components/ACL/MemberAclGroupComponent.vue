@@ -1,5 +1,5 @@
 <template>
-    <div class="gr-10 push-2">
+    <div>
         <div class="loaders loading" v-if="showLoader">
         <div class="loader">
           <div class="loader-inner ball-grid-pulse">
@@ -18,50 +18,48 @@
       <div class="gr-6 push-4">
         <h1>iPay Member ACL</h1>
       </div>
-      <div class="gr-12">
-        <hr>
+      <div class="gr-12 w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round">
         <div class="gr-3">
-            <table class="table table-striped table-hover">
+            <div class="gr-12 panel-label padding-5">
+                <div class="gr-6">
+                    <h4>Group List</h4>
+                </div>
+                <button type="button" class="btn btn-sm btn-default"
+                data-toggle="modal"
+                data-target="#addGroupModal">
+                <i class="fa fa-plus" aria-hidden="true"></i> Add New Group
+                </button>
+            </div>
+            <table id="aclGroup" class="table ui celled hover">
                 <thead>
                     <tr>
-                        <th>
-                            <div class="gr-6">
-                                <h4>Group List</h4>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-default"
-                            data-toggle="modal"
-                            data-target="#addGroupModal">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New Group
-                            </button>
-
-                            <input type="text" v-model="groupSearch" placeholder="Group..">
-                        </th>
+                        <input type="text" v-model="groupSearch" placeholder="Group..">
                     </tr>
                 </thead>
                 <tbody v-if="groups && groups.length > 0">
-                    <tr v-for="groupData in filteredGroup">
-                        <td @click="getService(groupData.id)">
+                    <tr v-for="groupData in filteredGroup" style="cursor: pointer;">
+                        <td @click="highlightRow(); getService(groupData.id); ">
                              {{groupData.groupName}}
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="gr-8">
-            <div class="gr-2">
-            <h4>Manage group</h4>
+        <div class="gr-9">
+            <div class="gr-12 panel-label padding-3">
+                <div class="gr-2">
+                <h4>Manage group</h4>
+                </div>
+                <div class="gr-2 push-8">
+                    <button type="reset" class="button-reset" @click="deactivate(group.id)">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                    </button>
+                    <button type="search" class="button-search" @click="edit(group.id)">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
-            <div class="gr-2 push-9">
-                <button type="reset" class="button-reset" @click="deactivate(group.id)">
-                    <i class="fa fa-ban" aria-hidden="true"></i>
-                </button>
-                <button type="search" class="button-search" @click="edit(group.id)">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </button>
-            </div>
-            <div class="gr-12">
-              <b>{{group.groupName}}</b>
-            </div>
+            
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -436,10 +434,6 @@
 import Http from '../../services/Http'
 export default {
   name: 'MemberOffer',
-  components: {
-    // 'member-offer-update': MemberOfferUpdate,
-    // 'member-offer-add': MemberOfferAdd
-  },
   data () {
     return {
       showLoader: false,
@@ -514,7 +508,7 @@ export default {
           console.log('Success, got group list: ', aclUserGroup)
           this.groups = aclUserGroup.data.groupList
           this.getService()
-          this.loadMemberList('', 0)
+        //   this.loadMemberList('', 0)
         }, error => {
           this.showLoader = false
           console.error('Error in offers: ', error)
@@ -537,6 +531,12 @@ export default {
           this.showLoader = false
           console.error('Error in offers: ', error)
         })
+    },
+    highlightRow () {
+        $('#aclGroup tbody').on('click', 'tr', function() {
+            $('#aclGroup tbody > tr').removeClass('selected');
+            $(this).addClass('selected');
+        });
     },
     swap (direction = 'enabled-blocked') {
       let {enabledServices: enabled, blockedServices: blocked} = this.group

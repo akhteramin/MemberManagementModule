@@ -4989,6 +4989,8 @@ select::-ms-expand { display: none; }
 
 .select-md { padding-top: 0px !important; padding-bottom: 0px !important; width: 66% !important; }
 
+.selected { background-color: #019889; color: #fff; }
+
 .fa-external-link { color: #1bb1a2; cursor: pointer; }
 
 .fa-window-close, .fa-arrow-left { cursor: pointer; }
@@ -5194,30 +5196,30 @@ textarea:focus { /* sizes for the 2 images (focus state) */ background-size: 100
 @keyframes ball-grid-beat { 50% { opacity: 0.7; }
   100% { opacity: 1; } }
 .ball-grid-beat { width: 57px; }
-.ball-grid-beat > div:nth-child(1) { animation-delay: 0.51s; animation-duration: 1.08s; }
-.ball-grid-beat > div:nth-child(2) { animation-delay: 0.71s; animation-duration: 0.79s; }
-.ball-grid-beat > div:nth-child(3) { animation-delay: -0.07s; animation-duration: 0.68s; }
-.ball-grid-beat > div:nth-child(4) { animation-delay: -0.17s; animation-duration: 1.57s; }
-.ball-grid-beat > div:nth-child(5) { animation-delay: 0.1s; animation-duration: 1.5s; }
-.ball-grid-beat > div:nth-child(6) { animation-delay: 0.23s; animation-duration: 1.02s; }
-.ball-grid-beat > div:nth-child(7) { animation-delay: -0.1s; animation-duration: 0.84s; }
-.ball-grid-beat > div:nth-child(8) { animation-delay: -0.02s; animation-duration: 1.12s; }
-.ball-grid-beat > div:nth-child(9) { animation-delay: -0.14s; animation-duration: 1.49s; }
+.ball-grid-beat > div:nth-child(1) { animation-delay: -0.13s; animation-duration: 1.52s; }
+.ball-grid-beat > div:nth-child(2) { animation-delay: 0.5s; animation-duration: 0.87s; }
+.ball-grid-beat > div:nth-child(3) { animation-delay: 0.79s; animation-duration: 0.94s; }
+.ball-grid-beat > div:nth-child(4) { animation-delay: 0.29s; animation-duration: 1.49s; }
+.ball-grid-beat > div:nth-child(5) { animation-delay: 0.5s; animation-duration: 1.34s; }
+.ball-grid-beat > div:nth-child(6) { animation-delay: 0.56s; animation-duration: 1.34s; }
+.ball-grid-beat > div:nth-child(7) { animation-delay: -0.18s; animation-duration: 0.65s; }
+.ball-grid-beat > div:nth-child(8) { animation-delay: 0.28s; animation-duration: 1.16s; }
+.ball-grid-beat > div:nth-child(9) { animation-delay: 0.52s; animation-duration: 1.37s; }
 .ball-grid-beat > div { background-color: #1bb1a2; width: 15px; height: 15px; border-radius: 100%; margin: 2px; animation-fill-mode: both; display: inline-block; float: left; animation-name: ball-grid-beat; animation-iteration-count: infinite; animation-delay: 0; }
 
 @keyframes ball-grid-pulse { 0% { transform: scale(1); }
   50% { transform: scale(0.5); opacity: 0.7; }
   100% { transform: scale(1); opacity: 1; } }
 .ball-grid-pulse { width: 57px; }
-.ball-grid-pulse > div:nth-child(1) { animation-delay: 0.37s; animation-duration: 1.2s; }
-.ball-grid-pulse > div:nth-child(2) { animation-delay: 0.4s; animation-duration: 0.87s; }
-.ball-grid-pulse > div:nth-child(3) { animation-delay: 0.48s; animation-duration: 1.11s; }
-.ball-grid-pulse > div:nth-child(4) { animation-delay: 0.24s; animation-duration: 1.34s; }
-.ball-grid-pulse > div:nth-child(5) { animation-delay: -0.17s; animation-duration: 0.93s; }
-.ball-grid-pulse > div:nth-child(6) { animation-delay: 0.26s; animation-duration: 1.58s; }
-.ball-grid-pulse > div:nth-child(7) { animation-delay: 0.08s; animation-duration: 0.69s; }
-.ball-grid-pulse > div:nth-child(8) { animation-delay: 0.78s; animation-duration: 1.24s; }
-.ball-grid-pulse > div:nth-child(9) { animation-delay: 0.39s; animation-duration: 0.9s; }
+.ball-grid-pulse > div:nth-child(1) { animation-delay: 0.66s; animation-duration: 0.72s; }
+.ball-grid-pulse > div:nth-child(2) { animation-delay: 0.55s; animation-duration: 0.96s; }
+.ball-grid-pulse > div:nth-child(3) { animation-delay: -0.16s; animation-duration: 0.63s; }
+.ball-grid-pulse > div:nth-child(4) { animation-delay: 0.62s; animation-duration: 1.38s; }
+.ball-grid-pulse > div:nth-child(5) { animation-delay: 0.56s; animation-duration: 1.05s; }
+.ball-grid-pulse > div:nth-child(6) { animation-delay: 0.45s; animation-duration: 0.8s; }
+.ball-grid-pulse > div:nth-child(7) { animation-delay: -0.06s; animation-duration: 0.75s; }
+.ball-grid-pulse > div:nth-child(8) { animation-delay: 0.6s; animation-duration: 0.85s; }
+.ball-grid-pulse > div:nth-child(9) { animation-delay: 0.37s; animation-duration: 1.23s; }
 .ball-grid-pulse > div { background-color: #1bb1a2; width: 15px; height: 15px; border-radius: 100%; margin: 2px; animation-fill-mode: both; display: inline-block; float: left; animation-name: ball-grid-pulse; animation-iteration-count: infinite; animation-delay: 0; }
 
 @keyframes ball-spin-fade-loader { 50% { opacity: 0.3; transform: scale(0.4); }
@@ -5288,10 +5290,10 @@ textarea:focus { /* sizes for the 2 images (focus state) */ background-size: 100
 @keyframes line-scale-party { 0% { transform: scale(1); }
   50% { transform: scale(0.5); }
   100% { transform: scale(1); } }
-.line-scale-party > div:nth-child(1) { animation-delay: 0.39s; animation-duration: 1.03s; }
-.line-scale-party > div:nth-child(2) { animation-delay: 0.64s; animation-duration: 0.94s; }
-.line-scale-party > div:nth-child(3) { animation-delay: 0.13s; animation-duration: 0.67s; }
-.line-scale-party > div:nth-child(4) { animation-delay: 0.06s; animation-duration: 0.58s; }
+.line-scale-party > div:nth-child(1) { animation-delay: -0.08s; animation-duration: 0.67s; }
+.line-scale-party > div:nth-child(2) { animation-delay: 0.65s; animation-duration: 0.8s; }
+.line-scale-party > div:nth-child(3) { animation-delay: 0.24s; animation-duration: 0.85s; }
+.line-scale-party > div:nth-child(4) { animation-delay: 0.09s; animation-duration: 0.67s; }
 .line-scale-party > div { background-color: #1bb1a2; width: 4px; height: 35px; border-radius: 2px; margin: 2px; animation-fill-mode: both; display: inline-block; animation-name: line-scale-party; animation-iteration-count: infinite; animation-delay: 0; }
 
 @keyframes line-scale-pulse-out { 0% { transform: scaley(1); }
@@ -5379,7 +5381,7 @@ textarea:focus { /* sizes for the 2 images (focus state) */ background-size: 100
 
 .menu-container ul { list-style: none; -webkit-margin-before: 1em; -webkit-margin-after: 1em; -webkit-margin-start: 0px; -webkit-margin-end: 0px; -webkit-padding-start: 0px; }
 
-.menu-container .bottom-menu { position: absolute; bottom: 0; min-width: 15%; }
+.menu-container .bottom-menu { position: absolute; bottom: 0; min-width: 100%; }
 
 body { background: #ffffff; margin: 0; word-spacing: 3px; }
 

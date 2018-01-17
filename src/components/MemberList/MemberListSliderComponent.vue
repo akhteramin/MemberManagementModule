@@ -57,7 +57,7 @@
 
             </div>
             <div class="gr-12 small-text" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE')">
-                <b>Missing Information</b>
+                <div class="gr-12 panel-label"><b>Missing Information</b></div>
                 <hr>
                 <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
                     No missing Information.This Member is <b>Verifiable</b>.
@@ -73,7 +73,7 @@
             </div>
             <div class="gr-12 small-text min-height-slider"
                  v-if="memberDocuments && containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
-                <b>Identification Documents</b>
+                <div class="gr-12 panel-label"><b>Identification Documents</b></div>
                 <hr>
                 <div class="row margin-5" v-for="memberDocument in memberDocuments">
                     <div class="gr-5 text-center padding-2">
