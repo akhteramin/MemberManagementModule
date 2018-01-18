@@ -67,24 +67,6 @@ const router = new Router({
       // auth check
       meta: { requiresAuth: true }
     },
-    // {
-    //   path: '/member/{waiting_verification}',
-    //   name: 'WaitingForVerificationList',
-    //   component: MemberList,
-    //   props: true,
-    //   // component: WaitingForVerificationList,
-    //   // auth check
-    //   meta: { requiresAuth: true }
-    // },
-    // {
-    //   path: '/member/:listType',
-    //   name: 'WaitingForApprovalList',
-    //   component: MemberList,
-    //   props: true,
-    //   // component: WaitingForApprovalList,
-    //   // auth check
-    //   meta: { requiresAuth: true }
-    // },
     {
       path: '/home',
       name: 'Home',
@@ -111,9 +93,9 @@ const router = new Router({
       path: '/user/:loginID',
       name: 'UserIndividualComponent',
       component: UserIndividualComponent,
-      props: true,
+      props: true
       // auth check
-      meta: { requiresAuth: true }
+      // meta: { requiresAuth: true }
     },
     {
       path: '/member/acl/group',

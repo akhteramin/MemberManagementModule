@@ -23,7 +23,7 @@
           <a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
             <li :class="{'btn-active-til': showConfiguration}" @click="setMenu('configuration')"> <i class="fa fa-cog fa-1x" aria-hidden="true"></i> Configuration <i class="fa fa-angle-down"></i></li>
           </a>
-          <div id="subMenu" v-if="expandList" class="gr-10 push-1 small-scrollable" style="height:120px">
+          <div id="subMenu" v-if="expandList" class="gr-10 small-scrollable" style="height:120px">
             <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="highlightMenu(); goToOccupationList();"><li>Occupation</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="highlightMenu();goToBankList()"><li>Bank</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="highlightMenu();goToBranchList();"><li>Branch</li></a>
@@ -74,7 +74,7 @@
           <a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
             <li :class="{'btn-active-til': showConfiguration}" @click="setMenu('configuration')"> <i class="fa fa-cog fa-2x" aria-hidden="true"></i> <i class="fa fa-angle-down"></i></li>
           </a>
-          <div id="subMenu" v-if="expandList" class="gr-10 push-1 small-scrollable" style="height:120px">
+          <div id="subMenu" v-if="expandList" class="gr-10 small-scrollable" style="height:120px">
             <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="highlightMenu(); goToOccupationList();"><li>Occupation</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="highlightMenu();goToBankList()"><li>Bank</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="highlightMenu();goToBranchList();"><li>Branch</li></a>
@@ -287,6 +287,18 @@
         this.appsData = JSON.parse(localStorage.getItem('appsData'))
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
+        if(localStorage.getItem('user-profile') === null)
+        {
+          Http.GET('user',['login'])
+          .then(
+            ({data: profile}) => {
+              console.log(profile)
+              console.log('hey')
+              localStorage.setItem('user-profile', JSON.stringify(profile.data))
+              
+            }
+          )
+        }
       }
     },
     created () {
