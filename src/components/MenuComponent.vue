@@ -25,6 +25,7 @@
           </a>
           <div id="subMenu" v-if="expandList" class="gr-10 small-scrollable" style="height:120px">
             <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="highlightMenu(); goToOccupationList();"><li>Occupation</li></a>
+            <a @click="highlightMenu(); goTo2faList();"><li>2FA</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="highlightMenu();goToBankList()"><li>Bank</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="highlightMenu();goToBranchList();"><li>Branch</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_DISTRICT_LIST'" @click="highlightMenu();goToDistrictList();"><li>District</li></a>
@@ -76,6 +77,7 @@
           </a>
           <div id="subMenu" v-if="expandList" class="gr-10 small-scrollable" style="height:120px">
             <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="highlightMenu(); goToOccupationList();"><li>Occupation</li></a>
+            <a v-restrict="'MS_2FA_GET_PREFERENCES'" @click="highlightMenu(); goTo2faList();"><li>2FA</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="highlightMenu();goToBankList()"><li>Bank</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="highlightMenu();goToBranchList();"><li>Branch</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_DISTRICT_LIST'" @click="highlightMenu();goToDistrictList();"><li>District</li></a>
@@ -209,6 +211,9 @@
       goToOccupationList () {
         route.push('/occupation')
       },
+      goTo2faList () {
+        route.push('/2fa')
+      },
       goToBankList () {
         route.push('/bank')
       },
@@ -272,14 +277,13 @@
         } else if (menuName === 'module') {
           this.showModule = true
         }
-
       },
       highlightMenu () {
-        $('#subMenu').on('click','li', function() {
-            console.log('clicked dude')
-            $('#subMenu > a li').removeClass('btn-active-til');
-            $(this).addClass('btn-active-til');
-        });
+        $('#subMenu').on('click', 'li', function () {
+          console.log('clicked dude')
+          $('#subMenu > a li').removeClass('btn-active-til')
+          $(this).addClass('btn-active-til')
+        })
       },
       init () {
         console.log('here it is')
@@ -287,15 +291,13 @@
         this.appsData = JSON.parse(localStorage.getItem('appsData'))
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
-        if(localStorage.getItem('user-profile') === null)
-        {
-          Http.GET('user',['login'])
+        if (localStorage.getItem('user-profile') === null) {
+          Http.GET('user', ['login'])
           .then(
             ({data: profile}) => {
               console.log(profile)
               console.log('hey')
               localStorage.setItem('user-profile', JSON.stringify(profile.data))
-              
             }
           )
         }

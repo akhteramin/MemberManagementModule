@@ -42,7 +42,8 @@ const Util = {
       'MS_STATIC_RESOURCE_GET_COUNTRY_LIST',
       'MS_STATIC_RESOURCE_GET_DISTRICT_LIST',
       'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST',
-      'MS_STATIC_RESOURCE_GET_THANA_LIST'
+      'MS_STATIC_RESOURCE_GET_THANA_LIST',
+      'MS_2FA_GET_PREFERENCES'
     ])) menu.push('Configuration')
 
     if (Util.findAnyOne(accessControlList, [
@@ -76,6 +77,11 @@ const Util = {
       'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'
     ])) {
       menu.push('StaticOccupationComponent')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_2FA_GET_PREFERENCES'
+    ])) {
+      menu.push('StaticTwoFactorAuthenticationComponent')
     }
     if (Util.findAnyOne(accessControlList, [
       'MS_STATIC_RESOURCE_GET_BANK_LIST'
