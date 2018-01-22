@@ -5,20 +5,7 @@
           <form v-if="user" v-on:submit.prevent="updateUserMethod" v-on:reset.prevent="doNotUpdateUser">
 
             <div class="row">
-
-              <div class="gr-2">
-                <img v-if="user.profilePictureUrl"
-                     :src="imageBaseUrl+user.profilePictureUrl || 'static/images/default-original.jpg'"
-                     class="img-circle img-responsive" width="250" height="250">
-
-                <img v-else src="static/images/default-original.jpg" class="img-circle img-responsive"
-                     alt="N/A" width="30" height="30">
-
-              </div>
-
-
-
-              <div class="gr-6 text-left push-.5">
+              <div class="gr-6 push-3 text-left">
 
 
                 <div class="gr-11">
@@ -37,7 +24,7 @@
                   <div class="gr-4 padding-5">
                     Email:
                   </div>
-                  <div class="gr-8 text-left pull-.5 padding-5">
+                  <div class="gr-8 text-left padding-5">
                     {{ user.email || 'N/A' }}
                   </div>
                   <br>
@@ -52,18 +39,19 @@
                     Status:
                   </div>
                   <div class="gr-8 padding-5">
-                    <div class="select select-sm">
+                      {{updateRequest.status}}
+                    <!--div class="select select-sm">
                       <select v-model="updateRequest.status">
                         <option value="ACTIVE">ACTIVE</option>
                         <option value="SUSPENDED">SUSPENDED</option>
                       </select>
-                    </div>
+                    </div-->
                   </div>
                   <br>
                   <div class="gr-4 padding-5">
                     <i class="fa fa-clock-o" aria-hidden="true"></i> User since:
                   </div>
-                  <div class="gr-8 padding-5 text-left pull-.5">
+                  <div class="gr-8 padding-5 text-left">
                     {{ user.creationTime | date('MMM D, YYYY') || 'N/A' }}
                   </div>
                   <br>
@@ -79,8 +67,6 @@
               </div>
 
             </div>
-
-            <hr>
           </form>
         </div>
 

@@ -93,7 +93,8 @@
     },
     methods: {
       init () {
-        this.id = this.user.id
+        let userProfile=JSON.parse(localStorage.getItem('user-profile'))
+        this.id=userProfile.id
         console.log('type::', this.id)
         if (this.user.profilePictureUrl) {
           this.imageUrl = this.user.profilePictureUrl
@@ -102,6 +103,7 @@
         }
       },
       onPPChange (e) {
+        console.log('type::', this.id)
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {
           return
@@ -116,6 +118,7 @@
         console.log(files[0])
       },
       uploadPP () {
+        console.log('type::', this.id)
         console.log(this.profilePicture)
         var fd = new FormData()
         fd.append('imageFile', this.profilePicture)

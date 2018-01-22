@@ -294,7 +294,7 @@
                       </div>
                       <div class="row text-left">
                         <div class="gr-2">
-                          Line 1:
+                          Address Line 1:
                         </div>
                         <div class="gr-3">
                           {{ memberPresentAddress.addressLine1 }}
@@ -302,7 +302,7 @@
                       </div>
                       <div class="row text-left">
                         <div class="gr-2">
-                          Line 2:
+                          Address Line 2:
                         </div>
                         <div class="gr-3 ">
                           {{ memberPresentAddress.addressLine2 }}
@@ -361,7 +361,7 @@
                       </div>
                       <div class="row text-left">
                         <div class="gr-2">
-                          Line 1:
+                          Address Line 1:
                         </div>
                         <div class="gr-3">
                           {{ memberPermanentAddress.addressLine1 }}
@@ -370,7 +370,7 @@
                       </div>
                       <div class="row text-left">
                         <div class="gr-2">
-                          Line 2:
+                          Address Line 2:
                         </div>
                         <div class="gr-3 ">
                           {{ memberPermanentAddress.addressLine2 }}
