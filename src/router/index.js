@@ -9,6 +9,7 @@ import UserListComponent from '@/components/User/UserListComponent'
 import UserIndividualComponent from '@/components/User/UserIndividualComponent'
 import MemberAclGroup from '@/components/ACL/MemberAclGroupComponent'
 import StaticOccupationComponent from '@/components/Configuration/StaticOccupationComponent'
+import StaticTwoFactorAuthenticationComponent from '@/components/Configuration/StaticTwoFactorAuthenticationComponent'
 import StaticBankComponent from '@/components/Configuration/StaticBankComponent'
 import StaticBranchComponent from '@/components/Configuration/StaticBranchComponent'
 import StaticDistrictComponent from '@/components/Configuration/StaticDistrictComponent'
@@ -108,6 +109,13 @@ const router = new Router({
       path: '/occupation',
       name: 'StaticOccupationComponent',
       component: StaticOccupationComponent,
+      // auth check
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/2fa',
+      name: 'StaticTwoFactorAuthenticationComponent',
+      component: StaticTwoFactorAuthenticationComponent,
       // auth check
       meta: { requiresAuth: true }
     },
