@@ -81,6 +81,7 @@
     name: 'UpdateUserImage',
     props: [
       'user',
+      'id'
     ],
     data () {
       return {
@@ -88,13 +89,12 @@
         imageUrl: '',
         profilePicture: '',
         showLoader: false,
-        id: ''
       }
     },
     methods: {
       init () {
-        let userProfile=JSON.parse(localStorage.getItem('user-profile'))
-        this.id=userProfile.id
+        //let userProfile=JSON.parse(localStorage.getItem('user-profile'))
+        
         console.log('type::', this.id)
         if (this.user.profilePictureUrl) {
           this.imageUrl = this.user.profilePictureUrl

@@ -41,6 +41,7 @@
                   <img v-else src="static/images/default-original.jpg" class="img-rounded img-responsive"
                       alt="N/A" width="330" height="330">
                   <update-user-image
+                    :id="id"
                     :user="user"
                     @update="editProfilePic"
                     v-if="containsPermission('MS_USER_PROFILE_PICTURE_UPLOAD')">
@@ -113,7 +114,7 @@
                     </div>
                     <div class="gr-12" v-else>
                         <update-user
-                        :loginID = this.loginID
+                        :loginID = "loginID"
                         @update = "reloadFields">
 
                         </update-user>

@@ -6,7 +6,9 @@ import MemberList from '@/components/MemberList/MemberListComponent'
 import Home from '@/components/Home'
 import MemberIndividualComponent from '@/components/MemberProfile/MemberIndividualComponent'
 import UserListComponent from '@/components/User/UserListComponent'
-import UserIndividualComponent from '@/components/User/UserIndividualComponent'
+import UserIndividualComponent from '@/components/User/UserOwnIndividualComponent'
+import UserIndividualProfileComponent from '@/components/User/UserIndividualProfileComponent'
+
 import MemberAclGroup from '@/components/ACL/MemberAclGroupComponent'
 import StaticOccupationComponent from '@/components/Configuration/StaticOccupationComponent'
 import StaticTwoFactorAuthenticationComponent from '@/components/Configuration/StaticTwoFactorAuthenticationComponent'
@@ -97,6 +99,12 @@ const router = new Router({
       props: true
       // auth check
       // meta: { requiresAuth: true }
+    },
+    {
+      path: '/user/profile/:id',
+      name: 'UserIndividualProfileComponent',
+      component: UserIndividualProfileComponent,
+      props: true
     },
     {
       path: '/member/acl/group',

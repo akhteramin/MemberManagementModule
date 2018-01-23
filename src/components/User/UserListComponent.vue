@@ -84,7 +84,7 @@
       <form v-on:submit.prevent="getUsers" v-on:reset.prevent="init">
         <div class="row">
           <div class="gr-12">
-            <div class="gr-3">
+            <div class="gr-4">
               <div class="form-group">
                 <label> Name: </label>
                 <input  name="queryName" type="text" id="queryName" placeholder="Name"
@@ -94,7 +94,7 @@
             </div>
 
 
-            <div class="gr-3">
+            <div class="gr-4">
               <div class="form-group">
                 <label> Email: </label>
                 <input  name="email" type="email"
@@ -103,7 +103,7 @@
               </div>
             </div>
 
-            <div class="gr-3">
+            <div class="gr-4">
               <div class="form-group">
                 <label>Status: </label>
                 <div class="select">
@@ -118,7 +118,7 @@
             </div>
           </div>
 
-          <div class="gr-4 push-4">
+          <div class="gr-4 push-5">
             <div class="form-group">
               <button type="submit" class="button-search">
                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -130,7 +130,7 @@
               </button>
             </div>
           </div>
-          <div class="gr-1 push-5">
+          <div class="gr-1 push-7">
             <div class="select select-sm">
               <select  v-model="userQuery.pageSize" @change="getUsers">
                 <option disabled>Number of Entries</option>
@@ -173,7 +173,7 @@
     </div>
 
     <!-- ------------------------------ Main table for users ---------------------------------- -->
-    <div class="table-responsive gr-10">
+    <div class="table-responsive gr-12">
       <br>
       <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
@@ -182,6 +182,7 @@
           <th style="text-align: center;">Name</th>
           <th style="text-align: center;">Email</th>
           <th style="text-align: center;">Status</th>
+          <th style="text-align: center;">Mobile No.</th>          
           <th style="text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i> User since</th>
           <th style="text-align: center;">Update</th>
         </tr>
@@ -192,13 +193,14 @@
 
           <td class="member-name" style="text-align: left">
                 <span v-if="user.profilePictureUrl">
-                  <img :src="imageBaseUrl+user.profilePictureUrl" class="img-circle" alt="N/A" width="30" height="30">
+                  <img :src="user.profilePictureUrl" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
             <span v-else>
                   <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
-
-            {{ user.name }}
+              <a style="cursor: pointer;" @click="userDetails(user.id)">
+                {{ user.name }}
+              </a>
 
             <!--<i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>-->
           </td>
@@ -206,6 +208,7 @@
           <td style="text-align: center;">
             {{ user.status }}
           </td>
+          <td style="text-align: center;">{{ user.mobileNumber ? user.mobileNumber : 'N/A' }}</td>          
           <td style="text-align: center;">{{ user.creationTime | date('MMM D, YYYY hh:mm')}}</td>
           <td style="text-align: center;">
             <a @click="showUpdateUserModal(user)">
@@ -369,6 +372,7 @@
 
 <script>
   import Http from '../../services/Http'
+  import route from '../../router'
 
   export default {
     name: 'UserListComponent',
@@ -473,6 +477,9 @@
             this.showLoader = false
             console.error('Error in getting users: ', error)
           })
+      },
+      userDetails (id) {
+        route.push(`/user/profile/${id}`)
       },
       init (_pageNumber = 0, _pageSize = 10) {
         this.userQuery = Object.assign({}, {

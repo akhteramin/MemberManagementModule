@@ -358,20 +358,6 @@
             </span>
             <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
           </td>
-          <!--<td>-->
-            <!--{{ member.father ? member.father : 'N/A' }}-->
-            <!--<small v-if="member.fatherMobileNumber">-->
-              <!--<br>-->
-              <!--{{ member.fatherMobileNumber }}-->
-            <!--</small>-->
-          <!--</td>-->
-          <!--<td>-->
-            <!--{{ member.mother ? member.mother : 'N/A' }}-->
-            <!--<small v-if="member.motherMobileNumber">-->
-              <!--<br>-->
-              <!--{{ member.motherMobileNumber }}-->
-            <!--</small>-->
-          <!--</td>-->
           <td>
             {{ getStaticNames(member.occupation) }}
             <br>
