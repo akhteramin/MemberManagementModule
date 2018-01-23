@@ -44,7 +44,7 @@
               <div class="form-group">
                 <label for="status">Account Class</label>
                 <div id = "status" class="select">
-                  <select v-model="createNew2faRequest.accountClass">
+                  <select required v-model="createNew2faRequest.accountClass">
                     <option :value="null">Choose ...</option>
                     <option v-for="item,index in mapper.accountClass" :value="index+1">{{ item }}</option>
                   </select>
@@ -54,7 +54,7 @@
               <div class="form-group">
                 <label for="status">Account Type</label>
                 <div id = "status" class="select">
-                  <select v-model="createNew2faRequest.accountType">
+                  <select required v-model="createNew2faRequest.accountType">
                     <option :value="null">Choose ...</option>
                     <option v-for="item,index in mapper.accountType" :value="index+1">{{ item }}</option>
                   </select>
@@ -106,7 +106,7 @@
               <div class="form-group">
                 <label for="status">Service</label>
                 <div id = "status" class="select">
-                  <select v-model="update2faRequest.serviceId">
+                  <select required v-model="update2faRequest.serviceId">
                     <option v-for="item in services" :value="item.serviceId">{{ item.serviceName }}</option>
                   </select>
                 </div>
@@ -115,7 +115,7 @@
               <div class="form-group">
                 <label for="status">Account Class</label>
                 <div id = "status" class="select">
-                  <select v-model="update2faRequest.accountClass">
+                  <select required v-model="update2faRequest.accountClass">
                     <option v-for="item,index in mapper.accountClass" :value="index+1">{{ item }}</option>
                   </select>
                 </div>
@@ -124,7 +124,7 @@
               <div class="form-group">
                 <label for="status">Account Type</label>
                 <div id = "status" class="select">
-                  <select v-model="update2faRequest.accountType">
+                  <select required v-model="update2faRequest.accountType">
                     <option v-for="item,index in mapper.accountType" :value="index+1">{{ item }}</option>
                   </select>
                 </div>
