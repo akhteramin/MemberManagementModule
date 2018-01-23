@@ -373,6 +373,7 @@
       },
       init () {
         console.log('Slider loaded....')
+        this.backgroundBlock()
         this.imageBaseUrl = Http.IMAGE_URL
         this.showLoader = true
         this.accessControlList = localStorage.getItem('accessControlList')
@@ -525,7 +526,14 @@
           return false
         }
       },
+      backgroundBlock () {
+        console.log('block back ground')
+        $('#memberlist-table').addClass('background-nonclickable')
+        $('#seachFilter').addClass('background-nonclickable')
+      },
       hideProfile () {
+        $('#memberlist-table').removeClass('background-nonclickable')
+        $('#seachFilter').removeClass('background-nonclickable')
         this.$emit('update', 'false')
       }
     }

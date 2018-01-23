@@ -158,7 +158,7 @@
     
     <form v-on:submit.prevent="filter"
           v-on:reset.prevent="init">
-        <div class="row">
+        <div id="seachFilter" class="row">
           <div class="gr-12">
            <div class="gr-3">
               <div class="form-group">
@@ -999,7 +999,8 @@
       },
       hideProfile: function (param = 'false') {
         this.sliderShow = false
-        this.init()
+        // this.init()
+        this.getMembers()
       },
       getMembers: function (key = 'member') {
         this.checkBoxTicked = []
