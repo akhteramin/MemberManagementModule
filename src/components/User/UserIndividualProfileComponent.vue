@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="gr-11" v-if="user">
+    <div class="gr-12" v-if="user">
 
       <br>
       <div class="gr-12"> <!--offset-md-1-->
@@ -46,6 +46,8 @@
                     @update="editProfilePic"
                     v-if="containsPermission('MS_USER_PROFILE_PICTURE_UPLOAD')">
                   </update-user-image>
+                  <div class="text-center"><b>{{ user.name || 'N/A'}}</b></div>
+                  <div class="text-center">{{ user.email || 'N/A'}}</div>
                   <table id="userIndividual" class="table ui celled hover padding-5">
                       <tbody>
                           <tr style="cursor: pointer;" class="selected">
@@ -74,7 +76,7 @@
                   <div class="gr-12" v-if="showProfile">
                     <div class="gr-12 panel-label padding-3">
                       <div class="gr-2"><b>Personal Information</b></div>
-                      <div class="gr-4 push-6" v-if="!updateUser">
+                      <div class="gr-4 push-8" v-if="!updateUser">
                         <!--a @click="showUpdateUserFields">
                           <i class="fa fa-edit" aria-hidden="true"></i>
                         </a-->

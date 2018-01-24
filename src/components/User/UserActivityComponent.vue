@@ -52,10 +52,10 @@
             </thead>
             <tbody>
             <tr v-for="activity in activities.list" >
-                <td style="width: 250px;">{{ activity.description }}</td>
-                <td style="width: 300px; text-align: center;">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
-                <td style="width: 800px; text-align: center;">{{ activity.serviceId }}</td>
-                <td style="text-align: center;">{{ activity.time | date('MMM D, YYYY') }}</td>
+                <td>{{ activity.description }}</td>
+                <td>{{ activity.deviceId }} </td> <!--{{ activity.deviceBrowser }}-->
+                <td>{{ activity.serviceId }}</td>
+                <td>{{ activity.time | date('MMM D, YYYY') }}</td>
             </tr>
             </tbody>
             </table>
@@ -164,7 +164,8 @@
           pageSize: 10,
           searchKey: '',
           fromDate: null,
-          toDate: null
+          toDate: null,
+          userId: this.id
         })
         this.getActivities()
       },
@@ -174,7 +175,8 @@
           pageSize: 10,
           fromDate: null,
           toDate: null,
-          searchKey: ''
+          searchKey: '',
+          userId: this.id
         })
         this.searchFromDate = null
         this.searchToDate = null
@@ -204,11 +206,7 @@
       },
       getActivities () {
         this.showLoader = true
-        let paramData = '?pageNumber='+this.activityQuery.pageNumber+
-        '&pageSize='+this.activityQuery.pageSize+'&toDate='+this.activityQuery.toDate+
-        '&fromDate='+this.activityQuery.fromDate+'&userId='+this.id+
-        '&description='+this.activityQuery.searchKey
-        Http.GET('user', ['activity',paramData])
+        Http.GET('user', ['activity'], this.activityQuery)
           .then(({data: {data: activities}}) => {
             this.showLoader = false
             console.log('Success, got activities: ', activities)

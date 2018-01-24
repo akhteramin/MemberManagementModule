@@ -46,6 +46,8 @@
                     @update="editProfilePic"
                     v-if="containsPermission('MS_USER_PROFILE_PICTURE_UPLOAD')">
                   </update-user-image>
+                  <div class="text-center"><b>{{ user.name || 'N/A'}}</b></div>
+                  <div class="text-center">{{ user.email || 'N/A'}}</div>
                   <table id="userIndividual" class="table ui celled hover padding-5">
                       <tbody>
                           <tr style="cursor: pointer;" class="selected">
