@@ -39,7 +39,7 @@
                   <div class="col-md-8">
                     <div>
                       <img id="ppImage" v-if="user.profilePictureUrl"
-                              :src="user.profilePictureUrl || 'static/images/default-original.jpg'"
+                              :src="imageBaseUrl + user.profilePictureUrl || 'static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250">
 
                         <img v-else src="static/images/default-original.jpg" class="img-rounded img-responsive"
@@ -94,7 +94,7 @@
     methods: {
       init () {
         //let userProfile=JSON.parse(localStorage.getItem('user-profile'))
-        
+        this.imageBaseUrl = Http.IMAGE_URL
         console.log('type::', this.id)
         if (this.user.profilePictureUrl) {
           this.imageUrl = this.user.profilePictureUrl

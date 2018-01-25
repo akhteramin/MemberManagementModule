@@ -323,11 +323,11 @@
             <th style="text-align: center;">Profile Completed</th>
             <th style="text-align: center;"
                 v-if="listType === 'default'">Account Status</th>
-            <th v-else style="text-align: center;">
+            <!--th v-else style="text-align: center;">
               Action
               <input type="checkbox" @click="allMemberSelectAndDeselect"
                 v-model="headerCheckBox"/>
-            </th>
+            </th-->
           </tr>
         </thead>
         <tbody>
@@ -420,10 +420,10 @@
             </div>
 
           </td>
-          <td v-else style="text-align: center;">
+          <!--td v-else style="text-align: center;">
             <input type="checkbox" @change="verificationBoxClicked(member, index)"
               v-model="checkBoxTicked[index]"> <!-- member.uncheckVerificationActionBox -->
-          </td>
+          <!--/td-->
 
         </tr>
         </tbody>
@@ -550,7 +550,7 @@
     </div>
 
 
-    <div class="gr-10 push-5" v-if="listType !== 'default'">
+    <!--div class="gr-10 push-5" v-if="listType !== 'default'">
       <form v-on:submit.prevent="showVerificationModal">
         <button type="submit" class="button-md-verify" style="width: 100px;"
         :disabled="memberVerificationListEmpty">
@@ -558,7 +558,7 @@
           {{listType === 'waiting-verification' ? 'Verify' : 'Approve'}}
         </button>
       </form>
-    </div>
+    </div-->
       <!--========================================= slider ==================================================-->
     <member-list-slider  v-if="sliderShow"
       :id = "memberProfile.id"

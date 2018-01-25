@@ -84,7 +84,6 @@
         user: {},
         updateRequest: {},
         updatingUserId: '',
-        imageBaseUrl: '',
         showLoader: false
       }
     },
@@ -94,7 +93,6 @@
     },
     methods: {
       init () {
-        this.imageBaseUrl = Http.IMAGE_URL
         // Http call for basic information of the member with the 'id'
         let query = {
           'name': null,

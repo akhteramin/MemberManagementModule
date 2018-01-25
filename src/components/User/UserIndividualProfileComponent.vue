@@ -35,7 +35,7 @@
                 <div class="gr-3 w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round"
                 style="padding-bottom:30px;padding-top:30px;min-height:490px">
                   <img v-if="user.profilePictureUrl"
-                      :src="user.profilePictureUrl || '../static/images/default-original.jpg'"
+                      :src="imageBaseUrl+user.profilePictureUrl || '../static/images/default-original.jpg'"
                       class="img-rounded img-responsive" width="330" height="330">
 
                   <img v-else src="static/images/default-original.jpg" class="img-rounded img-responsive"
@@ -647,6 +647,7 @@
         });
       },
       init () {
+        this.imageBaseUrl = Http.IMAGE_URL
         this.highlightRow ()
 
         this.userPresentAddress = {

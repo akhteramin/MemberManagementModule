@@ -75,6 +75,8 @@ const ADMIN_URI = 'http://10.15.40.11:80/'
 
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
 const IMAGE_URL = 'https://dev.ipay.com.bd'
+//const IMAGE_URL = 'https://test.ipay.com.bd'
+
 const CRM_URI = 'http://10.10.10.169/login'
 
 const routes = {

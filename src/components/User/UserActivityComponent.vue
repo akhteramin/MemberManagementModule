@@ -157,7 +157,6 @@
     },
     methods: {
       init () {
-        this.imageBaseUrl = Http.IMAGE_URL
         // Http call for basic information of the member with the 'id'
         this.activityQuery = Object.assign({}, {
           pageNumber: 0,

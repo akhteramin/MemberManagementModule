@@ -193,7 +193,7 @@
 
           <td class="member-name" style="text-align: left">
                 <span v-if="user.profilePictureUrl">
-                  <img :src="user.profilePictureUrl" class="img-circle" alt="N/A" width="30" height="30">
+                  <img :src="imageBaseUrl+user.profilePictureUrl" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
             <span v-else>
                   <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
@@ -391,7 +391,8 @@
         showNewUserComponent: false,
         createUser: {},
         showLoader: true,
-        accessControlList: []
+        accessControlList: [],
+        imageBaseUrl: ''
       }
     },
     created () {
@@ -482,6 +483,7 @@
         route.push(`/user/profile/${id}`)
       },
       init (_pageNumber = 0, _pageSize = 10) {
+        this.imageBaseUrl = Http.IMAGE_URL
         this.userQuery = Object.assign({}, {
           pageNumber: 0,
           pageSize: 10,
