@@ -20,7 +20,7 @@
           <a v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li :class="{'btn-active-til': showACL}" @click="setMenu('acl')"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Ipay Member ACL</li></a>
           <a v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices"><li :class="{'btn-active-til': showManageService}" @click="setMenu('manageService')"><i class="fa fa-tasks fa-1x" aria-hidden="true"></i> Manage Services</li></a>
           <a v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li :class="{'btn-active-til': showUsers}" @click="setMenu('user')"> <i class="fa fa-user fa-1x" aria-hidden="true"></i> Users</li></a>
-          <a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
+          <!--a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
             <li :class="{'btn-active-til': showConfiguration}" @click="setMenu('configuration')"> <i class="fa fa-cog fa-1x" aria-hidden="true"></i> Configuration <i class="fa fa-angle-down"></i></li>
           </a>
           <div id="subMenu" v-if="expandList" class="gr-10 small-scrollable" style="height:120px">
@@ -34,7 +34,7 @@
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BUSINESS_TYPE_LIST'" @click="highlightMenu();goToBusinessType();"><li>Business Type</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_TYPE_LIST'" @click="highlightMenu();goToAccountType();"><li>Account Type</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_CLASS_LIST'" @click="highlightMenu();goToAccountClass();"><li>Account Class</li></a>
-          </div>
+          </div-->
         </ul>
         <ul class="bottom-menu">
 
@@ -72,7 +72,7 @@
           <a v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li  :class="{'btn-active-til': showACL}" @click="setMenu('acl')"><i class="fa fa-lock fa-2x" aria-hidden="true"></i></li></a>
           <a v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices"><li  :class="{'btn-active-til': showManageService}" @click="setMenu('manageService')"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i></li></a>
           <a v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li  :class="{'btn-active-til': showUsers}" @click="setMenu('user')"> <i class="fa fa-user fa-2x" aria-hidden="true"></i></li></a>
-          <a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
+          <!--a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
             <li :class="{'btn-active-til': showConfiguration}" @click="setMenu('configuration')"> <i class="fa fa-cog fa-2x" aria-hidden="true"></i> <i class="fa fa-angle-down"></i></li>
           </a>
           <div id="subMenu" v-if="expandList" class="gr-10 small-scrollable" style="height:120px">
@@ -86,7 +86,7 @@
             <a v-restrict="'MS_STATIC_RESOURCE_GET_BUSINESS_TYPE_LIST'" @click="highlightMenu();goToBusinessType();"><li>Business Type</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_TYPE_LIST'" @click="highlightMenu();goToAccountType();"><li>Account Type</li></a>
             <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_CLASS_LIST'" @click="highlightMenu();goToAccountClass();"><li>Account Class</li></a>
-          </div>
+          </div-->
         </ul>
         <ul class="bottom-menu">
 
@@ -128,7 +128,7 @@
         appList: { '2': 'Auth', '3': 'CRM', '6': 'Admin' },
         accessControlList: [],
         appURL: {'2': Http.AUTH_HTTP_URI, '3': Http.CRM_URI, '6': Http.ADMIN_URI},
-        showHome: true,
+        showHome: false,
         showMembers: false,
         showWaitingVerification: false,
         showWaitingApproval: false,
@@ -291,16 +291,16 @@
         this.appsData = JSON.parse(localStorage.getItem('appsData'))
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
-        if (localStorage.getItem('user-profile') === null) {
-          Http.GET('user', ['login'])
-          .then(
-            ({data: profile}) => {
-              console.log(profile)
-              console.log('hey')
-              localStorage.setItem('user-profile', JSON.stringify(profile.data))
-            }
+        // if (localStorage.getItem('user-profile') === null) {
+        Http.GET('user', ['login'])
+        .then(
+          ({data: profile}) => {
+            console.log(profile)
+            console.log('hey')
+            localStorage.setItem('user-profile', JSON.stringify(profile.data))
+          }
           )
-        }
+        // }
       }
     },
     created () {

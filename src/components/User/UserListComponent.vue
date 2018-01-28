@@ -184,7 +184,7 @@
           <th style="text-align: center;">Status</th>
           <th style="text-align: center;">Mobile No.</th>          
           <th style="text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i> User since</th>
-          <th style="text-align: center;">Update</th>
+          <!--th style="text-align: center;">Update</th-->
         </tr>
         </thead>
         <tbody>
@@ -210,11 +210,11 @@
           </td>
           <td style="text-align: center;">{{ user.mobileNumber ? user.mobileNumber : 'N/A' }}</td>          
           <td style="text-align: center;">{{ user.creationTime | date('MMM D, YYYY hh:mm')}}</td>
-          <td style="text-align: center;">
+          <!--td style="text-align: center;">
             <a @click="showUpdateUserModal(user)">
               <i class="fa fa-edit" aria-hidden="true"></i>
             </a>
-          </td>
+          </td-->
 
         </tr>
         </tbody>

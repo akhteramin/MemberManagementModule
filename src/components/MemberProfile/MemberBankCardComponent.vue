@@ -9,27 +9,26 @@
           <table class="table ui celled" cellspacing="0" width="100%">
             <thead class="thead-default">
             <tr>
-              <th class = "text-center">Bin No.</th>
               <th class = "text-center">Card Info.</th>
-              <th class = "text-center">Card Level</th>
+              <!--th class = "text-center">Card Level</th-->
               <th class = "text-center">Card Status</th>
-              <th class = "text-center">Card Type</th>
+              <!--th class = "text-center">Card Type</th>
               <th class = "text-center">Issuer Name</th>
               <th class = "text-center">Network Company</th>
-              <th class = "text-center">Action</th>
+              <th class = "text-center">Action</th-->
             </tr>
             </thead>
             <tbody>
             <tr v-for="item in bankCards">
-              <td>{{ item.binNumber }}</td>
+              <!--td>{{ item.binNumber }}</td-->
               <td>{{ item.cardInfo }}</td>
-              <td>{{ item.cardLevel }}</td>
+              <!--td>{{ item.cardLevel }}</td-->
               <td><span class="badge" :class="{'badge-success': true }">{{item.cardStatus}}</span></td>
-              <td>{{ item.cardType }}</td>
+              <!--td>{{ item.cardType }}</td>
               <td>{{ item.issuerName }}</td>
               <td>{{ item.networkCompany }}</td>
               <td><button @click= "verifyCard(item)"
-                  class="button-md-verify" v-if="item.cardStatus=='PENDING'">Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button></td>
+                  class="button-md-verify" v-if="item.cardStatus=='PENDING'">Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button></td-->
             </tr>
             </tbody>
           </table>

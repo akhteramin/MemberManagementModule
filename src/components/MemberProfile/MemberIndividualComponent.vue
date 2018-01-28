@@ -447,7 +447,7 @@
                   </div>
 
                   <div class="justify-content-center"
-                       v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY')">
+                       v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY') || containsPermission('MS_MM_USER_VERIFICATION_APPROVE')">
                      {{ member.basicInfo.verificationStatus ? '' : '' }}
                     <member-verify-and-approve :id="id" :member="member">
 
