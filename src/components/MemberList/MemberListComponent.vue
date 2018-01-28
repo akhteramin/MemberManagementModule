@@ -1131,14 +1131,14 @@
         console.log('mobile number: ' + this.query.mobileNumber + ' accountType: ' + this.query.accountType +
           ' verified: ' + this.query.verificationStatus)
         if (this.signUpDateFrom !== null && this.signUpDateFrom.length > 0) {
-          this.query.startSignUpDate = new Date(this.signUpDateFrom).getTime()
+          this.query.startSignUpDate = new Date(this.signUpDateFrom).getTime() + 6 * 3600 * 1000
         } else {
           this.query.startSignUpDate = 0
         }
         if (this.signUpDateTo !== null && this.signUpDateTo.length > 0) {
-          this.query.endSignUpDate = new Date(this.signUpDateTo).getTime()
+          this.query.endSignUpDate = new Date(this.signUpDateTo).getTime() + 6 * 3600 * 1000
         } else {
-          this.query.endSignUpDate = new Date().getTime()
+          this.query.endSignUpDate = new Date().getTime() + 6 * 3600 * 1000
         }
         console.log('query, signup from date: ', this.query.startSignUpDate, ' to date: ',
           this.query.endSignUpDate)
