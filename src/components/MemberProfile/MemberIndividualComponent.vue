@@ -294,7 +294,7 @@
                   <div class="justify-content-left">
                     <!-- ================================= present address =============================================== -->
 
-                    <div class="gr-6 margin-10" v-if="!editPresentAddressMode">
+                    <div class="gr-6" v-if="!editPresentAddressMode">
                       <div class="gr-12">
                         <div class="gr-2">
                           <h5><b>Present</b></h5>
@@ -342,7 +342,9 @@
                           Country:
                         </div>
                         <div class="gr-3">
-                          {{ countryNamePresent }}
+                          <span v-if="countryNamePresent == 'BD'">
+                            Bangladesh
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -359,7 +361,7 @@
 
                     <!-- ================================= permanent address =============================================== -->
 
-                    <div class="gr-5 margin-10" v-if="!editPermanentAddressMode" >
+                    <div class="gr-6" style="margin-bottom: 5px;" v-if="!editPermanentAddressMode" >
                       <div class="gr-12">
                         <div class="gr-2">
                           <h5 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h5>
@@ -614,7 +616,7 @@
         this.memberPresentAddress = {
           addressLine1: 'N/A',
           addressLine2: 'N/A',
-          country: 'BD',
+          country: 'Bangladesh',
           districtId: 'N/A',
           postalCode: 'N/A',
           status: 'N/A',
@@ -624,7 +626,7 @@
         this.memberPermanentAddress = {
           addressLine1: 'N/A',
           addressLine2: 'N/A',
-          country: 'BD',
+          country: 'Bangladesh',
           districtId: 'N/A',
           postalCode: 'N/A',
           status: 'N/A',
@@ -772,8 +774,8 @@
         }
       },
       getStaticNames () {
+        this.occupationList = JSON.parse(localStorage.getItem('occupation'))
         if (this.member.basicInfo.occupation) {
-          this.occupationList = JSON.parse(localStorage.getItem('occupation'))
           this.occupationName = this.occupationList.find(x => x.id === this.member.basicInfo.occupation).name
         }
         this.thanaList = JSON.parse(localStorage.getItem('thana'))

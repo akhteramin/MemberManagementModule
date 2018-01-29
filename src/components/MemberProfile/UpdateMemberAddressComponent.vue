@@ -81,7 +81,7 @@
                 {{ memberPresentAddress.country}}
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group gr-4 push-2">
                 <button type="submit" class="button-search">
                 <i class="fa fa-edit" aria-hidden="true"></i>
                 Update
@@ -157,7 +157,7 @@
                 {{ memberPermanentAddress.country }}
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group gr-4 push-2">
                 <button type="submit" class="button-search">
                 <i class="fa fa-edit" aria-hidden="true"></i>
                 Update

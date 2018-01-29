@@ -28,7 +28,7 @@
             <div class="gr-2">
                 Mobile Number:
             </div>
-            <div class="gr-4 text-left pull-.5">
+            <div class="gr-4 text-left">
                 {{ member.basicInfo.mobileNumber || 'N/A' }}
             </div>
             <br><br><br>
@@ -41,16 +41,16 @@
             <div class="gr-2">
                 Date of Birth:
             </div>
-            <div class="gr-4 text-left pull-.5">
+            <div class="gr-4 text-left" style="margin-bottom: 5px;">
                 <input type="date" class="input-sm" name="memberDOB" v-model="dob"/>
             </div>
             <div class="gr-2">
             Gender:
             </div>
-            <div class="gr-4 text-left">
+            <div class="gr-4 text-left" style="margin-bottom: 5px;">
                 <div class="select select-sm">
-                <select id="genderSelection"  v-model="member.basicInfo.gender">
-                    <option value="">Select Gender</option>
+                <select id="genderSelection" v-model="member.basicInfo.gender">
+                    <option selected value = "">Select Gender</option>
                     <option value="M">Male</option>
                     <option value="F">Female</option>
                 </select>
@@ -59,10 +59,10 @@
             <div class="gr-2">
             Occupation:
             </div>
-            <div class="gr-4 text-left pull-.5">
+            <div class="gr-4 text-left" style="margin-bottom: 5px;">
                 <div class="select select-sm">
                 <select id="occupationSelection" v-model="member.basicInfo.occupation">
-                    <option value="">Select Occupation</option>
+                    <option selected value = "">Select Occupation</option>
                     <option v-for="occupation in occupationList" :value="occupation.id">{{ occupation.name }}</option>
                 </select>
                 </div>
@@ -71,8 +71,8 @@
             <div class="gr-2">
             Verification Status:
             </div>
-            <div class="gr-4 text-left">
-                <div class="select select-sm">
+            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+                <!--div class="select select-sm"-->
                     <select id="verification" v-model="member.basicInfo.verificationStatus" disabled>
                     <option value="">Select Status</option>
                     <option value="NOT_VERIFIED">Not Verified</option>
@@ -80,34 +80,35 @@
                     <option value="VERIFIED">Verified</option>
                     <option value="Rejected">Rejected</option>
                     </select>
-                </div>
+                <!--/div-->
             </div>
             <div class="gr-2">
             Member Since:
             </div>
-            <div class="gr-4 text-left pull-.5">
+            <div class="gr-4 text-left" style="margin-bottom: 5px;">
             {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
             </div>
 
             <div class="gr-2">
             Organization Name:
             </div>
-            <div class="gr-4 text-left pull-.5">
+            <div class="gr-4 text-left" style="margin-bottom: 5px;">
                 <input  name="memberOrganizationName" class="input-sm" type="text" id="memberOrganizationName" placeholder="Organization Name"
                 v-model="member.basicInfo.organizationName"/>
             </div>
-
-            <div class="gr-5 push-2">
-                <div class="form-group">
-                <button type="submit" class="button-search">
-                    <i class="fa fa-edit" aria-hidden="true"></i>
-                    Update
-                </button>
-                <button type="reset" class="button-reset" @click="editBasicInfo()">
-                    <i class="fa fa-times"></i>
-                    Cancel
-                </button>
-                </div>
+            <div class="gr-12">
+              <div class="gr-4 push-4 text-center">
+                  <div class="form-group">
+                  <button type="submit" class="button-search">
+                      <i class="fa fa-edit" aria-hidden="true"></i>
+                      Update
+                  </button>
+                  <button type="reset" class="button-reset" @click="editBasicInfo()">
+                      <i class="fa fa-times"></i>
+                      Cancel
+                  </button>
+                  </div>
+              </div>
             </div>
             </form>
     </div>
