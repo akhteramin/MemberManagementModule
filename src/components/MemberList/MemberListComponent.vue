@@ -345,28 +345,32 @@
           <td>{{query.pageNumber * query.pageSize + index + 1}}</td>
 
           <td class="member-name">
-            <span  v-if="member.userPictureResponses[0]">
-              <img :src="imageBaseUrl+member.userPictureResponses[0].url" class="img-circle"
-                   width="30" height="30"
-                   onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
-                <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
-                <!--width="30" height="30">-->
-            </span>
-            <span v-else>
-              <img src="/static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30"
-                   onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
-            </span>
-            <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
-              <a style="cursor: pointer;" @click="memberDetails(member.accountId,member.accountType)">
-                {{ member.name }}
-              </a>
-              <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
-              <small>
-                <br>
-                {{ member.mobileNumber }}
-              </small>
-            </span>
-            <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
+            <div class="gr-2">
+              <span  v-if="member.userPictureResponses[0]">
+                <img :src="imageBaseUrl+member.userPictureResponses[0].url" class="img-circle"
+                    width="30" height="30"
+                    onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
+                  <!--<img :src="imageBaseUrl+member.mmUserPictures[0].document.url" class="img-circle" alt="N/A"-->
+                  <!--width="30" height="30">-->
+              </span>
+              <span v-else>
+                <img src="/static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30"
+                    onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
+              </span>
+            </div>
+            <div class="gr-10">
+              <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
+                <a style="cursor: pointer;" @click="memberDetails(member.accountId,member.accountType)">
+                  {{ member.name }}
+                </a>
+                <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
+                <small>
+                  <br>
+                  {{ member.mobileNumber }}
+                </small>
+              </span>
+              <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
+            </div>
           </td>
           <td>{{member.businessName ? member.businessName : 'N/A'}}</td>
           <td>
