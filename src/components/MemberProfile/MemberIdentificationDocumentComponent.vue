@@ -24,18 +24,18 @@
                 <td>{{ item.documentType ? item.documentType : 'N/A' | underscoreless}}</td>
                 <td>{{ item.documentIdNumber ? item.documentIdNumber : 'N/A' }}</td>
                 <td>
-                    <button>
-                    <img default-src="/images/default-news-feed.jpg"
-                    v-if="!isPdf(item.documentUrl)"
-                    :src="documentBaseUrl + item.documentUrl"
-                    alt="Profile Picture"
-                    height="50"
-                    width="auto"
-                    class="img-rounded">
-                    <i v-if="isPdf(item.documentUrl)"
-                    class="fa fa-file-pdf-o"
-                    style="font-size:50px;"
-                    aria-hidden="true"></i>
+                    <button data-toggle="modal" data-target="#DocumentPreviewModal" data-backdrop="false" @click="setPreviewDocument(item)">
+                      <img default-src="/images/default-news-feed.jpg"
+                      v-if="!isPdf(item.documentUrl)"
+                      :src="documentBaseUrl + item.documentUrl"
+                      alt="Profile Picture"
+                      height="50"
+                      width="auto"
+                      class="img-rounded">
+                      <i v-if="isPdf(item.documentUrl)"
+                      class="fa fa-file-pdf-o"
+                      style="font-size:50px;"
+                      aria-hidden="true"></i>
                     </button>
                 </td>
                 <td>{{ item.documentVerificationStatus | underscoreless }}</td>
@@ -62,42 +62,81 @@
                 </tbody>
             </table>
 
-            <div id="DocumentVerificationModal" class="modal fade" role="dialog">
-              <div class="modal-dialog  modal-md">
-                <!-- Modal content-->
+              <div id="DocumentVerificationModal" class="modal fade" role="dialog">
+                <div class="modal-dialog  modal-md">
+                  <!-- Modal content-->
 
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                    <h4 class="modal-title"> Document Verification </h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-md-4 col-md-offset-3">
-                          <span>
-                            <div class="comment">
-                              <!--<span>Browse</span>-->
-                              Comment:
-                               <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
-                            </div>
-                            <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
-                          </span>
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                      <h4 class="modal-title"> Document Verification </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-4 col-md-offset-3">
+                            <span>
+                              <div class="comment">
+                                <!--<span>Browse</span>-->
+                                Comment:
+                                <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
+                              </div>
+                              <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="modal-footer">
+                    <div class="modal-footer">
 
-                    <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()">Verify</button>
-                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()">Verify</button>
+                      <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+
+              <div id="DocumentPreviewModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog  modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                      <h4 class="modal-title"> Change Document {{ document.documentType }} </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Document:</label>
+                          </div>
+                          <div class="col-md-8">
+                            <div>
+                                <div v-if="!isPdf(document.documentUrl)">
+                                  <img id="ppImage" v-if="document.documentUrl"
+                                        :src="documentUrl || 'static/images/default-original.jpg'"
+                                        class="img-rounded" width="250" height="250">
+
+                                  <img v-else src="static/images/default-original.jpg" class="img-rounded"
+                                      alt="N/A" width="30" height="30">
+                                </div>
+                                <div v-if="isPdf(document.documentUrl)">
+                                    <iframe :src="documentBaseUrl+document.documentUrl" width="400" height="400"></iframe>
+                                </div>
 
 
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+              </div>
             </div>
+          </div>
 
             <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC')">
               <div class="form-group">
@@ -192,7 +231,8 @@
         memberDocument: {},
         documentID: '',
         showLoader: false,
-        accessControlList: []
+        accessControlList: [],
+        document: {}
       }
     },
     methods: {
@@ -204,11 +244,12 @@
           ' account type: ', this.accountType)
         this.showDocumentUploadData = false
         this.documentBaseUrl = Http.IMAGE_URL
-        if (this.accountType === 1) {
+        if (this.accountType == 1) {
           this.documentTypes = GLOBAL_VARS.DOCUMENT_TYPE
         } else {
           this.documentTypes = GLOBAL_VARS.DOCUMENT_TYPE_BUSINESS
         }
+        console.log('document type::',this.documentTypes)
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
         this.getIdentificationDocuments()
@@ -259,6 +300,10 @@
           documentVerificationStatus: 'VERIFIED',
           documentID: document.id
         }
+      },
+      setPreviewDocument (document) {
+        this.document = document
+        console.log(this.document)
       },
       verifyDocument () {
 //        console.log('param data ::', this.paramData)

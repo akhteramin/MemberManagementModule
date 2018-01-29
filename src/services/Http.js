@@ -57,7 +57,7 @@ axios.interceptors.response.use(
 // const AUTH_ACCOUNTS_URI = 'http://localhost:8000/accounts'
 // const ADMIN_URI = 'http://localhost:8080'
 
-// const API_URL = 'http://192.168.1.231:8085/member-service/api/v1'
+// const API_URL = 'http://192.168.1.219:8085/member-service/api/v1'
 const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
 const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1'
