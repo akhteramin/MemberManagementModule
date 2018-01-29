@@ -342,9 +342,7 @@
                           Country:
                         </div>
                         <div class="gr-3">
-                          <span v-if="countryNamePresent == 'BD'">
                             Bangladesh
-                          </span>
                         </div>
                       </div>
                     </div>
