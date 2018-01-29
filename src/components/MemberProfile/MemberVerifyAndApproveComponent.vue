@@ -62,7 +62,7 @@
                     <div class="gr-4 push-1" style="text-align: left;">
                       Verified By:
                     </div>
-                    <div class="gr-4 push-1">
+                    <div class="gr-4 push-1 word-break: break-all;">
                       {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
@@ -94,7 +94,7 @@
                         Rejected By:
                       </div>
                     </div>
-                    <div class="gr-7" style="text-align: left;">
+                    <div class="gr-7" style="text-align: left; word-break: break-all;">
                       {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
@@ -121,7 +121,7 @@
                     <div class="gr-4 push-1" style="text-align: left;">
                       Verified By:
                     </div>
-                    <div class="gr-4 push-1">
+                    <div class="gr-4 push-1" style="word-break: break-all;">
                       {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
@@ -152,7 +152,7 @@
                     <div class="gr-5" style="text-align: left;">
                       Verified By:
                     </div>
-                    <div class="gr-7" style="text-align: left;">
+                    <div class="gr-7" style="text-align: left; word-break: break-all;">
                       {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[verificationHistory.length - 1].actor.name : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -187,7 +187,7 @@
                   <div class="gr-5" style="text-align: left;">
                     Approved By:
                   </div>
-                  <div class="gr-7" style="text-align: left;">
+                  <div class="gr-7" style="text-align: left; word-break: break-all;">
                     {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
@@ -213,7 +213,7 @@
                   <div class="gr-5" style="text-align: left;">
                     Rejected By:
                   </div>
-                  <div class="gr-7" style="text-align: left;">
+                  <div class="gr-7" style="text-align: left; word-break: break-all;">
                     {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
