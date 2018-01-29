@@ -14,7 +14,7 @@
               <th class = "text-center">A/C No</th>
               <th class = "text-center">A/C Name</th>
               <th class = "text-center">A/C Status</th>
-              <th class = "text-center">Verification</th>
+              <th class = "text-center">Verification Status</th>
               <th class = "text-center">Added</th>
             </tr>
             </thead>
