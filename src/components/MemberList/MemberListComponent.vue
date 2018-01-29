@@ -160,19 +160,28 @@
           v-on:reset.prevent="init">
         <div id="seachFilter" class="row">
           <div class="gr-12">
-           <div class="gr-3">
-              <div class="form-group">
+           <div class="gr-2">
+              <div class="form-group padding-5">
                 <label> Mobile Number: </label>
                 <input  name="mobilenumber" type="text" id="mobilenumber"
                         v-model="query.mobileNumber" placeholder="+8801XXXXXXXXX"
                         value=""/>
               </div>
             </div>
-            <div class="gr-3">
-              <div class="form-group">
+            <div class="gr-2">
+              <div class="form-group padding-5">
                 <label> Name: </label>
                 <input  name="queryName" type="text" id="queryName" placeholder="Name"
                         v-model="query.name"
+                        value=""/>
+              </div>
+            </div>
+
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label> Business Name: </label>
+                <input  name="queryBusinessName" type="text" id="queryBusinessName" placeholder="BusinessName"
+                        v-model="query.businessName"
                         value=""/>
               </div>
             </div>
@@ -311,6 +320,7 @@
           <tr>
             <th>#</th>
             <th style="width: 250px;">Name</th>
+            <th>Business Name</th>
             <th>Basic Info</th>
             <!--<th>Mother</th>-->
             <th style="text-align: center;">A/C Type</th>
@@ -335,7 +345,7 @@
           <td>{{query.pageNumber * query.pageSize + index + 1}}</td>
 
           <td class="member-name">
-            <span v-if="member.userPictureResponses[0]">
+            <span  v-if="member.userPictureResponses[0]">
               <img :src="imageBaseUrl+member.userPictureResponses[0].url" class="img-circle"
                    width="30" height="30"
                    onerror="onerror=null; this.src='/static/images/default-profile-180x180.png'">
@@ -358,6 +368,7 @@
             </span>
             <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
           </td>
+          <td>{{member.businessName ? member.businessName : 'N/A'}}</td>
           <td>
             {{ getStaticNames(member.occupation) }}
             <br>
@@ -1082,6 +1093,7 @@
         this.imageBaseUrl = Http.IMAGE_URL
         this.query = Object.assign({}, {
           name: '', // string
+          businessName: '',
           mobileNumber: '', // string
           accountType: '', // int: 1 = personal, 2 = business
           verificationStatus: '', // string: VERIFIED, NOT_VERIFIED

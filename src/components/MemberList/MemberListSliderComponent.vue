@@ -46,12 +46,13 @@
 
                 </div>
                 <div class="gr-12 small-text">
+                    <b v-if="memberProfile.accountType == 2">Business Name: {{member.businessDetails.businessBasicInfo.businessName}}<br></b>
                     <b>{{memberProfile.name}}</b>
                     <span class="banner-text" v-if="memberProfile.accountType == 1">(Personal)</span>
                     <span class="banner-text" v-else>(Business)</span>
                     <span>{{memberProfile.profileCompletionScore}}%</span>
                     <br>{{memberProfile.mobileNumber}}
-                    <br>General
+                    <br>{{memberAccountClass}}
 
                 </div>
 
@@ -355,7 +356,8 @@
         documentDetails: {},
         accessControlList: [],
         member: {},
-        showLoader: false
+        showLoader: false,
+        memberAccountClass: 'REGULAR'
       }
     },
     created () {
@@ -384,6 +386,13 @@
               this.showLoader = false
               this.member = member
               console.log('In slider component, member basic details: ', this.member)
+              if (member.basicInfo.accountClass === 5) {
+                this.memberAccountClass = 'VERIFIED GENERAL'
+              } else if (member.basicInfo.accountClass === 3) {
+                this.memberAccountClass = 'PLATINUM'
+              } else if (member.basicInfo.accountClass === 2) {
+                this.memberAccountClass = 'GOLD'
+              }
             },
             error => {
               this.showLoader = false

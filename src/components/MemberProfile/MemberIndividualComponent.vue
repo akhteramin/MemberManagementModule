@@ -81,9 +81,8 @@
                           <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
                           <span v-else>Balance: N/A </span>
                         </button-->
+                        
                       </div>
-
-
 
                       <div class="gr-10 text-left">
                         
@@ -262,7 +261,21 @@
                         </div>
 
                       </div>
+                      <div class="gr-12" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE')">
+                            <div class="gr-12 panel-label"><b>Missing Information</b></div>
+                            <hr>
+                            <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
+                                No missing Information.This Member is <b>Verifiable</b>.
+                            </div>
+                            <div class="gr-12" v-else>
+                                <div class="gr-6" v-for="missingInfo in memberMissingInfo.missingInformation">
+                                    <span class="text-ash">
+                                        -{{missingInfo | underscoreless}}
+                                    </span>
+                                </div>
 
+                            </div>
+                        </div>
                     </div>
                   </div>
 
@@ -583,7 +596,8 @@
           thanaId: 'N/A',
           type: 'PERMANENT'
         },
-        showLoader: false
+        showLoader: false,
+        memberMissingInfo: null
       }
     },
     created () {
@@ -672,6 +686,24 @@
               console.log('Error in retrieving balance... ', error)
             }
           )
+        if (!this.containsPermission('MS_MM_USER_IS_VERIFIABLE')) {
+            this.memberMissingInfo = null
+          } else {
+            // Http call for the missing information
+            this.showLoader = true
+            Http.GET('member', [this.id, 'is-verifiable'])
+              .then(
+                ({data: {data: missingData}}) => {
+                  this.showLoader = false
+                  this.memberMissingInfo = missingData
+                  console.log('Got the list of missing: ', this.memberMissingInfo)
+                },
+                error => {
+                  this.showLoader = false
+                  console.log('Error in getting the list of missing, error: ', error)
+                }
+              )
+          }
       },
       editBasicInfo (param = '') {
         if (this.editBasicProfileMode) {
