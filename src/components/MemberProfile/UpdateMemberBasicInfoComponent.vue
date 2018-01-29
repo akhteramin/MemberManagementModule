@@ -50,7 +50,7 @@
             <div class="gr-4 text-left" style="margin-bottom: 5px;">
                 <div class="select select-sm">
                 <select id="genderSelection" v-model="member.basicInfo.gender">
-                    <option selected value = "">Select Gender</option>
+                    <option selected :value = "null">Select Gender</option>
                     <option value="M">Male</option>
                     <option value="F">Female</option>
                 </select>
@@ -62,7 +62,7 @@
             <div class="gr-4 text-left" style="margin-bottom: 5px;">
                 <div class="select select-sm">
                 <select id="occupationSelection" v-model="member.basicInfo.occupation">
-                    <option selected value = "">Select Occupation</option>
+                    <option selected :value = "null">Select Occupation</option>
                     <option v-for="occupation in occupationList" :value="occupation.id">{{ occupation.name }}</option>
                 </select>
                 </div>
