@@ -6,11 +6,11 @@
               <br>
               <div class="gr-3">
                 <label> From: </label>
-                <input  type="date" name="fromRDate" placeholder=activityQuery.fromDate  v-model="searchFromDate"/>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromRDate" placeholder="activityQuery.fromDate"  v-model="searchFromDate"/>
               </div>
               <div class="gr-3">
                 <label>To:</label>
-                <input type="date" name="toRange"  placeholder=activityQuery.toDate v-model="searchToDate"/>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="activityQuery.toDate" v-model="searchToDate"/>
               </div>
               <div class="gr-4">
                 <label class="justify-content-md-start" for="search-key">Description</label>
@@ -90,26 +90,26 @@
                 </nav>
                 </div>
                 <div class="pull-right" v-else>
-                <a class="btn btn-sm btn-secondary"
+                <a class="btn btn-sm btn-default btn-active-til"
                     role="button"
                     v-bind:class="{ disabled: activityQuery.pageNumber === 0 }"
                     v-on:click="pageChange(0)">
                     <i class="fa fa-angle-double-left" aria-hidden="true"></i> First
                 </a>
-                <a class="btn btn-sm btn-secondary"
+                <a class="btn btn-sm btn-default btn-active-til"
                     role="button"
                     v-bind:class="{ disabled: activityQuery.pageNumber === 0 }"
                     v-on:click="pageChange(activityQuery.pageNumber - 1)">
                     <i class="fa fa-angle-left" aria-hidden="true"></i> Previous
                 </a>
                 <small>Page {{ activityQuery.pageNumber + 1 }} of {{ activities.totalPages }}</small>
-                <a class="btn btn-sm btn-secondary"
+                <a class="btn btn-sm btn-default btn-active-til"
                     role="button"
                     v-bind:class="{ disabled: activityQuery.pageNumber === activities.totalPages - 1 }"
                     v-on:click="pageChange(activityQuery.pageNumber + 1)">
                     Next <i class="fa fa-angle-right" aria-hidden="true"></i>
                 </a>
-                <a class="btn btn-sm btn-secondary"
+                <a class="btn btn-sm btn-default btn-active-til"
                     role="button"
                     v-bind:class="{ disabled: activityQuery.pageNumber === activities.totalPages - 1 }"
                     v-on:click="pageChange(activities.totalPages - 1)">

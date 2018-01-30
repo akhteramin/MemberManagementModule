@@ -71,12 +71,20 @@
                           @update="editProfilePic"
                           v-if="containsPermission('MS_MM_USER_UPLOAD_PROFILE_PIC')">
                         </update-member-image>
-                        <b>{{member.basicInfo.name}}</b>
-                        <span class="banner-text" v-if="member.basicInfo.accountType == 1">(Personal)</span>
-                        <span class="banner-text" v-else>(Business)</span>
-                        <br>{{member.basicInfo.mobileNumber}}
-                        <br><span>{{member.basicInfo.profileCompletionScore}}%</span>
-                        <br>{{ memberAccountClass }}
+                        <div class="text-right">
+                          <b>{{member.basicInfo.name}}</b>
+                          <span class="banner-text" v-if="member.basicInfo.accountType == 1">(Personal)</span>
+                          <span class="banner-text" v-else>(Business)</span>
+                        </div>
+                        <div class="text-right">
+                          {{member.basicInfo.mobileNumber}}
+                        </div>
+                        <div class="text-right">
+                          <span>{{member.basicInfo.profileCompletionScore}}%</span>
+                        </div>
+                        <div class="text-right">
+                          {{ memberAccountClass }}
+                        </div>
                         <!--button class="button-md-balance padding-2" >
                           <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
                           <span v-else>Balance: N/A </span>
@@ -687,11 +695,11 @@
             }
           )
         if (!this.containsPermission('MS_MM_USER_IS_VERIFIABLE')) {
-            this.memberMissingInfo = null
-          } else {
+          this.memberMissingInfo = null
+        } else {
             // Http call for the missing information
-            this.showLoader = true
-            Http.GET('member', [this.id, 'is-verifiable'])
+          this.showLoader = true
+          Http.GET('member', [this.id, 'is-verifiable'])
               .then(
                 ({data: {data: missingData}}) => {
                   this.showLoader = false
@@ -703,7 +711,7 @@
                   console.log('Error in getting the list of missing, error: ', error)
                 }
               )
-          }
+        }
       },
       editBasicInfo (param = '') {
         if (this.editBasicProfileMode) {

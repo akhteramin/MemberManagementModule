@@ -14,7 +14,7 @@
                 <th class = "text-center">Type</th>
                 <th class = "text-center">Document No.</th>
                 <th class = "text-center">Document</th>
-                <th class = "text-center">Verification</th>
+                <th class = "text-center">Verification Status</th>
                 <th class = "text-center" v-if="containsPermission('MS_MM_USER_ADD_DOC')">Action</th>
 
                 </tr>
@@ -249,7 +249,7 @@
         } else {
           this.documentTypes = GLOBAL_VARS.DOCUMENT_TYPE_BUSINESS
         }
-        console.log('document type::',this.documentTypes)
+        console.log('document type::', this.documentTypes)
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
         this.getIdentificationDocuments()

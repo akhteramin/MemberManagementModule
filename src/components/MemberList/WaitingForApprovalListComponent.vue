@@ -67,11 +67,11 @@
 
             <div class="gr-3">
               <label>Signup From: </label>
-              <input type="date" v-model="signUpDateFrom"/>
+              <input type="date" :max="new Date().toISOString().substring(0,10)" v-model="signUpDateFrom"/>
             </div>
             <div class="gr-3">
               <label>Signup To: </label>
-              <input type="date" v-model="signUpDateTo"/>
+              <input type="date" :max="new Date().toISOString().substring(0,10)" v-model="signUpDateTo"/>
             </div>
 
             <div class="gr-3">
@@ -234,26 +234,26 @@
             </nav>
           </div>
           <div class="pull-right" v-else>
-            <a class="btn btn-sm btn-secondary"
+            <a class="btn btn-sm btn-default btn-active-til"
                role="button"
                v-bind:class="{ disabled: query.pageNumber === 0 }"
                v-on:click="pageChange(0)">
               <i class="fa fa-angle-double-left" aria-hidden="true"></i> First
             </a>
-            <a class="btn btn-sm btn-secondary"
+            <a class="btn btn-sm btn-default btn-active-til"
                role="button"
                v-bind:class="{ disabled: query.pageNumber === 0 }"
                v-on:click="pageChange(query.pageNumber - 1)">
               <i class="fa fa-angle-left" aria-hidden="true"></i> Previous
             </a>
             <small>Page {{ query.pageNumber + 1 }} of {{ members.totalPages }}</small>
-            <a class="btn btn-sm btn-secondary"
+            <a class="btn btn-sm btn-default btn-active-til"
                role="button"
                v-bind:class="{ disabled: query.pageNumber === members.totalPages - 1 }"
                v-on:click="pageChange(query.pageNumber + 1)">
               Next <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
-            <a class="btn btn-sm btn-secondary"
+            <a class="btn btn-sm btn-default btn-active-til"
                role="button"
                v-bind:class="{ disabled: query.pageNumber === members.totalPages - 1 }"
                v-on:click="pageChange(members.totalPages - 1)">
