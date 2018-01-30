@@ -20,7 +20,7 @@
 
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" >&times;</button>
+              <button type="button" @click="clearDocument" class="close" data-dismiss="modal" >&times;</button>
               <h4 class="modal-title"> Change Document {{ document.documentType }} </h4>
             </div>
             <div class="modal-body">
@@ -65,7 +65,7 @@
             <div class="modal-footer">
 
               <button type="button" class="btn btn-sm btn-default btn-active-til" @click="uploadDocument" data-dismiss="modal">Update</button>
-              <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-sm btn-danger" @click="clearDocument" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </div>
@@ -109,6 +109,11 @@
         reader.readAsDataURL(files[0])
         this.memberDocument = files[0]
         console.log(files[0])
+      },
+      clearDocument () {
+        console.log('clear the document')
+        this.documentUrl = this.documentBaseUrl + this.document.documentUrl
+        $('#uploadBtn3').val('')
       },
       uploadDocument () {
         console.log(this.memberDocument)

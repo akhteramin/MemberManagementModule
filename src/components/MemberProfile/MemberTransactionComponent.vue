@@ -91,7 +91,7 @@
                     <tbody>
                     <tr v-for="transaction in transactions.transactions" >
                         <td style="width: 200px;">{{ transaction.transactionID }}</td>
-                        <td>{{ transaction.time | date('MMM D, YYYY') }}</td>
+                        <td>{{ transaction.time | date('MMM D, YYYY - HH:mm:ss a') }}</td>
                         <td> {{ transaction.serviceID | static_mapper(serviceList) | underscoreless }}</td>
                         <td>{{ transaction.description }}</td>
                         <td style="text-align: right;">{{ transaction.amount }}</td>

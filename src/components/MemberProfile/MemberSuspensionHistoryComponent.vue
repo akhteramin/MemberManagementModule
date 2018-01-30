@@ -44,20 +44,24 @@
         <thead class="thead-default">
         <tr>
           <th style="text-align: center;">#</th>
+          <th style="text-align: center;">Initiated On</th>
+          <th style="text-align: center;">Status</th>
+          <th style="text-align: center;">Effective From</th>
+          <th style="text-align: center;">Effective To</th>
           <th style="text-align: center;">Taken By</th>
           <th style="text-align: center;">Description</th>
-          <th style="text-align: center;">Status</th>
-          <th style="text-align: center;">Time</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="suspension, index in suspensionHistory" >
-          <td style="width: 30px;">{{ suspensionHistoryQuery.pageNumber * suspensionHistoryQuery.pageSize + 1 + index }}</td>
-          <td style="text-align: center;">{{ suspension.adminUserDetails ? suspension.adminUserDetails.name : 'SYSTEM' }}</td>
-          <td style="width: 350px; text-align: center;">{{ suspension.description }}</td>
-          <td style="text-align: center;">{{ suspension.suspensionStatus }} </td> <!--{{ activity.deviceBrowser }}-->
-          <td style="text-align: center;">{{ suspension.createdAt | date('MMM D, YYYY h:mm:ss') }}</td>
-        </tr>
+          <tr v-for="suspension, index in suspensionHistory" >
+            <td style="width: 30px;">{{ suspensionHistoryQuery.pageNumber * suspensionHistoryQuery.pageSize + 1 + index }}</td>
+            <td style="text-align: center;">{{ suspension.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}</td>
+            <td style="text-align: center;">{{ suspension.suspensionStatus }} </td> <!--{{ activity.deviceBrowser }}-->
+            <td style="text-align: center;">{{ suspension.effectiveFrom | date('MMM D, YYYY - HH:mm:ss a') }}</td>
+            <td style="text-align: center;">{{ suspension.effectiveTo | date('MMM D, YYYY - HH:mm:ss a') }}</td>
+            <td style="text-align: center;">{{ suspension.adminUserDetails ? suspension.adminUserDetails.name : 'SYSTEM' }}</td>
+            <td style="width: 350px; text-align: center;">{{ suspension.description }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
