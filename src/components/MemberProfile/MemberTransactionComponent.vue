@@ -91,12 +91,12 @@
                     <tbody>
                     <tr v-for="transaction in transactions.transactions" >
                         <td style="width: 200px;">{{ transaction.transactionID }}</td>
-                        <td>{{ transaction.time | date('MMM D, YYYY') }}</td>
+                        <td>{{ transaction.time | date('MMM D, YYYY - HH:mm:ss a') }}</td>
                         <td> {{ transaction.serviceID | static_mapper(serviceList) | underscoreless }}</td>
                         <td>{{ transaction.description }}</td>
                         <td style="text-align: right;">{{ transaction.amount }}</td>
                         <td style="text-align: right;">{{ transaction.fee }}</td>
-                        <td style="text-align: right;">{{ transaction.netAmount }}</td>
+                        <td style="text-align: right;">{{ transaction.currencyFilter }}{{ transaction.netAmount }}</td>
                         <td style="text-align: right;">{{ transaction.balance }}</td>
                         <td style="text-align: center;">{{ transaction.statusCode == 200 ? 'Success' :
                             transaction.statusCode == 102 ? 'In Progress' : 'Fail'}}</td>
@@ -249,12 +249,134 @@
             console.log('Success, got transactions: ', transactions)
             console.log('same transaction data: ')
             this.transactions = transactions
+            let transactionHistory = transactions.transactions
+            this.transactions.transactions = this.processForCurrencyFilter(transactionHistory)
+            console.log('transaction histor',this.transactions)
             this.transactionTotalPages = Math.ceil(
               this.transactions.totalCount / this.transactionQuery.pageSize)
           }, error => {
             this.showLoader = false
             console.error('Error in getting members: ', error)
           })
+      },
+      processForCurrencyFilter (transactions)
+      {
+          const LENGTH = transactions.length;
+          if (LENGTH > 0) {
+              
+              let service
+
+              for (let i = 0; i < LENGTH; i++) {
+                  service = transactions[i].serviceID
+                  switch (service) {
+                      case 1001:
+                          transactions[i].currencyFilter = '+ '
+                          transactions[i].serviceName="Transaction Service"
+                          break
+                      case 1:
+                          transactions[i].serviceName="Send Money"
+                          if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                              transactions[i].currencyFilter = '- '
+                          } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                              transactions[i].currencyFilter = '+ '
+                          } else {
+                              transactions[i].currencyFilter = '+ '
+                          }
+                          break
+                      case 3001:
+                          transactions[i].serviceName="Add Money"
+                          transactions[i].currencyFilter = '+ '
+                          break
+                      case 963001:
+                          transactions[i].serviceName="Add Money Revert"
+                          transactions[i].currencyFilter = '- '
+                          break
+                      case 3002:
+                          transactions[i].serviceName="Withdraw Money"
+                          transactions[i].currencyFilter = '- '
+                          break
+                      case 2001:
+                          transactions[i].serviceName="Top Up"
+                          transactions[i].currencyFilter = '- '
+                          break
+                      case 2002:
+                          transactions[i].serviceName="Top Up Rollback"
+                          transactions[i].currencyFilter = '+ '
+                          break
+                      case 6001:
+                          transactions[i].serviceName="Request Money"
+                          
+                          if(transactions[i].statusCode!==200 && transactions[i].statusCode!==102)
+                          {
+                              transactions[i].currencyFilter = ' '
+                          }
+                          else if(transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber)
+                          {
+                              transactions[i].currencyFilter = '+ '
+                          }
+                          else
+                          {
+                              transactions[i].currencyFilter = '- '
+                          }
+
+                          break
+
+                      case 6002:
+                          transactions[i].serviceName="Payment"
+                          if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                              transactions[i].currencyFilter = '- '
+                          } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                              transactions[i].currencyFilter = '+ '
+                          } else {
+                              transactions[i].currencyFilter = '+ '
+                          }
+                          break
+                      case 6003:
+
+                          transactions[i].serviceName="Invoice"
+                          if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                              transactions[i].currencyFilter = '- '
+                          } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                              transactions[i].currencyFilter = '+ '
+                          } else {
+                              transactions[i].currencyFilter = '+ '
+                          }
+                          break
+                      case 8001:
+
+                          transactions[i].serviceName="Education"
+                          if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                              transactions[i].currencyFilter = '- '
+                          } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                              transactions[i].currencyFilter = '+ '
+                          } else {
+                              transactions[i].currencyFilter = '+ '
+                          }
+                          break
+                      case 7001:
+                          transactions[i].serviceName="Internal Balance Transfer"
+                          transactions[i].currencyFilter = '+'
+                          if(transactions[i].additionalInfo.isReceiver == true)
+                          {
+                              transactions[i].currencyFilter = '-'
+                          }
+                          break;
+                      case 1100:
+                          transactions[i].serviceName="Offer"
+                          transactions[i].currencyFilter = '+'
+                          if(transactions[i].additionalInfo.isReceiver == true)
+                          {
+                              transactions[i].currencyFilter = '-'
+                          }
+                          break
+                      default:
+                          transactions[i].serviceName="N/A"
+                          transactions[i].currencyFilter = '+ '
+                          break
+                  }
+              }
+          }
+          return transactions || []
       },
       pageChange (number = 0, activeQuery = true) {
         if (!activeQuery && this.transactionQuery.pageNumber !== number) { // transaction query

@@ -26,7 +26,7 @@
 
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" >&times;</button>
+              <button type="button" class="close"  @click="clearDocument" data-dismiss="modal" >&times;</button>
               <h4 class="modal-title"> Change Your Profile Picture </h4>
             </div>
             <div class="modal-body">
@@ -65,7 +65,7 @@
             <div class="modal-footer">
 
               <button type="button" class="btn btn-sm btn-default btn-active-til" @click="uploadPP" data-dismiss="modal">Update</button>
-              <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-sm btn-danger" @click="clearDocument" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </div>
@@ -114,6 +114,11 @@
         reader.readAsDataURL(files[0])
         this.profilePicture = files[0]
         console.log(files[0])
+      },
+      clearDocument () {
+        console.log('clear the document')
+        this.imageUrl = this.imageBaseUrl + this.member.basicInfo.mmUserPictures[0].document.url
+        $('#uploadBtn3').val('')
       },
       uploadPP () {
         console.log(this.profilePicture)

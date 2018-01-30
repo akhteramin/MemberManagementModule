@@ -59,15 +59,14 @@
             </div>
             <div class="gr-12 small-text" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE')">
                 <div class="gr-12 panel-label"><b>Missing Information</b></div>
-                <hr>
                 <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
                     No missing Information.This Member is <b>Verifiable</b>.
                 </div>
                 <div class="gr-12" v-else>
                     <div class="gr-6" v-for="missingInfo in memberMissingInfo.missingInformation">
-                        <span class="text-ash">
+                        <span><b>
                             -{{missingInfo | underscoreless}}
-                        </span>
+                        </b></span>
                     </div>
 
                 </div>
@@ -75,7 +74,6 @@
             <div class="gr-12 small-text min-height-slider"
                  v-if="memberDocuments && containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
                 <div class="gr-12 panel-label"><b>Identification Documents</b></div>
-                <hr>
                 <div class="row margin-5" v-for="memberDocument in memberDocuments">
                     <div class="gr-5 text-center padding-2">
                         <img :src="imageBaseUrl+memberDocument.documentUrl"
@@ -205,7 +203,6 @@
                 </div>
             <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails &&
               containsPermission('MS_MM_USER_VERIFICATION_VERIFY')">
-              <hr>
               <member-verify-and-approve-component
                 :id = "memberBasicDetails.basicInfo.accountId"
                 :member = "memberBasicDetails">

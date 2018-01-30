@@ -38,7 +38,7 @@
         </ul>
         <ul class="bottom-menu">
 
-          <li :class="{'btn-active-til': showModule}" @click="setMenu('module')">
+          <li v-if="appsData.length > 1" :class="{'btn-active-til': showModule}" @click="setMenu('module')">
             <div class="dropup">
               <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-th fa-1x" aria-hidden="true"></i></button>
               <ul class="dropdown-menu">
@@ -90,7 +90,7 @@
         </ul>
         <ul class="bottom-menu">
 
-          <li :class="{'btn-active-til': showModule}" @click="setMenu('module')">
+          <li v-if="appsData.length > 1" :class="{'btn-active-til': showModule}" @click="setMenu('module')">
             <div class="dropup">
               <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-th fa-2x" aria-hidden="true"></i></button>
               <ul class="dropdown-menu">

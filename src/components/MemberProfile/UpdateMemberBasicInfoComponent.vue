@@ -26,7 +26,7 @@
                 v-model="member.basicInfo.name"/>
             </div>
             <div class="gr-2">
-                Mobile Number:
+                Ipay Number:
             </div>
             <div class="gr-4 text-left">
                 {{ member.basicInfo.mobileNumber || 'N/A' }}

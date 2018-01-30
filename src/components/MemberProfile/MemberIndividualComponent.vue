@@ -110,7 +110,7 @@
                             {{ member.basicInfo.name || 'N/A'}}
                           </div>
                           <div class="gr-2">
-                            Mobile Number:
+                            Ipay Number:
                           </div>
                           <div class="gr-4 text-left pull-.5">
                             {{ member.basicInfo.mobileNumber || 'N/A' }}
@@ -260,7 +260,7 @@
                               {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
                             </div>
                             <div class="gr-2">
-                            Mobile Number:
+                            Ipay Number:
                             </div>
                             <div class="gr-4 text-left">
                               {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}

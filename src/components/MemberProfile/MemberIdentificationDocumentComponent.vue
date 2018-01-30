@@ -13,7 +13,7 @@
                 <tr>
                 <th class = "text-center">Type</th>
                 <th class = "text-center">Document No.</th>
-                <th class = "text-center">URL</th>
+                <th class = "text-center">Document</th>
                 <th class = "text-center">Verification Status</th>
                 <th class = "text-center" v-if="containsPermission('MS_MM_USER_ADD_DOC')">Action</th>
 

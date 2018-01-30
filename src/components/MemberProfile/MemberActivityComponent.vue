@@ -55,7 +55,7 @@
                 <td style="width: 250px;">{{ activity.description }}</td>
                 <td style="width: 300px; text-align: center;">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
                 <td style="width: 800px; text-align: center;">{{ activity.userAgent }}</td>
-                <td style="text-align: center;">{{ activity.time | date('MMM D, YYYY') }}</td>
+                <td style="text-align: center;">{{ activity.time | date('MMM D, YYYY - HH:mm:ss a') }}</td>
             </tr>
             </tbody>
             </table>
