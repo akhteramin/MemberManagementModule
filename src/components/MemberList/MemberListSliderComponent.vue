@@ -354,7 +354,7 @@
         accessControlList: [],
         member: {},
         showLoader: false,
-        memberAccountClass: 'REGULAR'
+        memberAccountClass: 'GENERAL'
       }
     },
     created () {

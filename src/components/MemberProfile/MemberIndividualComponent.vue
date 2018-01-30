@@ -583,7 +583,7 @@
         districtList: {},
         profilePicture: {},
         accessControlList: [],
-        memberAccountClass: 'REGULAR',
+        memberAccountClass: 'GENERAL',
         memberPresentAddress: {
           addressLine1: 'N/A',
           addressLine2: 'N/A',
