@@ -92,26 +92,26 @@
             </nav>
           </div>
           <div class="pull-right" v-else>
-            <a class="btn btn-sm btn-secondary"
+            <a class="btn btn-sm btn-default btn-active-til"
                role="button"
                v-bind:class="{ disabled: suspensionHistoryQuery.pageNumber === 0 }"
                v-on:click="pageChange(0)">
               <i class="fa fa-angle-double-left" aria-hidden="true"></i> First
             </a>
-            <a class="btn btn-sm btn-secondary"
+            <a class="btn btn-sm btn-default btn-active-til"
                role="button"
                v-bind:class="{ disabled: suspensionHistoryQuery.pageNumber === 0 }"
                v-on:click="pageChange(suspensionHistoryQuery.pageNumber - 1)">
               <i class="fa fa-angle-left" aria-hidden="true"></i> Previous
             </a>
             <small>Page {{ suspensionHistoryQuery.pageNumber + 1 }} of {{ totalPages }}</small>
-            <a class="btn btn-sm btn-secondary"
+            <a class="btn btn-sm btn-default btn-active-til"
                role="button"
                v-bind:class="{ disabled: suspensionHistoryQuery.pageNumber === totalPages - 1 }"
                v-on:click="pageChange(suspensionHistoryQuery.pageNumber + 1)">
               Next <i class="fa fa-angle-right" aria-hidden="true"></i>
             </a>
-            <a class="btn btn-sm btn-secondary"
+            <a class="btn btn-sm btn-default btn-active-til"
                role="button"
                v-bind:class="{ disabled: suspensionHistoryQuery.pageNumber === totalPages - 1 }"
                v-on:click="pageChange(totalPages - 1)">

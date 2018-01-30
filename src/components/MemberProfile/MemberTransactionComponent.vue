@@ -138,26 +138,26 @@
                     </nav>
                   </div>
                   <div class="pull-right" v-else>
-                    <a class="btn btn-sm btn-secondary"
+                    <a class="btn btn-sm btn-default btn-active-til"
                        role="button"
                        v-bind:class="{ disabled: transactionQuery.pageNumber === 0 }"
                        v-on:click="pageChange(0, false)">
                       <i class="fa fa-angle-double-left" aria-hidden="true"></i> First
                     </a>
-                    <a class="btn btn-sm btn-secondary"
+                    <a class="btn btn-sm btn-default btn-active-til"
                        role="button"
                        v-bind:class="{ disabled: transactionQuery.pageNumber === 0 }"
                        v-on:click="pageChange(transactionQuery.pageNumber - 1, false)">
                       <i class="fa fa-angle-left" aria-hidden="true"></i> Previous
                     </a>
                     <small>Page {{ transactionQuery.pageNumber + 1 }} of {{ transactionTotalPages }}</small>
-                    <a class="btn btn-sm btn-secondary"
+                    <a class="btn btn-sm btn-default btn-active-til"
                        role="button"
                        v-bind:class="{ disabled: transactionQuery.pageNumber === transactionTotalPages - 1 }"
                        v-on:click="pageChange(transactionQuery.pageNumber + 1, false)">
                       Next <i class="fa fa-angle-right" aria-hidden="true"></i>
                     </a>
-                    <a class="btn btn-sm btn-secondary"
+                    <a class="btn btn-sm btn-default btn-active-til"
                        role="button"
                        v-bind:class="{ disabled: transactionQuery.pageNumber === transactionTotalPages - 1 }"
                        v-on:click="pageChange(transactionTotalPages - 1, false)">
