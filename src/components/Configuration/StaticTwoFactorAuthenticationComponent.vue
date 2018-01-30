@@ -46,7 +46,7 @@
                 <div id = "status" class="select">
                   <select required v-model="createNew2faRequest.accountClass">
                     <option :value="null">Choose ...</option>
-                    <option v-for="item,index in mapper.accountClass" :value="index+1">{{ item }}</option>
+                    <option v-for="item in classes" :value="item.id">{{ item.name }}</option>
                   </select>
                 </div>
               </div>
@@ -56,7 +56,7 @@
                 <div id = "status" class="select">
                   <select required v-model="createNew2faRequest.accountType">
                     <option :value="null">Choose ...</option>
-                    <option v-for="item,index in mapper.accountType" :value="index+1">{{ item }}</option>
+                    <option v-for="item in types" :value="item.id">{{ item.name }}</option>
                   </select>
                 </div>
               </div>
@@ -116,7 +116,7 @@
                 <label for="status">Account Class</label>
                 <div id = "status" class="select">
                   <select required v-model="update2faRequest.accountClass">
-                    <option v-for="item,index in mapper.accountClass" :value="index+1">{{ item }}</option>
+                    <option v-for="item in classes" :value="item.id">{{ item.name }}</option>
                   </select>
                 </div>
               </div>
@@ -125,7 +125,7 @@
                 <label for="status">Account Type</label>
                 <div id = "status" class="select">
                   <select required v-model="update2faRequest.accountType">
-                    <option v-for="item,index in mapper.accountType" :value="index+1">{{ item }}</option>
+                    <option v-for="item,index in types" :value="item.id">{{ item.name }}</option>
                   </select>
                 </div>
               </div>
@@ -181,8 +181,8 @@
             <td>{{ item.id }}</td>
             <td style="text-align: left;">{{ item.serviceTag || 'N/A'}}</td>
             <td style="text-align: left;">{{ serviceMapper[item.serviceId] }}</td>
-            <td style="text-align: left;">{{ mapper.accountType[item.accountType-1] || 'N/A' }}</td>
-            <td style="text-align: left;">{{ mapper.accountClass[item.accountClass-1] || 'N/A' }}</td>
+            <td style="text-align: left;">{{ accountTypeMapper[item.accountType] || 'Unverified' }}</td>
+            <td style="text-align: left;">{{ accountClassMapper[item.accountClass] || 'N/A' }}</td>
             <td style="text-align: center;">{{ item.is2FAEnabled ? 'ACTIVE' : 'INACTIVE' }}</td>
             <td v-restrict="'MS_2FA_UPDATE_PREFERENCES'" style="text-align: center;">
               <a @click="showUpdate2faModal(item)"> <i class="fa fa-edit"></i></a>
@@ -222,10 +222,8 @@
         twoFactorList: {},
         showCreateNew2faButton: true,
         showLoader: false,
-        mapper: {
-          accountClass: ['General', 'Gold', 'Platinum', 'Bronze', 'Verified General'],
-          accountType: ['Personal', 'Business', 'Unverified']
-        },
+        accountClassMapper: {},
+        accountTypeMapper: {},
         serviceMapper: {},
         createNew2faRequest: {
           'accountClass': null,
@@ -236,7 +234,9 @@
         },
         twoFactorSearch: '',
         update2faRequest: {},
-        services: []
+        services: [],
+        classes: [],
+        types: []
       }
     },
     created () {
@@ -273,6 +273,32 @@
               console.log('successfully got service list: ', services)
               this.services.forEach(service => {
                 this.serviceMapper[service.serviceId] = service.serviceName
+              })
+            },
+            error => {
+              console.log('error getting service list', error)
+            }
+          )
+        Http.GET('resource', ['account-class'])
+          .then(
+            ({data: {data: classes}}) => {
+              this.classes = classes
+              console.log('successfully got account class list: ', classes)
+              this.classes.forEach(item => {
+                this.accountClassMapper[item.id] = item.name
+              })
+            },
+            error => {
+              console.log('error getting service list', error)
+            }
+          )
+        Http.GET('resource', ['account-type'])
+          .then(
+            ({data: {data: types}}) => {
+              this.types = types
+              console.log('successfully got account type list: ', types)
+              this.types.forEach(item => {
+                this.accountTypeMapper[item.id] = item.name
               })
             },
             error => {

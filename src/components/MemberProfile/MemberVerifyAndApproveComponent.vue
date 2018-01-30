@@ -29,7 +29,7 @@
               <div v-restrict="'MS_MM_USER_VERIFICATION_VERIFY'">
                 <form  v-on:submit.prevent="acceptVerification" v-on:reset.prevent="rejectVerification">
                   <br>
-                  <div class="row text-center" v-if="verificationStatus === 'NOT_VERIFIED'" style="color: red;">
+                  <div class="row text-center" v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'" style="color: red;">
                     <i class="fa fa-times" aria-hidden="true"></i> NOT VERIFIED
                     <br> <br>
                     <div class="gr-10 push-1">
@@ -53,8 +53,7 @@
                   </div>
 
 
-                  <div v-else-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' &&
-                verificationType === 'VERIFY')" class="row" >
+                  <div v-else-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' && verificationType === 'VERIFY')" class="row" >
                     <div style="color: #eb9316;" class="text-center">
                       <i class="fa fa-spinner" aria-hidden="true"></i> IN PROGRESS
                     </div>
@@ -82,8 +81,7 @@
 
                   </div>
 
-                  <div v-else-if="(verificationStatus === 'REJECTED' && verificationType === null)
-                  || (verificationStatus === 'REJECT' && verificationType === 'VERIFY')"
+                  <div v-else-if="(verificationStatus === 'REJECTED' && verificationType === null) || (verificationStatus === 'REJECT' && verificationType === 'VERIFY')"
                       class="row justify-content-center text-center">
                     <div style="color: red;">
                       <i class="fa fa-times"></i> REJECTED
@@ -112,8 +110,7 @@
                     </div>
                   </div>
 
-                  <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT')
-                      && verificationType === 'APPROVE'">
+                  <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT') && verificationType === 'APPROVE'">
                     <div style="color: #eb9316;" class="text-center">
 
                     </div>
@@ -142,9 +139,7 @@
 
 
 
-                  <div v-else-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
-                (verificationStatus === 'VERIFIED' && verificationType === null) ||
-                (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
+                  <div v-else-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') || (verificationStatus === 'VERIFIED' && verificationType === null) || (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
                     <div style="color: #5BC43C;">
                       <i class="fa fa-check"></i> VERIFIED
                     </div>
@@ -268,7 +263,7 @@
                     <!--</div>-->
                     <!--</div>-->
 
-                    <div v-if="verificationStatus === 'NOT_VERIFIED'" class="row text-center">
+                    <div v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'" class="row text-center">
                       <div style="color: red;">
                         <i class="fa fa-times"></i> NOT APPROVED
                       </div>
@@ -282,6 +277,61 @@
           </tr>
           </tbody>
         </table>
+        <div v-restrict="'MS_MM_USER_VERIFICATION_APPROVE'" v-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
+                  (verificationStatus === 'VERIFIED' && verificationType === null) ||
+                  (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
+          <button data-toggle="modal" data-target="#MemberUnverifiedModal" data-backdrop="false"
+          class="button-md-verify" style="width: 100px;">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            Unverify
+          </button>
+        </div>
+
+        <div id="MemberUnverifiedModal" class="modal fade" role="dialog">
+          <div class="modal-dialog  modal-md">
+            <!-- Modal content-->
+
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                <h4 class="modal-title"> Confirm Unverification (max. 250 characters) </h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                      <span>
+                        <div class="comment">
+                          <!--<span>Browse</span>-->
+                          Comment:
+                          <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
+                        </div>
+                        <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-2">
+                      Account Class:
+                      <div class="select">
+                        <select v-model="paramData.accountClass">
+                          <option v-for="item in classes" :value="item.id">{{ item.name }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+
+                <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="unverifyMember()" :disabled="paramData.comment === null || paramData.comment === ''">Unverify</button>
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -401,7 +451,13 @@
         approvalComment: '',
         showVerificationHistory: true,
         showApprovalHistory: false,
-        showLoader: false
+        showLoader: false,
+        paramData: {
+          comment: null,
+          accountClass: 1
+        },
+        accountClassMapper: {},
+        classes: []
       }
     },
     created () {
@@ -426,6 +482,19 @@
         this.verificationType = this.approvalHistory && this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
         console.log('verification status: ', this.verificationStatus, ' verification type: ', this.verificationType,
         'approvalHistory: ', this.approvalHistory)
+        Http.GET('resource', ['account-class'])
+          .then(
+            ({data: {data: classes}}) => {
+              this.classes = classes
+              console.log('successfully got account class list: ', classes)
+              this.classes.forEach(item => {
+                this.accountClassMapper[item.id] = item.name
+              })
+            },
+            error => {
+              console.log('error getting service list', error)
+            }
+          )
       },
       setTab (setName) {
         console.log('here, at set tab:: ')
@@ -587,6 +656,43 @@
             },
             error => {
               this.showLoader = false
+              console.log('Error in putting approval request, error: ', error)
+            }
+          )
+      },
+      unverifyMember () {
+        console.log(this.paramData)
+        this.showLoader = true
+        Http.PUT('verification', this.paramData, [this.id, 'revoke-verification'])
+          .then(
+            ({data: revokeResponse}) => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Success!</strong>',
+                message: 'Verification revoked.'
+              }, {
+                // settings
+                type: 'success',
+                delay: 3000
+              })
+              console.log('revoke request response::', revokeResponse)
+              this.verificationStatus = revokeResponse.data.verificationStatus
+              this.verificationType = revokeResponse.data.verificationType
+              this.approvalHistory.push(revokeResponse.data)
+              console.log('now, approval history: ', this.approvalHistory)
+            },
+            error => {
+              this.showLoader = false
+              $.notify({
+                // options
+                title: '<strong>Revoke failed!</strong>',
+                message: 'Please try again.'
+              }, {
+                // settings
+                type: 'danger',
+                delay: 3000
+              })
               console.log('Error in putting approval request, error: ', error)
             }
           )
