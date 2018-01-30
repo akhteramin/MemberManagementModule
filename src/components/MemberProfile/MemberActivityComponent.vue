@@ -6,11 +6,11 @@
               <br>
               <div class="gr-3">
                 <label> From: </label>
-                <input  type="date" name="fromRDate" placeholder=activityQuery.fromDate  v-model="searchFromDate"/>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromRDate" placeholder=activityQuery.fromDate  v-model="searchFromDate"/>
               </div>
               <div class="gr-3">
                 <label>To:</label>
-                <input type="date" name="toRange"  placeholder=activityQuery.toDate v-model="searchToDate"/>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder=activityQuery.toDate v-model="searchToDate"/>
               </div>
               <div class="gr-4">
                 <label class="justify-content-md-start" for="search-key">Description</label>

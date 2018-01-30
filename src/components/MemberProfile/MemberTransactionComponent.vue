@@ -22,11 +22,11 @@
           <div class="form-group gr-12">
             <div class="gr-3">
               <label> Date Range From: </label>
-              <input  type="date" name="fromRDate"  v-model="searchDateFrom" />
+              <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromRDate"  v-model="searchDateFrom" />
             </div>
             <div class="gr-3">
               <label>To:</label>
-              <input type="date" name="toRange"  placeholder="to"
+              <input type="date" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="to"
                      v-model="searchDateTo" />
             </div>
 

@@ -231,11 +231,11 @@
 
             <div class="gr-3">
               <label>Signup From: </label>
-              <input type="date" v-model="signUpDateFrom"/>
+              <input type="date" :max="new Date().toISOString().substring(0,10)" v-model="signUpDateFrom"/>
             </div>
             <div class="gr-3">
               <label>Signup To: </label>
-              <input type="date" v-model="signUpDateTo"/>
+              <input type="date" :max="new Date().toISOString().substring(0,10)" v-model="signUpDateTo"/>
             </div>
 
             <div class="gr-3">
