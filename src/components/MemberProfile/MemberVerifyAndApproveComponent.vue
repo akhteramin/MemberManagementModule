@@ -38,11 +38,13 @@
                     <div>
                       <div class="gr-12">
                         <div class="form-group">
-                          <button type="submit" class="button-md-verify" style="width: 90px;">
+                          <button type="submit" class="button-md-verify" style="width: 90px;"
+                          :disabled="verificationComment === null || verificationComment === ''">
                             <i class="fa fa-check" aria-hidden="true"></i>
                             Verify
                           </button>
-                          <button type="reset" class="button-reset">
+                          <button type="reset" class="button-reset"
+                          :disabled="verificationComment === null || verificationComment === ''">
                             <i class="fa fa-times"></i>
                             Reject
                           </button>

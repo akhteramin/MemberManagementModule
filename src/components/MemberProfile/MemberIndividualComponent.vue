@@ -16,7 +16,7 @@
                 </b></p>
                 </div>
                 <div class="gr-6 push-7">
-                  <div class="gr-2 padding-5 margin-10" align="right">
+                  <div class="gr-3 padding-5 margin-10 text-right">
                     <span><b>{{member.basicInfo.name}}</b></span>
                     <br><b>{{member.basicInfo.mobileNumber}}</b>
                     <br><b><span>{{member.basicInfo.profileCompletionScore}}%</span></b>
@@ -71,18 +71,18 @@
                           @update="editProfilePic"
                           v-if="containsPermission('MS_MM_USER_UPLOAD_PROFILE_PIC')">
                         </update-member-image>
-                        <div class="text-right">
+                        <div class="text-center">
                           <b>{{member.basicInfo.name}}</b>
                           <span class="banner-text" v-if="member.basicInfo.accountType == 1">(Personal)</span>
                           <span class="banner-text" v-else>(Business)</span>
                         </div>
-                        <div class="text-right">
+                        <div class="text-center">
                           {{member.basicInfo.mobileNumber}}
                         </div>
-                        <div class="text-right">
+                        <div class="text-center">
                           <span>{{member.basicInfo.profileCompletionScore}}%</span>
                         </div>
-                        <div class="text-right">
+                        <div class="text-center">
                           {{ memberAccountClass }}
                         </div>
                         <!--button class="button-md-balance padding-2" >

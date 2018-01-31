@@ -89,7 +89,8 @@
                     </div>
                     <div class="modal-footer">
 
-                      <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()">Verify</button>
+                      <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()"
+                      :disabled="paramData.comment === null || paramData.comment === ''">Verify</button>
                       <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                   </div>
