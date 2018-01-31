@@ -32,8 +32,7 @@
               <br>
               <div class="row">
 
-                <div class="gr-3 w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round"
-                style="padding-bottom:30px;padding-top:30px;min-height:490px">
+                <div class="gr-3 w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round user-profile-header">
                   <img v-if="user.profilePictureUrl"
                       :src="imageBaseUrl+user.profilePictureUrl || '../static/images/default-original.jpg'"
                       class="img-rounded img-responsive" width="330" height="330">
@@ -50,17 +49,17 @@
                   <div class="text-center">{{ user.email || 'N/A'}}</div>
                   <table id="userIndividual" class="table ui celled hover padding-5">
                       <tbody>
-                          <tr style="cursor: pointer;" class="selected">
+                          <tr class="selected pointer">
                               <td @click="highlightRow(); showSegmant ('profile')">
                                   Personal Information
                               </td>
                           </tr>
-                          <tr style="cursor: pointer;">
+                          <tr class="pointer">
                               <td @click="highlightRow(); showSegmant ('address')">
                                   Address
                               </td>
                           </tr>
-                          <tr style="cursor: pointer;" v-if="containsPermission('MS_USER_GET_ACTIVITY')">
+                          <tr class="pointer" v-if="containsPermission('MS_USER_GET_ACTIVITY')">
                               <td @click="highlightRow(); showSegmant ('activity')">
                                   Activity
                               </td>
@@ -69,8 +68,7 @@
                   </table>
                 </div>
 
-                <div class="gr-8 text-left w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round"
-                style="min-height:490px;margin-left:15px;">
+                <div class="gr-8 text-left w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round user-info-block">
                   
                   
                   <div class="gr-12" v-if="showProfile">

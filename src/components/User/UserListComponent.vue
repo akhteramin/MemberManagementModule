@@ -14,8 +14,8 @@
       <div id="CreateNewUserModal" class="modal fade" role="dialog">
         <div class="modal-dialog  modal-md">
           <!-- Modal content-->
-          <div class="modal-content" style="height: 650px; width: 500px;">
-            <div class="modal-header" style="text-align: center;">
+          <div class="modal-content height-650px width-500">
+            <div class="modal-header text-center">
               <button type="button" class="close" data-dismiss="modal" @click="setShowNewUserComponentToFalse">&times;</button>
               <h3><i class="fa fa-user-plus" aria-hidden="true"></i> Create New User</h3>
             </div>
@@ -162,7 +162,7 @@
       </div>
 
       <div>
-        <span style="display:inline-block; width: 5px;"></span>
+        <span class="user-creation-span"></span>
         <button role="button" class="button-search"
                 v-if="!showNewUserComponent && containsPermission('MS_USER_CREATE')"
                 @click="loadCreateNewUserComponent">
@@ -178,38 +178,38 @@
       <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
         <tr>
-          <th style="text-align: center;">#</th>
-          <th style="text-align: center;">Name</th>
-          <th style="text-align: center;">Email</th>
-          <th style="text-align: center;">Status</th>
-          <th style="text-align: center;">Mobile No.</th>          
-          <th style="text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i> User since</th>
+          <th class="text-center">#</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">Email</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Mobile No.</th>          
+          <th class="text-center"><i class="fa fa-clock-o" aria-hidden="true"></i> User since</th>
           <!--th style="text-align: center;">Update</th-->
         </tr>
         </thead>
         <tbody>
         <tr v-for="user,index in users">
-          <td style="text-align: center;">{{userQuery.pageNumber * userQuery.pageSize + index + 1}}</td>
+          <td class="text-center">{{userQuery.pageNumber * userQuery.pageSize + index + 1}}</td>
 
-          <td class="member-name" style="text-align: left">
+          <td class="member-name text-left">
                 <span v-if="user.profilePictureUrl">
                   <img :src="imageBaseUrl+user.profilePictureUrl" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
             <span v-else>
                   <img src="static/images/default-original.jpg" class="img-circle" alt="N/A" width="30" height="30">
                 </span>
-              <a style="cursor: pointer;" @click="userDetails(user.id)">
+              <a class="pointer" @click="userDetails(user.id)">
                 {{ user.name }}
               </a>
 
             <!--<i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>-->
           </td>
-          <td style="text-align: center;">{{ user.email ? user.email : 'N/A' }}</td>
-          <td style="text-align: center;">
+          <td class="text-center">{{ user.email ? user.email : 'N/A' }}</td>
+          <td class="text-center">
             {{ user.status }}
           </td>
-          <td style="text-align: center;">{{ user.mobileNumber ? user.mobileNumber : 'N/A' }}</td>          
-          <td style="text-align: center;">{{ user.creationTime | date('MMM D, YYYY hh:mm')}}</td>
+          <td class="text-center">{{ user.mobileNumber ? user.mobileNumber : 'N/A' }}</td>          
+          <td class="text-center">{{ user.creationTime | date('MMM D, YYYY hh:mm')}}</td>
           <!--td style="text-align: center;">
             <a @click="showUpdateUserModal(user)">
               <i class="fa fa-edit" aria-hidden="true"></i>
@@ -228,7 +228,7 @@
     <div class="gr-12 push-2 card-footer text-muted" v-if="totalElements > 0 && totalPages > 1">
       <div class="row">
         <div class="gr-3">
-          <div style="margin-top: 2.5rem;" v-if="users">
+          <div class="margin-top-rem" v-if="users">
             <small>Showing {{ parseInt(userQuery.pageNumber * userQuery.pageSize + 1)
               }} to {{ parseInt(userQuery.pageNumber * userQuery.pageSize + users.length)
               }} out of {{ totalElements }}
@@ -292,52 +292,52 @@
       <div class="modal-dialog  modal-md">
         <!-- Modal content-->
 
-        <div class="modal-content" style="height: 320px;">
+        <div class="modal-content height-320">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" >&times;</button>
-            <h4 class="modal-title" style="text-align: center;">Update User</h4>
+            <h4 class="modal-title text-center">Update User</h4>
             <div v-if="userUpdateSuccessful || userUpdateUnsuccessful">
               <br>
-              <div v-if="userUpdateSuccessful" style="text-align: center;">
-                <i class="fa fa-check" aria-hidden="true" style="color: greenyellow"></i> User update Successful
+              <div v-if="userUpdateSuccessful" class="text-center">
+                <i class="fa fa-check alert-color" aria-hidden="true"></i> User update Successful
               </div>
-              <div v-if="userUpdateUnsuccessful" style="text-align: center;">
-                <i class="fa fa-times" aria-hidden="true" style="color: greenyellow"></i> User update Unsuccessful
+              <div v-if="userUpdateUnsuccessful" class="text-center">
+                <i class="fa fa-times alert-color" aria-hidden="true"></i> User update Unsuccessful
               </div>
             </div>
           </div>
 
 
-          <div class="modal-body" style="text-align: left;">
+          <div class="modal-body text-left">
             <form v-on:submit.prevent="updateUser"
                 v-on:reset.prevent="doNotUpdateUser">
 
-              <div class="row push-2" style="padding: 2px;">
+              <div class="row push-2 padding-2">
                 <div class="gr-3">
                   <label for="name">Name: </label>
                 </div>
                 <div class="gr-4">
                   <input id="name" placeholder="User's name" v-model="updateRequest.name"
-                         style="width: 220px; height: 35px;"  type="text" required/>
+                         class="user-name-field"  type="text" required/>
                 </div>
               </div>
 
-              <div class="row push-2" style="padding: 2px;">
+              <div class="row push-2 padding-2">
                 <div class="gr-3">
                   <label for="designation">Designation: </label>
                 </div>
-                <div class="gr-3" style="align-items: flex-start;">
+                <div class="gr-3 user-designation-style">
                   <input id="designation" placeholder="User's designation" v-model="updateRequest.designation"
-                         style="width: 220px; height: 35px;" type="text" required/>
+                         class="user-name-field" type="text" required/>
                 </div>
               </div>
 
-              <div class="row push-2" style="padding: 2px;">
+              <div class="row push-2 padding-2">
                 <div class="gr-3">
                   <label for="status">Status: </label>
                 </div>
                 <div class="gr-3">
-                  <div class="select" style="width: 220px;">
+                  <div class="select width-220">
                     <select id="status" v-model="updateRequest.status">
                       <option value="ACTIVE">ACTIVE</option>
                       <option value="SUSPENDED">SUSPENDED</option>

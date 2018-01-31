@@ -22,28 +22,28 @@
             <div class="gr-2">
             Father Name:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <input  name="memberFather" class="input-sm" type="text" id="memberFather" placeholder="Father Name"
                 v-model="member.basicInfo.father"/>
             </div>
             <div class="gr-2">
             Mother Name:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <input  name="memberMother" class="input-sm" type="text" id="memberMother" placeholder="Mother Name"
                 v-model="member.basicInfo.mother"/>
             </div>
             <div class="gr-2">
             Father Mobile:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <input  name="memberFatherMobile" class="input-sm" type="text" id="memberFatherMobile" placeholder="Father Mobile Number"
                 v-model="member.basicInfo.fatherMobileNumber"/>
             </div>
             <div class="gr-2">
             Mother Mobile:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <input  name="memberMotherMobile" class="input-sm" type="text" id="memberMotherMobile" placeholder="Mother Mobile Number"
                 v-model="member.basicInfo.motherMobileNumber"/>
             </div>

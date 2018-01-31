@@ -33,8 +33,7 @@
                       width="auto"
                       class="img-rounded">
                       <i v-if="isPdf(item.documentUrl)"
-                      class="fa fa-file-pdf-o"
-                      style="font-size:50px;"
+                      class="fa fa-file-pdf-o font-size-50"
                       aria-hidden="true"></i>
                     </button>
                 </td>

@@ -4,8 +4,8 @@
 
     <div id="IdentificationDocumentModal" class="modal fade" role="dialog">
       <div class="modal-dialog modal-md">
-        <div class="modal-content" style="width: 800px;">
-          <div class="modal-header" style="text-align: center;">
+        <div class="modal-content width-800">
+          <div class="modal-header text-center">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h3><i class="fa fa-file" aria-hidden="true"></i> Identification Documents</h3>
           </div>
@@ -19,8 +19,8 @@
                 <th>Name</th>
                 <th>Type</th>
                 <th>Id No.</th>
-                <th style="text-align: center;">URL</th>
-                <th style="text-align: center;">Verification Status</th>
+                <th class="text-center">URL</th>
+                <th class="text-center">Verification Status</th>
               </tr>
               </thead>
               <tbody>
@@ -29,7 +29,7 @@
                 <td>{{ document.documentName ? document.documentName : 'N/A' }}</td>
                 <td>{{ document.documentType ? document.documentType : 'N/A' }}</td>
                 <td>{{ document.documentIdNumber ? document.documentIdNumber : 'N/A' }}</td>
-                <td style="text-align: center;">
+                <td class="text-center">
                   <img default-src="/static/images/default-document-icon.png"
                        v-if="!isPdf(document.documentUrl)"
                        :src="imageBaseUrl + document.documentUrl"
@@ -40,11 +40,10 @@
                       onerror="onerror=null;
                       this.src='/static/images/default-document-icon.png'">
                   <i v-if="isPdf(document.documentUrl)"
-                     class="fa fa-file-pdf-o"
-                     style="font-size:50px;"
+                     class="fa fa-file-pdf-o font-size-50"
                      aria-hidden="true"></i>
                 </td>
-                <td style="text-align: center;">
+                <td class="text-center">
                   {{ document.documentVerificationStatus ? document.documentVerificationStatus : 'N/A' }}
                 </td>
               </tr>
@@ -58,8 +57,8 @@
 
     <div id="BankDocumentModal" class="modal fade" role="dialog">
       <div class="modal-dialog modal-md">
-        <div class="modal-content" style="width: 800px;">
-          <div class="modal-header" style="text-align: center;">
+        <div class="modal-content width-800">
+          <div class="modal-header text-center">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h3><i class="fa fa-bank" aria-hidden="true"></i> Bank Information</h3>
           </div>
@@ -74,19 +73,19 @@
                 <th>Account No.</th>
                 <th>Bank Name</th>
                 <th>Branch Name</th>
-                <th style="text-align: center;">Verification Status</th>
-                <th style="text-align: center;">Verified Date</th>
+                <th class="text-center">Verification Status</th>
+                <th class="text-center">Verified Date</th>
               </tr>
               </thead>
               <tbody>
               <!--bank documents are: {{ bankDocuments }}-->
-              <tr v-for="bank,index in bankDocuments" style="height: 10px;">
+              <tr v-for="bank,index in bankDocuments" class="height-10">
                 <td>{{ index + 1 }}</td>
                 <td>{{ bank.accountName ? bank.accountName : 'N/A' }}</td>
                 <td>{{ bank.accountNumber ? bank.accountNumber : 'N/A' }}</td>
                 <td>{{ bank.bankName ? bank.bankName : 'N/A' }}</td>
                 <td>{{ bank.branchName ? bank.branchName : 'N/A' }}</td>
-                <td style="text-align: center;">{{ bank.verificationStatus ? bank.verificationStatus : 'N/A' }}</td>
+                <td class="text-center">{{ bank.verificationStatus ? bank.verificationStatus : 'N/A' }}</td>
                 <td>
                   <div v-if="bank.verifiedDate">
                     {{ bank.verifiedDate | date('MMM D, YYYY')}}
@@ -106,8 +105,8 @@
 
     <div id="CardDocumentModal" class="modal fade" role="dialog">
       <div class="modal-dialog modal-md">
-        <div class="modal-content" style="width: 800px;">
-          <div class="modal-header" style="text-align: center;">
+        <div class="modal-content width-800">
+          <div class="modal-header text-center">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h3><i class="fa fa-credit-card" aria-hidden="true"></i> Card Information</h3>
           </div>
@@ -124,11 +123,11 @@
                   <th>Bin Number</th>
                   <th>Type</th>
                   <th>Network Company</th>
-                  <th style="text-align: center;">Status</th>
+                  <th class="text-center">Status</th>
                 </tr>
               </thead>
               <tbody>
-              <tr v-for="card,index in cards" style="height: 10px;">
+              <tr v-for="card,index in cards" class="height-10">
                 <td>{{ index + 1 }}</td>
                 <td>{{ card.issuerName ? card.issuerName : 'N/A' }}</td>
                 <td>{{ card.cardInfo ? card.cardInfo : 'N/A' }}</td>
@@ -136,7 +135,7 @@
                 <td>{{ card.binNumber ? card.binNumber : 'N/A' }}</td>
                 <td>{{ card.cardType ? card.cardType : 'N/A' }}</td>
                 <td>{{ card.networkCompany ? card.networkCompany : 'N/A' }}</td>
-                <td style="text-align: center;">{{ card.cardStatus ? card.cardStatus : 'N/A' }}</td>
+                <td class="text-center">{{ card.cardStatus ? card.cardStatus : 'N/A' }}</td>
               </tr>
               </tbody>
             </table>
@@ -274,7 +273,7 @@
 
         </div>
         <div class="gr-8 pointer">
-        <span style="display: inline-block; width: 10px;"></span>
+        <span class="advanced-search"></span>
            <a @click="toggleAdvancedSearch">
              <i class="fa fa-search-plus" aria-hidden="true" v-if="!doAdvancedSearch"></i>
              <i class="fa fa-search-minus" aria-hidden="true" v-if="doAdvancedSearch"></i>
@@ -319,21 +318,21 @@
         <thead>
           <tr>
             <th>#</th>
-            <th style="width: 250px;">Name</th>
+            <th class="width-250">Name</th>
             <th>Business Name</th>
             <th>Basic Info</th>
             <!--<th>Mother</th>-->
-            <th style="text-align: center;">A/C Type</th>
-            <th style="text-align: center;">Identification Documents</th>
-            <th style="text-align: center;">Bank Info</th>
-            <th style="text-align: center;">Card Info</th>
-            <th style="text-align: center;" v-if="listType === 'default'">
+            <th class="text-center">A/C Type</th>
+            <th class="text-center">Identification Documents</th>
+            <th class="text-center">Bank Info</th>
+            <th class="text-center">Card Info</th>
+            <th class="text-center" v-if="listType === 'default'">
               Verification
             </th>
-            <th style="text-align: center;">Profile Completed</th>
-            <th style="text-align: center;"
+            <th class="text-center">Profile Completed</th>
+            <th class="text-center"
                 v-if="listType === 'default'">Account Status</th>
-            <!--th v-else style="text-align: center;">
+            <!--th v-else class="text-center">
               Action
               <input type="checkbox" @click="allMemberSelectAndDeselect"
                 v-model="headerCheckBox"/>
@@ -341,7 +340,7 @@
           </tr>
         </thead>
         <tbody>
-        <tr v-for="member,index in members.list" style="height: 10px;">
+        <tr v-for="member,index in members.list" class="height-10">
           <td>{{query.pageNumber * query.pageSize + index + 1}}</td>
 
           <td class="member-name">
@@ -360,7 +359,7 @@
             </div>
             <div class="gr-10">
               <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
-                <a style="cursor: pointer;" @click="memberDetails(member.accountId,member.accountType)">
+                <a class="pointer" @click="memberDetails(member.accountId,member.accountType)">
                   {{ member.name }}
                 </a>
                 <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
@@ -378,7 +377,7 @@
             <br>
             <small>{{ member.organizationName }}</small>
           </td>
-          <td style="text-align: center;">
+          <td class="text-center">
             <span v-if="member.accountType == 1">
               <i class="fa fa-user fa-2" aria-hidden="true"></i>
             </span>
@@ -386,10 +385,10 @@
               <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
             </span>
           </td>
-          <td style="text-align: center">
+          <td class="text-center">
             <div v-if="member.identificationDocuments.length > 0">
               <a @click="showIdentificationDocumentsModal(member.identificationDocuments)"
-                style="cursor: pointer;">
+                class="pointer">
                 {{ member.identificationDocuments.length }} documents
               </a>
             </div>
@@ -398,10 +397,10 @@
             </div>
           </td>
 
-          <td style="text-align: center">
+          <td class="text-center">
             <div v-if="member.userBanks.length > 0">
               <a @click="showBankDocumentsModal(member.userBanks)"
-                 style="cursor: pointer;">
+                 class="pointer">
                 {{ member.userBanks.length }} banks
               </a>
             </div>
@@ -410,10 +409,10 @@
             </div>
           </td>
 
-          <td style="text-align: center">
+          <td class="text-center">
             <div v-if="member.userCards.length > 0">
               <a @click="showCardsModal(member.userCards)"
-                 style="cursor: pointer;">
+                 class="pointer">
                 {{ member.userCards.length }} cards
               </a>
             </div>
@@ -422,10 +421,10 @@
             </div>
           </td>
 
-          <td style="text-align: center;" v-if="listType === 'default'">
+          <td class="text-center" v-if="listType === 'default'">
             {{ member.verificationStatus | underscoreless }}
           </td>
-          <td style="text-align: center;">{{ member.profileCompletionScore }}%</td>
+          <td class="text-center">{{ member.profileCompletionScore }}%</td>
           <td v-if="listType === 'default'">
             <div class="select">
               <select id="order-by-select"  v-model="member.accountStatus" @change="statusChange( member.accountId,member.accountStatus)">
@@ -435,7 +434,7 @@
             </div>
 
           </td>
-          <!--td v-else style="text-align: center;">
+          <!--td v-else class="text-center">
             <input type="checkbox" @change="verificationBoxClicked(member, index)"
               v-model="checkBoxTicked[index]"> <!-- member.uncheckVerificationActionBox -->
           <!--/td-->
@@ -509,8 +508,8 @@
       <div class="modal-dialog  modal-md">
         <!-- Modal content-->
 
-        <div class="modal-content" style="min-height: 500px; width: 500px;">
-          <div class="modal-header" style="text-align: center;">
+        <div class="modal-content min-height-width">
+          <div class="modal-header text-center">
             <button type="button" class="close" data-dismiss="modal"
                     @click="$('#VerifyOrApproveMemberModal').modal('hide')">&times;</button>
             <h3><i class="fa fa-check" aria-hidden="true"></i> Member Verification</h3>
@@ -541,13 +540,13 @@
               <div class="form-group">
                 <br>
                 <label for="comment">Comment</label>
-                <textarea type="email" class="form-control" id="comment" placeholder="Enter comment"
-                        required style="height: 150px; resize: none;" v-model="verificationComment">
+                <textarea type="email" class="form-control height-150-no-resize" id="comment" placeholder="Enter comment"
+                        required v-model="verificationComment">
                 </textarea>
               </div>
 
               <div class="push-3">
-                <button type="submit" class="button-md-verify" style="width: 100px;"
+                <button type="submit" class="button-md-verify width-100"
                   :disabled="this.disableModalVerificationAndRejectionButton">
                   <i class="fa fa-check"></i> {{ listType === 'waiting-verification'? 'Verify': 'Approve' }}
                 </button>
@@ -567,7 +566,7 @@
 
     <!--div class="gr-10 push-5" v-if="listType !== 'default'">
       <form v-on:submit.prevent="showVerificationModal">
-        <button type="submit" class="button-md-verify" style="width: 100px;"
+        <button type="submit" class="button-md-verify width-100"
         :disabled="memberVerificationListEmpty">
           <i class="fa fa-check" aria-hidden="true"></i>
           {{listType === 'waiting-verification' ? 'Verify' : 'Approve'}}

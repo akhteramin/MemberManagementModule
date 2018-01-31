@@ -2,7 +2,7 @@
     <div>
         <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
             <div class="form-group gr-12">
-            <div  style="align-content: left;">
+            <div  class="text-center">
               <br>
               <div class="gr-3">
                 <label> From: </label>
@@ -44,18 +44,18 @@
             <table class="table ui celled" cellspacing="0" width="100%">
             <thead class="thead-default">
             <tr>
-                <th style="text-align: center;">Activity</th>
-                <th style="text-align: center;">Device Information</th>
-                <th style="text-align: center;">User Agent</th>
-                <th style="text-align: center;">Time</th>
+                <th class="text-center">Activity</th>
+                <th class="text-center">Device Information</th>
+                <th class="text-center">User Agent</th>
+                <th class="text-center">Time</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="activity in activities.list" >
-                <td style="width: 250px;">{{ activity.description }}</td>
-                <td style="width: 300px; text-align: center;">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
-                <td style="width: 800px; text-align: center;">{{ activity.userAgent }}</td>
-                <td style="text-align: center;">{{ activity.time | date('MMM D, YYYY - HH:mm:ss a') }}</td>
+                <td class="text-center width-250">{{ activity.description }}</td>
+                <td class="text-center width-300">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
+                <td class="text-center width-800">{{ activity.userAgent }}</td>
+                <td class="text-center">{{ activity.time | date('MMM D, YYYY - HH:mm:ss a') }}</td>
             </tr>
             </tbody>
             </table>
@@ -64,7 +64,7 @@
         <div class="card-footer text-muted" v-if="activities.totalElements > 0 && activities.totalPages > 1">
             <div class="row">
             <div class="gr-3">
-                <div style="margin-top: 0.2rem;" v-if="activities.list">
+                <div class="margin-top-rem" v-if="activities.list">
                 <small>Showing {{ parseInt(activityQuery.pageNumber * activityQuery.pageSize + 1)
                     }} to {{ parseInt(activityQuery.pageNumber * activityQuery.pageSize + activities.list.length)
                     }} out of {{ activities.totalElements }}
@@ -190,14 +190,14 @@
 //         let fromDate = this.transactionQuery.fromDate
 //        let toDate = this.transactionQuery.toDate
         if (this.searchFromDate !== null) {
-          this.activityQuery.fromDate = new Date(this.searchFromDate).getTime() - 6 * 3600 * 1000
+          this.activityQuery.fromDate = new Date(this.searchFromDate).getTime() 
         } else {
           this.activityQuery.fromDate = 0
         }
         if (this.searchToDate !== null) {
-          this.activityQuery.toDate = new Date(this.searchToDate).getTime() - 6 * 60 * 60 * 1000
+          this.activityQuery.toDate = new Date(this.searchToDate).getTime()
         } else {
-          this.activityQuery.toDate = new Date().getTime() - 6 * 3600 * 1000
+          this.activityQuery.toDate = new Date().getTime()
         }
         this.activityQuery.pageNumber = 0
         this.getActivities()

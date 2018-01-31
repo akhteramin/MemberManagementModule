@@ -5,12 +5,12 @@
         </div>
         <hr>
         <div class="text-center" v-if="introduced.length === 0">This member has introduced none.</div>
-        <div v-else class="small-scrollable" style="height: 210px;">
+        <div v-else class="small-scrollable height-210">
         <div class="row" v-for="item in introduced">
             <div class="gr-3">
-            <img class="img-rounded mx-auto d-block" :src="imageBaseUrl+item.profilePictureUrl"
+            <img class="img-rounded mx-auto d-block width-50" :src="imageBaseUrl+item.profilePictureUrl"
                  onerror="this.onerror=null;this.src='/static/images/default-profile-180x180.png'"
-                    data-holder-rendered="true" style="width: 50px;">
+                    data-holder-rendered="true">
             </div>
             <div class="gr-9">
             {{item.name}}<br>

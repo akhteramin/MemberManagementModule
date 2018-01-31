@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody v-if="groups && groups.length > 0">
-                    <tr v-for="groupData in filteredGroup" style="cursor: pointer;">
+                    <tr v-for="groupData in filteredGroup" class="pointer">
                         <td @click="highlightRow(); getService(groupData.id); ">
                              {{groupData.groupName}}
                         </td>
@@ -74,7 +74,7 @@
                     </tr>
                     <tr>
                         <td class="col-md-3">
-                            <div class="small-scrollable" style="height:500px">
+                            <div class="small-scrollable height-500">
                                 <div class="padding-2" v-for="service in filteredEnabledList">
                                     <input type="checkbox"
                                             v-model="service.checked"
@@ -231,10 +231,10 @@
                                                   {{user.accountType==1?'Personal':user.accountType==2?'Business':'N/A'}}
                                               </td>
                                               <td class="text-center">
-                                                      <p class="p-margin-2" style="color:green;" v-if="user.verificationStatus == 'VERIFIED'">
+                                                      <p class="p-margin-2 green" v-if="user.verificationStatus == 'VERIFIED'">
                                                           <i class="fa fa-check" aria-hidden="true"></i></p>
-                                                      <p class="p-margin-2" style="color:red;" v-if="user.verificationStatus == 'NOT_VERIFIED'"><i class="fa fa-times-circle-o" aria-hidden="true"></i></p>
-                                                      <p class="p-margin-2" style="color:blue;" v-if="user.verificationStatus == 'IN_PROGRESS'"><i class="fa fa-refresh" aria-hidden="true"></i></p>
+                                                      <p class="p-margin-2 red" v-if="user.verificationStatus == 'NOT_VERIFIED'"><i class="fa fa-times-circle-o" aria-hidden="true"></i></p>
+                                                      <p class="p-margin-2 blue" v-if="user.verificationStatus == 'IN_PROGRESS'"><i class="fa fa-refresh" aria-hidden="true"></i></p>
                                               </td>
                                               <td>
                                                 <button v-if="user.flag=='Not Added'" class="btn btn-sm btn-default" title="Add to black list or white list" @click="addOrRemoveMembersToGroup([user.accountId],[],index)">
@@ -358,7 +358,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" @click="init()">&times;</button>
-                        <h4 class="modal-title" style="color: red">Conflict !</h4>
+                        <h4 class="modal-title red">Conflict !</h4>
                     </div>
                     <!--  <form name="newUserForm" id="newUserForm"  ng-submit="submitUserData(userData)" novalidate> -->
                         <div class="modal-body">
@@ -368,7 +368,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <p>{{conflictObject.conflictMessage}}</p>
-                                            <table class="table table-striped" style="width:100%;" data-pagination="true" data-search="true">
+                                            <table class="table table-striped width-full" data-pagination="true" data-search="true">
                                                 <tr class="tr-bg">
                                                 <th>Id</th>
                                                 <th>Service Code</th>
@@ -409,7 +409,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-11">
-                                <p class="lead text-center" style="margin-top: 20px;">
+                                <p class="lead text-center margin-top-20">
                                 Do you want to deactivate group <strong>{{tempGroup.groupName}}</strong>?
                                 </p>
                             </div>

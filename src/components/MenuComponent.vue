@@ -5,9 +5,8 @@
         <div class="menu-header">
           <img class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="110" height="50">
           Admin
-          <button v-if="!collapseMenuComponent" @click="toggleCollapse"
-            style="background-color: #1bb1a2; border:0px; position:relative">
-            <i class="fa fa-arrow-left" aria-hidden="true" style="color: white;"></i>
+          <button v-if="!collapseMenuComponent" @click="toggleCollapse" class="menu-expansion">
+            <i class="fa fa-arrow-left white" aria-hidden="true"></i>
           </button>
         </div>
       </div>
@@ -59,8 +58,8 @@
         <img class="padding-2" src="/static/images/iPay-short-icon.png"
              alt="Pro. Pic" width="50" height="50">
         <button v-if="collapseMenuComponent" @click="toggleCollapse"
-                style="background-color: #1bb1a2; border:0px; position:relative">
-          <i class="fa fa-arrow-right" aria-hidden="true" style="color: white;"></i>
+                class="menu-expansion">
+          <i class="fa fa-arrow-right white" aria-hidden="true"></i>
         </button>
       </div>
       <nav>

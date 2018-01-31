@@ -23,7 +23,7 @@
                     <h5>Update Profile</h5>
             </div>
             <div class="gr-6 push-4">
-                    <i class="fa fa-external-link" style="color:black" aria-hidden="true" @click="memberDetails(memberProfile.accountId,memberProfile.accountType)"></i>
+                    <i class="fa fa-external-link black" aria-hidden="true" @click="memberDetails(memberProfile.accountId,memberProfile.accountType)"></i>
                     <i class="fa fa-window-close" aria-hidden="true" @click="hideProfile()"></i>
             </div>
             <hr>
@@ -84,8 +84,7 @@
                         >
 
                         <i v-if="isPdf(memberDocument.documentUrl)"
-                        class="fa fa-file-pdf-o"
-                        style="font-size:50px;"
+                        class="fa fa-file-pdf-o font-size-50"
                         aria-hidden="true"
                         @click="showDocumentDetails(memberDocument)"></i>
                     </div>
@@ -181,16 +180,16 @@
                                   <table lass="table ui celled hover" cellspacing="0" width="100%">
                                     <thead>
                                     <tr>
-                                      <th style="text-align: center;">Name</th>
-                                      <th style="text-align: center;">Frequency</th>
+                                      <th class="text-center">Name</th>
+                                      <th class="text-center">Frequency</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr v-for="entry in likelyNameList">
 
-                                      <td style="text-align: left;">{{ entry.name }}</td>
+                                      <td class="text-center">{{ entry.name }}</td>
 
-                                      <td style="text-align: center">{{ entry.frequency }}</td>
+                                      <td class="text-center">{{ entry.frequency }}</td>
 
                                     </tr>
                                     </tbody>

@@ -6,7 +6,7 @@
       <div class="gr-11 padding-5">
         
         <div class="text-center" v-if="bankAccounts.length === 0">No Bank Added<br></div>
-        <div v-else-if="bankAccounts" class="small-scrollable" style="height: 210px;">
+        <div v-else-if="bankAccounts" class="small-scrollable height-210">
           <table class="table ui celled" cellspacing="0" width="100%">
             <thead class="thead-default">
             <tr>

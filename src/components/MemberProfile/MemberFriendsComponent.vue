@@ -78,31 +78,31 @@
         <thead>
           <tr>
             <th>#</th>
-            <th style="text-align: left;">Name</th>
-            <th style="text-align: center;">Mobile Number</th>
-            <th style="text-align: center;">Verified</th>
-            <th style="text-align: center;">iPay Member</th>
+            <th class="text-left">Name</th>
+            <th class="text-center">Mobile Number</th>
+            <th class="text-center">Verified</th>
+            <th class="text-center">iPay Member</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="entry, index in friends">
             <td>{{ index + 1 }}</td>
-            <td style="text-align: left;">{{ entry.contactName }}</td>
+            <td class="text-left">{{ entry.contactName }}</td>
 
-            <td style="text-align: center;">{{ entry.mobileNumber }}</td>
+            <td class="text-center">{{ entry.mobileNumber }}</td>
 
-            <td style="text-align: center;">{{ entry.verified ? 'VERIFIED' : 'NOT VERIFIED'}}</td>
+            <td class="text-center">{{ entry.verified ? 'VERIFIED' : 'NOT VERIFIED'}}</td>
 
-            <td style="text-align: center;">{{ entry.iPayMember ? 'MEMBER' : 'NOT MEMBER' }}</td>
+            <td class="text-center">{{ entry.iPayMember ? 'MEMBER' : 'NOT MEMBER' }}</td>
 
           </tr>
         </tbody>
       </table>
 
-      <div style="text-align: center;"
+      <div class="text-center"
         v-if="totalCount > query.pageNumber * query.pageSize">
         <a class="padding-5" role="button" @click="loadMore">
-          <strong style="color: #31b0d5;"> Load More </strong>
+          <strong class="loadmore-color"> Load More </strong>
         </a>
       </div>
 

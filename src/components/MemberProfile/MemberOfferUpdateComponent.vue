@@ -14,7 +14,7 @@
                 </div>
                 <div class="gr-6">
                     <input v-show="offerEditFlag"  id="abc" type="text" class="form-control" v-model="singleOfferInfo.offerName"  />
-                    <p  v-show="!offerEditFlag" style="word-wrap: break-word;">{{singleOfferInfo.offerName}}</p>
+                    <p  v-show="!offerEditFlag" class="break-word">{{singleOfferInfo.offerName}}</p>
                 </div>
             </div>
             <br>

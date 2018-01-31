@@ -77,28 +77,28 @@
             <table class="table ui celled" cellspacing="0" width="100%">
                 <thead class="thead-default">
                     <tr>
-                        <th style="text-align: center;">Transaction Id</th>
-                        <th style="text-align: center;">Date</th>
-                        <th style="text-align: center;">Transaction Type</th>
-                        <th style="text-align: center;">Description</th>
-                        <th style="text-align: right;">Amount</th>
-                        <th style="text-align: right;">Fee</th>
-                        <th style="text-align: right;">Net Amount</th>
-                        <th style="text-align: right;">Balance</th>
-                        <th style="text-align: center;">Status</th>
+                        <th class="text-center">Transaction Id</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Transaction Type</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-right">Amount</th>
+                        <th class="text-right">Fee</th>
+                        <th class="text-right">Net Amount</th>
+                        <th class="text-right">Balance</th>
+                        <th class="text-center">Status</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="transaction in transactions.transactions" >
-                        <td style="width: 200px;">{{ transaction.transactionID }}</td>
+                        <td class="width-200">{{ transaction.transactionID }}</td>
                         <td>{{ transaction.time | date('MMM D, YYYY - HH:mm:ss a') }}</td>
                         <td> {{ transaction.serviceID | static_mapper(serviceList) | underscoreless }}</td>
                         <td>{{ transaction.description }}</td>
-                        <td style="text-align: right;">{{ transaction.amount }}</td>
-                        <td style="text-align: right;">{{ transaction.fee }}</td>
-                        <td style="text-align: right;">{{ transaction.currencyFilter }}{{ transaction.netAmount }}</td>
-                        <td style="text-align: right;">{{ transaction.balance }}</td>
-                        <td style="text-align: center;">{{ transaction.statusCode == 200 ? 'Success' :
+                        <td class="text-right">{{ transaction.amount }}</td>
+                        <td class="text-right">{{ transaction.fee }}</td>
+                        <td class="text-right">{{ transaction.currencyFilter }}{{ transaction.netAmount }}</td>
+                        <td class="text-right">{{ transaction.balance }}</td>
+                        <td class="text-right">{{ transaction.statusCode == 200 ? 'Success' :
                             transaction.statusCode == 102 ? 'In Progress' : 'Fail'}}</td>
                     </tr>
                 </tbody>
@@ -108,7 +108,7 @@
       <div class="card-footer text-muted" v-if="transactions.totalCount > 0">
               <div class="row">
                 <div class="gr-3">
-                  <div style="margin-top: 0.2rem;" v-if="transactions.transactions">
+                  <div class="margin-top-rem" v-if="transactions.transactions">
                     <small>Showing {{ parseInt(transactionQuery.pageNumber * transactionQuery.pageSize + 1)
                       }} to {{ parseInt(transactionQuery.pageNumber * transactionQuery.pageSize + transactions.transactions.length)
                       }} out of {{ transactions.totalCount }}

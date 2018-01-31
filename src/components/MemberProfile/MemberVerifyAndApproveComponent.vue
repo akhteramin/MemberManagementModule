@@ -24,12 +24,12 @@
         <table class="table">
           <tbody>
           <tr class="gr-12">
-            <td class="gr-6" style="border-right: 1px solid #cdd0d4; height: 280px;">
+            <td class="gr-6 verification-block">
               <!--How cow verification status: {{ verificationStatus }} and verification type: {{ verificationType }}-->
               <div v-restrict="'MS_MM_USER_VERIFICATION_VERIFY'">
                 <form  v-on:submit.prevent="acceptVerification" v-on:reset.prevent="rejectVerification">
                   <br>
-                  <div class="row text-center" v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'" style="color: red;">
+                  <div class="row text-center red" v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'">
                     <i class="fa fa-times" aria-hidden="true"></i> NOT VERIFIED
                     <br> <br>
                     <div class="gr-10 push-1">
@@ -38,7 +38,7 @@
                     <div>
                       <div class="gr-12">
                         <div class="form-group">
-                          <button type="submit" class="button-md-verify" style="width: 90px;"
+                          <button type="submit" class="button-md-verify width-90"
                           :disabled="verificationComment === null || verificationComment === ''">
                             <i class="fa fa-check" aria-hidden="true"></i>
                             Verify
@@ -56,23 +56,23 @@
 
 
                   <div v-else-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' && verificationType === 'VERIFY')" class="row" >
-                    <div style="color: #eb9316;" class="text-center">
+                    <div class="text-center inprogress-color">
                       <i class="fa fa-spinner" aria-hidden="true"></i> IN PROGRESS
                     </div>
                     <br>
-                    <div class="gr-4 push-1" style="text-align: left;">
+                    <div class="gr-4 push-1 text-left">
                       Verified By:
                     </div>
-                    <div class="gr-6 push-1" style="word-break: break-all;">
+                    <div class="gr-6 push-1 break-word">
                       {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br><br>
-                    <div class="gr-4 push-1" style="text-align: left;">
+                    <div class="gr-4 push-1 text-left;">
                       Time:
                     </div>
-                    <div class="gr-6 push-1" style="word-break: break-all;" v-if="verificationHistory && verificationHistory.length > 0">
+                    <div class="gr-6 push-1 break-word" v-if="verificationHistory && verificationHistory.length > 0">
                       {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -85,7 +85,7 @@
 
                   <div v-else-if="(verificationStatus === 'REJECTED' && verificationType === null) || (verificationStatus === 'REJECT' && verificationType === 'VERIFY')"
                       class="row justify-content-center text-center">
-                    <div style="color: red;">
+                    <div class="red">
                       <i class="fa fa-times"></i> REJECTED
                     </div>
                     <br>
@@ -94,42 +94,42 @@
                         Rejected By:
                       </div>
                     </div>
-                    <div class="gr-7" style="text-align: left; word-break: break-all;">
+                    <div class="gr-7 text-left break-word">
                       {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br> <br>
-                    <div class="gr-5 text-left" style="text-align: left;">
+                    <div class="gr-5 text-left text-left">
                       Time:
                     </div>
-                    <div class="gr-7" v-if="verificationHistory && verificationHistory.length > 0" style="text-align: left;">
+                    <div class="gr-7 text-left" v-if="verificationHistory && verificationHistory.length > 0">
                       {{ verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
-                    <div v-else class="gr-7" style="text-align: left;">
+                    <div v-else class="gr-7 text-left">
                       N/A
                     </div>
                   </div>
 
                   <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT') && verificationType === 'APPROVE'">
-                    <div style="color: #eb9316;" class="text-center">
+                    <div class="text-center inprogress-color">
 
                     </div>
                     <br>
-                    <div class="gr-4 push-1" style="text-align: left;">
+                    <div class="gr-4 push-1 text-left">
                       Verified By:
                     </div>
-                    <div class="gr-6 push-1" style="word-break: break-all;">
+                    <div class="gr-6 push-1 break-word">
                       {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br><br>
-                    <div class="gr-4 push-1" style="text-align: left;">
+                    <div class="gr-4 push-1 text-left">
                       Time:
                     </div>
-                    <div class="gr-6 push-1" style="word-break: break-all;" v-if="verificationHistory && verificationHistory.length > 0">
+                    <div class="gr-6 push-1 break-word" v-if="verificationHistory && verificationHistory.length > 0">
                       {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -142,26 +142,26 @@
 
 
                   <div v-else-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') || (verificationStatus === 'VERIFIED' && verificationType === null) || (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
-                    <div style="color: #5BC43C;">
+                    <div class="verified-color">
                       <i class="fa fa-check"></i> VERIFIED
                     </div>
                     <br>
-                    <div class="gr-5" style="text-align: left;">
+                    <div class="gr-5 text-left">
                       Verified By:
                     </div>
-                    <div class="gr-7" style="text-align: left; word-break: break-all;">
+                    <div class="gr-7 text-left break-word">
                       {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[verificationHistory.length - 1].actor.name : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br><br><br>
-                    <div class="gr-5" style="text-align: left; word-break: break-all;">
+                    <div class="gr-5 text-left break-word">
                       Time:
                     </div>
-                    <div class="gr-7" v-if="verificationHistory && verificationHistory.length > 0" style="text-align: left; word-break: break-all;">
+                    <div class="gr-7 text-left break-word" v-if="verificationHistory && verificationHistory.length > 0">
                       {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
-                    <div v-else class="gr-1" style="text-align: left;">
+                    <div v-else class="gr-1 text-left;">
                       N/A
                     </div>
                   </div>
@@ -171,58 +171,58 @@
 
 
 
-            <td class="gr-6" style="height: 280px;">
+            <td class="gr-6 height-280">
               <br>
               <div v-restrict="'MS_MM_USER_VERIFICATION_APPROVE'">
                 <div v-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
                   (verificationStatus === 'VERIFIED' && verificationType === null) ||
                   (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
-                  <div style="color: #5BC43C;">
+                  <div class="verified-color">
                     <i class="fa fa-check"></i> APPROVED
                   </div>
                   <br>
-                  <div class="gr-5" style="text-align: left;">
+                  <div class="gr-5 text-left">
                     Approved By:
                   </div>
-                  <div class="gr-7" style="text-align: left; word-break: break-all;">
+                  <div class="gr-7 text-left break-word">
                     {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br><br>
-                  <div class="gr-5" style="text-align: left;">
+                  <div class="gr-5 text-left">
                     Time:
                   </div>
-                  <div class="gr-7" v-if="approvalHistory && approvalHistory.length > 0" style="text-align: left; word-break: break-all;">
+                  <div class="gr-7 text-left break-word" v-if="approvalHistory && approvalHistory.length > 0">
                     {{ approvalHistory && approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
-                  <div v-else class="gr-1" style="text-align: left;">
+                  <div v-else class="gr-1 text-left;">
                     N/A
                   </div>
                 </div>
 
                 <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT')
                 && verificationType === 'APPROVE'">
-                  <div style="color: red; text-align: center;">
+                  <div class="red text-center">
                     <i class="fa fa-times"></i> APPROVAL REJECTED
                   </div>
                   <br>
-                  <div class="gr-5" style="text-align: left;">
+                  <div class="gr-5 text-left">
                     Rejected By:
                   </div>
-                  <div class="gr-7" style="text-align: left; word-break: break-all;">
+                  <div class="gr-7 text-left break-word">
                     {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br>
-                  <div class="gr-5" style="text-align: left;">
+                  <div class="gr-5 text-left">
                     Time:
                   </div>
-                  <div class="gr-7" v-if="approvalHistory && approvalHistory.length > 0" style="text-align: left;">
+                  <div class="gr-7 text-left" v-if="approvalHistory && approvalHistory.length > 0">
                     {{ approvalHistory && approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
-                  <div v-else class="gr-7" style="text-align: left;">
+                  <div v-else class="gr-7 text-left;">
                     N/A
                   </div>
                 </div>
@@ -232,12 +232,12 @@
 
                     <div v-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' &&
                   verificationType === 'VERIFY')" class="row text-center">
-                      <div style="color: red;">
+                      <div class="red">
                         <i class="fa fa-times"></i> NOT APPROVED
                       </div>
                       <br> <br>
                       <textarea v-model="approvalComment" placeholder="Enter comment" required
-                                style="width: 80%; height: 150px;"></textarea>
+                                class="comment-textarea"></textarea>
 
                       <div>
                         <div class="form-group">
@@ -252,7 +252,7 @@
                     </div>
 
                     <div v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'" class="row text-center">
-                      <div style="color: red;">
+                      <div class="red">
                         <i class="fa fa-times"></i> NOT APPROVED
                       </div>
                     </div>
@@ -269,7 +269,7 @@
                   (verificationStatus === 'VERIFIED' && verificationType === null) ||
                   (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
           <button data-toggle="modal" data-target="#MemberUnverifiedModal" data-backdrop="false"
-          class="button-md-verify" style="width: 100px;">
+          class="button-md-verify width-100">
             <i class="fa fa-times" aria-hidden="true"></i>
             Unverify
           </button>

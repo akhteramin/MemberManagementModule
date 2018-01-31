@@ -93,7 +93,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" @click="init()">&times;</button>
-                    <h4 class="modal-title" style="color: red">Conflict !</h4>
+                    <h4 class="modal-title red">Conflict !</h4>
                 </div>
                <!--  <form name="newUserForm" id="newUserForm"  ng-submit="submitUserData(userData)" novalidate> -->
                     <div class="modal-body">
@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <p>{{conflictObject.conflictMessage}}</p>
-                                        <table class="table table-striped" style="width:100%;" data-pagination="true" data-search="true">
+                                        <table class="table table-striped width-full" data-pagination="true" data-search="true">
                                           <tr class="tr-bg">
                                             <th>Id</th>
                                             <th>Service Code</th>

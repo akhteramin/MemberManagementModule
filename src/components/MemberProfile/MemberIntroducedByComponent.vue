@@ -5,11 +5,11 @@
         </div>
         <hr>
         <div class="text-center" v-if="introducers.length === 0">This member has no introducer.</div>
-        <div v-else class="small-scrollable" style="height: 210px;">
+        <div v-else class="small-scrollable height-210">
             <div class="row" v-for="item in introducers">
                 <div class="gr-3">
-                <img class="img-rounded mx-auto d-block" :src="imageBaseUrl+item.profilePictureUrl"
-                        data-holder-rendered="true" style="width: 50px;"
+                <img class="img-rounded mx-auto d-block width-50" :src="imageBaseUrl+item.profilePictureUrl"
+                        data-holder-rendered="true"
                      onerror="this.onerror=null;this.src='/static/images/default-profile-180x180.png'">
                 </div>
                 <div class="gr-9">

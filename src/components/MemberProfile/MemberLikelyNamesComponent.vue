@@ -21,22 +21,22 @@
       <table class="table ui celled" cellspacing="0" width="100%">
         <thead>
           <tr>
-            <th style="text-align: center;">Name</th>
-            <th style="text-align: center;">Frequency</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Frequency</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="entry in nameList">
 
-            <td style="text-align: left;">{{ entry.name }}</td>
+            <td class="text-left">{{ entry.name }}</td>
 
-            <td style="text-align: center">{{ entry.frequency }}</td>
+            <td class="text-center">{{ entry.frequency }}</td>
 
           </tr>
         </tbody>
       </table>
     </div>
-    <div v-else style="text-align: center;">
+    <div v-else class="text-center">
       <h3><strong>NO LIKELY NAMES</strong> </h3>
     </div>
 

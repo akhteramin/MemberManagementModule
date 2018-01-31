@@ -20,7 +20,7 @@
     <div v-if="addressType==0">
         <form v-on:submit.prevent="updateMemberAddress(addressType)">
             <div class="gr-6">
-            <h3 style="align: left;"><b>Present</b></h3>
+            <h3 class="text-left"><b>Present</b></h3>
             <br>
             <div class="row text-left">
                 <div class="gr-2">
@@ -97,7 +97,7 @@
     <div v-else-if="addressType==1">
         <form  v-on:submit.prevent="updateMemberAddress(1)">
             <div class="gr-6">
-            <h3 style="align: center;"><b>Permanent</b></h3>
+            <h3 class="text-center"><b>Permanent</b></h3>
             <br>
             <div class="row text-left">
                 <div class="gr-2">

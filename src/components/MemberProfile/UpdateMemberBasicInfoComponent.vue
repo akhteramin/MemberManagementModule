@@ -41,13 +41,13 @@
             <div class="gr-2">
                 Date of Birth:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <input type="date" class="input-sm" name="memberDOB" v-model="dob"/>
             </div>
             <div class="gr-2">
             Gender:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <div class="select select-sm">
                 <select id="genderSelection" v-model="member.basicInfo.gender">
                     <option selected :value = "null">Select Gender</option>
@@ -59,7 +59,7 @@
             <div class="gr-2">
             Occupation:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <div class="select select-sm">
                 <select id="occupationSelection" v-model="member.basicInfo.occupation">
                     <option selected :value = "null">Select Occupation</option>
@@ -71,7 +71,7 @@
             <div class="gr-2">
             Verification Status:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <!--div class="select select-sm"-->
                     <select id="verification" v-model="member.basicInfo.verificationStatus" disabled>
                     <option value="">Select Status</option>
@@ -85,14 +85,14 @@
             <div class="gr-2">
             Member Since:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
             {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
             </div>
 
             <div class="gr-2">
             Organization Name:
             </div>
-            <div class="gr-4 text-left" style="margin-bottom: 5px;">
+            <div class="gr-4 text-left margin-bottom-5">
                 <input  name="memberOrganizationName" class="input-sm" type="text" id="memberOrganizationName" placeholder="Organization Name"
                 v-model="member.basicInfo.organizationName"/>
             </div>

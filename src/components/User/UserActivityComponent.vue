@@ -2,7 +2,7 @@
     <div>
         <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
             <div class="form-group gr-12">
-            <div  style="align-content: left;">
+            <div  class="text-left">
               <br>
               <div class="gr-3">
                 <label> From: </label>
@@ -44,10 +44,10 @@
             <table class="table ui celled" cellspacing="0" width="100%">
             <thead class="thead-default">
             <tr>
-                <th style="text-align: center;">Activity</th>
-                <th style="text-align: center;">Device Information</th>
-                <th style="text-align: center;">Service ID</th>
-                <th style="text-align: center;">Time</th>
+                <th class="text-center">Activity</th>
+                <th class="text-center">Device Information</th>
+                <th class="text-center">Service ID</th>
+                <th class="text-center">Time</th>
             </tr>
             </thead>
             <tbody>
@@ -64,7 +64,7 @@
         <div class="card-footer text-muted" v-if="activities.totalElements > 0 && activities.totalPages > 1">
             <div class="row">
             <div class="gr-3">
-                <div style="margin-top: 0.2rem;" v-if="activities.list">
+                <div class="margin-top-rem;" v-if="activities.list">
                 <small>Showing {{ parseInt(activityQuery.pageNumber * activityQuery.pageSize + 1)
                     }} to {{ parseInt(activityQuery.pageNumber * activityQuery.pageSize + activities.list.length)
                     }} out of {{ activities.totalElements }}

@@ -23,7 +23,7 @@
           <!--<i class="fa fa-undo" aria-hidden="true"></i> Reset</button>-->
       <!--</div>-->
 
-      <div id="container" class="gr-8" style="height: 40px;">
+      <div id="container" class="gr-8 height-40">
         <!--<label class="gr-5" style="background-color: red; width: 250px;">Number of entries per page</label>-->
         <div class="gr-2 push-10">
           <div class="select select-sm">
@@ -43,24 +43,24 @@
       <table class="table ui celled" cellspacing="0" width="100%">
         <thead class="thead-default">
         <tr>
-          <th style="text-align: center;">#</th>
-          <th style="text-align: center;">Initiated On</th>
-          <th style="text-align: center;">Status</th>
-          <th style="text-align: center;">Effective From</th>
-          <th style="text-align: center;">Effective To</th>
-          <th style="text-align: center;">Taken By</th>
-          <th style="text-align: center;">Description</th>
+          <th class="text-center">#</th>
+          <th class="text-center">Initiated On</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Effective From</th>
+          <th class="text-center">Effective To</th>
+          <th class="text-center">Taken By</th>
+          <th class="text-center">Description</th>
         </tr>
         </thead>
         <tbody>
           <tr v-for="suspension, index in suspensionHistory" >
-            <td style="width: 30px;">{{ suspensionHistoryQuery.pageNumber * suspensionHistoryQuery.pageSize + 1 + index }}</td>
-            <td style="text-align: center;">{{ suspension.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}</td>
-            <td style="text-align: center;">{{ suspension.suspensionStatus }} </td> <!--{{ activity.deviceBrowser }}-->
-            <td style="text-align: center;">{{ suspension.effectiveFrom | date('MMM D, YYYY - HH:mm:ss a') }}</td>
-            <td style="text-align: center;">{{ suspension.effectiveTo | date('MMM D, YYYY - HH:mm:ss a') }}</td>
-            <td style="text-align: center;">{{ suspension.adminUserDetails ? suspension.adminUserDetails.name : 'SYSTEM' }}</td>
-            <td style="width: 350px; text-align: center;">{{ suspension.description }}</td>
+            <td class="width-30">{{ suspensionHistoryQuery.pageNumber * suspensionHistoryQuery.pageSize + 1 + index }}</td>
+            <td class="text-center">{{ suspension.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}</td>
+            <td class="text-center">{{ suspension.suspensionStatus }} </td> <!--{{ activity.deviceBrowser }}-->
+            <td class="text-center">{{ suspension.effectiveFrom | date('MMM D, YYYY - HH:mm:ss a') }}</td>
+            <td class="text-center">{{ suspension.effectiveTo | date('MMM D, YYYY - HH:mm:ss a') }}</td>
+            <td class="text-center">{{ suspension.adminUserDetails ? suspension.adminUserDetails.name : 'SYSTEM' }}</td>
+            <td class="width-350 text-center;">{{ suspension.description }}</td>
           </tr>
         </tbody>
       </table>
@@ -69,7 +69,7 @@
     <div class="card-footer text-muted" v-if="totalElements > 0 && totalPages > 1">
       <div class="row">
         <div class="gr-3">
-          <div style="margin-top: 0.2rem;" v-if="suspensionHistory">
+          <div class="margin-top-rem" v-if="suspensionHistory">
             <small>Showing {{ parseInt(suspensionHistoryQuery.pageNumber * suspensionHistoryQuery.pageSize + 1)
               }} to {{ parseInt(suspensionHistoryQuery.pageNumber * suspensionHistoryQuery.pageSize
               + suspensionHistory.length)
