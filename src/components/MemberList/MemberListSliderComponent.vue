@@ -290,7 +290,7 @@
                 <div class="modal-body">
                 <div class="form-group">
                     <div class="row">
-                    <div class="col-md-4 col-md-offset-3">
+                    <div class="col-md-8 col-md-offset-2">
                         <span>
                         <div class="comment">
                             <!--<span>Browse</span>-->
