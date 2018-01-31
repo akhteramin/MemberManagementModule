@@ -251,20 +251,6 @@
                       </div>
                     </div>
 
-                    <!--<div v-else-if="verificationStatus === 'VERIFIED'" class="row text-center">-->
-                    <!--<div style="color: #5BC43C;">-->
-                    <!--<i class="fa fa-check"></i> APPROVED-->
-                    <!--</div>-->
-                    <!--<br>-->
-                    <!--<div class="gr-5 push-1">-->
-                    <!--Approved By:-->
-                    <!--</div>-->
-                    <!--<div class="gr-4 push-1">-->
-                    <!--Joomla 4-->
-                    <!--&lt;!&ndash;{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}&ndash;&gt;-->
-                    <!--</div>-->
-                    <!--</div>-->
-
                     <div v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'" class="row text-center">
                       <div style="color: red;">
                         <i class="fa fa-times"></i> NOT APPROVED
@@ -279,7 +265,7 @@
           </tr>
           </tbody>
         </table>
-        <div v-restrict="'MS_MM_USER_VERIFICATION_APPROVE'" v-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
+        <div v-restrict="'MS_MM_USER_VERIFICATION_REVOKE'" v-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
                   (verificationStatus === 'VERIFIED' && verificationType === null) ||
                   (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
           <button data-toggle="modal" data-target="#MemberUnverifiedModal" data-backdrop="false"

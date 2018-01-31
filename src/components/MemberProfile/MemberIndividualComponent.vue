@@ -82,13 +82,48 @@
                         <div class="text-center">
                           <span>{{member.basicInfo.profileCompletionScore}}%</span>
                         </div>
-                        <div class="text-center">
-                          {{ memberAccountClass }}
+                        <div class="text-center gr-10 push-1 margin-5" v-if="containsPermission('MS_MM_USER_CHANGE_ACCOUNT_CLASS')">
+                          <div class="select" @change="showAccClassChangeModal()">
+                            <select v-model="memberAccountClass">
+                              <option v-for="item in classes" :value="item.id">{{ item.name }}</option>
+                            </select>
+                          </div>
                         </div>
-                        <!--button class="button-md-balance padding-2" >
-                          <span v-if="balance">Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
-                          <span v-else>Balance: N/A </span>
-                        </button-->
+                        <div class="margin-5" v-else>
+                              <b v-for="item in classes"><span v-if="item.id===memberAccountClass">{{ item.name }}</span></b>
+                        </div>
+
+                        <div id="MemberClassChangeModal" class="modal fade" role="dialog">
+                          <div class="modal-dialog  modal-md">
+                            <!-- Modal content-->
+
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" @click="cancelChangingAccountClass" data-dismiss="modal" >&times;</button>
+                                <h4 class="modal-title"> Change account class of the Member? </h4>
+                              </div>
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <div class="row">
+                                    <div class="col-md-10 col-md-offset-1">
+                                      <span>
+                                        <div class="comment">
+                                          <!--<span>Browse</span>-->
+                                          <b>Member's account class will be changed by this action. Do you want to make this change?</b>
+                                        </div>
+                                        <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-default btn-active-til" @click="changeAccountClass" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-sm btn-danger" @click="cancelChangingAccountClass" data-dismiss="modal">No</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         
                       </div>
 
@@ -305,7 +340,7 @@
                     <div class="gr-6" v-if="!editPresentAddressMode">
                       <div class="gr-12">
                         <div class="gr-2">
-                          <h5><b>Present</b></h5>
+                          <h3><b>Present</b></h3>
                         </div>
                         <div class="gr-2 push-6"
                              v-if="!editPresentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
@@ -370,8 +405,8 @@
                     <div class="gr-6" style="margin-bottom: 5px;" v-if="!editPermanentAddressMode" >
                       <div class="gr-12">
                         <div class="gr-2">
-                          <h5 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h5>
-                          <h5 v-if="member.basicInfo && member.basicInfo.accountType===2"><b>Business</b></h5>
+                          <h3 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h3>
+                          <h3 v-if="member.basicInfo && member.basicInfo.accountType===2"><b>Business</b></h3>
 
                         </div>
                         <div class="gr-2 push-6"
@@ -583,7 +618,7 @@
         districtList: {},
         profilePicture: {},
         accessControlList: [],
-        memberAccountClass: 'GENERAL',
+        memberAccountClass: 1,
         memberPresentAddress: {
           addressLine1: 'N/A',
           addressLine2: 'N/A',
@@ -605,7 +640,9 @@
           type: 'PERMANENT'
         },
         showLoader: false,
-        memberMissingInfo: null
+        memberMissingInfo: null,
+        accountClassMapper: {},
+        classes: []
       }
     },
     created () {
@@ -664,15 +701,7 @@
               console.log('this.memberPresentAddress: ', this.memberPresentAddress)
               console.log('this.memberPermanentAddress: ', this.memberPermanentAddress)
               console.log('response addresses: ', this.member.addresses)
-
-              if (member.basicInfo.accountClass === 5) {
-                this.memberAccountClass = 'VERIFIED GENERAL'
-              } else if (member.basicInfo.accountClass === 3) {
-                this.memberAccountClass = 'PLATINUM'
-              } else if (member.basicInfo.accountClass === 2) {
-                this.memberAccountClass = 'GOLD'
-              }
-
+              this.memberAccountClass = member.basicInfo.accountClass
               this.getStaticNames()
             },
             error => {
@@ -752,6 +781,45 @@
         }
 //        console.log('now edit Parmanent AddressMode is: ', this.editPermanentAddressMode)
       },
+      showAccClassChangeModal () {
+        console.log(this.memberAccountClass)
+        $('#MemberClassChangeModal').modal('show')
+      },
+      changeAccountClass () {
+        this.showLoader = true
+        Http.PUT('member', {}, [this.id, 'class', this.memberAccountClass])
+        .then(
+          ({data: classChanged}) => {
+            this.showLoader = false
+            this.member.basicInfo.accountClass = this.memberAccountClass
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'Account Class Has been Changed Successfully.'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
+          },
+          error => {
+            this.showLoader = false
+            console.log('Error in getting the list of missing, error: ', error)
+            $.notify({
+              // options
+              title: '<strong>Changing Account Class failed!</strong>',
+              message: 'Please try again.'
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
+          }
+        )
+      },
+      cancelChangingAccountClass () {
+        this.memberAccountClass = this.member.basicInfo.accountClass
+      },
       setTab (tabName) {
         this.showBasicDetails = false
         this.showActivities = false
@@ -780,6 +848,20 @@
         }
       },
       getStaticNames () {
+        Http.GET('resource', ['account-class'])
+          .then(
+            ({data: {data: classes}}) => {
+              this.classes = classes
+              console.log('successfully got account class list: ', classes)
+              this.classes.forEach(item => {
+                this.accountClassMapper[item.id] = item.name
+              })
+            },
+            error => {
+              console.log('error getting service list', error)
+            }
+          )
+
         this.occupationList = JSON.parse(localStorage.getItem('occupation'))
         if (this.member.basicInfo.occupation) {
           this.occupationName = this.occupationList.find(x => x.id === this.member.basicInfo.occupation).name
