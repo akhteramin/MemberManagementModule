@@ -67,17 +67,18 @@ const ADMIN_URI = 'http://10.15.40.11:80/'
 
 // const API_URL = 'http://192.168.1.95:8085/member-service/api/v1'
 // const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
-// const API_URL = 'http://10.200.40.204:8100/member-service/api/v1'
+// const API_URL = 'http://verification.ipay.com.bd/member-service/api/v1'
 // const AUTH_URL = 'http://10.200.40.204:7000/auth/api/v1'
 // const AUTH_HTTP_URI = 'http://10.200.40.204:7001/'
 // const AUTH_ACCOUNTS_URI = 'http://10.200.40.204:7001/accounts'
-// const ADMIN_URI = 'http://10.200.40.204/'
+// const ADMIN_URI = 'http://verification.ipay.com.bd/'
 
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
 // const IMAGE_URL = 'https://dev.ipay.com.bd'
 const IMAGE_URL = 'https://test.ipay.com.bd'
 
 const CRM_URI = 'http://10.10.10.169/login'
+// const CRM_URI = 'http://crmnew.ipay.com.bd'
 
 const routes = {
   apps: `${AUTH_URL}/user/get`,
