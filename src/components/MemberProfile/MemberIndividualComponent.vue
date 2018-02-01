@@ -402,7 +402,7 @@
 
                     <!-- ================================= permanent address =============================================== -->
 
-                    <div class="gr-6 margin-bottom-5" v-if="!editPermanentAddressMode" >
+                    <div class="gr-6" v-if="!editPermanentAddressMode" >
                       <div class="gr-12">
                         <div class="gr-2">
                           <h3 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h3>
