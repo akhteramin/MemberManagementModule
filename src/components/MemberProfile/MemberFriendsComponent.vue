@@ -59,11 +59,11 @@
 
           <div class="gr-4 push-5">
             <div class="form-group">
-              <button type="submit" class="button-search">
+              <button type="submit" class="button-search" :disabled="showLoader">
                 <i class="fa fa-search" aria-hidden="true"></i>
                 Search
               </button>
-              <button type="reset" class="button-reset">
+              <button type="reset" class="button-reset" :disabled="showLoader">
                 <i class="fa fa-undo" aria-hidden="true"></i>
                 Reset
               </button>
