@@ -115,6 +115,14 @@
                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                             </button>
                         </span>
+                        <span v-else>
+                          <button class="button-small-verify width-90"
+                          data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false"
+                          @click= "setDocumentUnverify(memberDocument)">
+                          Unverify
+                          <i class="fa fa-times" aria-hidden="true"></i>
+                          </button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -273,6 +281,14 @@
                         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                 </button>
                 </span>
+                <span v-else>
+                  <button class="button-small-verify width-90"
+                  data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false"
+                  @click= "setDocumentUnverify(memberDocument)">
+                  Unverify
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                  </button>
+                </span>
             </div>
         </div>
 
@@ -305,6 +321,40 @@
                 <div class="modal-footer">
 
                 <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()">Verify</button>
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div id="DocumentUnverificationModal" class="modal-slider modal fade" role="dialog">
+            <div class="modal-dialog  modal-md">
+            <!-- Modal content-->
+
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                <h4 class="modal-title"> {{paramData.documentType | underscoreless}} Unverification </h4>
+                </div>
+                <div class="modal-body">
+                <div class="form-group">
+                    <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <span>
+                        <div class="comment">
+                            <!--<span>Browse</span>-->
+                            Comment:
+                            <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
+                        </div>
+                        <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                        </span>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+
+                <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()">Unverify</button>
                 <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -479,6 +529,15 @@
           documentIdNumber: document.documentIdNumber,
           documentType: document.documentType,
           documentVerificationStatus: 'VERIFIED',
+          documentID: document.id
+        }
+      },
+      setDocumentUnverify (document) {
+        console.log(document)
+        this.paramData = {
+          documentIdNumber: document.documentIdNumber,
+          documentType: document.documentType,
+          documentVerificationStatus: 'NOT_VERIFIED',
           documentID: document.id
         }
       },

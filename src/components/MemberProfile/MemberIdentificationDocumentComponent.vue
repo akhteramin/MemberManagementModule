@@ -53,6 +53,9 @@
                     <button
                      data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false" @click= "setDocument(item)"
                      class="button-md-verify" v-if="item.documentVerificationStatus=='NOT_VERIFIED'">Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
+                    <button
+                     data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false" @click= "setDocumentUnverify(item)"
+                     class="button-md-verify width-100" v-else>Unverify <i class="fa fa-times" aria-hidden="true"></i></button>
                   </span>
 
                 </td>
@@ -90,6 +93,41 @@
 
                       <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()"
                       :disabled="paramData.comment === null || paramData.comment === ''">Verify</button>
+                      <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="DocumentUnverificationModal" class="modal fade" role="dialog">
+                <div class="modal-dialog  modal-md">
+                  <!-- Modal content-->
+
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                      <h4 class="modal-title"> Document Unverification </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <span>
+                              <div class="comment">
+                                <!--<span>Browse</span>-->
+                                Comment:
+                                <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
+                              </div>
+                              <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+
+                      <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()"
+                      :disabled="paramData.comment === null || paramData.comment === ''">Unverify</button>
                       <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
                     </div>
                   </div>
@@ -301,6 +339,15 @@
           documentID: document.id
         }
       },
+      setDocumentUnverify (document) {
+//        console.log(document)
+        this.paramData = {
+          documentIdNumber: document.documentIdNumber,
+          documentType: document.documentType,
+          documentVerificationStatus: 'NOT_VERIFIED',
+          documentID: document.id
+        }
+      },
       setPreviewDocument (document) {
         this.document = document
         console.log(this.document)
@@ -316,7 +363,7 @@
             $.notify({
               // options
               title: '<strong>Success!</strong>',
-              message: 'Document verified successfully'
+              message: `Document ${this.paramData.documentVerificationStatus === 'NOT_VERIFIED' ? 'un' : ''}verified successfully`
             }, {
               // settings
               type: 'success',
