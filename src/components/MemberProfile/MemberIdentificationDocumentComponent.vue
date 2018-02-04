@@ -139,7 +139,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                      <h4 class="modal-title"> Change Document {{ document.documentType }} </h4>
+                      <h4 class="modal-title"> Document {{ document.documentType }} </h4>
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
@@ -152,7 +152,7 @@
                             <div>
                                 <div v-if="!isPdf(document.documentUrl)">
                                   <img id="ppImage" v-if="document.documentUrl"
-                                        :src="documentUrl || 'static/images/default-original.jpg'"
+                                        :src="documentBaseUrl+document.documentUrl || 'static/images/default-original.jpg'"
                                         class="img-rounded" width="250" height="250">
 
                                   <img v-else src="static/images/default-original.jpg" class="img-rounded"
