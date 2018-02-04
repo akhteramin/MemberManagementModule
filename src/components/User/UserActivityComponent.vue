@@ -196,9 +196,9 @@
           this.activityQuery.fromDate = 0
         }
         if (this.searchToDate !== null) {
-          this.activityQuery.toDate = new Date(this.searchToDate).getTime() - 6 * 60 * 60 * 1000
+          this.activityQuery.toDate = new Date(this.searchToDate).getTime() - 6 * 60 * 60 * 1000 + (1000 * 60 * 60 * 24 * 1 - 1)
         } else {
-          this.activityQuery.toDate = new Date().getTime() - 6 * 3600 * 1000
+          this.activityQuery.toDate = new Date().getTime() - 6 * 3600 * 1000 + (1000 * 60 * 60 * 24 * 1 - 1)
         }
         this.activityQuery.pageNumber = 0
         this.getActivities()

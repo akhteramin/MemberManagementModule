@@ -168,7 +168,7 @@
                                 Country:
                               </div>
                               <div class="gr-3">
-                                {{ countryNamePresent }}
+                                {{ countryNamePresent === 'BD' ? 'Bangladesh' : countryNamePresent }}
                               </div>
                             </div>
                             <div class="row text-left">
@@ -250,7 +250,7 @@
                                   Country:
                                   </div>
                                   <div class="push-3 gr-8 padding-2">
-                                  {{ userPresentAddress.country}}
+                                  {{ userPresentAddress.country === 'BD' ? 'Bangladesh' : userPresentAddress.country }}
                                   </div>
                               </div>
                             </div>
@@ -327,7 +327,7 @@
                                 Country:
                               </div>
                               <div class="gr-3">
-                                {{ countryNamePresent }}
+                                {{ countryNamePresent === 'BD' ? 'Bangladesh' : countryNamePresent }}
                               </div>
                             </div>
                             <div class="row text-left">
@@ -409,7 +409,7 @@
                                   Country:
                                   </div>
                                   <div class="push-3 gr-8 padding-2">
-                                  {{ userPermanentAddress.country}}
+                                  {{ userPermanentAddress.country === 'BD' ? 'Bangladesh' : userPermanentAddress.country }}
                                   </div>
                               </div>
                             </div>
@@ -468,7 +468,7 @@
     ],
     components: {
       'update-user': UpdateUserComponent,
-      'update-user-image':UpdateUserImageComponent
+      'update-user-image': UpdateUserImageComponent
     },
     data () {
       return {
@@ -517,7 +517,7 @@
     },
     created () {
       console.log('created user  information..., user login id iss: ', this.loginID)
-      console.log("get the data")
+      console.log('get the data')
       this.init()
     },
     methods: {
@@ -537,35 +537,25 @@
       showSegmant (name = '') {
         this.showProfile = false
         this.showAddress = false
-        if (name === 'profile' ) {
+        if (name === 'profile') {
           console.log(name)
           this.showProfile = true
-        }
-        else {
+        } else {
           console.log(name)
           this.showAddress = true
         }
       },
       updateAddress (addressType = '') {
-        if (addressType === 'present')
-        {
-          if(!this.updatePresentAddr)
-          {
+        if (addressType === 'present') {
+          if (!this.updatePresentAddr) {
             this.updatePresentAddr = true
-          }
-          else
-          {
+          } else {
             this.updatePresentAddr = false
           }
-        }
-        else if (addressType === 'permanent')
-        {
-          if(!this.updatePermanentAddr)
-          {
+        } else if (addressType === 'permanent') {
+          if (!this.updatePermanentAddr) {
             this.updatePermanentAddr = true
-          }
-          else
-          {
+          } else {
             this.updatePermanentAddr = false
           }
         }
@@ -624,14 +614,14 @@
         console.log('after http put in update member address.')
       },
       highlightRow () {
-        $('#userIndividual tbody').on('click', 'tr', function() {
-            $('#userIndividual tbody > tr').removeClass('selected');
-            $(this).addClass('selected');
-        });
+        $('#userIndividual tbody').on('click', 'tr', function () {
+          $('#userIndividual tbody > tr').removeClass('selected')
+          $(this).addClass('selected')
+        })
       },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
-        this.highlightRow ()
+        this.highlightRow()
 
         this.userPresentAddress = {
           addressLine1: 'N/A',
@@ -657,8 +647,8 @@
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
 
-        let userProfile=JSON.parse(localStorage.getItem('user-profile'))
-        this.id=userProfile.id
+        let userProfile = JSON.parse(localStorage.getItem('user-profile'))
+        this.id = userProfile.id
 
         this.showLoader = true
         Http.GET('user', [userProfile.id])
