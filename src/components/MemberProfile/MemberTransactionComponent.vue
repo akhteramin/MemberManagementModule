@@ -231,9 +231,9 @@
           this.transactionQuery.fromDate = 0
         }
         if (this.searchDateTo !== null) {
-          this.transactionQuery.toDate = new Date(this.searchDateTo).getTime() - 6 * 60 * 60 * 1000
+          this.transactionQuery.toDate = new Date(this.searchDateTo).getTime() - 6 * 60 * 60 * 1000 + (1000 * 60 * 60 * 24 * 1 - 1)
         } else {
-          this.transactionQuery.toDate = new Date().getTime() - 6 * 3600 * 1000
+          this.transactionQuery.toDate = new Date().getTime() - 6 * 3600 * 1000 + (1000 * 60 * 60 * 24 * 1 - 1)
         }
         this.transactionQuery.pageNumber = 0
         console.log('transaction from: ', this.transactionQuery.fromDate, ' date: ',
@@ -265,107 +265,107 @@
           let service
 
           for (let i = 0; i < LENGTH; i++) {
-              service = transactions[i].serviceID
-              switch (service) {
-                  case 1001:
-                    transactions[i].currencyFilter = '+ '
-                    transactions[i].serviceName = 'Transaction Service'
-                    break
-                  case 1:
-                    transactions[i].serviceName = 'Send Money'
-                    if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
-                        transactions[i].currencyFilter = '- '
-                      } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
-                            transactions[i].currencyFilter = '+ '
-                          } else {
-                            transactions[i].currencyFilter = '+ '
-                          }
-                    break
-                  case 3001:
-                    transactions[i].serviceName = 'Add Money'
-                    transactions[i].currencyFilter = '+ '
-                    break
-                  case 963001:
-                    transactions[i].serviceName = 'Add Money Revert'
-                    transactions[i].currencyFilter = '- '
-                    break
-                  case 3002:
-                    transactions[i].serviceName = 'Withdraw Money'
-                    transactions[i].currencyFilter = '- '
-                    break
-                  case 2001:
-                    transactions[i].serviceName = 'Top Up'
-                    transactions[i].currencyFilter = '- '
-                    break
-                  case 2002:
-                    transactions[i].serviceName = 'Top Up Rollback'
-                    transactions[i].currencyFilter = '+ '
-                    break
-                  case 6001:
-                    transactions[i].serviceName = 'Request Money'
+            service = transactions[i].serviceID
+            switch (service) {
+                case 1001:
+                  transactions[i].currencyFilter = '+ '
+                  transactions[i].serviceName = 'Transaction Service'
+                  break
+                case 1:
+                  transactions[i].serviceName = 'Send Money'
+                  if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                      transactions[i].currencyFilter = '- '
+                    } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                        transactions[i].currencyFilter = '+ '
+                      } else {
+                        transactions[i].currencyFilter = '+ '
+                      }
+                  break
+                case 3001:
+                  transactions[i].serviceName = 'Add Money'
+                  transactions[i].currencyFilter = '+ '
+                  break
+                case 963001:
+                  transactions[i].serviceName = 'Add Money Revert'
+                  transactions[i].currencyFilter = '- '
+                  break
+                case 3002:
+                  transactions[i].serviceName = 'Withdraw Money'
+                  transactions[i].currencyFilter = '- '
+                  break
+                case 2001:
+                  transactions[i].serviceName = 'Top Up'
+                  transactions[i].currencyFilter = '- '
+                  break
+                case 2002:
+                  transactions[i].serviceName = 'Top Up Rollback'
+                  transactions[i].currencyFilter = '+ '
+                  break
+                case 6001:
+                  transactions[i].serviceName = 'Request Money'
   
-                    if (transactions[i].statusCode !== 200 && transactions[i].statusCode !== 102) {
-                        transactions[i].currencyFilter = ' '
-                      } else if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
-                            transactions[i].currencyFilter = '+ '
-                          } else {
-                            transactions[i].currencyFilter = '- '
-                          }
-
-                    break
-
-                  case 6002:
-                    transactions[i].serviceName = 'Payment'
-                    if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                  if (transactions[i].statusCode !== 200 && transactions[i].statusCode !== 102) {
+                      transactions[i].currencyFilter = ' '
+                    } else if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                        transactions[i].currencyFilter = '+ '
+                      } else {
                         transactions[i].currencyFilter = '- '
-                      } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
-                            transactions[i].currencyFilter = '+ '
-                          } else {
-                            transactions[i].currencyFilter = '+ '
-                          }
-                    break
-                  case 6003:
-
-                    transactions[i].serviceName = 'Invoice'
-                    if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
-                        transactions[i].currencyFilter = '- '
-                      } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
-                            transactions[i].currencyFilter = '+ '
-                          } else {
-                            transactions[i].currencyFilter = '+ '
-                          }
-                    break
-                  case 8001:
-
-                    transactions[i].serviceName = 'Education'
-                    if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
-                        transactions[i].currencyFilter = '- '
-                      } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
-                            transactions[i].currencyFilter = '+ '
-                          } else {
-                            transactions[i].currencyFilter = '+ '
-                          }
-                    break
-                  case 7001:
-                    transactions[i].serviceName = 'Internal Balance Transfer'
-                    transactions[i].currencyFilter = '+'
-                    if (transactions[i].additionalInfo.isReceiver == true) {
-                        transactions[i].currencyFilter = '-'
                       }
-                    break
-                  case 1100:
-                    transactions[i].serviceName = 'Offer'
-                    transactions[i].currencyFilter = '+'
-                    if (transactions[i].additionalInfo.isReceiver == true) {
-                        transactions[i].currencyFilter = '-'
+
+                  break
+
+                case 6002:
+                  transactions[i].serviceName = 'Payment'
+                  if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                      transactions[i].currencyFilter = '- '
+                    } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                        transactions[i].currencyFilter = '+ '
+                      } else {
+                        transactions[i].currencyFilter = '+ '
                       }
-                    break
-                  default:
-                    transactions[i].serviceName = 'N/A'
-                    transactions[i].currencyFilter = '+ '
-                    break
-                }
-            }
+                  break
+                case 6003:
+
+                  transactions[i].serviceName = 'Invoice'
+                  if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                      transactions[i].currencyFilter = '- '
+                    } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                        transactions[i].currencyFilter = '+ '
+                      } else {
+                        transactions[i].currencyFilter = '+ '
+                      }
+                  break
+                case 8001:
+
+                  transactions[i].serviceName = 'Education'
+                  if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                      transactions[i].currencyFilter = '- '
+                    } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                        transactions[i].currencyFilter = '+ '
+                      } else {
+                        transactions[i].currencyFilter = '+ '
+                      }
+                  break
+                case 7001:
+                  transactions[i].serviceName = 'Internal Balance Transfer'
+                  transactions[i].currencyFilter = '+'
+                  if (transactions[i].additionalInfo.isReceiver == true) {
+                      transactions[i].currencyFilter = '-'
+                    }
+                  break
+                case 1100:
+                  transactions[i].serviceName = 'Offer'
+                  transactions[i].currencyFilter = '+'
+                  if (transactions[i].additionalInfo.isReceiver == true) {
+                      transactions[i].currencyFilter = '-'
+                    }
+                  break
+                default:
+                  transactions[i].serviceName = 'N/A'
+                  transactions[i].currencyFilter = '+ '
+                  break
+              }
+          }
         }
         return transactions || []
       },
