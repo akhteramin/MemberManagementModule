@@ -78,7 +78,7 @@
                 Country:
                 </div>
                 <div class="gr-8 padding-2">
-                {{ memberPresentAddress.country}}
+                {{ memberPresentAddress.country === 'BD' ? 'Bangladesh' : memberPresentAddress.country}}
                 </div>
             </div>
             <div class="form-group gr-4 push-2">
@@ -154,7 +154,7 @@
                 Country:
                 </div>
                 <div class="gr-8">
-                {{ memberPermanentAddress.country }}
+                {{ memberPermanentAddress.country === 'BD' ? 'Bangladesh' : memberPermanentAddress.country }}
                 </div>
             </div>
             <div class="form-group gr-4 push-2">
