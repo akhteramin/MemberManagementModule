@@ -21,9 +21,9 @@
             </div>
             <div class="form-group push-4">
               <div class="gr-4">
-                <button type="submit" class="button-search">
+                <button type="submit" class="button-search" :disabled="showLoader">
                   <i class="fa fa-search" aria-hidden="true"></i> Search</button>
-                <button type="reset" class="button-reset">
+                <button type="reset" class="button-reset" :disabled="showLoader">
                   <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
               </div>
               <div class="gr-1 push-3">
