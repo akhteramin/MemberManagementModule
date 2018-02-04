@@ -244,7 +244,7 @@
                             {{ member.basicInfo.motherMobileNumber || 'N/A' }}
                           </div>
                         </div>
-                        <div v-else>
+                        <div class="gr-12" v-else>
                           <update-member-parents
                               :member="member"
                               @update="editParents">
