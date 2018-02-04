@@ -6,7 +6,7 @@
               <br>
               <div class="gr-3">
                 <label> From: </label>
-                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromRDate" placeholder="activityQuery.fromDate"  v-model="searchFromDate"/>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromDate" placeholder="activityQuery.fromDate"  v-model="searchFromDate"/>
               </div>
               <div class="gr-3">
                 <label>To:</label>
