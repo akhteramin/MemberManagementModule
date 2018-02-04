@@ -64,7 +64,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
+                      {{ verificationHistory && verificationHistory.length > 0 ? member.verifyDetails.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -73,7 +73,7 @@
                       Time:
                     </div>
                     <div class="gr-6 push-1 break-word" v-if="verificationHistory && verificationHistory.length > 0">
-                      {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                      {{ verificationHistory && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-6 push-1">
@@ -95,7 +95,7 @@
                       </div>
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
+                      {{ verificationHistory && verificationHistory.length > 0 ? member.verifyDetails.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -104,7 +104,7 @@
                       Time:
                     </div>
                     <div class="gr-7 text-left" v-if="verificationHistory && verificationHistory.length > 0">
-                      {{ verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY') }}
+                      {{ member.verifyDetails.updateTime | date('MMM D, YYYY') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-7 text-left">
@@ -121,7 +121,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[ verificationHistory.length - 1 ].actor.name
+                      {{ verificationHistory && verificationHistory.length > 0 ? member.verifyDetails.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -130,7 +130,7 @@
                       Time:
                     </div>
                     <div class="gr-6 push-1 break-word" v-if="verificationHistory && verificationHistory.length > 0">
-                      {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                      {{ verificationHistory && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-6 push-1">
@@ -150,7 +150,7 @@
                       Verified By:
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ verificationHistory && verificationHistory.length > 0 ? verificationHistory[verificationHistory.length - 1].actor.name : 'N/A' }}
+                      {{ verificationHistory && verificationHistory.length > 0 ? member.verifyDetails.actor.name : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br><br><br>
@@ -158,7 +158,7 @@
                       Time:
                     </div>
                     <div class="gr-7 text-left break-word" v-if="verificationHistory && verificationHistory.length > 0">
-                      {{ verificationHistory && verificationHistory[verificationHistory.length - 1].updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                      {{ verificationHistory && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-1 text-left;">
@@ -185,15 +185,15 @@
                     Approved By:
                   </div>
                   <div class="gr-7 text-left break-word">
-                    {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
+                    {{ member.approveDetails ? member.approveDetails.actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br><br>
                   <div class="gr-5 text-left">
                     Time:
                   </div>
-                  <div class="gr-7 text-left break-word" v-if="approvalHistory && approvalHistory.length > 0">
-                    {{ approvalHistory && approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                  <div class="gr-7 text-left break-word" v-if="member.approveDetails">
+                    {{ member.approveDetails && member.approveDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <div v-else class="gr-1 text-left;">
@@ -211,15 +211,15 @@
                     Rejected By:
                   </div>
                   <div class="gr-7 text-left break-word">
-                    {{ approvalHistory && approvalHistory.length > 0 ? approvalHistory[approvalHistory.length - 1].actor.name : 'N/A' }}
+                    {{  member.approveDetails ? member.approveDetails.actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br>
                   <div class="gr-5 text-left">
                     Time:
                   </div>
-                  <div class="gr-7 text-left" v-if="approvalHistory && approvalHistory.length > 0">
-                    {{ approvalHistory && approvalHistory[approvalHistory.length - 1].updateTime | date('MMM D, YYYY') }}
+                  <div class="gr-7 text-left" v-if="member.approveDetails">
+                    {{ member.approveDetails && member.approveDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <div v-else class="gr-7 text-left;">
@@ -324,55 +324,20 @@
     </div>
 
     <div class="gr-12 w3-header-card">
-      <div id = "nav-bar">
         <div class="gr-12 panel-label">
           <label class="text-label"><b>Verification History</b></label>
         </div>
-        <div class="gr-12 padding-5">
+        <!--div class="gr-12 padding-5">
           <ul class="nav nav-tabs">
             <li class="gr-6 text-center" :class="{active: showVerificationHistory}"
                 @click="setTab('tabVerificationHistory')"><a data-toggle="tab">Verification</a></li>
             <!--<li class="col-md-3 text-center" ng-click="setType('approved')"><a data-toggle="tab" >Approved</a></li>-->
-            <li class="gr-6 text-center" :class="{active: showApprovalHistory}"
+            <!--li class="gr-6 text-center" :class="{active: showApprovalHistory}"
                 @click="setTab('tabApprovalHistory')"><a data-toggle="tab">Approval</a></li>
           </ul>
         </div>
         <br>
-      </div>
-      <div class="small-scrollable padding-5 col-md-11">
-        <div v-if="showApprovalHistory">
-          <div class="card-block" v-if="approvalHistory && approvalHistory.length > 0">
-            <div class="col-md-12">
-              <div class="col-md-12 comment">
-                <ul class="chat">
-                  <div v-for="history in approvalHistory">
-                    <li class="left clearfix">
-                      <span class="chat-img pull-left"></span>
-                      <div class="chat-body clearfix">
-                        <div class="header">
-                          <strong class="primary-font">{{ history.verificationStatus }}</strong> by
-                          <strong class="primary-font">{{ history.actor ? history.actor.name : 'N/A' }}  </strong>
-                          <small class="pull-right text-muted">
-                            <i class="fa fa-clock-o" aria-hidden="true"></i>
-                            {{ history.updateTime | date('MMM D, YYYY hh:mm') }}
-                          </small>
-                        </div>
-                        <p>
-                          {{ history.comment }}
-                        </p>
-                      </div>
-                    </li>
-                  </div>
-
-
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div v-else>
-            <strong class="primary-font">N/A</strong>
-          </div>
-        </div>
+      </div-->
 
         <div v-if="showVerificationHistory">
           <div class="card-block" v-if="verificationHistory && verificationHistory.length > 0">
@@ -384,11 +349,12 @@
                       <span class="chat-img pull-left"></span>
                       <div class="chat-body clearfix">
                         <div class="header">
-                          <strong class="primary-font">{{ history.verificationStatus }}</strong> by
+                          <strong class="primary-font">
+                          {{history.verificationType == 'APPROVE'? 'Approval' : 'Verification'}} {{ history.verificationStatus }}</strong> by
                           <strong class="primary-font">{{ history.actor ? history.actor.name : 'N/A' }}  </strong>
                           <small class="pull-right text-muted">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
-                            {{ history.updateTime | date('MMM D, YYYY hh:mm') }}
+                            {{ history.updateTime | date('MMM D, YYYY HH:mm:ss a') }}
                           </small>
                         </div>
                         <p>
@@ -408,10 +374,7 @@
           </div>
         </div>
         <br> <br> <br> <br>
-      </div>
-
-
-
+      
     </div>
   </div>
 </template>
@@ -438,7 +401,6 @@
         verificationComment: '',
         approvalComment: '',
         showVerificationHistory: true,
-        showApprovalHistory: false,
         showLoader: false,
         paramData: {
           comment: null,
@@ -456,20 +418,24 @@
     },
     methods: {
       init () {
-        if (this.member.approveHistory && this.member.approveHistory.length > 0) {
-          this.approvalHistory = this.member.approveHistory
-        } else {
-          this.approvalHistory = []
-        }
+        
         if (this.member.verificationHistory && this.member.verificationHistory.length > 0) {
           this.verificationHistory = this.member.verificationHistory
         } else {
           this.verificationHistory = []
         }
         this.verificationStatus = this.member.basicInfo.verificationStatus
-        this.verificationType = this.approvalHistory && this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
-        console.log('verification status: ', this.verificationStatus, ' verification type: ', this.verificationType,
-        'approvalHistory: ', this.approvalHistory)
+        // this.verificationType = this.approvalHistory && this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
+        if (this.member.approveDetails) {
+          this.verificationType = this.member.approveDetails.verificationType
+        }
+        else if (this.member.verifyDetails) {
+          this.verificationType = this.member.verifyDetails.verificationType
+        }
+        else {
+          this.verificationType = null
+        }
+        console.log('verification status: ', this.verificationStatus, ' verification type: ', this.verificationType)
         Http.GET('resource', ['account-class'])
           .then(
             ({data: {data: classes}}) => {
@@ -483,24 +449,6 @@
               console.log('error getting service list', error)
             }
           )
-      },
-      setTab (setName) {
-        console.log('here, at set tab:: ')
-        this.showVerificationHistory = false
-        this.showApprovalHistory = false
-        if (setName === 'tabVerificationHistory') {
-          if (this.showVerificationHistory) {
-            this.showVerificationHistory = false
-          } else {
-            this.showVerificationHistory = true
-          }
-        } else {
-          if (this.showApprovalHistory) {
-            this.showApprovalHistory = false
-          } else {
-            this.showApprovalHistory = true
-          }
-        }
       },
       acceptVerification () {
         let request = {
@@ -527,6 +475,7 @@
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
               console.log('now, verification history: ', this.verificationHistory)
+              this.init()
             },
             error => {
               this.showLoader = false
@@ -568,6 +517,7 @@
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
               console.log('now, verification history: ', this.verificationHistory)
+              this.init()
             },
             error => {
               this.showLoader = false
@@ -607,8 +557,9 @@
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
-              this.approvalHistory.push(approvalResponse.data)
-              console.log('now, approval history: ', this.approvalHistory)
+              this.verificationHistory.push(approvalResponse.data)
+              console.log('now, approval history: ', this.verificationHistory)
+              this.init()
             },
             error => {
               this.showLoader = false
@@ -639,8 +590,9 @@
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
-              this.approvalHistory.push(approvalResponse.data)
-              console.log('now, approval history: ', this.approvalHistory)
+              this.verificationHistory.push(approvalResponse.data)
+              console.log('now, approval history: ', this.verificationHistory)
+              this.init()
             },
             error => {
               this.showLoader = false
@@ -667,8 +619,9 @@
               console.log('revoke request response::', revokeResponse)
               this.verificationStatus = revokeResponse.data.verificationStatus
               this.verificationType = revokeResponse.data.verificationType
-              this.approvalHistory.push(revokeResponse.data)
-              console.log('now, approval history: ', this.approvalHistory)
+              this.verificationHistory.push(revokeResponse.data)
+              console.log('now, approval history: ', this.verificationHistory)
+              this.init()
             },
             error => {
               this.showLoader = false

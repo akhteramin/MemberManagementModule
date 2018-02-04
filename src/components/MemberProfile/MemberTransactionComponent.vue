@@ -178,7 +178,8 @@
   export default {
     name: 'MemberTransaction',
     props: [
-      'id'
+      'id',
+      'mobileNumber'
     ],
     data () {
       return {
@@ -273,9 +274,9 @@
                     break
                   case 1:
                     transactions[i].serviceName = 'Send Money'
-                    if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                    if (transactions[i].originatingMobileNumber === this.mobileNumber) {
                         transactions[i].currencyFilter = '- '
-                      } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                      } else if (transactions[i].receiverInfo === this.mobileNumber) {
                             transactions[i].currencyFilter = '+ '
                           } else {
                             transactions[i].currencyFilter = '+ '
@@ -306,7 +307,7 @@
   
                     if (transactions[i].statusCode !== 200 && transactions[i].statusCode !== 102) {
                         transactions[i].currencyFilter = ' '
-                      } else if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                      } else if (transactions[i].originatingMobileNumber === this.mobileNumber) {
                             transactions[i].currencyFilter = '+ '
                           } else {
                             transactions[i].currencyFilter = '- '
@@ -316,9 +317,9 @@
 
                   case 6002:
                     transactions[i].serviceName = 'Payment'
-                    if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                    if (transactions[i].originatingMobileNumber === this.mobileNumber) {
                         transactions[i].currencyFilter = '- '
-                      } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                      } else if (transactions[i].receiverInfo === this.mobileNumber) {
                             transactions[i].currencyFilter = '+ '
                           } else {
                             transactions[i].currencyFilter = '+ '
@@ -327,9 +328,9 @@
                   case 6003:
 
                     transactions[i].serviceName = 'Invoice'
-                    if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                    if (transactions[i].originatingMobileNumber === this.mobileNumber) {
                         transactions[i].currencyFilter = '- '
-                      } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                      } else if (transactions[i].receiverInfo === this.mobileNumber) {
                             transactions[i].currencyFilter = '+ '
                           } else {
                             transactions[i].currencyFilter = '+ '
@@ -338,9 +339,9 @@
                   case 8001:
 
                     transactions[i].serviceName = 'Education'
-                    if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                    if (transactions[i].originatingMobileNumber === this.mobileNumber) {
                         transactions[i].currencyFilter = '- '
-                      } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                      } else if (transactions[i].receiverInfo === this.mobileNumber) {
                             transactions[i].currencyFilter = '+ '
                           } else {
                             transactions[i].currencyFilter = '+ '

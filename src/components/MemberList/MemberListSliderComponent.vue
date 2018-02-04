@@ -92,7 +92,6 @@
                         <b>{{memberDocument.documentType | underscoreless}}</b>
                         <i v-if="memberDocument.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
                         <br>{{memberDocument.documentIdNumber}}
-                        <br>Updated On:12/05/2017
                         <br>
                         <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">
                             <button class="button-small-edit"
@@ -258,7 +257,6 @@
             <div class="gr-7">
                 <i v-if="memberDocumentDetail.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
                 <br>{{memberDocumentDetail.documentIdNumber}}
-                <br>Updated On:12/05/2017
                 <br>
                 <span v-if="memberDocumentDetail.documentVerificationStatus=='NOT_VERIFIED'">
                 <button class="button-md-edit"

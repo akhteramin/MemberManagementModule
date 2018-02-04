@@ -319,7 +319,7 @@
           <tr>
             <th>#</th>
             <th class="width-250">Name</th>
-            <th>Business Name</th>
+            <th>Business Owner Name</th>
             <th>Basic Info</th>
             <!--<th>Mother</th>-->
             <th class="text-center">A/C Type</th>
@@ -360,7 +360,12 @@
             <div class="gr-10">
               <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
                 <a class="pointer" @click="memberDetails(member.accountId,member.accountType)">
-                  {{ member.name }}
+                  <span v-if="member.accountType == 1">
+                    {{ member.name }}
+                  </span>
+                  <span v-if="member.accountType == 2">
+                    {{ member.businessName }}
+                  </span>
                 </a>
                 <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
                 <small>
@@ -371,7 +376,7 @@
               <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
             </div>
           </td>
-          <td>{{member.businessName ? member.businessName : 'N/A'}}</td>
+          <td>{{member.businessName ? member.name : 'N/A'}}</td>
           <td>
             {{ getStaticNames(member.occupation) }}
             <br>
