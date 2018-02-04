@@ -50,7 +50,7 @@
             <div class="gr-4 text-left margin-bottom-5">
                 <div class="select select-sm">
                 <select id="genderSelection" v-model="member.basicInfo.gender">
-                    <option selected :value = "null">Select Gender</option>
+                    <!-- <option selected :value = "null">Select Gender</option> -->
                     <option value="M">Male</option>
                     <option value="F">Female</option>
                 </select>
