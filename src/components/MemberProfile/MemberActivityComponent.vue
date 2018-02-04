@@ -6,7 +6,7 @@
               <br>
               <div class="gr-3">
                 <label> From: </label>
-                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromRDate" placeholder="activityQuery.fromDate"  v-model="searchFromDate"/>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromDate" placeholder="activityQuery.fromDate"  v-model="searchFromDate"/>
               </div>
               <div class="gr-3">
                 <label>To:</label>
@@ -195,9 +195,9 @@
           this.activityQuery.fromDate = 0
         }
         if (this.searchToDate !== null) {
-          this.activityQuery.toDate = new Date(this.searchToDate).getTime()
+          this.activityQuery.toDate = new Date(this.searchToDate).getTime() + (1000 * 60 * 60 * 24 * 1 - 1)
         } else {
-          this.activityQuery.toDate = new Date().getTime()
+          this.activityQuery.toDate = new Date().getTime() + (1000 * 60 * 60 * 24 * 1 - 1)
         }
         this.activityQuery.pageNumber = 0
         this.getActivities()

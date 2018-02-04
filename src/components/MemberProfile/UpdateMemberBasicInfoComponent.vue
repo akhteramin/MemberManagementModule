@@ -18,84 +18,96 @@
         </div>
       </div>
       <form v-on:submit.prevent="updateMemberBasicProfile">
-            <div class="gr-2">
-                Name:
+            <div class="row">
+              <div class="gr-2">
+                  Name:
+              </div>
+              <div class="gr-4 text-left">
+                  <input  name="memberName" class="input-sm" type="text" id="memberName" placeholder="Name"
+                  v-model="member.basicInfo.name"/>
+              </div>
+              <div class="gr-2">
+                  Ipay Number:
+              </div>
+              <div class="gr-4 text-left">
+                  {{ member.basicInfo.mobileNumber || 'N/A' }}
+              </div>
             </div>
-            <div class="gr-4 text-left">
-                <input  name="memberName" class="input-sm" type="text" id="memberName" placeholder="Name"
-                v-model="member.basicInfo.name"/>
+            <br>
+            <div class="row">
+              <div class="gr-2">
+                  Email:
+              </div>
+              <div class="gr-4 text-left">
+              {{ member.emails.length > 0 ? member.emails[0].emailAddress : 'N/A' }}
+              </div>
+              <div class="gr-2">
+                  Date of Birth:
+              </div>
+              <div class="gr-4 text-left">
+                  <input type="date" class="input-sm" name="memberDOB" v-model="dob"/>
+              </div>
             </div>
-            <div class="gr-2">
-                Ipay Number:
+            <br>
+            <div class="row">
+              <div class="gr-2">
+              Gender:
+              </div>
+              <div class="gr-4 text-left">
+                  <div class="select select-sm">
+                  <select id="genderSelection" v-model="member.basicInfo.gender">
+                      <!-- <option selected :value = "null">Select Gender</option> -->
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                  </select>
+                  </div>
+              </div>
+              <div class="gr-2">
+              Occupation:
+              </div>
+              <div class="gr-4 text-left">
+                  <div class="select select-sm">
+                  <select id="occupationSelection" v-model="member.basicInfo.occupation">
+                      <option selected :value = "null">Select Occupation</option>
+                      <option v-for="occupation in occupationList" :value="occupation.id">{{ occupation.name }}</option>
+                  </select>
+                  </div>
+              </div>
             </div>
-            <div class="gr-4 text-left">
-                {{ member.basicInfo.mobileNumber || 'N/A' }}
+            <br>
+            <div class="row">
+              <div class="gr-2">
+              Verification Status:
+              </div>
+              <div class="gr-4 text-left">
+                  <!--div class="select select-sm"-->
+                      <select id="verification" v-model="member.basicInfo.verificationStatus" disabled>
+                      <option value="">Select Status</option>
+                      <option value="NOT_VERIFIED">Not Verified</option>
+                      <option value="IN_PROGRESS">In Progress</option>
+                      <option value="VERIFIED">Verified</option>
+                      <option value="Rejected">Rejected</option>
+                      </select>
+                  <!--/div-->
+              </div>
+              <div class="gr-2">
+              Member Since:
+              </div>
+              <div class="gr-4 text-left">
+              {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
+              </div>
             </div>
-            <br><br><br>
-            <div class="gr-2">
-                Email:
+            <br>
+            <div class="row">
+              <div class="gr-2">
+              Organization Name:
+              </div>
+              <div class="gr-4 text-left">
+                  <input  name="memberOrganizationName" class="input-sm" type="text" id="memberOrganizationName" placeholder="Organization Name"
+                  v-model="member.basicInfo.organizationName"/>
+              </div>
             </div>
-            <div class="gr-4 text-left">
-            {{ member.emails.length > 0 ? member.emails[0].emailAddress : 'N/A' }}
-            </div>
-            <div class="gr-2">
-                Date of Birth:
-            </div>
-            <div class="gr-4 text-left">
-                <input type="date" class="input-sm" name="memberDOB" v-model="dob"/>
-            </div>
-            <div class="gr-2">
-            Gender:
-            </div>
-            <div class="gr-4 text-left">
-                <div class="select select-sm">
-                <select id="genderSelection" v-model="member.basicInfo.gender">
-                    <option selected :value = "null">Select Gender</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                </select>
-                </div>
-            </div>
-            <div class="gr-2">
-            Occupation:
-            </div>
-            <div class="gr-4 text-left">
-                <div class="select select-sm">
-                <select id="occupationSelection" v-model="member.basicInfo.occupation">
-                    <option selected :value = "null">Select Occupation</option>
-                    <option v-for="occupation in occupationList" :value="occupation.id">{{ occupation.name }}</option>
-                </select>
-                </div>
-            </div>
-
-            <div class="gr-2">
-            Verification Status:
-            </div>
-            <div class="gr-4 text-left">
-                <!--div class="select select-sm"-->
-                    <select id="verification" v-model="member.basicInfo.verificationStatus" disabled>
-                    <option value="">Select Status</option>
-                    <option value="NOT_VERIFIED">Not Verified</option>
-                    <option value="IN_PROGRESS">In Progress</option>
-                    <option value="VERIFIED">Verified</option>
-                    <option value="Rejected">Rejected</option>
-                    </select>
-                <!--/div-->
-            </div>
-            <div class="gr-2">
-            Member Since:
-            </div>
-            <div class="gr-4 text-left">
-            {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
-            </div>
-
-            <div class="gr-2">
-            Organization Name:
-            </div>
-            <div class="gr-4 text-left">
-                <input  name="memberOrganizationName" class="input-sm" type="text" id="memberOrganizationName" placeholder="Organization Name"
-                v-model="member.basicInfo.organizationName"/>
-            </div>
+            <br>
             <div class="gr-12">
               <div class="gr-4 push-4 text-center">
                   <div class="form-group">
@@ -110,7 +122,7 @@
                   </div>
               </div>
             </div>
-            </form>
+      </form>
     </div>
 </template>
 

@@ -244,7 +244,7 @@
                             {{ member.basicInfo.motherMobileNumber || 'N/A' }}
                           </div>
                         </div>
-                        <div v-else>
+                        <div class="gr-12" v-else>
                           <update-member-parents
                               :member="member"
                               @update="editParents">
@@ -385,7 +385,7 @@
                           Country:
                         </div>
                         <div class="gr-3">
-                            Bangladesh
+                          {{ countryNamePresent === 'BD' ? 'Bangladesh' : countryNamePresent }}
                         </div>
                       </div>
                     </div>
@@ -454,7 +454,7 @@
                           Country:
                         </div>
                         <div class="gr-3">
-                          {{ countryNamePermanent }}
+                          {{ countryNamePermanent === 'BD' ? 'Bangladesh' : countryNamePermanent }}
                         </div>
                       </div>
                     </div>

@@ -232,9 +232,9 @@
           this.transactionQuery.fromDate = 0
         }
         if (this.searchDateTo !== null) {
-          this.transactionQuery.toDate = new Date(this.searchDateTo).getTime() - 6 * 60 * 60 * 1000
+          this.transactionQuery.toDate = new Date(this.searchDateTo).getTime() - 6 * 60 * 60 * 1000 + (1000 * 60 * 60 * 24 * 1 - 1)
         } else {
-          this.transactionQuery.toDate = new Date().getTime() - 6 * 3600 * 1000
+          this.transactionQuery.toDate = new Date().getTime() - 6 * 3600 * 1000 + (1000 * 60 * 60 * 24 * 1 - 1)
         }
         this.transactionQuery.pageNumber = 0
         console.log('transaction from: ', this.transactionQuery.fromDate, ' date: ',
@@ -353,20 +353,49 @@
                     if (transactions[i].additionalInfo.isReceiver == true) {
                         transactions[i].currencyFilter = '-'
                       }
-                    break
-                  case 1100:
-                    transactions[i].serviceName = 'Offer'
-                    transactions[i].currencyFilter = '+'
-                    if (transactions[i].additionalInfo.isReceiver == true) {
-                        transactions[i].currencyFilter = '-'
+                  break
+                case 6003:
+
+                  transactions[i].serviceName = 'Invoice'
+                  if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                      transactions[i].currencyFilter = '- '
+                    } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                        transactions[i].currencyFilter = '+ '
+                      } else {
+                        transactions[i].currencyFilter = '+ '
                       }
-                    break
-                  default:
-                    transactions[i].serviceName = 'N/A'
-                    transactions[i].currencyFilter = '+ '
-                    break
-                }
-            }
+                  break
+                case 8001:
+
+                  transactions[i].serviceName = 'Education'
+                  if (transactions[i].originatingMobileNumber === $scope.FormData.mobileNumber) {
+                      transactions[i].currencyFilter = '- '
+                    } else if (transactions[i].receiverInfo === $scope.FormData.mobileNumber) {
+                        transactions[i].currencyFilter = '+ '
+                      } else {
+                        transactions[i].currencyFilter = '+ '
+                      }
+                  break
+                case 7001:
+                  transactions[i].serviceName = 'Internal Balance Transfer'
+                  transactions[i].currencyFilter = '+'
+                  if (transactions[i].additionalInfo.isReceiver == true) {
+                      transactions[i].currencyFilter = '-'
+                    }
+                  break
+                case 1100:
+                  transactions[i].serviceName = 'Offer'
+                  transactions[i].currencyFilter = '+'
+                  if (transactions[i].additionalInfo.isReceiver == true) {
+                      transactions[i].currencyFilter = '-'
+                    }
+                  break
+                default:
+                  transactions[i].serviceName = 'N/A'
+                  transactions[i].currencyFilter = '+ '
+                  break
+              }
+          }
         }
         return transactions || []
       },

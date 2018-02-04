@@ -173,7 +173,7 @@
                                 Country:
                               </div>
                               <div class="gr-3">
-                                {{ countryNamePresent }}
+                                {{ countryNamePresent === 'BD' ? 'Bangladesh' : countryNamePresent }}
                               </div>
                             </div>
                             <div class="row text-left">
@@ -255,7 +255,7 @@
                                   Country:
                                   </div>
                                   <div class="push-3 gr-8 padding-2">
-                                  {{ userPresentAddress.country}}
+                                  {{ userPresentAddress.country === 'BD' ? 'Bangladesh' : userPresentAddress.country }}
                                   </div>
                               </div>
                             </div>
@@ -332,7 +332,7 @@
                                 Country:
                               </div>
                               <div class="gr-3">
-                                {{ countryNamePresent }}
+                                {{ countryNamePresent === 'BD' ? 'Bangladesh' : countryNamePresent }}
                               </div>
                             </div>
                             <div class="row text-left">
@@ -414,7 +414,7 @@
                                   Country:
                                   </div>
                                   <div class="push-3 gr-8 padding-2">
-                                  {{ userPermanentAddress.country}}
+                                  {{ userPermanentAddress.country === 'BD' ? 'Bangladesh' : userPermanentAddress.country }}
                                   </div>
                               </div>
                             </div>
@@ -532,7 +532,7 @@
     },
     created () {
       console.log('created user  information..., user login id iss: ', this.loginID)
-      console.log("get the data")
+      console.log('get the data')
       this.init()
     },
     methods: {
@@ -553,39 +553,28 @@
         this.showProfile = false
         this.showAddress = false
         this.showActivity = false
-        if (name === 'profile' ) {
+        if (name === 'profile') {
           console.log(name)
           this.showProfile = true
-        }
-        else if (name === 'address') {
+        }      else if (name === 'address') {
           console.log(name)
           this.showAddress = true
-        }
-        else if (name === 'activity') {
+        }      else if (name === 'activity') {
           console.log(name)
-          this.showActivity = true 
+          this.showActivity = true
         }
       },
       updateAddress (addressType = '') {
-        if (addressType === 'present')
-        {
-          if(!this.updatePresentAddr)
-          {
+        if (addressType === 'present')      {
+          if (!this.updatePresentAddr)        {
             this.updatePresentAddr = true
-          }
-          else
-          {
+          }        else        {
             this.updatePresentAddr = false
           }
-        }
-        else if (addressType === 'permanent')
-        {
-          if(!this.updatePermanentAddr)
-          {
+        }      else if (addressType === 'permanent')      {
+          if (!this.updatePermanentAddr)        {
             this.updatePermanentAddr = true
-          }
-          else
-          {
+          }        else        {
             this.updatePermanentAddr = false
           }
         }
@@ -602,7 +591,7 @@
             'address': this.userPermanentAddress
           }
         }
-        
+  
         console.log('updatedAddress: ', updatedAddress)
         this.showLoader = true
         Http.PUT('user', updatedAddress.address, [this.id, 'address'])
@@ -639,14 +628,14 @@
         console.log('after http put in update member address.')
       },
       highlightRow () {
-        $('#userIndividual tbody').on('click', 'tr', function() {
-            $('#userIndividual tbody > tr').removeClass('selected');
-            $(this).addClass('selected');
-        });
-      },
+        $('#userIndividual tbody').on('click', 'tr', function () {
+          $('#userIndividual tbody > tr').removeClass('selected')
+          $(this).addClass('selected')
+      })
+    },
       init () {
         this.imageBaseUrl = Http.IMAGE_URL
-        this.highlightRow ()
+        this.highlightRow()
 
         this.userPresentAddress = {
           addressLine1: 'N/A',
@@ -671,7 +660,6 @@
         // Http call for basic information of the member with the 'id'
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
-
 
         this.showLoader = true
         Http.GET('user', [this.id])

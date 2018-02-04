@@ -1156,9 +1156,9 @@
           this.query.startSignUpDate = 0
         }
         if (this.signUpDateTo !== null && this.signUpDateTo.length > 0) {
-          this.query.endSignUpDate = new Date(this.signUpDateTo).getTime()
+          this.query.endSignUpDate = new Date(this.signUpDateTo).getTime() + (1000 * 60 * 60 * 24 * 1 - 1)
         } else {
-          this.query.endSignUpDate = new Date().getTime()
+          this.query.endSignUpDate = new Date().getTime() + (1000 * 60 * 60 * 24 * 1 - 1)
         }
         console.log('query, signup from date: ', this.query.startSignUpDate, ' to date: ',
           this.query.endSignUpDate)
