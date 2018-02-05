@@ -80,15 +80,10 @@
               Verification Status:
               </div>
               <div class="gr-4 text-left">
-                  <!--div class="select select-sm"-->
-                      <select id="verification" v-model="member.basicInfo.verificationStatus" disabled>
-                      <option value="">Select Status</option>
-                      <option value="NOT_VERIFIED">Not Verified</option>
-                      <option value="IN_PROGRESS">In Progress</option>
-                      <option value="VERIFIED">Verified</option>
-                      <option value="Rejected">Rejected</option>
-                      </select>
-                  <!--/div-->
+                  {{ member.basicInfo.verificationStatus === null ? 'N/A': member.basicInfo.verificationStatus == 'VERIFIED' ? 'Verified':
+                            member.basicInfo.verificationStatus == 'NOT_VERIFIED' ? 'Not Verified':
+                            member.basicInfo.verificationStatus == 'IN_PROGRESS' ? 'In Progress':
+                            'Rejected'}}
               </div>
               <div class="gr-2">
               Member Since:

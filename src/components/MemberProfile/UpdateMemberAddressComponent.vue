@@ -219,6 +219,7 @@
         }
         updatedAddress.address['district'] = updatedAddress.address['districtId']
         updatedAddress.address['thana'] = updatedAddress.address['thanaId']
+        updatedAddress.address['country'] = 'BD'
         delete updatedAddress.address['thanaId']
         delete updatedAddress.address['districtId']
         delete updatedAddress.address['type']
