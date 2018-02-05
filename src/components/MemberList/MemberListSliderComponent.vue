@@ -235,26 +235,7 @@
 
             </div>
             <br>
-            <div class="gr-12" v-if="documentDetails.histories">
-                <div class="gr-12 comment" v-for="history in documentDetails.histories">
-                   <ul class="chat">
-                    <li class="left clearfix"><span class="chat-img pull-left">
-                        <!--img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /-->
-                        </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">{{history.verificationStatus}}</strong> by <strong class="primary-font">{{history.verifier.name}}  </strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>{{history.creationTime | date('MMM D, YYYY')}}</small>
-                                </div>
-                                <p>
-                                    {{history.comment}}
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="gr-7">
+            <div class="gr-7 margin-top-10">
                 <i v-if="memberDocumentDetail.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
                 <br>{{memberDocumentDetail.documentIdNumber}}
                 <br>
@@ -288,6 +269,26 @@
                   </button>
                 </span>
             </div>
+            <div class="gr-12 margin-top-10" v-if="documentDetails.histories">
+                <div class="gr-12 comment" v-for="history in documentDetails.histories">
+                   <ul class="chat">
+                    <li class="left clearfix"><span class="chat-img pull-left">
+                        <!--img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /-->
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">{{history.verificationStatus}}</strong> by <strong class="primary-font">{{history.verifier.name}}  </strong> <small class="pull-right text-muted">
+                                        <span class="glyphicon glyphicon-time"></span>{{history.creationTime | date('MMM D, YYYY')}}</small>
+                                </div>
+                                <p>
+                                    {{history.comment}}
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
         </div>
 
 

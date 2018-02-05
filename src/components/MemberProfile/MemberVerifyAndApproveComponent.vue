@@ -64,7 +64,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ verificationHistory && verificationHistory.length > 0 ? member.verifyDetails.actor.name
+                      {{ member.verifyDetails ? member.verifyDetails.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -72,8 +72,8 @@
                     <div class="gr-4 push-1 text-left;">
                       Time:
                     </div>
-                    <div class="gr-6 push-1 break-word" v-if="verificationHistory && verificationHistory.length > 0">
-                      {{ verificationHistory && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    <div class="gr-6 push-1 break-word" v-if="member.verifyDetails">
+                      {{ member.verifyDetails && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-6 push-1">
@@ -95,7 +95,7 @@
                       </div>
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ verificationHistory && verificationHistory.length > 0 ? member.verifyDetails.actor.name
+                      {{ member.verifyDetails ? member.verifyDetails.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -103,7 +103,7 @@
                     <div class="gr-5 text-left text-left">
                       Time:
                     </div>
-                    <div class="gr-7 text-left" v-if="verificationHistory && verificationHistory.length > 0">
+                    <div class="gr-7 text-left" v-if="member.verifyDetails">
                       {{ member.verifyDetails.updateTime | date('MMM D, YYYY') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -121,7 +121,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ verificationHistory && verificationHistory.length > 0 ? member.verifyDetails.actor.name
+                      {{ member.verifyDetails ? member.verifyDetails.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -129,8 +129,8 @@
                     <div class="gr-4 push-1 text-left">
                       Time:
                     </div>
-                    <div class="gr-6 push-1 break-word" v-if="verificationHistory && verificationHistory.length > 0">
-                      {{ verificationHistory && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    <div class="gr-6 push-1 break-word" v-if="member.verifyDetails">
+                      {{ member.verifyDetails && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-6 push-1">
@@ -150,15 +150,15 @@
                       Verified By:
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ verificationHistory && verificationHistory.length > 0 ? member.verifyDetails.actor.name : 'N/A' }}
+                      {{ member.verifyDetails ? member.verifyDetails.actor.name : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br><br><br>
                     <div class="gr-5 text-left break-word">
                       Time:
                     </div>
-                    <div class="gr-7 text-left break-word" v-if="verificationHistory && verificationHistory.length > 0">
-                      {{ verificationHistory && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    <div class="gr-7 text-left break-word" v-if="member.verifyDetails">
+                      {{ member.verifyDetails && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-1 text-left;">

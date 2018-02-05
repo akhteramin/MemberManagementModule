@@ -57,14 +57,16 @@ axios.interceptors.response.use(
 // const AUTH_ACCOUNTS_URI = 'http://localhost:8000/accounts'
 // const ADMIN_URI = 'http://localhost:8080'
 
-// const API_URL = 'http://192.168.1.219:8085/member-service/api/v1'
+/////dev/test configuration///////
+// const API_URL = 'http://192.168.1.120:8085/member-service/api/v1'
 const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
-// const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
+// // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
 const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1'
 const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
 const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
 const ADMIN_URI = 'http://10.15.40.11:80/'
 
+////live////
 // const API_URL = 'http://192.168.1.95:8085/member-service/api/v1'
 // const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // const API_URL = 'http://verification.ipay.com.bd/member-service/api/v1'
@@ -75,6 +77,7 @@ const ADMIN_URI = 'http://10.15.40.11:80/'
 
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
 // const IMAGE_URL = 'https://dev.ipay.com.bd'
+// const IMAGE_URL = 'https://www.ipay.com.bd'
 const IMAGE_URL = 'https://test.ipay.com.bd'
 
 const CRM_URI = 'http://10.10.10.169/login'
