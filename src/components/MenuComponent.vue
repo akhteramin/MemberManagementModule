@@ -184,11 +184,15 @@
       },
       goToWaitingForVerificationMemberList () {
         this.expandList = false
+        $('#memberlist-table').removeClass('background-nonclickable')
+        $('#seachFilter').removeClass('background-nonclickable')
         route.push('/member/waiting-verification')
         // route.push('/member/waiting/verification')
       },
       goToWaitingForApprovalMemberList () {
         this.expandList = false
+        $('#memberlist-table').removeClass('background-nonclickable')
+        $('#seachFilter').removeClass('background-nonclickable')
         console.log('waiting for approval clicked in menu component')
         route.push('/member/waiting-approval')
 //        route.push('/member/waiting/approval')
