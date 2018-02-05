@@ -10,16 +10,25 @@
             <div class="w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round">
               <div class="gr-12">
                 <div class="gr-2 margin-10">
-                <p><b>
+                  <p><b><h3>
                   <span v-if="balance">Current Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
                   <span v-else>Current Balance: N/A </span>
-                </b></p>
+                  </h3></b></p>
                 </div>
                 <div class="gr-6 push-7">
                   <div class="gr-3 padding-5 margin-10 text-right">
                     <span><b>{{member.basicInfo.name}}</b></span>
-                    <br><b>{{member.basicInfo.mobileNumber}}</b>
-                    <br><b><span>{{member.basicInfo.profileCompletionScore}}%</span></b>
+                    <br>
+                    <span><b>{{member.basicInfo.mobileNumber}}</b></span>
+                    <br>
+                    <span><b>{{member.basicInfo.profileCompletionScore}}%</b></span>
+                    <br>
+                    <div class="select">
+                      <select id="order-by-select"  v-model="member.basicInfo.accountStatus" @change="statusChange(id, member.basicInfo.accountStatus)">
+                        <option value = "1">Active</option>
+                        <option value = "2">Suspended</option>
+                      </select>
+                    </div>
                   </div>
                   <div class="gr-6 margin-5">
                     <img v-if="member.basicInfo.mmUserPictures[0]"
@@ -523,6 +532,63 @@
         </div>
       </div>
 
+      <div id="MemberAccountStatusModal" class="modal fade" role="dialog">
+            <div class="modal-dialog  modal-md">
+            <!-- Modal content-->
+
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                <h4 class="modal-title">Change Account Status </h4>
+                </div>
+                <div class="modal-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12" v-if="memberSuspensionHistory.list">
+                      <div class="col-md-12 comment" v-for="history in memberSuspensionHistory.list">
+                        <ul class="chat">
+                          <li class="left clearfix"><span class="chat-img pull-left">
+                              <!--img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /-->
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">{{history.suspensionStatus}}</strong> by <strong class="primary-font">{{history.adminUserDetails.name}}  </strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>{{history.createdAt | date('MMM D, YYYY')}}</small>
+                                      </div>
+                                      <p>
+                                          {{history.description}}
+                                      </p>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-md-offset-2">
+                        <span>
+                        <div class="comment">
+                            <!--<span>Browse</span>-->
+                            Comment:
+                            <textarea id="comment" rows="4" cols="50" v-model="memberComment"></textarea>
+                        </div>
+                        <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                        </span>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+
+                <button v-if="memberAccountStatus==2" type="button" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="changeAccountStatus(2)">Suspend</button>
+                <button v-if="memberAccountStatus==1" type="button" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="changeAccountStatus(1)">Activate</button>
+
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" @click="init">Cancel</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+    
+
       <div class="loaders loading" v-if="showLoader">
         <div class="loader">
           <div class="loader-inner ball-grid-pulse">
@@ -619,6 +685,9 @@
         profilePicture: {},
         accessControlList: [],
         memberAccountClass: 1,
+        memberAccountID: '',
+        memberAccountStatus: '',
+        memberComment: '',
         memberPresentAddress: {
           addressLine1: 'N/A',
           addressLine2: 'N/A',
@@ -639,6 +708,7 @@
           thanaId: 'N/A',
           type: 'PERMANENT'
         },
+        memberSuspensionHistory: [],
         showLoader: false,
         memberMissingInfo: null,
         accountClassMapper: {},
@@ -903,6 +973,47 @@
 //        } else {
 //          this.countryNamePermanent = 'N/A'
 //        }
+      },
+      statusChange (accountID, accountStatus) {
+        console.log(accountStatus)
+        this.memberAccountStatus = accountStatus
+        this.memberAccountID = accountID
+        let paramData = Object.assign({}, {
+          order: 'DESC',
+          pageNumber: 0,
+          pageSize: 3
+        })
+        this.showLoader = true
+        Http.GET('member', [accountID, 'suspension-history'], paramData)
+          .then(({data: {data}}) => {
+            this.showLoader = false
+            console.log('Success, got members: ', data)
+            this.memberSuspensionHistory = data
+          }, error => {
+            this.showLoader = false
+            console.error('Error in getting members: ', error)
+          }
+        )
+        $('#MemberAccountStatusModal').modal({backdrop: false})
+      },
+      changeAccountStatus: function (accountStatus) {
+        let paramData = {
+          'message': this.memberComment,
+          'effectiveFrom': new Date().getTime().toString()
+        }
+//        this.showLoader = true
+        Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
+        .then(
+          ({data: statusData}) => {
+//            this.showLoader = false
+            console.log('account status data::', statusData)
+            this.init()
+          },
+          error => {
+//            this.showLoader = false
+            console.log('Error account status change: ', error)
+          }
+        )
       }
     }
   }
