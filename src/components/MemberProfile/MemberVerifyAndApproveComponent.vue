@@ -478,7 +478,7 @@
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
-              this.verificationHistory.push(verificationResponse)
+              this.verificationHistory.unshift(verificationResponse)
               console.log('now, verification history: ', this.verificationHistory)
               this.verifier = verificationResponse
               this.clearComment()
@@ -521,7 +521,7 @@
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
               this.verificationType = verificationResponse.verificationType
-              this.verificationHistory.push(verificationResponse)
+              this.verificationHistory.unshift(verificationResponse)
               console.log('now, verification history: ', this.verificationHistory)
               this.verifier = verificationResponse
               this.clearComment()
@@ -564,7 +564,7 @@
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
-              this.verificationHistory.push(approvalResponse.data)
+              this.verificationHistory.unshift(approvalResponse.data)
               this.approver = approvalResponse.data
               console.log('now, approval history: ', this.verificationHistory)
               this.clearComment()
@@ -598,7 +598,7 @@
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
-              this.verificationHistory.push(approvalResponse.data)
+              this.verificationHistory.unshift(approvalResponse.data)
               console.log('now, approval history: ', this.verificationHistory)
               this.approver = approvalResponse.data
               this.clearComment()
@@ -628,7 +628,7 @@
               console.log('revoke request response::', revokeResponse)
               this.verificationStatus = revokeResponse.data.verificationStatus
               this.verificationType = revokeResponse.data.verificationType
-              this.verificationHistory.push(revokeResponse.data)
+              this.verificationHistory.unshift(revokeResponse.data)
               console.log('now, approval history: ', this.verificationHistory)
               this.clearComment()
             },
