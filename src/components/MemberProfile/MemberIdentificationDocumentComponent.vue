@@ -16,6 +16,7 @@
                 <th class = "text-center">Document</th>
                 <th class = "text-center">Verification Status</th>
                 <th class = "text-center" v-if="containsPermission('MS_MM_USER_ADD_DOC')">Action</th>
+                <th class = "text-center">History</th>
 
                 </tr>
                 </thead>
@@ -59,121 +60,168 @@
                   </span>
 
                 </td>
+                <td>
+                  <button data-toggle="modal" data-target="#DocumentHistoryModal" data-backdrop="false" @click= "setDocumentHistory(item)"
+                     class="button-md-verify width-100">View History</button>
+                </td>
 
                 </tr>
                 </tbody>
             </table>
 
-              <div id="DocumentVerificationModal" class="modal fade" role="dialog">
-                <div class="modal-dialog  modal-md">
-                  <!-- Modal content-->
+            <div id="DocumentVerificationModal" class="modal fade" role="dialog">
+              <div class="modal-dialog  modal-md">
+                <!-- Modal content-->
 
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                      <h4 class="modal-title"> Document Verification </h4>
-                    </div>
-                    <div class="modal-body">
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-md-8 col-md-offset-2">
-                            <span>
-                              <div class="comment">
-                                <!--<span>Browse</span>-->
-                                Comment:
-                                <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
-                              </div>
-                              <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-
-                      <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()"
-                      :disabled="paramData.comment === null || paramData.comment === ''">Verify</button>
-                      <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
-                    </div>
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                    <h4 class="modal-title"> Document Verification </h4>
                   </div>
-                </div>
-              </div>
-
-              <div id="DocumentUnverificationModal" class="modal fade" role="dialog">
-                <div class="modal-dialog  modal-md">
-                  <!-- Modal content-->
-
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                      <h4 class="modal-title"> Document Unverification </h4>
-                    </div>
-                    <div class="modal-body">
-                      <div class="form-group">
-                        <div class="row">
-                          <div class="col-md-8 col-md-offset-2">
-                            <span>
-                              <div class="comment">
-                                <!--<span>Browse</span>-->
-                                Comment:
-                                <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
-                              </div>
-                              <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-
-                      <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()"
-                      :disabled="paramData.comment === null || paramData.comment === ''">Unverify</button>
-                      <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div id="DocumentPreviewModal" class="modal fade" role="dialog">
-                  <div class="modal-dialog  modal-md">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                      <h4 class="modal-title"> Document {{ document.documentType }} </h4>
-                    </div>
-                    <div class="modal-body">
-                      <div class="form-group">
-
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label class="control-label">Document:</label>
-                          </div>
-                          <div class="col-md-8">
-                            <div>
-                                <div v-if="!isPdf(document.documentUrl)">
-                                  <img id="ppImage" v-if="document.documentUrl"
-                                        :src="documentBaseUrl+document.documentUrl || 'static/images/default-original.jpg'"
-                                        class="img-rounded" width="250" height="250">
-
-                                  <img v-else src="static/images/default-original.jpg" class="img-rounded"
-                                      alt="N/A" width="30" height="30">
-                                </div>
-                                <div v-if="isPdf(document.documentUrl)">
-                                    <iframe :src="documentBaseUrl+document.documentUrl" width="400" height="400"></iframe>
-                                </div>
-
-
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                          <span>
+                            <div class="comment">
+                              <!--<span>Browse</span>-->
+                              Comment:
+                              <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
                             </div>
-                          </div>
+                            <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                          </span>
                         </div>
                       </div>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-                    </div>
                   </div>
+                  <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()"
+                    :disabled="paramData.comment === null || paramData.comment === ''">Verify</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <div id="DocumentUnverificationModal" class="modal fade" role="dialog">
+              <div class="modal-dialog  modal-md">
+                <!-- Modal content-->
+
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                    <h4 class="modal-title"> Document Unverification </h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                          <span>
+                            <div class="comment">
+                              <!--<span>Browse</span>-->
+                              Comment:
+                              <textarea id="comment" v-model="paramData.comment" rows="4" cols="50"></textarea>
+                            </div>
+                            <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="verifyDocument()"
+                    :disabled="paramData.comment === null || paramData.comment === ''">Unverify</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="DocumentPreviewModal" class="modal fade" role="dialog">
+              <div class="modal-dialog  modal-md">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                    <h4 class="modal-title"> Document {{ document.documentType }} </h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label class="control-label">Document:</label>
+                        </div>
+                        <div class="col-md-8">
+                          <div>
+                              <div v-if="!isPdf(document.documentUrl)">
+                                <img id="ppImage" v-if="document.documentUrl"
+                                      :src="documentBaseUrl+document.documentUrl || 'static/images/default-original.jpg'"
+                                      class="img-rounded" width="250" height="250">
+
+                                <img v-else src="static/images/default-original.jpg" class="img-rounded"
+                                    alt="N/A" width="30" height="30">
+                              </div>
+                              <div v-if="isPdf(document.documentUrl)">
+                                  <iframe :src="documentBaseUrl+document.documentUrl" width="400" height="400"></iframe>
+                              </div>
+
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="DocumentHistoryModal" class="modal fade" role="dialog">
+              <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                    <h4 class="modal-title"> Document {{ documentForHistory.documentType }} </h4>
+                  </div>
+                  <div class="modal-body">
+                    
+                    <div class="row">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label class="control-label">History:</label>
+                        </div>
+                      </div>
+                      <div class="gr-12 margin-top-10 pre-scrollable" v-if="documentDetails.histories">
+                        <div class="gr-12 comment" v-for="history in documentDetails.histories">
+                          <ul class="chat">
+                            <li class="left clearfix"><span class="chat-img pull-left">
+                              </span>
+                                <div class="chat-body clearfix">
+                                  <div class="header">
+                                    <strong class="primary-font">{{history.verificationStatus}}</strong> by <strong class="primary-font">{{history.verifier.name}}</strong>
+                                    <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>{{history.creationTime | date('MMM D, YYYY')}}</small>
+                                  </div>
+                                  <p>
+                                    {{history.comment}}
+                                  </p>
+                                </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
             <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC')">
@@ -270,7 +318,9 @@
         documentID: '',
         showLoader: false,
         accessControlList: [],
-        document: {}
+        document: {},
+        documentForHistory: {},
+        documentDetails: {}
       }
     },
     methods: {
@@ -347,6 +397,11 @@
           documentVerificationStatus: 'NOT_VERIFIED',
           documentID: document.id
         }
+      },
+      setDocumentHistory (document) {
+        this.documentForHistory = document
+        console.log(document)
+        this.getDocumentDetails(document.id)
       },
       setPreviewDocument (document) {
         this.document = document
@@ -444,6 +499,21 @@
         } else {
           return false
         }
+      },
+      getDocumentDetails: function (documentID) {
+        this.showLoader = true
+        Http.GET('member', ['identification-document', documentID])
+        .then(
+            ({data: {data: documentDetail}}) => {
+              this.showLoader = false
+              this.documentDetails = documentDetail
+              console.log('documentDetail:', documentDetail)
+            },
+            error => {
+              this.showLoader = false
+              console.log('Error in getting list of identification documents, error: ', error)
+            }
+        )
       }
     },
     created () {
