@@ -64,7 +64,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ member.verifyDetails ? member.verifyDetails.actor.name
+                      {{ verifier ? verifier.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -72,8 +72,8 @@
                     <div class="gr-4 push-1 text-left;">
                       Time:
                     </div>
-                    <div class="gr-6 push-1 break-word" v-if="member.verifyDetails">
-                      {{ member.verifyDetails && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    <div class="gr-6 push-1 break-word" v-if="verifier">
+                      {{ verifier && verifier.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-6 push-1">
@@ -95,7 +95,7 @@
                       </div>
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ member.verifyDetails ? member.verifyDetails.actor.name
+                      {{ verifier ? verifier.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -103,8 +103,8 @@
                     <div class="gr-5 text-left text-left">
                       Time:
                     </div>
-                    <div class="gr-7 text-left" v-if="member.verifyDetails">
-                      {{ member.verifyDetails.updateTime | date('MMM D, YYYY') }}
+                    <div class="gr-7 text-left" v-if="verifier">
+                      {{ verifier.updateTime | date('MMM D, YYYY') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-7 text-left">
@@ -121,7 +121,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ member.verifyDetails ? member.verifyDetails.actor.name
+                      {{ verifier ? verifier.actor.name
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -129,8 +129,8 @@
                     <div class="gr-4 push-1 text-left">
                       Time:
                     </div>
-                    <div class="gr-6 push-1 break-word" v-if="member.verifyDetails">
-                      {{ member.verifyDetails && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    <div class="gr-6 push-1 break-word" v-if="verifier">
+                      {{ verifier && verifier.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-6 push-1">
@@ -150,15 +150,15 @@
                       Verified By:
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ member.verifyDetails ? member.verifyDetails.actor.name : 'N/A' }}
+                      {{ verifier ? verifier.actor.name : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br><br><br>
                     <div class="gr-5 text-left break-word">
                       Time:
                     </div>
-                    <div class="gr-7 text-left break-word" v-if="member.verifyDetails">
-                      {{ member.verifyDetails && member.verifyDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    <div class="gr-7 text-left break-word" v-if="verifier">
+                      {{ verifier && verifier.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-1 text-left;">
@@ -185,7 +185,7 @@
                     Approved By:
                   </div>
                   <div class="gr-7 text-left break-word">
-                    {{ member.approveDetails ? member.approveDetails.actor.name : 'N/A' }}
+                    {{ approver ? approver.actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br><br>
@@ -193,7 +193,7 @@
                     Time:
                   </div>
                   <div class="gr-7 text-left break-word" v-if="member.approveDetails">
-                    {{ member.approveDetails && member.approveDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    {{ approver && approver.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <div v-else class="gr-1 text-left;">
@@ -211,15 +211,15 @@
                     Rejected By:
                   </div>
                   <div class="gr-7 text-left break-word">
-                    {{  member.approveDetails ? member.approveDetails.actor.name : 'N/A' }}
+                    {{  approver ? approver.actor.name : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br>
                   <div class="gr-5 text-left">
                     Time:
                   </div>
-                  <div class="gr-7 text-left" v-if="member.approveDetails">
-                    {{ member.approveDetails && member.approveDetails.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                  <div class="gr-7 text-left" v-if="approver">
+                    {{ approver && approver.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <div v-else class="gr-7 text-left;">
@@ -406,6 +406,8 @@
           comment: null,
           accountClass: 1
         },
+        approver: {},
+        verifier: {},
         accountClassMapper: {},
         classes: []
       }
@@ -428,9 +430,12 @@
         // this.verificationType = this.approvalHistory && this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
         if (this.member.approveDetails) {
           this.verificationType = this.member.approveDetails.verificationType
+          this.approver = this.member.approveDetails
+          this.verifier = this.member.verifyDetails
         }
         else if (this.member.verifyDetails) {
           this.verificationType = this.member.verifyDetails.verificationType
+          this.verifier = this.member.verifyDetails
         }
         else {
           this.verificationType = null
@@ -475,7 +480,8 @@
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
               console.log('now, verification history: ', this.verificationHistory)
-              this.init()
+              this.verifier = verificationResponse
+              this.clearComment()
             },
             error => {
               this.showLoader = false
@@ -517,7 +523,8 @@
               this.verificationType = verificationResponse.verificationType
               this.verificationHistory.push(verificationResponse)
               console.log('now, verification history: ', this.verificationHistory)
-              this.init()
+              this.verifier = verificationResponse
+              this.clearComment()
             },
             error => {
               this.showLoader = false
@@ -558,8 +565,9 @@
               this.verificationStatus = approvalResponse.data.verificationStatus
               this.verificationType = approvalResponse.data.verificationType
               this.verificationHistory.push(approvalResponse.data)
+              this.approver = approvalResponse.data
               console.log('now, approval history: ', this.verificationHistory)
-              this.init()
+              this.clearComment()
             },
             error => {
               this.showLoader = false
@@ -592,7 +600,8 @@
               this.verificationType = approvalResponse.data.verificationType
               this.verificationHistory.push(approvalResponse.data)
               console.log('now, approval history: ', this.verificationHistory)
-              this.init()
+              this.approver = approvalResponse.data
+              this.clearComment()
             },
             error => {
               this.showLoader = false
@@ -621,7 +630,7 @@
               this.verificationType = revokeResponse.data.verificationType
               this.verificationHistory.push(revokeResponse.data)
               console.log('now, approval history: ', this.verificationHistory)
-              this.init()
+              this.clearComment()
             },
             error => {
               this.showLoader = false
@@ -637,6 +646,11 @@
               console.log('Error in putting approval request, error: ', error)
             }
           )
+      },
+      clearComment () {
+        this.verificationComment = ''
+        this.approvalComment = ''
+        this.paramData.comment = ''
       }
     }
   }
