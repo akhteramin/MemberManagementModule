@@ -23,7 +23,7 @@
                     <br>
                     <span><b>{{member.basicInfo.profileCompletionScore}}%</b></span>
                     <br>
-                    <div class="select">
+                    <div class="select select-sm push-3">
                       <select id="order-by-select"  v-model="member.basicInfo.accountStatus" @change="statusChange(id, member.basicInfo.accountStatus)">
                         <option value = "1">Active</option>
                         <option value = "2">Suspended</option>
