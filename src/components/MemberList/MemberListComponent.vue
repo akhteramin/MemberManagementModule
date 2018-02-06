@@ -1098,6 +1098,7 @@
       },
       init () {
         this.sliderShow = false
+        this.memberComment = ''
         this.imageBaseUrl = Http.IMAGE_URL
         this.query = Object.assign({}, {
           name: '', // string
