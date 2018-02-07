@@ -192,7 +192,7 @@
                   <div class="gr-5 text-left">
                     Time:
                   </div>
-                  <div class="gr-7 text-left break-word" v-if="member.approveDetails">
+                  <div class="gr-7 text-left break-word" v-if="approver">
                     {{ approver && approver.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
