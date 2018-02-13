@@ -17,7 +17,11 @@
                 </div>
                 <div class="gr-6 push-7">
                   <div class="gr-3 padding-5 margin-10 text-right">
-                    <span><b>{{member.basicInfo.name}}</b></span>
+                    <span>
+                    <b v-if="member.basicInfo.accountType == 1">{{member.basicInfo.name}}</b>
+                    <b v-if="member.basicInfo.accountType == 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
+                    </span>
+                          
                     <br>
                     <span><b>{{member.basicInfo.mobileNumber}}</b></span>
                     <br>
@@ -81,7 +85,8 @@
                           v-if="containsPermission('MS_MM_USER_UPLOAD_PROFILE_PIC')">
                         </update-member-image>
                         <div class="text-center">
-                          <b>{{member.basicInfo.name}}</b>
+                          <b v-if="member.basicInfo.accountType == 1">{{member.basicInfo.name}}</b>
+                          <b v-if="member.basicInfo.accountType == 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
                           <span class="banner-text" v-if="member.basicInfo.accountType == 1">(Personal)</span>
                           <span class="banner-text" v-else>(Business)</span>
                         </div>
