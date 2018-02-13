@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div>
+    <div class="w3-header-card">
       <!-- ================================ Filter ============================== -->
 
       <form v-on:submit.prevent="filter" v-on:reset.prevent="init">

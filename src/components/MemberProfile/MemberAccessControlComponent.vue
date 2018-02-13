@@ -1,5 +1,5 @@
 <template>
-  <div class="gr-10 push-1">
+  <div class="gr-12 w3-header-card">
     <div class="loaders loading" v-if="showLoader > 0">
       <div class="loader">
         <div class="loader-inner ball-grid-pulse">

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="w3-header-card">
       <div class="loaders loading" v-if="showLoader">
         <div class="loader">
           <div class="loader-inner ball-grid-pulse">
