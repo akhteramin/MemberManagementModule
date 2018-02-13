@@ -1,5 +1,5 @@
  <template>
-    <div>
+    <div class="w3-header-card">
         <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
             <div class="form-group gr-12">
             <div  class="text-center">
