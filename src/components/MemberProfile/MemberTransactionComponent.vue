@@ -18,7 +18,7 @@
       </div>
 
       <br>
-      <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions"  @change="triggerSearchTransactions">
+      <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
           <div class="form-group gr-12">
             <div class="gr-3">
               <label> Date Range From: </label>
@@ -32,15 +32,31 @@
 
 
 
-            <div class="gr-4"> <!-- #8b9eb6; -->
+            <div class="gr-3"> <!-- #8b9eb6; -->
+              <div class="form-group">
+                <label>Service Type: </label>
+                <div>
+                  <div class="select">
+                    <select id="sort-by-select" v-model="transactionQuery.serviceID">
+                      <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
+                      <option value=null disabled selected>Select Service Type</option>
+                      <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="gr-3"> <!-- #8b9eb6; -->
               <div class="form-group">
                 <label>Type: </label>
                 <div>
-                  <div class="select select-sm">
-                    <select id="sort-by-select" v-model="transactionQuery.serviceID">
+                  <div class="select">
+                    <select id="sort-by-select" v-model="transactionQuery.isPending">
                       <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
-                      <option value=null disabled selected>Select Transaction Type</option>
-                      <option v-for="service in serviceList" :value="service.id">{{ service.name  | underscoreless }}</option>
+                      <option value="false" selected>Completed</option>
+                      <option value="true" >Pending</option>
+                      
                     </select>
                   </div>
                 </div>
@@ -202,7 +218,8 @@
           pageSize: 10,
           fromDate: 0,
           serviceID: null,
-          toDate: new Date().getTime()
+          toDate: new Date().getTime(),
+          isPending: 'false'
         })
         this.searchDateFrom = null
         this.searchDateTo = null
