@@ -414,7 +414,7 @@
           this.showLoader = true
           Http.GET('member', [member.accountId, 'introducers'])
             .then(
-              ({data: {data: introducers}}) => {
+              ({data: {introducerList: introducers}}) => {
                 this.showLoader = false
                 this.memberIntroducers = introducers
                 console.log('Got the list of introducers: ', this.memberIntroducers)
