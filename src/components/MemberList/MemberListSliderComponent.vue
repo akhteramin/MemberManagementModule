@@ -500,7 +500,7 @@
         Http.GET('member', ['likely-names'], parameter)
           .then(({data: likely_names}) => {
             this.showLoader = false
-            this.likelyNameList = likely_names.data.likelyNameList
+            this.likelyNameList = likely_names.likelyNameList
             console.log('Success, got likely names: ', this.nameList)
           }, error => {
             this.showLoader = false
