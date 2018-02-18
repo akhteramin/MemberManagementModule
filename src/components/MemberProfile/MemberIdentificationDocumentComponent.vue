@@ -347,7 +347,7 @@
         this.showLoader = true
         Http.GET('member', [this.id, 'identification-documents'])
            .then(
-             ({data: {data: documents}}) => {
+             ({data: {list: documents}}) => {
                this.showLoader = false
                this.documents = documents
 //               console.log('docs::', this.documents)

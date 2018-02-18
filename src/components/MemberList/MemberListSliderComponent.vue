@@ -480,7 +480,7 @@
           this.containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS'))
         Http.GET('member', [accountId, 'identification-documents'])
         .then(
-            ({data: {data: documents}}) => {
+            ({data: {list: documents}}) => {
               this.showLoader = false
               this.memberDocuments = documents
               console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
