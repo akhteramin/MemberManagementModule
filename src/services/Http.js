@@ -92,6 +92,7 @@ const routes = {
   resource: `${API_URL}/resource/`,
   twofactor: `${API_URL}/configuration/2fa/`,
   member: `${MM_ADMIN_URL}/ms/member/`,
+  adminUser: `${MM_ADMIN_URL}/admin/internal/user/`,
   verification: `${API_URL}/verify/member/`,
   user: `${API_URL}/user/`,
   offer: `${API_URL}/offer/business/member/`,
