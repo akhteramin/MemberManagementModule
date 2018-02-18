@@ -57,16 +57,17 @@ axios.interceptors.response.use(
 // const AUTH_ACCOUNTS_URI = 'http://localhost:8000/accounts'
 // const ADMIN_URI = 'http://localhost:8080'
 
-/////dev/test configuration///////
+/// //dev/test configuration///////
 // const API_URL = 'http://192.168.1.120:8085/member-service/api/v1'
 const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
+const MM_ADMIN_URL = 'http://192.168.1.233:9001/api/v1'
 const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1'
 const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
 const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
 const ADMIN_URI = 'http://10.15.40.11:80/'
 
-////live////
+/// /live////
 // const API_URL = 'http://192.168.1.95:8085/member-service/api/v1'
 // const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // const API_URL = 'http://verification.ipay.com.bd/member-service/api/v1'
@@ -90,7 +91,7 @@ const routes = {
   logout: `${AUTH_URL}/logout/`,
   resource: `${API_URL}/resource/`,
   twofactor: `${API_URL}/configuration/2fa/`,
-  member: `${API_URL}/member/`,
+  member: `${MM_ADMIN_URL}/ms/member/`,
   verification: `${API_URL}/verify/member/`,
   user: `${API_URL}/user/`,
   offer: `${API_URL}/offer/business/member/`,
@@ -106,8 +107,8 @@ const encodeQueryData = (data) => {
     if (Object.prototype.hasOwnProperty.call(data, d)) {
       temp = data[d]
       if (temp !== '' && temp !== null) {
-       ret.push(`${encodeURIComponent(d)}=${encodeURIComponent(temp)}`)
-     }
+        ret.push(`${encodeURIComponent(d)}=${encodeURIComponent(temp)}`)
+      }
     }
   }
   return ret.join('&')
@@ -119,19 +120,19 @@ export default {
   GET (key, props = {}, params = {}) {
     let parameters = ''
     if (Object.prototype.toString.call(props) === '[object Array]') {
-     parameters = props.length > 0 ? `/${props.join('/')}` : ''
-   } else {
-     parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
-   }
+      parameters = props.length > 0 ? `/${props.join('/')}` : ''
+    } else {
+      parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
+    }
 
    // console.log('Http.js 54, parameters: ', parameters, ' I have shown the parameters')
 
     let additionalParams = ''
     if (Object.prototype.toString.call(params) === '[object Array]') {
-     additionalParams = params.length > 0 ? `/${params.join('/')}` : ''
-   } else {
-     additionalParams = !isEmpty(params) ? `?${encodeQueryData(params)}` : ''
-   }
+      additionalParams = params.length > 0 ? `/${params.join('/')}` : ''
+    } else {
+      additionalParams = !isEmpty(params) ? `?${encodeQueryData(params)}` : ''
+    }
     console.log('Line 60, http.js, key: ', key)
     const route = routes[key]
     console.log('Line 62, http.js parameters: ' + parameters)
@@ -140,37 +141,37 @@ export default {
   POST (key, data, props = {}) {
     let parameters = ''
     if (Object.prototype.toString.call(props) === '[object Array]') {
-     parameters = props.length > 0 ? `${props.join('/')}` : ''
-   } else {
-     parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
-   }
+      parameters = props.length > 0 ? `${props.join('/')}` : ''
+    } else {
+      parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
+    }
 
     const route = routes[key]
     console.log('Http POST, parameters:: ', route.concat(parameters), '\tdata: ', data)
     return axios.post(route.concat(parameters), data)
   },
   PUT (key, data, props = {}) {
-   let parameters = ''
-   if (Object.prototype.toString.call(props) === '[object Array]') {
-     parameters = props.length > 0 ? `${props.join('/')}` : ''
-   } else {
-     parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
-   }
+    let parameters = ''
+    if (Object.prototype.toString.call(props) === '[object Array]') {
+      parameters = props.length > 0 ? `${props.join('/')}` : ''
+    } else {
+      parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
+    }
 
-   const route = routes[key]
-   return axios.put(route.concat(parameters), data)
- },
+    const route = routes[key]
+    return axios.put(route.concat(parameters), data)
+  },
   DELETE (key, props = {}, data) {
-   let parameters = ''
-   if (Object.prototype.toString.call(props) === '[object Array]') {
-     parameters = props.length > 0 ? `${props.join('/')}` : ''
-   } else {
-     parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
-   }
+    let parameters = ''
+    if (Object.prototype.toString.call(props) === '[object Array]') {
+      parameters = props.length > 0 ? `${props.join('/')}` : ''
+    } else {
+      parameters = !isEmpty(props) ? `?${encodeQueryData(props)}` : ''
+    }
 
-   const route = routes[key]
-   return axios.delete(route.concat(parameters), data)
- },
+    const route = routes[key]
+    return axios.delete(route.concat(parameters), data)
+  },
   IMAGE_URL,
   AUTH_ACCOUNTS_URI,
   AUTH_HTTP_URI,
