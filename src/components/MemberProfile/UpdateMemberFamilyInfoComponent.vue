@@ -85,8 +85,9 @@
       init () {
       },
       updateMemberParents () {
+        this.member.basicInfo.dob = Date.parse(this.member.basicInfo.dob)
         this.showLoader = true
-        Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
+        Http.PUT('mmAdminMember', this.member.basicInfo, [this.member.basicInfo.accountId])
           .then(
             ({data: {data: memberUpdate}}) => {
               this.showLoader = false
