@@ -202,7 +202,7 @@
         this.activityQuery.page = 0
         this.getActivities()
       },
-      getActivities (key = 'adminUser') {
+      getActivities (key = 'mmAdminMember') {
         this.showLoader = true
         Http.GET(key, [this.id, 'activities'], this.activityQuery)
           .then(({data: activities}) => {
