@@ -501,7 +501,7 @@
           .then(({data: likely_names}) => {
             this.showLoader = false
             this.likelyNameList = likely_names.likelyNameList
-            console.log('Success, got likely names: ', this.nameList)
+            console.log('Success, got likely names: ', this.likelyNameList)
           }, error => {
             this.showLoader = false
             console.error('Error in getting likely names: ', error)
