@@ -35,8 +35,8 @@
                     </div>
                   </div>
                   <div class="gr-6 margin-5">
-                    <img v-if="member.basicInfo.mmUserPictures[0]"
-                                :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
+                    <img v-if="member.profilePictures[0]"
+                                :src="imageBaseUrl+member.profilePictures[0].url || 'static/images/default-original.jpg'"
                                 class="img-circle img-responsive" width="70" height="70"
                               onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
                     <img v-else src="/static/images/default-original.jpg" class="img-circle img-responsive"
@@ -70,8 +70,8 @@
                     <div class="row">
 
                       <div class="gr-2 text-center margin-top-10">
-                        <img v-if="member.basicInfo.mmUserPictures[0]"
-                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
+                        <img v-if="member.profilePictures[0]"
+                              :src="imageBaseUrl+member.profilePictures[0].url || 'static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250"
                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
 
