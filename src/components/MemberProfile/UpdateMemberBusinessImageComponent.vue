@@ -119,9 +119,9 @@
       uploadPP () {
         console.log(this.profilePicture)
         var fd = new FormData()
-        fd.append('imageFile', this.profilePicture)
+        fd.append('file', this.profilePicture)
         this.showLoader = true
-        Http.POST('member', fd, [this.id, 'business-owner', 'picture'])
+        Http.POST('mmAdminMember', fd, [this.id, 'business-owner', 'picture'])
         .then(
           ({data: propicData}) => {
             this.showLoader = false

@@ -862,7 +862,7 @@
       },
       changeAccountClass () {
         this.showLoader = true
-        Http.PUT('member', {}, [this.id, 'class', this.memberAccountClass])
+        Http.PUT('mmAdminMember', {}, [this.id, 'class', this.memberAccountClass])
         .then(
           ({data: classChanged}) => {
             this.showLoader = false
@@ -990,9 +990,9 @@
         })
         this.showLoader = true
         Http.GET('member', [accountID, 'suspension-history'], paramData)
-          .then(({data: {data}}) => {
+          .then(({data}) => {
             this.showLoader = false
-            console.log('Success, got members: ', data)
+            console.log('Success, got suspension history: ', data)
             this.memberSuspensionHistory = data
           }, error => {
             this.showLoader = false

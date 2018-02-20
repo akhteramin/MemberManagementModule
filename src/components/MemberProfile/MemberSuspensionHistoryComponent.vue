@@ -172,7 +172,7 @@
         }
         this.showLoader = true
         Http.GET('member', [this.id, 'suspension-history'], this.suspensionHistoryQuery)
-          .then(({data: {data: history}}) => {
+          .then(({data: history}) => {
             this.showLoader = false
             console.log('Success, got history: ', history)
             this.suspensionHistory = history.list
