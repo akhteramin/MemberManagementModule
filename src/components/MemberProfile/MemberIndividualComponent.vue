@@ -1007,7 +1007,7 @@
           'effectiveFrom': new Date().getTime().toString()
         }
 //        this.showLoader = true
-        Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
+        Http.PUT('mmAdminMember', paramData, [this.memberAccountID, 'status', accountStatus])
         .then(
           ({data: statusData}) => {
 //            this.showLoader = false
