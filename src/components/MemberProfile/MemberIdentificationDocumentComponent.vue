@@ -457,7 +457,7 @@
         fd.append('documentType', this.docType)
 //        console.log('document type::', this.docType)
         this.showLoader = true
-        Http.POST('member', fd, [this.id, 'identification-document'])
+        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc'])
           .then(
             () => {
 //              console.log('document data: ', documentData)
