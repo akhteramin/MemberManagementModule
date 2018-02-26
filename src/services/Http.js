@@ -61,7 +61,7 @@ axios.interceptors.response.use(
 // const API_URL = 'http://192.168.1.120:8085/member-service/api/v1'
 const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
-const MM_ADMIN_URL = 'http://192.168.0.98:9001/api/v1'
+const MM_ADMIN_URL = 'http://192.168.0.101:9001/api/v1'
 const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1'
 const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
 const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
@@ -89,7 +89,7 @@ const routes = {
   login: `${AUTH_URL}/login/`,
   permissions: `${AUTH_URL}/permissions/`,
   logout: `${AUTH_URL}/logout/`,
-  resource: `${API_URL}/resource/`,
+  resource: `${MM_ADMIN_URL}/ms/resource/`,
   twofactor: `${API_URL}/configuration/2fa/`,
   member: `${MM_ADMIN_URL}/ms/member/`,
   mmAdminMember: `${MM_ADMIN_URL}/admin/internal/user/`,
