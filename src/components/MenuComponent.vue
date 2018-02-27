@@ -18,7 +18,7 @@
           <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList"><li :class="{'btn-active-til': showWaitingApproval}" @click="setMenu('memberApproval')"><i class="fa fa-user-circle-o fa-1x" aria-hidden="true"></i> Waiting For Approval</li></a>
           <!-- <a class="break-word" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li :class="{'btn-active-til': showACL}" @click="setMenu('acl')"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Ipay Member ACL</li></a> -->
           <!-- <a class="break-word" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices"><li :class="{'btn-active-til': showManageService}" @click="setMenu('manageService')"><i class="fa fa-tasks fa-1x" aria-hidden="true"></i> Manage Services</li></a> -->
-          <a class="break-word" v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li :class="{'btn-active-til': showUsers}" @click="setMenu('user')"> <i class="fa fa-user fa-1x" aria-hidden="true"></i> Users</li></a>
+          <!-- <a class="break-word" v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li :class="{'btn-active-til': showUsers}" @click="setMenu('user')"> <i class="fa fa-user fa-1x" aria-hidden="true"></i> Users</li></a> -->
           <!--a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
             <li :class="{'btn-active-til': showConfiguration}" @click="setMenu('configuration')"> <i class="fa fa-cog fa-1x" aria-hidden="true"></i> Configuration <i class="fa fa-angle-down"></i></li>
           </a>

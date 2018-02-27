@@ -61,7 +61,7 @@ axios.interceptors.response.use(
 // const API_URL = 'http://192.168.1.120:8085/member-service/api/v1'
 const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
-const MM_ADMIN_URL = 'http://192.168.1.244:9001/api/v1'
+const MM_ADMIN_URL = 'http://10.10.10.10:9002/api/v1'
 const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1'
 const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
 const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
@@ -90,16 +90,16 @@ const routes = {
   permissions: `${AUTH_URL}/permissions/`,
   logout: `${AUTH_URL}/logout/`,
   resource: `${MM_ADMIN_URL}/ms/resource/`,
-  twofactor: `${API_URL}/configuration/2fa/`,
+  // twofactor: `${API_URL}/configuration/2fa/`,
   member: `${MM_ADMIN_URL}/ms/member/`,
   mmAdminMember: `${MM_ADMIN_URL}/admin/internal/user/`,
   verification: `${MM_ADMIN_URL}/ms/verify/member/`,
-  user: `${API_URL}/user/`,
-  mmAdminUser: `${MM_ADMIN_URL}/ms/admin/user/`,
-  offer: `${API_URL}/offer/business/member/`,
-  aclUserGroup: `${API_URL}/member/acl/user-group/`,
-  memberAclUpdate: `${API_URL}/member/acl/member/`,
-  memberAclGet: `${API_URL}/member/acl/`
+  // user: `${API_URL}/user/`,
+  mmAdminUser: `${MM_ADMIN_URL}/ms/admin/user/`
+  // offer: `${API_URL}/offer/business/member/`,
+  // aclUserGroup: `${API_URL}/member/acl/user-group/`,
+  // memberAclUpdate: `${API_URL}/member/acl/member/`,
+  // memberAclGet: `${API_URL}/member/acl/`
 }
 
 const encodeQueryData = (data) => {

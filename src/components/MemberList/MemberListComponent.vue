@@ -319,7 +319,7 @@
           <tr>
             <th>#</th>
             <th class="width-250">Name</th>
-            <th>Business Owner Name</th>
+            <th v-if="query.accountType !== 1">Business Owner Name</th>
             <th>Basic Info</th>
             <!--<th>Mother</th>-->
             <th class="text-center">A/C Type</th>
@@ -376,7 +376,7 @@
               <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
             </div>
           </td>
-          <td>{{member.businessName ? member.name : 'N/A'}}</td>
+          <td v-if="query.accountType !== '1'">{{member.businessName ? member.name : 'N/A'}}</td>
           <td>
             {{ getStaticNames(member.occupation) }}
             <br>
