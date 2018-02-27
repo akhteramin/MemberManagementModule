@@ -66,7 +66,7 @@
             <div class="gr-3">
                 <div class="margin-top-rem" v-if="activities.activities">
                 <small>Showing {{ parseInt(activityQuery.page * activityQuery.count + 1)
-                    }} to {{ parseInt(activityQuery.page * activityQuery.count + activities.list.length)
+                    }} to {{ parseInt(activityQuery.page * activityQuery.count + activities.activities.length)
                     }} out of {{ activities.totalElements }}
                 </small>
                 </div>
