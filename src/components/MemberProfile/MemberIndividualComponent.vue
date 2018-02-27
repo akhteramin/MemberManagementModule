@@ -50,6 +50,8 @@
                 @click="setTab('basicDetails')">Basic Details</button>
                 <button v-if="containsPermission('MS_MM_USER_GET_ACTIVITIES')" type="button" class="btn btn-default" 
                 :class="{'btn-active-til': showActivities}" @click="setTab('activities')">Activities</button>
+                <button v-if="containsPermission('MS_USER_GET_ACTIVITY')" type="button" class="btn btn-default" 
+                :class="{'btn-active-til': showAdminActivities}" @click="setTab('adminActivities')">Admin Activities</button>
                 <button v-if="containsPermission('MS_MM_USER_GET_TRANSACTION_HISTORY')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showTransactions}" @click="setTab('transactions')">Transactions</button>
                 <button v-if="containsPermission('MS_MM_USER_SUSPENSION_HISTORY')" type="button" class="btn btn-default"
@@ -528,6 +530,7 @@
               </div>
             </div>
             <member-activity v-if="showActivities" :id="id"></member-activity>
+            <member-admin-activity v-if="showAdminActivities" :id="id"></member-admin-activity>
             <member-transaction v-if="showTransactions" :id="id"></member-transaction>
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
             <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
@@ -618,6 +621,7 @@
   import Constants from '../../services/Constants'
   import MemberSuspensionHistory from './MemberSuspensionHistoryComponent.vue'
   import MemberActivity from './MemberActivityComponent.vue'
+  import MemberAdminActivity from './MemberAdminActivityComponent.vue'
   import MemberTransaction from './MemberTransactionComponent.vue'
   import MemberIdentificationDocument from './MemberIdentificationDocumentComponent.vue'
   import MemberIntroducedBy from './MemberIntroducedByComponent.vue'
@@ -643,6 +647,7 @@
     components: {
       'member-suspension-history': MemberSuspensionHistory,
       'member-activity': MemberActivity,
+      'member-admin-activity': MemberAdminActivity,
       'member-transaction': MemberTransaction,
       'member-identification-document': MemberIdentificationDocument,
       'member-introduced-by': MemberIntroducedBy,
@@ -673,6 +678,7 @@
         serviceList: Constants,
         showBasicDetails: true,
         showActivities: false,
+        showAdminActivities: false,
         showAccessControl: false,
         showTransactions: false,
         showSuspensionHistory: false,
@@ -898,6 +904,7 @@
       setTab (tabName) {
         this.showBasicDetails = false
         this.showActivities = false
+        this.showAdminActivities = false
         this.showTransactions = false
         this.showSuspensionHistory = false
         this.showLikelyNames = false
@@ -908,6 +915,8 @@
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
           this.showActivities = true
+        } else if (tabName === 'adminActivities') {
+          this.showAdminActivities = true
         } else if (tabName === 'transactions') {
           this.showTransactions = true
         } else if (tabName === 'suspensionHistory') {
