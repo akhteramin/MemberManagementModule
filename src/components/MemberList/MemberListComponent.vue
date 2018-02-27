@@ -319,7 +319,7 @@
           <tr>
             <th>#</th>
             <th class="width-250">Name</th>
-            <th v-if="query.accountType !== 1">Business Owner Name</th>
+            <th v-if="showBusinessOwner">Business Owner Name</th>
             <th>Basic Info</th>
             <!--<th>Mother</th>-->
             <th class="text-center">A/C Type</th>
@@ -376,7 +376,7 @@
               <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
             </div>
           </td>
-          <td v-if="query.accountType !== '1'">{{member.businessName ? member.name : 'N/A'}}</td>
+          <td v-if="showBusinessOwner">{{member.businessName ? member.name : 'N/A'}}</td>
           <td>
             {{ getStaticNames(member.occupation) }}
             <br>
@@ -695,6 +695,7 @@
         memberMissingInfo: {},
         memberListForVerification: {},
         memberListForVerificationNames: [],
+        showBusinessOwner: true,
         memberVerificationListEmpty: true,
         uncheckVerificationActionBox: null,
         allMembersSelected: null,
@@ -1018,6 +1019,8 @@
             this.showLoader = false
             console.log('Success, got members: ', data)
             this.members = data
+            if (this.query.accountType === '1') this.showBusinessOwner = false
+            else this.showBusinessOwner = true
           }, error => {
             this.showLoader = false
             console.error('Error in getting members: ', error)
@@ -1173,6 +1176,8 @@
             this.memberListForVerificationNames = []
             this.memberVerificationListEmpty = true
             this.disableModalVerificationAndRejectionButton = false
+            if (this.query.accountType === '1') this.showBusinessOwner = false
+            else this.showBusinessOwner = true
           }, error => {
             console.log('Error in getting filtered results: ', error)
           })
