@@ -224,10 +224,10 @@
 
           </div>
 
-            <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC')">
+            <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC') && documentTypes.filter(x=>x.found === 'Not Found').length">
               <div class="form-group">
                 <br>
-                <label>Document Type: </label>
+                <label>Upload Missing Documents </label>
                 <div class="select">
                   <select id="personal-business-select" v-model="docType" @change="showDocumentUpload()">
                     <!--<option selected disabled>Select account type</option>-->
