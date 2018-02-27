@@ -318,7 +318,7 @@
                         </div>
 
                       </div>
-                      <div class="gr-12" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE')">
+                      <div class="gr-12" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE') && (member.basicInfo.verificationStatus !== 'VERIFIED' || (member.basicInfo.verificationStatus === 'VERIFIED' && !memberMissingInfo.isVerifiable) )">
                             <div class="gr-12 panel-label"><b>Missing Information</b></div>
                             <hr>
                             <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
