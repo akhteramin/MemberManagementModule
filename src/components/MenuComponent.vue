@@ -46,7 +46,7 @@
             </div>
           </li>
 
-          <a v-on:click="goToUserProfile"><li class="break-word" :class="{'btn-active-til': showProfile}" @click="setMenu('profile')" ><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
+          <!-- <a v-on:click="goToUserProfile"><li class="break-word" :class="{'btn-active-til': showProfile}" @click="setMenu('profile')" ><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a> -->
           <a v-on:click="logout"><li class="break-word" :class="{'btn-active-til': showLogout}" @click="setMenu('logout')"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</li></a>
         </ul>
 
