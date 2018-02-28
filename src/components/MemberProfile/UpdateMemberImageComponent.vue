@@ -38,7 +38,7 @@
                   </div>
                   <div class="col-md-8">
                     <div>
-                      <img id="ppImage" v-if="member.basicInfo.mmUserPictures[0]"
+                      <img id="ppImage" v-if="member.profilePictures[0]"
                               :src="imageUrl || 'static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250">
 
@@ -95,8 +95,8 @@
       init () {
         console.log('type::', this.id)
         this.imageBaseUrl = Http.IMAGE_URL
-        if (this.member.basicInfo.mmUserPictures[0]) {
-          this.imageUrl = this.imageBaseUrl + this.member.basicInfo.mmUserPictures[0].document.url
+        if (this.member.profilePictures[0]) {
+          this.imageUrl = this.imageBaseUrl + this.member.profilePictures[0].document.url
         } else {
           this.imageUrl = 'static/images/default-original.jpg'
         }
@@ -117,15 +117,15 @@
       },
       clearDocument () {
         console.log('clear the document')
-        this.imageUrl = this.imageBaseUrl + this.member.basicInfo.mmUserPictures[0].document.url
+        this.imageUrl = this.imageBaseUrl + this.member.profilePictures[0].document.url
         $('#uploadBtn3').val('')
       },
       uploadPP () {
         console.log(this.profilePicture)
         var fd = new FormData()
-        fd.append('imageFile', this.profilePicture)
+        fd.append('file', this.profilePicture)
         this.showLoader = true
-        Http.POST('member', fd, [this.id, 'profile-picture'])
+        Http.POST('mmAdminMember', fd, [this.id, 'profilepicture'])
         .then(
           ({data: propicData}) => {
             this.showLoader = false

@@ -64,7 +64,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ verifier ? verifier.actor.name
+                      {{ verifier ? ( verifier.adminLoginId ? verifier.adminLoginId : 'Legacy Admin User' )
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -73,7 +73,7 @@
                       Time:
                     </div>
                     <div class="gr-6 push-1 break-word" v-if="verifier">
-                      {{ verifier && verifier.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                      {{ verifier && verifier.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-6 push-1">
@@ -95,7 +95,7 @@
                       </div>
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ verifier ? verifier.actor.name
+                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : 'Legacy Admin User')
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -104,7 +104,7 @@
                       Time:
                     </div>
                     <div class="gr-7 text-left" v-if="verifier">
-                      {{ verifier.updateTime | date('MMM D, YYYY') }}
+                      {{ verifier.createdAt | date('MMM D, YYYY') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-7 text-left">
@@ -121,7 +121,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ verifier ? verifier.actor.name
+                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : 'Legacy Admin User')
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -130,7 +130,7 @@
                       Time:
                     </div>
                     <div class="gr-6 push-1 break-word" v-if="verifier">
-                      {{ verifier && verifier.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                      {{ verifier && verifier.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-6 push-1">
@@ -150,7 +150,7 @@
                       Verified By:
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ verifier ? verifier.actor.name : 'N/A' }}
+                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : 'Legacy Admin User') : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br><br><br>
@@ -158,7 +158,7 @@
                       Time:
                     </div>
                     <div class="gr-7 text-left break-word" v-if="verifier">
-                      {{ verifier && verifier.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                      {{ verifier && verifier.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-1 text-left;">
@@ -185,7 +185,7 @@
                     Approved By:
                   </div>
                   <div class="gr-7 text-left break-word">
-                    {{ approver ? approver.actor.name : 'N/A' }}
+                    {{ approver ? (approver.adminLoginId ? approver.adminLoginId : 'Legacy Admin User') : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br><br>
@@ -193,7 +193,7 @@
                     Time:
                   </div>
                   <div class="gr-7 text-left break-word" v-if="approver">
-                    {{ approver && approver.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    {{ approver && approver.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <div v-else class="gr-1 text-left;">
@@ -211,7 +211,7 @@
                     Rejected By:
                   </div>
                   <div class="gr-7 text-left break-word">
-                    {{  approver ? approver.actor.name : 'N/A' }}
+                    {{  approver ? (approver.adminLoginId ? approver.adminLoginId : 'Legacy Admin User') : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br>
@@ -219,7 +219,7 @@
                     Time:
                   </div>
                   <div class="gr-7 text-left" v-if="approver">
-                    {{ approver && approver.updateTime | date('MMM D, YYYY - HH:mm:ss a') }}
+                    {{ approver && approver.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <div v-else class="gr-7 text-left;">
@@ -351,14 +351,14 @@
                         <div class="header">
                           <strong class="primary-font">
                           {{history.verificationType == 'APPROVE'? 'Approval' : 'Verification'}} {{ history.verificationStatus }}</strong> by
-                          <strong class="primary-font">{{ history.actor ? history.actor.name : 'N/A' }}  </strong>
+                          <strong class="primary-font">{{ history.adminLoginId ? history.adminLoginId : 'Legacy Admin User' }}  </strong>
                           <small class="pull-right text-muted">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
-                            {{ history.updateTime | date('MMM D, YYYY HH:mm:ss a') }}
+                            {{ history.createdAt | date('MMM D, YYYY HH:mm:ss a') }}
                           </small>
                         </div>
                         <p>
-                          {{ history.comment }}
+                          {{ history.message }}
                         </p>
                       </div>
                     </li>
@@ -420,7 +420,6 @@
     },
     methods: {
       init () {
-        
         if (this.member.verificationHistory && this.member.verificationHistory.length > 0) {
           this.verificationHistory = this.member.verificationHistory
         } else {
@@ -432,12 +431,10 @@
           this.verificationType = this.member.approveDetails.verificationType
           this.approver = this.member.approveDetails
           this.verifier = this.member.verifyDetails
-        }
-        else if (this.member.verifyDetails) {
+        } else if (this.member.verifyDetails) {
           this.verificationType = this.member.verifyDetails.verificationType
           this.verifier = this.member.verifyDetails
-        }
-        else {
+        } else {
           this.verificationType = null
         }
         console.log('verification status: ', this.verificationStatus, ' verification type: ', this.verificationType)

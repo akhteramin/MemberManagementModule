@@ -11,7 +11,7 @@
               <div class="gr-12">
                 <div class="gr-2 margin-10">
                   <p><b><h3>
-                  <span v-if="balance">Current Balance: {{ balance.availableBalance || 'N/A'}} BDT </span>
+                  <span v-if="balance">Current Balance: {{ balance.balance || 'N/A'}} BDT </span>
                   <span v-else>Current Balance: N/A </span>
                   </h3></b></p>
                 </div>
@@ -35,8 +35,8 @@
                     </div>
                   </div>
                   <div class="gr-6 margin-5">
-                    <img v-if="member.basicInfo.mmUserPictures[0]"
-                                :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
+                    <img v-if="member.profilePictures[0]"
+                                :src="imageBaseUrl+member.profilePictures[0].url || 'static/images/default-original.jpg'"
                                 class="img-circle img-responsive" width="70" height="70"
                               onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
                     <img v-else src="/static/images/default-original.jpg" class="img-circle img-responsive"
@@ -50,6 +50,8 @@
                 @click="setTab('basicDetails')">Basic Details</button>
                 <button v-if="containsPermission('MS_MM_USER_GET_ACTIVITIES')" type="button" class="btn btn-default" 
                 :class="{'btn-active-til': showActivities}" @click="setTab('activities')">Activities</button>
+                <button v-if="containsPermission('MS_USER_GET_ACTIVITY')" type="button" class="btn btn-default" 
+                :class="{'btn-active-til': showAdminActivities}" @click="setTab('adminActivities')">Admin Activities</button>
                 <button v-if="containsPermission('MS_MM_USER_GET_TRANSACTION_HISTORY')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showTransactions}" @click="setTab('transactions')">Transactions</button>
                 <button v-if="containsPermission('MS_MM_USER_SUSPENSION_HISTORY')" type="button" class="btn btn-default"
@@ -60,8 +62,8 @@
                 :class="{'btn-active-til': showFriends}" @click="setTab('friends')">Friends</button>
                 <button v-if="member.basicInfo && member.basicInfo.accountType==2" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showOffer}" @click="setTab('offers')">Offers</button>
-                <button v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" type="button" class="btn btn-default"
-                :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button>
+                <!-- <button v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button> -->
               </div>
             </div>
             
@@ -70,8 +72,8 @@
                     <div class="row">
 
                       <div class="gr-2 text-center margin-top-10">
-                        <img v-if="member.basicInfo.mmUserPictures[0]"
-                              :src="imageBaseUrl+member.basicInfo.mmUserPictures[0].document.url || 'static/images/default-original.jpg'"
+                        <img v-if="member.profilePictures[0]"
+                              :src="imageBaseUrl+member.profilePictures[0].url || 'static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250"
                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
 
@@ -318,7 +320,7 @@
                         </div>
 
                       </div>
-                      <div class="gr-12" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE')">
+                      <div class="gr-12" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE') && (member.basicInfo.verificationStatus !== 'VERIFIED' || (member.basicInfo.verificationStatus === 'VERIFIED' && !memberMissingInfo.isVerifiable) )">
                             <div class="gr-12 panel-label"><b>Missing Information</b></div>
                             <hr>
                             <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
@@ -528,6 +530,7 @@
               </div>
             </div>
             <member-activity v-if="showActivities" :id="id"></member-activity>
+            <member-admin-activity v-if="showAdminActivities" :id="id"></member-admin-activity>
             <member-transaction v-if="showTransactions" :id="id"></member-transaction>
             <member-suspension-history v-if="showSuspensionHistory" :id="id"></member-suspension-history>
             <member-likely-names v-if="showLikelyNames" :mobileNumber="member.basicInfo.mobileNumber"></member-likely-names>
@@ -557,7 +560,7 @@
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
-                                          <strong class="primary-font">{{history.suspensionStatus}}</strong> by <strong class="primary-font">{{history.adminUserDetails.name}}  </strong> <small class="pull-right text-muted">
+                                          <strong class="primary-font">{{history.suspensionStatus}}</strong> by <strong class="primary-font">{{history.adminUserDetails ? history.adminUserDetails.name : 'Legacy Admin User'}}  </strong> <small class="pull-right text-muted">
                                               <span class="glyphicon glyphicon-time"></span>{{history.createdAt | date('MMM D, YYYY')}}</small>
                                       </div>
                                       <p>
@@ -618,6 +621,7 @@
   import Constants from '../../services/Constants'
   import MemberSuspensionHistory from './MemberSuspensionHistoryComponent.vue'
   import MemberActivity from './MemberActivityComponent.vue'
+  import MemberAdminActivity from './MemberAdminActivityComponent.vue'
   import MemberTransaction from './MemberTransactionComponent.vue'
   import MemberIdentificationDocument from './MemberIdentificationDocumentComponent.vue'
   import MemberIntroducedBy from './MemberIntroducedByComponent.vue'
@@ -643,6 +647,7 @@
     components: {
       'member-suspension-history': MemberSuspensionHistory,
       'member-activity': MemberActivity,
+      'member-admin-activity': MemberAdminActivity,
       'member-transaction': MemberTransaction,
       'member-identification-document': MemberIdentificationDocument,
       'member-introduced-by': MemberIntroducedBy,
@@ -673,6 +678,7 @@
         serviceList: Constants,
         showBasicDetails: true,
         showActivities: false,
+        showAdminActivities: false,
         showAccessControl: false,
         showTransactions: false,
         showSuspensionHistory: false,
@@ -762,7 +768,7 @@
               console.log('Got, member success::')
               console.log('member basic info: ', this.member.basicInfo,
                 ' member verification history: ', this.member.verificationHistory)
-              this.dob = this.$options.filters.date(member.basicInfo.dateOfBirth, 'YYYY-MM-DD')
+              this.member.basicInfo.dob = this.$options.filters.date(this.member.basicInfo.dateOfBirth, 'YYYY-MM-DD')
               // check for address
 
               for (let indx in this.member.addresses) {
@@ -862,7 +868,7 @@
       },
       changeAccountClass () {
         this.showLoader = true
-        Http.PUT('member', {}, [this.id, 'class', this.memberAccountClass])
+        Http.PUT('mmAdminMember', {}, [this.id, 'class', this.memberAccountClass])
         .then(
           ({data: classChanged}) => {
             this.showLoader = false
@@ -898,6 +904,7 @@
       setTab (tabName) {
         this.showBasicDetails = false
         this.showActivities = false
+        this.showAdminActivities = false
         this.showTransactions = false
         this.showSuspensionHistory = false
         this.showLikelyNames = false
@@ -908,6 +915,8 @@
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
           this.showActivities = true
+        } else if (tabName === 'adminActivities') {
+          this.showAdminActivities = true
         } else if (tabName === 'transactions') {
           this.showTransactions = true
         } else if (tabName === 'suspensionHistory') {
@@ -990,9 +999,9 @@
         })
         this.showLoader = true
         Http.GET('member', [accountID, 'suspension-history'], paramData)
-          .then(({data: {data}}) => {
+          .then(({data}) => {
             this.showLoader = false
-            console.log('Success, got members: ', data)
+            console.log('Success, got suspension history: ', data)
             this.memberSuspensionHistory = data
           }, error => {
             this.showLoader = false
@@ -1007,7 +1016,7 @@
           'effectiveFrom': new Date().getTime().toString()
         }
 //        this.showLoader = true
-        Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
+        Http.PUT('mmAdminMember', paramData, [this.memberAccountID, 'status', accountStatus])
         .then(
           ({data: statusData}) => {
 //            this.showLoader = false

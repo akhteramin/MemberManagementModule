@@ -16,9 +16,9 @@
           <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList"><li :class="{'btn-active-til': showMembers}" @click="setMenu('member')"><i class="fa fa-users fa-1x" aria-hidden="true"></i> Members</li></a>
           <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList"><li :class="{'btn-active-til': showWaitingVerification}" @click="setMenu('memberVerification')"><i class="fa fa-user-circle fa-1x" aria-hidden="true"></i> Waiting For Verification</li></a>
           <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList"><li :class="{'btn-active-til': showWaitingApproval}" @click="setMenu('memberApproval')"><i class="fa fa-user-circle-o fa-1x" aria-hidden="true"></i> Waiting For Approval</li></a>
-          <a class="break-word" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li :class="{'btn-active-til': showACL}" @click="setMenu('acl')"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Ipay Member ACL</li></a>
-          <a class="break-word" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices"><li :class="{'btn-active-til': showManageService}" @click="setMenu('manageService')"><i class="fa fa-tasks fa-1x" aria-hidden="true"></i> Manage Services</li></a>
-          <a class="break-word" v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li :class="{'btn-active-til': showUsers}" @click="setMenu('user')"> <i class="fa fa-user fa-1x" aria-hidden="true"></i> Users</li></a>
+          <!-- <a class="break-word" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li :class="{'btn-active-til': showACL}" @click="setMenu('acl')"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Ipay Member ACL</li></a> -->
+          <!-- <a class="break-word" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices"><li :class="{'btn-active-til': showManageService}" @click="setMenu('manageService')"><i class="fa fa-tasks fa-1x" aria-hidden="true"></i> Manage Services</li></a> -->
+          <!-- <a class="break-word" v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li :class="{'btn-active-til': showUsers}" @click="setMenu('user')"> <i class="fa fa-user fa-1x" aria-hidden="true"></i> Users</li></a> -->
           <!--a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
             <li :class="{'btn-active-til': showConfiguration}" @click="setMenu('configuration')"> <i class="fa fa-cog fa-1x" aria-hidden="true"></i> Configuration <i class="fa fa-angle-down"></i></li>
           </a>
@@ -46,7 +46,7 @@
             </div>
           </li>
 
-          <a v-on:click="goToUserProfile"><li class="break-word" :class="{'btn-active-til': showProfile}" @click="setMenu('profile')" ><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
+          <!-- <a v-on:click="goToUserProfile"><li class="break-word" :class="{'btn-active-til': showProfile}" @click="setMenu('profile')" ><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a> -->
           <a v-on:click="logout"><li class="break-word" :class="{'btn-active-til': showLogout}" @click="setMenu('logout')"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</li></a>
         </ul>
 
@@ -98,7 +98,7 @@
             </div>
           </li>
 
-          <a v-on:click="goToUserProfile"><li :class="{'btn-active-til': showProfile}" @click="setMenu('profile')"><i class="fa fa-user-circle" aria-hidden="true"></i></li></a>
+          <!-- <a v-on:click="goToUserProfile"><li :class="{'btn-active-til': showProfile}" @click="setMenu('profile')"><i class="fa fa-user-circle" aria-hidden="true"></i></li></a> -->
           <a v-on:click="logout"><li :class="{'btn-active-til': showLogout}" @click="setMenu('logout')"><i class="fa fa-sign-out" aria-hidden="true"></i></li></a>
         </ul>
 
@@ -294,16 +294,14 @@
         this.appsData = JSON.parse(localStorage.getItem('appsData'))
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
-        // if (localStorage.getItem('user-profile') === null) {
-        Http.GET('user', ['login'])
-        .then(
-          ({data: profile}) => {
-            console.log(profile)
-            console.log('hey')
-            localStorage.setItem('user-profile', JSON.stringify(profile.data))
-          }
-          )
-        // }
+        // Http.GET('user', ['login'])
+        // .then(
+        //   ({data: profile}) => {
+        //     console.log(profile)
+        //     console.log('hey')
+        //     localStorage.setItem('user-profile', JSON.stringify(profile.data))
+        //   }
+        //   )
       }
     },
     created () {

@@ -164,8 +164,8 @@
         Http.GET('member', ['contacts'], this.query)
           .then(({data: friends}) => {
             this.showLoader = false
-            this.totalCount = friends.data.totalCount
-            this.friends = friends.data.contactList
+            this.totalCount = friends.totalCount
+            this.friends = friends.contactList
             console.log('success in getting friends: ', this.friends)
           },
           error => {
@@ -180,8 +180,8 @@
         Http.GET('member', ['contacts'], this.query)
           .then(({data: friends}) => {
             this.showLoader = false
-            for (let indx in friends.data.contactList) {
-              this.friends.push(friends.data.contactList[indx])
+            for (let indx in friends.contactList) {
+              this.friends.push(friends.contactList[indx])
             }
             console.log('success in getting friends: ', this.friends)
           },
@@ -197,8 +197,8 @@
         Http.GET('member', ['contacts'], this.query)
           .then(({data: friends}) => {
             this.showLoader = false
-            this.totalCount = friends.data.totalCount
-            this.friends = friends.data.contactList
+            this.totalCount = friends.totalCount
+            this.friends = friends.contactList
             console.log('success in getting friends: ', this.friends)
           },
           error => {

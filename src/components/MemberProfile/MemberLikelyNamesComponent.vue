@@ -72,8 +72,8 @@
         Http.GET('member', ['likely-names'], parameter)
           .then(({data: likely_names}) => {
             this.showLoader = false
-            this.nameList = likely_names.data.likelyNameList
-            console.log('Success, got likely names: ', this.nameList)
+            this.nameList = likely_names.likelyNameList
+            console.log('Success, got likely names: ', this.likelyNameList)
           }, error => {
             this.showLoader = false
             console.error('Error in getting likely names: ', error)

@@ -123,7 +123,7 @@
         fd.append('documentType', this.document.documentType)
         console.log('document type::', this.document.documentType)
         this.showLoader = true
-        Http.POST('member', fd, [this.id, 'identification-document'])
+        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc'])
           .then(
             ({data: documentdata}) => {
               $.notify({

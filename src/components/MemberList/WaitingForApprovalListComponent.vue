@@ -399,7 +399,7 @@
           this.showLoader = true
           Http.GET('member', [member.accountId, 'identification-documents'])
             .then(
-              ({data: {data: documents}}) => {
+              ({data: {list: documents}}) => {
                 this.showLoader = false
                 this.memberDocuments = documents
                 console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
@@ -419,7 +419,7 @@
           this.showLoader = true
           Http.GET('member', [member.accountId, 'introducers'])
             .then(
-              ({data: {data: introducers}}) => {
+              ({data: {introducerList: introducers}}) => {
                 this.showLoader = false
                 this.memberIntroducers = introducers
                 console.log('Got the list of introducers: ', this.memberIntroducers)
@@ -501,7 +501,7 @@
           'effectiveFrom': new Date().getTime().toString()
         }
         this.showLoader = true
-        Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
+        Http.PUT('mmAdminMember', paramData, [this.memberAccountID, 'status', accountStatus])
           .then(
             ({data: statusData}) => {
               this.showLoader = false

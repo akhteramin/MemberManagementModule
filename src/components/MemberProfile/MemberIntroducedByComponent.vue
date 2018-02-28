@@ -45,7 +45,7 @@
         // Http call for the introducers
         Http.GET('member', [this.id, 'introducers'])
            .then(
-             ({data: {data: introducers}}) => {
+             ({data: {introducerList: introducers}}) => {
                this.introducers = introducers
 //               console.log('Got the list of introducers: ', introducers)
              },

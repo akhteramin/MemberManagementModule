@@ -202,8 +202,8 @@
                               </span>
                                 <div class="chat-body clearfix">
                                   <div class="header">
-                                    <strong class="primary-font">{{history.verificationStatus}}</strong> by <strong class="primary-font">{{history.verifier.name}}</strong>
-                                    <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>{{history.creationTime | date('MMM D, YYYY')}}</small>
+                                    <strong class="primary-font">{{history.verificationStatus}}</strong> by <strong class="primary-font">{{history.adminLoginId ? history.adminLoginId : 'Legacy Admin User'}}</strong>
+                                    <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>{{history.createdAt | date('MMM D, YYYY')}}</small>
                                   </div>
                                   <p>
                                     {{history.comment}}
@@ -224,10 +224,10 @@
 
           </div>
 
-            <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC')">
+            <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC') && documentTypes.filter(x=>x.found === 'Not Found').length">
               <div class="form-group">
                 <br>
-                <label>Document Type: </label>
+                <label>Upload Missing Documents </label>
                 <div class="select">
                   <select id="personal-business-select" v-model="docType" @change="showDocumentUpload()">
                     <!--<option selected disabled>Select account type</option>-->
@@ -347,7 +347,7 @@
         this.showLoader = true
         Http.GET('member', [this.id, 'identification-documents'])
            .then(
-             ({data: {data: documents}}) => {
+             ({data: {list: documents}}) => {
                this.showLoader = false
                this.documents = documents
 //               console.log('docs::', this.documents)
@@ -457,7 +457,7 @@
         fd.append('documentType', this.docType)
 //        console.log('document type::', this.docType)
         this.showLoader = true
-        Http.POST('member', fd, [this.id, 'identification-document'])
+        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc'])
           .then(
             () => {
 //              console.log('document data: ', documentData)

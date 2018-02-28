@@ -319,7 +319,7 @@
           <tr>
             <th>#</th>
             <th class="width-250">Name</th>
-            <th>Business Owner Name</th>
+            <!-- <th v-if="showBusinessOwner">Business Owner Name</th> -->
             <th>Basic Info</th>
             <!--<th>Mother</th>-->
             <th class="text-center">A/C Type</th>
@@ -376,7 +376,7 @@
               <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
             </div>
           </td>
-          <td>{{member.businessName ? member.name : 'N/A'}}</td>
+          <!-- <td v-if="showBusinessOwner">{{member.businessName ? member.name : 'N/A'}}</td> -->
           <td>
             {{ getStaticNames(member.occupation) }}
             <br>
@@ -610,7 +610,7 @@
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
-                                          <strong class="primary-font">{{history.suspensionStatus}}</strong> by <strong class="primary-font">{{history.adminUserDetails.name}}  </strong> <small class="pull-right text-muted">
+                                          <strong class="primary-font">{{history.suspensionStatus}}</strong> by <strong class="primary-font">{{history.adminUserDetails ? history.adminUserDetails.name : 'Legacy Admin User'}}  </strong> <small class="pull-right text-muted">
                                               <span class="glyphicon glyphicon-time"></span>{{history.createdAt | date('MMM D, YYYY')}}</small>
                                       </div>
                                       <p>
@@ -695,6 +695,7 @@
         memberMissingInfo: {},
         memberListForVerification: {},
         memberListForVerificationNames: [],
+        showBusinessOwner: true,
         memberVerificationListEmpty: true,
         uncheckVerificationActionBox: null,
         allMembersSelected: null,
@@ -934,7 +935,7 @@
             this.showLoader = true
             Http.GET('member', [member.accountId, 'identification-documents'])
               .then(
-                ({data: {data: documents}}) => {
+                ({data: {list: documents}}) => {
                   this.showLoader = false
                   this.memberDocuments = documents
                   console.log('Got the list of documents: ', this.memberDocuments, ' documents.length: ',
@@ -953,7 +954,7 @@
             this.showLoader = true
             Http.GET('member', [member.accountId, 'introducers'])
               .then(
-                ({data: {data: introducers}}) => {
+                ({data: {introducerList: introducers}}) => {
                   this.showLoader = false
                   this.memberIntroducers = introducers
                   console.log('Got the list of introducers: ', this.memberIntroducers)
@@ -1018,6 +1019,8 @@
             this.showLoader = false
             console.log('Success, got members: ', data)
             this.members = data
+            if (this.query.accountType === '1') this.showBusinessOwner = false
+            else this.showBusinessOwner = true
           }, error => {
             this.showLoader = false
             console.error('Error in getting members: ', error)
@@ -1041,7 +1044,7 @@
         })
         this.showLoader = true
         Http.GET('member', [accountID, 'suspension-history'], paramData)
-          .then(({data: {data}}) => {
+          .then(({data}) => {
             this.showLoader = false
             console.log('Success, got members: ', data)
             this.memberSuspensionHistory = data
@@ -1058,7 +1061,7 @@
           'effectiveFrom': new Date().getTime().toString()
         }
 //        this.showLoader = true
-        Http.PUT('member', paramData, [this.memberAccountID, 'status', accountStatus])
+        Http.PUT('mmAdminMember', paramData, [this.memberAccountID, 'status', accountStatus])
         .then(
           ({data: statusData}) => {
 //            this.showLoader = false
@@ -1173,6 +1176,8 @@
             this.memberListForVerificationNames = []
             this.memberVerificationListEmpty = true
             this.disableModalVerificationAndRejectionButton = false
+            if (this.query.accountType === '1') this.showBusinessOwner = false
+            else this.showBusinessOwner = true
           }, error => {
             console.log('Error in getting filtered results: ', error)
           })

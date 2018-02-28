@@ -225,7 +225,7 @@
         delete updatedAddress.address['type']
         console.log('updatedAddress: ', updatedAddress)
         this.showLoader = true
-        Http.PUT('member', updatedAddress, [this.id, 'address'])
+        Http.PUT('mmAdminMember', updatedAddress, [this.id, 'address'])
           .then(
             ({data: {data: response}}) => {
               this.showLoader = false

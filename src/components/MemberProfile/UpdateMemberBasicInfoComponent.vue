@@ -146,7 +146,7 @@
         this.member.basicInfo.dob = Date.parse(this.dob)
         console.log('update member clicked, this.member.basicInfo: ', this.member.basicInfo)
         this.showLoader = true
-        Http.PUT('member', this.member.basicInfo, [this.member.basicInfo.accountId, 'basic-details'])
+        Http.PUT('mmAdminMember', this.member.basicInfo, [this.member.basicInfo.accountId])
           .then(
             ({data: {data: memberUpdate}}) => {
               this.showLoader = false
