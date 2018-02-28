@@ -294,16 +294,14 @@
         this.appsData = JSON.parse(localStorage.getItem('appsData'))
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
-        // if (localStorage.getItem('user-profile') === null) {
-        Http.GET('user', ['login'])
-        .then(
-          ({data: profile}) => {
-            console.log(profile)
-            console.log('hey')
-            localStorage.setItem('user-profile', JSON.stringify(profile.data))
-          }
-          )
-        // }
+        // Http.GET('user', ['login'])
+        // .then(
+        //   ({data: profile}) => {
+        //     console.log(profile)
+        //     console.log('hey')
+        //     localStorage.setItem('user-profile', JSON.stringify(profile.data))
+        //   }
+        //   )
       }
     },
     created () {

@@ -610,7 +610,7 @@
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
-                                          <strong class="primary-font">{{history.suspensionStatus}}</strong> by <strong class="primary-font">{{history.adminUserDetails.name}}  </strong> <small class="pull-right text-muted">
+                                          <strong class="primary-font">{{history.suspensionStatus}}</strong> by <strong class="primary-font">{{history.adminUserDetails ? history.adminUserDetails.name : 'Legacy Admin User'}}  </strong> <small class="pull-right text-muted">
                                               <span class="glyphicon glyphicon-time"></span>{{history.createdAt | date('MMM D, YYYY')}}</small>
                                       </div>
                                       <p>
@@ -1044,7 +1044,7 @@
         })
         this.showLoader = true
         Http.GET('member', [accountID, 'suspension-history'], paramData)
-          .then(({data: {data}}) => {
+          .then(({data}) => {
             this.showLoader = false
             console.log('Success, got members: ', data)
             this.memberSuspensionHistory = data
