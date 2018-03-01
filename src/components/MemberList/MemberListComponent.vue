@@ -176,17 +176,17 @@
               </div>
             </div>
 
-            <div class="gr-2">
+            <!-- <div class="gr-2">
               <div class="form-group padding-5">
                 <label> Business Name: </label>
                 <input  name="queryBusinessName" type="text" id="queryBusinessName" placeholder="BusinessName"
                         v-model="query.businessName"
                         value=""/>
               </div>
-            </div>
+            </div> -->
 
             <div class="gr-3">
-              <div class="form-group">
+              <div class="form-group padding-5">
                 <label class="push-1">Account Type: </label>
                 <div class="push-1">
                   <div class="select select-sm">
@@ -202,7 +202,7 @@
             </div>
 
             <div class="gr-3">
-              <div class="form-group">
+              <div class="form-group padding-5">
                 <label class="push-0"> Verification Status: </label>
                 <div class="push-0">
                   <div class="select select-sm">
