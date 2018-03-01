@@ -506,7 +506,7 @@ export default {
         .then(({data: aclUserGroup}) => {
           this.showLoader = false
           console.log('Success, got group list: ', aclUserGroup)
-          this.groups = aclUserGroup.data.groupList
+          this.groups = aclUserGroup.groupList
           this.getService()
         //   this.loadMemberList('', 0)
         }, error => {
@@ -516,11 +516,11 @@ export default {
     },
     getService (param = 1) {
       this.showLoader = true
-      Http.GET('aclUserGroup', [param, 'details'])
+      Http.GET('aclUserGroup', [param])
         .then(({data: aclService}) => {
           this.showLoader = false
           console.log('Success, got group list: ', aclService)
-          this.group = aclService.data
+          this.group = aclService
           this.immutableServices = {
             enabledServices: Object.assign([], this.group.enabledServices),
             blockedServices: Object.assign([], this.group.blockedServices)
@@ -533,10 +533,10 @@ export default {
         })
     },
     highlightRow () {
-        $('#aclGroup tbody').on('click', 'tr', function() {
-            $('#aclGroup tbody > tr').removeClass('selected');
-            $(this).addClass('selected');
-        });
+      $('#aclGroup tbody').on('click', 'tr', function () {
+        $('#aclGroup tbody > tr').removeClass('selected')
+        $(this).addClass('selected')
+      })
     },
     swap (direction = 'enabled-blocked') {
       let {enabledServices: enabled, blockedServices: blocked} = this.group

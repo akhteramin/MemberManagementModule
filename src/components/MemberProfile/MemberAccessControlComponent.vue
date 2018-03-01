@@ -278,7 +278,7 @@ export default {
     },
     getServices () {
       this.showLoader = this.showLoader + 1
-      Http.GET('memberAclGet', [this.id])
+      Http.GET('memberAclGet', [this.id, 'acl'])
       .then(
         ({data: {data}}) => {
           console.log(data)
