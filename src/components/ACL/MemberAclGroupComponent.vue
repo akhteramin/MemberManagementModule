@@ -618,7 +618,7 @@ export default {
               type: 'success',
               delay: 3000
             })
-            this.getService()
+            this.getService(this.group.id)
           }, error => {
             if (error.response.status === 409) {
               this.conflictObject.conflictedServiceList = error.response.data.serviceList
