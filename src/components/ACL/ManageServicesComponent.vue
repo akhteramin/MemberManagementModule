@@ -158,11 +158,11 @@ export default {
   methods: {
     init () {
       this.showLoader = true
-      Http.GET('memberAclGet', ['service'])
+      Http.GET('memberAclGet', ['service', ''])
         .then(({data: aclServices}) => {
           this.showLoader = false
           console.log('Success, got service list: ', aclServices)
-          this.aclServiceList = aclServices.data.serviceList
+          this.aclServiceList = aclServices.serviceList
         }, error => {
           this.showLoader = false
           console.error('Error in offers: ', error)
