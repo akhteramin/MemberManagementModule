@@ -177,7 +177,7 @@ export default {
         'status': service.status
       }
         // iPayAclServices.sendHttpRequest(angular.toJson(param), '13003')
-      Http.PUT('memberAclGet', param, ['service', service.id, 'change-access-level'])
+      Http.PUT('memberAclGet', param, ['service', service.id])
       .then(({data: response}) => {
         $.notify({
           // options

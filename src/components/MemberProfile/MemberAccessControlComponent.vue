@@ -259,9 +259,9 @@ export default {
     },
     getGroups () {
       this.showLoader = this.showLoader + 1
-      Http.GET('memberAclGet', [this.id, 'groups'])
+      Http.GET('memberAclUpdate', [this.id, 'groups'])
       .then(
-        ({data: {data}}) => {
+        ({data}) => {
           console.log(data)
           this.immutableGroups = {
             activeGroups: Object.assign([], data.activeGroups),
@@ -278,9 +278,9 @@ export default {
     },
     getServices () {
       this.showLoader = this.showLoader + 1
-      Http.GET('memberAclGet', [this.id, 'acl'])
+      Http.GET('memberAclUpdate', [this.id, 'acl'])
       .then(
-        ({data: {data}}) => {
+        ({data}) => {
           console.log(data)
           this.immutableServices = {
             enabledServices: Object.assign([], data.enabledServices),
@@ -448,7 +448,7 @@ export default {
         })
       } else {
           // iPayAclServices.sendHttpRequest({groupId: vm.group.id, enabledServices, removedServices}, '13009')
-        Http.POST('memberAclUpdate', {enabledServices, removedServices}, [this.id, 'manage-acl'])
+        Http.POST('memberAclUpdate', {enabledServices, removedServices}, [this.id, 'acl'])
           .then(({data}) => {
             console.log(data)
             $.notify({

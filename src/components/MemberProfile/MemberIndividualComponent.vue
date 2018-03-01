@@ -62,8 +62,8 @@
                 :class="{'btn-active-til': showFriends}" @click="setTab('friends')">Friends</button>
                 <button v-if="member.basicInfo && member.basicInfo.accountType==2" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showOffer}" @click="setTab('offers')">Offers</button>
-                <!-- <button v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" type="button" class="btn btn-default"
-                :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button> -->
+                <button v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button>
               </div>
             </div>
             

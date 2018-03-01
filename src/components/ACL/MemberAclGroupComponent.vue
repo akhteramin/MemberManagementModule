@@ -636,7 +636,7 @@ export default {
         'removedUsers': removedMembers
       }
          // iPayAclServices.sendHttpRequest(angular.toJson(param), '13011')
-      Http.POST('aclUserGroup', param, [this.group.id])
+      Http.POST('aclUserGroup', param, [this.group.id, 'manage-members'])
         .then(({data: response}) => {
         //   notiService.showNotiFunc("Success!","Access Control of Group Changed Successfully","alert alert-success");
             // vm.getServiceDetails(vm.selectedService);
@@ -673,7 +673,7 @@ export default {
       Http.POST('aclUserGroup', {groupName: name})
         .then(({data: response}) => {
           console.log('Success ADD: ', response)
-          this.groups.push({id: response.data.group.id, groupName: name, isActive: true})
+          this.groups.push({id: response.group.id, groupName: name, isActive: true})
             // notiService.showNotiFunc("Success!", "Group Added Successfully", "alert alert-success")
           $.notify({
             // options
