@@ -360,11 +360,14 @@
             <div class="gr-10">
               <span v-restrict="'MS_MM_USER_BASIC_DETAILS'">
                 <a class="pointer" @click="memberDetails(member.accountId,member.accountType)">
-                  <span v-if="member.accountType == 1">
+                  <!-- <span v-if="member.accountType == 1">
                     {{ member.name }}
                   </span>
                   <span v-if="member.accountType == 2">
                     {{ member.businessName }}
+                  </span> -->
+                  <span>
+                    {{ member.name }}
                   </span>
                 </a>
                 <i class="fa fa-external-link" aria-hidden="true" @click="loadProfile(member)"></i>
