@@ -297,10 +297,10 @@
             <div class="select select-sm">
               <select v-model="query.pageSize" @change="filter">
                 <option disabled>Number of Entries</option>
-                <option selected value=10>10</option>
-                <option value=20>20</option>
-                <option value=30>30</option>
-                <option value=50>50</option>
+                <option selected value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
               </select>
             </div>
           </div>
