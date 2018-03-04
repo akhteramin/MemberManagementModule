@@ -61,8 +61,8 @@ axios.interceptors.response.use(
 // const API_URL = 'http://192.168.1.120:8085/member-service/api/v1'
 // const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
-// const MM_ADMIN_URL = 'http://10.10.10.10:9002/api/v1' // dev
-const MM_ADMIN_URL = 'http://10.15.40.10:9002/api/v1' // test
+const MM_ADMIN_URL = 'http://10.10.10.10:9002/api/v1' // dev
+// const MM_ADMIN_URL = 'http://10.15.40.10:9002/api/v1' // test
 const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1' // test
 const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
 const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
@@ -78,9 +78,9 @@ const ADMIN_URI = 'http://10.15.40.11:80/'
 // const ADMIN_URI = 'http://verification.ipay.com.bd/'
 
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
-// const IMAGE_URL = 'https://dev.ipay.com.bd'
+const IMAGE_URL = 'https://dev.ipay.com.bd'
 // const IMAGE_URL = 'https://www.ipay.com.bd'
-const IMAGE_URL = 'https://test.ipay.com.bd'
+// const IMAGE_URL = 'https://test.ipay.com.bd'
 
 const CRM_URI = 'http://10.10.10.169/login'
 // const CRM_URI = 'http://crmnew.ipay.com.bd'
@@ -96,11 +96,11 @@ const routes = {
   mmAdminMember: `${MM_ADMIN_URL}/admin/internal/user/`,
   verification: `${MM_ADMIN_URL}/ms/verify/member/`,
   // user: `${API_URL}/user/`,
-  mmAdminUser: `${MM_ADMIN_URL}/ms/admin/user/`
+  mmAdminUser: `${MM_ADMIN_URL}/ms/admin/user/`,
   // offer: `${API_URL}/offer/business/member/`,
-  // aclUserGroup: `${API_URL}/member/acl/user-group/`,
-  // memberAclUpdate: `${API_URL}/member/acl/member/`,
-  // memberAclGet: `${API_URL}/member/acl/`
+  aclUserGroup: `${MM_ADMIN_URL}/acl/groups/`,
+  memberAclUpdate: `${MM_ADMIN_URL}/acl/users/`,
+  memberAclGet: `${MM_ADMIN_URL}/acl/`
 }
 
 const encodeQueryData = (data) => {
