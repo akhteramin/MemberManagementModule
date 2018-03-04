@@ -203,7 +203,7 @@
                                 <div class="chat-body clearfix">
                                   <div class="header">
                                     <strong class="primary-font">{{history.verificationStatus}}</strong> by <strong class="primary-font">{{history.adminLoginId ? history.adminLoginId : 'Legacy Admin User'}}</strong>
-                                    <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>{{history.createdAt | date('MMM D, YYYY')}}</small>
+                                    <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>{{history.createdAt | date}}</small>
                                   </div>
                                   <p>
                                     {{history.comment}}
