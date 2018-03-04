@@ -139,18 +139,33 @@
                 <div class="col-md-5">
                   <input type="text" v-model="memberSearch" placeholder="Members..">
                 </div>
-                <div class="col-md-2 col-md-offset-5 padding-5">
+                <div class="col-md-2">
                     <button type="button" class="btn btn-sm btn-default"
                     data-toggle="modal"
                     data-target="#member_add_remove_for_service_modal">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add Member
                     </button>
                 </div>
-                <span v-if="group && group.userList.length === 0">
+                <div class="col-md-2 col-md-offset-3">
+                    <div class="select select-sm">
+                    <select v-model="query.count" @change="getService(group.id)">
+                        <option disabled>Number of Entries</option>
+                        <option selected value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12">
+                <span v-if="group.userList && group.userList.length === 0">
                     <hr>
                     <div class="text-center"><label>No user found</label></div>
                 </span>
-                <table class="table table-condensed" v-if="group && group.userList.length > 0">
+                <table class="table table-condensed" v-if="group.userList && group.userList.length > 0">
                     <tbody>
                     <tr v-for="(user, index) in filteredMember">
                         <th scope="row">
@@ -178,6 +193,65 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="col-md-12" v-if="group.users.totalElements > 0">
+                <div class="row">
+                    <div class="gr-3">
+                        <div v-if="group.users.userList">
+                        <small>Showing {{ parseInt(query.page * query.count + 1)
+                            }} to {{ parseInt(query.page * query.count + group.users.userList.length)
+                            }} out of {{ group.users.totalElements }} entries
+                        </small>
+                        </div>
+                    </div>
+                    <div class="gr-9">
+                        <!-- Member Pagination -->
+                        <div v-if="group.users.totalPages <= maxPaginationItem">
+                        <nav aria-label="MemberPagination">
+                            <ul class="pagination pagination-sm justify-content-end">
+                            <li class="page-item " v-bind:class="{ disabled: query.page === 0 }">
+                                <a class="page-link" v-on:click="pageChange(query.page - 1)" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item"
+                                v-bind:class="{ active: query.page === (n - 1) }"
+                                v-for="n in group.users.totalPages">
+                                <a class="page-link" v-on:click="pageChange(n - 1)" tabindex="-1">{{ n }}</a>
+                            </li>
+                            <li class="page-item" v-bind:class="{ disabled: query.page === group.users.totalPages - 1 }">
+                                <a class="page-link" v-on:click="pageChange(query.page + 1)" tabindex="-1">Next</a>
+                            </li>
+                            </ul>
+                        </nav>
+                        </div>
+                        <div class="pull-right" v-else>
+                        <a class="btn btn-sm btn-default btn-active-til"
+                            role="button"
+                            v-bind:class="{ disabled: query.page === 0 }"
+                            v-on:click="pageChange(0)">
+                            <i class="fa fa-angle-double-left" aria-hidden="true"></i> First
+                        </a>
+                        <a class="btn btn-sm btn-default btn-active-til"
+                            role="button"
+                            v-bind:class="{ disabled: query.page === 0 }"
+                            v-on:click="pageChange(query.page - 1)">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i> Previous
+                        </a>
+                        <small>Page {{ query.page + 1 }} of {{ group.users.totalPages }}</small>
+                        <a class="btn btn-sm btn-default btn-active-til"
+                            role="button"
+                            v-bind:class="{ disabled: query.page === group.users.totalPages - 1 }"
+                            v-on:click="pageChange(query.page + 1)">
+                            Next <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-sm btn-default btn-active-til"
+                            role="button"
+                            v-bind:class="{ disabled: query.page === group.users.totalPages - 1 }"
+                            v-on:click="pageChange(group.users.totalPages - 1)">
+                            Last <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -437,6 +511,7 @@ export default {
   data () {
     return {
       showLoader: false,
+      query: {},
       groups: {},
       group: {},
       mapper: {
@@ -502,6 +577,10 @@ export default {
       this.imageBaseUrl = Http.IMAGE_URL
       console.log('Hello')
       this.showLoader = true
+      this.query = {
+        page: 0,
+        count: 10
+      }
       Http.GET('aclUserGroup')
         .then(({data: aclUserGroup}) => {
           this.showLoader = false
@@ -516,21 +595,32 @@ export default {
     },
     getService (param = 1) {
       this.showLoader = true
-      Http.GET('aclUserGroup', [param])
+      Http.GET('aclUserGroup', [param, 'services'])
         .then(({data: aclService}) => {
           this.showLoader = false
-          console.log('Success, got group list: ', aclService)
-          this.group = aclService
+          console.log('Success, got services: ', aclService)
           this.immutableServices = {
             enabledServices: Object.assign([], this.group.enabledServices),
             blockedServices: Object.assign([], this.group.blockedServices)
           }
-          console.log('Success, got group list: ', this.group)
         //   this.groupList = aclUserGroup.data.groupList
+          Http.GET('aclUserGroup', [param, 'users'], this.query)
+            .then(({data: users}) => {
+              this.group = Object.assign([], aclService, {userList: users.userList}, {users: users})
+              console.log('Success, got userList: ', this.group.users)
+            }, error => {
+              console.error('Error in offers: ', error)
+            })
         }, error => {
           this.showLoader = false
           console.error('Error in offers: ', error)
         })
+    },
+    pageChange (number = 0) {
+      if (number >= 0 && number < this.group.users.totalPages && this.query.page !== number) {
+        this.query.page = number
+        this.getService(this.group.id)
+      }
     },
     highlightRow () {
       $('#aclGroup tbody').on('click', 'tr', function () {
