@@ -74,55 +74,60 @@
             <div class="gr-12 small-text min-height-slider"
                  v-if="memberDocuments && containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
                 <div class="gr-12 panel-label"><b>Identification Documents</b></div>
-                <div class="row margin-5" v-for="memberDocument in memberDocuments">
-                    <div class="gr-5 text-center padding-2">
-                        <img :src="imageBaseUrl+memberDocument.documentUrl"
-                        v-if="!isPdf(memberDocument.documentUrl)"
-                        class="img-rounded" alt="Documents" width="140" height="80"
-                        @click="showDocumentDetails(memberDocument)"
-                             onerror="this.onerror=null;"
-                        >
+                <div v-if="memberDocuments.length > 0">
+                  <div class="row margin-5" v-for="memberDocument in memberDocuments">
+                      <div class="gr-5 text-center padding-2">
+                          <img :src="imageBaseUrl+memberDocument.documentUrl"
+                          v-if="!isPdf(memberDocument.documentUrl)"
+                          class="img-rounded" alt="Documents" width="140" height="80"
+                          @click="showDocumentDetails(memberDocument)"
+                              onerror="this.onerror=null;"
+                          >
 
-                        <i v-if="isPdf(memberDocument.documentUrl)"
-                        class="fa fa-file-pdf-o font-size-50"
-                        aria-hidden="true"
-                        @click="showDocumentDetails(memberDocument)"></i>
-                    </div>
-                    <div class="gr-7">
-                        <b>{{memberDocument.documentType | underscoreless}}</b>
-                        <i v-if="memberDocument.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
-                        <br>{{memberDocument.documentIdNumber}}
-                        <br>
-                        <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">
-                            <button class="button-small-edit"
-                             data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocument.id}`"
-                             data-backdrop="false">
-                             <i class="fa fa-pencil-square-o"></i>
-                             Edit
+                          <i v-if="isPdf(memberDocument.documentUrl)"
+                          class="fa fa-file-pdf-o font-size-50"
+                          aria-hidden="true"
+                          @click="showDocumentDetails(memberDocument)"></i>
+                      </div>
+                      <div class="gr-7">
+                          <b>{{memberDocument.documentType | underscoreless}}</b>
+                          <i v-if="memberDocument.documentVerificationStatus=='VERIFIED'"  class="fa fa-check-circle-o banner-text" aria-hidden="true"></i>
+                          <br>{{memberDocument.documentIdNumber}}
+                          <br>
+                          <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">
+                              <button class="button-small-edit"
+                              data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocument.id}`"
+                              data-backdrop="false">
+                              <i class="fa fa-pencil-square-o"></i>
+                              Edit
+                              </button>
+                              <div :id="`ChangeDocumentModal${memberDocument.id}`" class="modal fade modal-slider" role="dialog">
+                                  <update-member-identification-document
+                                  :document="memberDocument"
+                                  :id="memberProfile.accountId"
+                                  @update="editIdentificationDocument">
+                                  </update-member-identification-document>
+                              </div>
+                              <button class="button-small-verify"
+                              data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
+                              @click= "setDocument(memberDocument)">
+                              Verify
+                              <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                              </button>
+                          </span>
+                          <span v-else>
+                            <button class="button-small-verify width-90"
+                            data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false"
+                            @click= "setDocumentUnverify(memberDocument)">
+                            Unverify
+                            <i class="fa fa-times" aria-hidden="true"></i>
                             </button>
-                            <div :id="`ChangeDocumentModal${memberDocument.id}`" class="modal fade modal-slider" role="dialog">
-                                <update-member-identification-document
-                                :document="memberDocument"
-                                :id="memberProfile.accountId"
-                                @update="editIdentificationDocument">
-                                </update-member-identification-document>
-                            </div>
-                            <button class="button-small-verify"
-                            data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
-                            @click= "setDocument(memberDocument)">
-                            Verify
-                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            </button>
-                        </span>
-                        <span v-else>
-                          <button class="button-small-verify width-90"
-                          data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false"
-                          @click= "setDocumentUnverify(memberDocument)">
-                          Unverify
-                          <i class="fa fa-times" aria-hidden="true"></i>
-                          </button>
-                        </span>
-                    </div>
+                          </span>
+                      </div>
+                  </div>
+                </div>
+                <div v-else>
+                  <strong class="primary-font">N/A</strong>
                 </div>
             </div>
             <div class="gr-12 small-text" v-if="
@@ -148,7 +153,7 @@
                         </ul>
                         <div class="tab-content">
                             <div id="introducedBy" class="tab-pane fade in active padding-4">
-                                <div class="gr-4 text-center" v-if="memberIntroducers">
+                                <div class="gr-4 text-center" v-if="memberIntroducers && memberIntroducers.length > 0">
                                     <div class="gr-6 padding-5" v-for="memberIntroducer in memberIntroducers">
                                             <img :src="imageBaseUrl+memberIntroducer.profilePictureUrl"
                                                  class="img-circle" alt="Profile Picture" width="80" height="80"
@@ -157,9 +162,12 @@
                                             <br>{{memberIntroducer.mobileNumber}}
                                     </div>
                                 </div>
+                                <div class="gr-4 text-left" v-else>
+                                  <strong class="primary-font">N/A</strong>
+                                </div>
                             </div>
                             <div id="hasIntroduced" class="tab-pane fade  padding-4">
-                                <div class="gr-4 text-center" v-if="membersIntroduced">
+                                <div class="gr-4 text-center" v-if="membersIntroduced && membersIntroduced.length > 0">
                                     <div class="gr-6 padding-5" v-for="memberIntroduced in membersIntroduced">
                                             <img :src="imageBaseUrl+memberIntroduced.profilePictureUrl" class="img-circle"
                                                  alt="Profile Picture" width="80" height="80"
@@ -169,9 +177,12 @@
 
                                     </div>
                                 </div>
+                                <div class="gr-4 text-left" v-else>
+                                  <strong class="primary-font">N/A</strong>
+                                </div>
                             </div>
                             <div id="invitedBy" class="tab-pane fade  padding-4">
-                                <div class="gr-4 text-center" v-if="membersInvitedBy">
+                                <div class="gr-4 text-center" v-if="membersInvitedBy && membersInvitedBy.length > 0">
                                     <div class="gr-6 padding-5" v-for="memberInvitedBy in membersInvitedBy">
                                             <img :src="imageBaseUrl+memberInvitedBy.profilePictureUrl"
                                                  class="img-circle" alt="Profile Picture" width="80" height="80"
@@ -181,9 +192,12 @@
 
                                     </div>
                                 </div>
+                                <div class="gr-4 text-left" v-else>
+                                  <strong class="primary-font">N/A</strong>
+                                </div>
                             </div>
                             <div id="likelyNames" class="tab-pane fade  padding-4">
-                              <div class="gr-4 text-center">
+                              <div class="gr-4 text-center" v-if="likelyNameList && likelyNameList.length > 0">
                                   <table lass="table ui celled hover" cellspacing="0" width="100%">
                                     <thead>
                                     <tr>
@@ -201,6 +215,9 @@
                                     </tr>
                                     </tbody>
                                   </table>
+                                </div>
+                                <div class="gr-4 text-left" v-else>
+                                  <strong class="primary-font">N/A</strong>
                                 </div>
                               </div>
                             </div>

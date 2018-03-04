@@ -74,7 +74,7 @@
       </form>
       <!-- ================================ Filter ============================== -->
       <br>
-      <table class="table ui celled" cellspacing="0" width="100%">
+      <table class="table ui celled" cellspacing="0" width="100%" v-if="friends.length > 0">
         <thead>
           <tr>
             <th>#</th>
@@ -98,6 +98,9 @@
           </tr>
         </tbody>
       </table>
+      <div v-else>
+        <strong class="primary-font">NO ENTRIES FOUND</strong>
+      </div>
 
       <div class="text-center"
         v-if="totalCount > query.pageNumber * query.pageSize">

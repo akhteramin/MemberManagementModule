@@ -1,5 +1,5 @@
  <template>
-    <div class="w3-header-card">
+    <div>
         <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
             <div class="form-group gr-12">
             <div  class="text-center">
@@ -40,8 +40,8 @@
             </div>
         </form>
 
-        <div>
-            <table class="table ui celled" cellspacing="0" width="100%">
+        <div  class="table-responsive gr-12">
+            <table class="table ui celled" cellspacing="0" width="100%" v-if="activities.activities.length > 0">
             <thead class="thead-default">
             <tr>
                 <th class="text-center">Activity</th>
@@ -59,7 +59,11 @@
             </tr>
             </tbody>
             </table>
+            <div v-else>
+              <strong class="primary-font">NO ENTRIES FOUND</strong>
+            </div>
         </div>
+        
 
         <div class="card-footer text-muted" v-if="activities.totalElements > 0 && activities.totalPages > 1">
             <div class="row">

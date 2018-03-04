@@ -1,5 +1,5 @@
 <template>
-  <div class="w3-header-card">
+  <div>
     <div class="loaders loading" v-if="showLoader">
       <div class="loader">
         <div class="loader-inner ball-grid-pulse">
@@ -39,8 +39,8 @@
       </div>
     </div>
 
-    <div>
-      <table class="table ui celled" cellspacing="0" width="100%">
+    <div class="table-responsive gr-12">
+      <table class="table ui celled" cellspacing="0" width="100%" v-if="suspensionHistory.length > 0">
         <thead class="thead-default">
         <tr>
           <th class="text-center">#</th>
@@ -64,6 +64,9 @@
           </tr>
         </tbody>
       </table>
+      <div v-else>
+        <strong class="primary-font">NO ENTRIES FOUND</strong>
+      </div>
     </div>
 
     <div class="card-footer text-muted" v-if="totalElements > 0 && totalPages > 1">

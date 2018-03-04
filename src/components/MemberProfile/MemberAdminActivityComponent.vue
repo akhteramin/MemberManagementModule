@@ -40,8 +40,8 @@
             </div>
         </form>
 
-        <div>
-            <table class="table ui celled" cellspacing="0" width="100%">
+        <div class="table-responsive gr-12">
+            <table class="table ui celled" cellspacing="0" width="100%" v-if="activities.list.length > 0">
             <thead class="thead-default">
             <tr>
                 <th class="text-center">Actor</th>
@@ -61,6 +61,9 @@
             </tr>
             </tbody>
             </table>
+            <div v-else>
+              <strong class="primary-font">NO ENTRIES FOUND</strong>
+            </div>
         </div>
 
         <div class="card-footer text-muted" v-if="activities.totalElements > 0 && activities.totalPages > 1">

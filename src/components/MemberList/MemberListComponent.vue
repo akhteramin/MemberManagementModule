@@ -314,7 +314,7 @@
 
           <!--========================================= my filters ==================================================-->
     <div class="table-responsive gr-12">
-      <table id="memberlist-table" class="table ui celled" cellspacing="0" width="80%">
+      <table id="memberlist-table" class="table ui celled" cellspacing="0" width="80%" v-if="members.list.length > 0">
         <thead>
           <tr>
             <th>#</th>
@@ -450,6 +450,9 @@
         </tr>
         </tbody>
       </table>
+      <div v-else>
+        <strong class="primary-font">NO ENTRIES FOUND</strong>
+      </div>
     </div>
     <div class="gr-12" v-if="members.totalElements > 0">
             <div class="row">
