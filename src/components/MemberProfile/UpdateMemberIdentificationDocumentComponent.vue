@@ -25,6 +25,16 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
+                <div class="row">
+                  <div class="col-md-3">
+                    <label class="control-label">Document No:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <input type="text" v-model="document.documentIdNumber" required>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
 
                 <div class="row">
                   <div class="col-md-3">
@@ -48,7 +58,7 @@
                     </div>
                   </div>
                 </div>
-            <br>
+                <br>
                 <div class="row">
                   <div class="col-md-4 col-md-offset-3">
                     <span>
