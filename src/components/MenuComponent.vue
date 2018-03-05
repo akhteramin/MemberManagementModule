@@ -302,6 +302,17 @@
         //     localStorage.setItem('user-profile', JSON.stringify(profile.data))
         //   }
         //   )
+        const firstKey = this.$route.path.split('/')[1]
+        const secondKey = this.$route.path.split('/')[2]
+        console.log(firstKey, secondKey)
+        if (firstKey === 'member') {
+          if (secondKey === 'default') this.showMembers = true
+          else if (secondKey === 'waiting-verification') this.showWaitingVerification = true
+          else if (secondKey === 'waiting-approval') this.showWaitingApproval = true
+          else if (secondKey === 'acl') this.showACL = true
+        } else if (firstKey === 'manage') {
+          if (secondKey === 'services') this.showManageService = true
+        }
       }
     },
     created () {
