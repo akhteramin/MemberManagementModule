@@ -239,7 +239,7 @@
 
             <div class="gr-3">
               <label class="push-2">Sort by: </label>
-              <div class="push-1">
+              <div class="push-2">
                 <div class="select select-sm">
                   <select id="sort-by-select"  v-model="query.sort">
                     <!--<option selected disabled>Select account type</option>-->
