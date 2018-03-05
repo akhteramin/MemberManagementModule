@@ -147,7 +147,7 @@
                     </button>
                 </div>
                 <div class="col-md-2 col-md-offset-3">
-                    <div class="select select-sm">
+                    <div class="select select-sm" style="width: 100% !important;">
                     <select v-model="query.count" @change="getService(group.id)">
                         <option disabled>Number of Entries</option>
                         <option selected value="10">10</option>
