@@ -64,7 +64,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ verifier ? ( verifier.adminLoginId ? verifier.adminLoginId : 'Legacy Admin User' )
+                      {{ verifier ? ( verifier.adminLoginId ? verifier.adminLoginId : (verifier.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User') )
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -95,7 +95,7 @@
                       </div>
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : 'Legacy Admin User')
+                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : (verifier.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User'))
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -121,7 +121,7 @@
                       Verified By:
                     </div>
                     <div class="gr-6 push-1 break-word">
-                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : 'Legacy Admin User')
+                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : (verifier.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User'))
                       : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
@@ -150,7 +150,7 @@
                       Verified By:
                     </div>
                     <div class="gr-7 text-left break-word">
-                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : 'Legacy Admin User') : 'N/A' }}
+                      {{ verifier ? (verifier.adminLoginId ? verifier.adminLoginId : (verifier.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User')) : 'N/A' }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <br><br><br>
@@ -185,7 +185,7 @@
                     Approved By:
                   </div>
                   <div class="gr-7 text-left break-word">
-                    {{ approver ? (approver.adminLoginId ? approver.adminLoginId : 'Legacy Admin User') : 'N/A' }}
+                    {{ approver ? (approver.adminLoginId ? approver.adminLoginId : (approver.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User')) : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br><br>
@@ -211,7 +211,7 @@
                     Rejected By:
                   </div>
                   <div class="gr-7 text-left break-word">
-                    {{  approver ? (approver.adminLoginId ? approver.adminLoginId : 'Legacy Admin User') : 'N/A' }}
+                    {{  approver ? (approver.adminLoginId ? approver.adminLoginId : (approver.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User')) : 'N/A' }}
                     <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                   </div>
                   <br><br>
@@ -351,7 +351,7 @@
                         <div class="header">
                           <strong class="primary-font">
                           {{history.verificationType == 'APPROVE'? 'Approval' : 'Verification'}} {{ history.verificationStatus }}</strong> by
-                          <strong class="primary-font">{{ history.adminLoginId ? history.adminLoginId : 'Legacy Admin User' }}  </strong>
+                          <strong class="primary-font">{{ history.adminLoginId ? history.adminLoginId : (history.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User') }}  </strong>
                           <small class="pull-right text-muted">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
                             {{ history.createdAt | date('MMM D, YYYY HH:mm:ss a') }}
