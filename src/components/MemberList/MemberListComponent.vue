@@ -243,9 +243,9 @@
                 <div class="select select-sm">
                   <select id="sort-by-select"  v-model="query.sort">
                     <!--<option selected disabled>Select account type</option>-->
-                    <option selected value = "DOCUMENT_UPLOAD">Document Upload Date</option>
+                    <option selected value="PROFILE_COMPLETION_SCORE">Profile Completion Score</option>
+                    <option value = "DOCUMENT_UPLOAD">Document Upload Date</option>
                     <option value="CREATION_DATE">Account Creation Date</option>
-                    <option value="PROFILE_COMPLETION_SCORE">Profile Completion Score</option>
                   </select>
                 </div>
               </div>
@@ -312,9 +312,11 @@
       </div>
     </form>
 
-          <!--========================================= my filters ==================================================-->
+          <!--========================================= my filters ==================================================-->     
     <div class="table-responsive gr-12">
-      <table id="memberlist-table" class="table ui celled" cellspacing="0" width="80%" v-if="members.list.length > 0">
+      <br>
+      <strong>Sorted by {{sortParam}} in {{orderParam}} order</strong>
+      <table id="memberlist-table" class="table ui celled" cellspacing="0" width="80%" v-if="members.list && members.list.length > 0">
         <thead>
           <tr>
             <th>#</th>
@@ -713,6 +715,8 @@
         identificationDocuments: null,
         bankDocuments: null,
         cards: null,
+        sortParam: '',
+        orderParam: '',
         value: [
           0,
           100
@@ -1022,6 +1026,19 @@
         this.showLoader = true
         Http.GET(key, this.query)
           .then(({data: {data}}) => {
+            console.log('sortParam: ', this.query.sort, 'orderParam: ', this.query.order)
+            if (this.query.sort === 'PROFILE_COMPLETION_SCORE') {
+              this.sortParam = 'PROFILE COMPLETION SCORE'
+            } else if (this.query.sort === 'DOCUMENT_UPLOAD') {
+              this.sortParam = 'DOCUMENT UPLOAD'
+            } else if (this.query.sort === 'CREATION_DATE') {
+              this.sortParam = 'ACCOUNT CREATION DATE'
+            }
+            if (this.query.order === 'DESC') {
+              this.orderParam = 'DESC'
+            } else if (this.query.order === 'ASC') {
+              this.orderParam = 'ASC'
+            }
             this.showLoader = false
             console.log('Success, got members: ', data)
             this.members = data
@@ -1119,7 +1136,7 @@
           profileCompletionScoreEndRange: '',
           startSignUpDate: '',
           endSignUpDate: '',
-          sort: 'DOCUMENT_UPLOAD',
+          sort: 'PROFILE_COMPLETION_SCORE',
           order: 'DESC',
           pageNumber: 0,
           pageSize: 10
@@ -1175,6 +1192,19 @@
         this.showLoader = true
         Http.GET('member', this.query)
           .then(({data: {data}}) => {
+            console.log('sortParam: ', this.query.sort, 'orderParam: ', this.query.order)
+            if (this.query.sort === 'PROFILE_COMPLETION_SCORE') {
+              this.sortParam = 'PROFILE COMPLETION SCORE'
+            } else if (this.query.sort === 'DOCUMENT_UPLOAD') {
+              this.sortParam = 'DOCUMENT UPLOAD'
+            } else if (this.query.sort === 'CREATION_DATE') {
+              this.sortParam = 'ACCOUNT CREATION DATE'
+            }
+            if (this.query.order === 'DESC') {
+              this.orderParam = 'DESC'
+            } else if (this.query.order === 'ASC') {
+              this.orderParam = 'ASC'
+            }
             this.showLoader = false
             console.log('Success in getting filtered results, data: ', data)
             this.members = data
