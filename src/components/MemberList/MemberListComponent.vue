@@ -315,7 +315,7 @@
           <!--========================================= my filters ==================================================-->     
     <div class="table-responsive gr-12">
       <br>
-      <strong>Sorted by {{sortParam}} in {{orderParam}} order</strong>
+      <strong v-if="members.list && members.list.length > 0">Sorted by {{sortParam}} in {{orderParam}} order</strong>
       <table id="memberlist-table" class="table ui celled" cellspacing="0" width="80%" v-if="members.list && members.list.length > 0">
         <thead>
           <tr>
