@@ -30,7 +30,7 @@
                 <form  v-on:submit.prevent="acceptVerification" v-on:reset.prevent="rejectVerification">
                   <br>
                   <div class="row text-center red" v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'">
-                    <i class="fa fa-times" aria-hidden="true"></i> NOT VERIFIED
+                    <i class="fa fa-times" aria-hidden="true"></i> DATA NOT VERIFIED
                     <br> <br>
                     <div class="gr-10 push-1">
                       <textarea v-model="verificationComment" placeholder="Enter comment" required></textarea>
@@ -57,7 +57,7 @@
 
                   <div v-else-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' && verificationType === 'VERIFY')" class="row" >
                     <div class="text-center inprogress-color">
-                      <i class="fa fa-spinner" aria-hidden="true"></i> IN PROGRESS
+                      <i class="fa fa-spinner" aria-hidden="true"></i> DATA VERIFIED
                     </div>
                     <br>
                     <div class="gr-4 push-1 text-left">
@@ -86,7 +86,7 @@
                   <div v-else-if="(verificationStatus === 'REJECTED' && verificationType === null) || (verificationStatus === 'REJECT' && verificationType === 'VERIFY')"
                       class="row justify-content-center text-center">
                     <div class="red">
-                      <i class="fa fa-times"></i> REJECTED
+                      <i class="fa fa-times"></i> DATA VERIFICATION REJECTED
                     </div>
                     <br>
                     <div class="gr-5" >
@@ -143,7 +143,7 @@
 
                   <div v-else-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') || (verificationStatus === 'VERIFIED' && verificationType === null) || (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
                     <div class="verified-color">
-                      <i class="fa fa-check"></i> VERIFIED
+                      <i class="fa fa-check"></i> DATA VERIFIED
                     </div>
                     <br>
                     <div class="gr-5 text-left">
@@ -178,7 +178,7 @@
                   (verificationStatus === 'VERIFIED' && verificationType === null) ||
                   (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
                   <div class="verified-color">
-                    <i class="fa fa-check"></i> APPROVED
+                    <i class="fa fa-check"></i> ACCOUNT VERIFIED
                   </div>
                   <br>
                   <div class="gr-5 text-left">
@@ -204,7 +204,7 @@
                 <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT')
                 && verificationType === 'APPROVE'">
                   <div class="red text-center">
-                    <i class="fa fa-times"></i> APPROVAL REJECTED
+                    <i class="fa fa-times"></i> ACCOUNT VERIFICATION REJECTED
                   </div>
                   <br>
                   <div class="gr-5 text-left">
@@ -233,7 +233,7 @@
                     <div v-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' &&
                   verificationType === 'VERIFY')" class="row text-center">
                       <div class="red">
-                        <i class="fa fa-times"></i> NOT APPROVED
+                        <i class="fa fa-times"></i> ACCOUNT NOT VERIFIED
                       </div>
                       <br> <br>
                       <textarea v-model="approvalComment" placeholder="Enter comment" required
@@ -253,7 +253,7 @@
 
                     <div v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'" class="row text-center">
                       <div class="red">
-                        <i class="fa fa-times"></i> NOT APPROVED
+                        <i class="fa fa-times"></i> ACCOUNT NOT VERIFIED
                       </div>
                     </div>
 
@@ -271,7 +271,7 @@
           <button data-toggle="modal" data-target="#MemberUnverifiedModal" data-backdrop="false"
           class="button-md-verify width-100">
             <i class="fa fa-times" aria-hidden="true"></i>
-            Unverify
+            Reverify
           </button>
         </div>
 
@@ -282,7 +282,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                <h4 class="modal-title"> Confirm Unverification (max. 250 characters) </h4>
+                <h4 class="modal-title"> Confirm Reverification (max. 250 characters) </h4>
               </div>
               <div class="modal-body">
                 <div class="form-group">
@@ -314,7 +314,7 @@
               </div>
               <div class="modal-footer">
 
-                <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="unverifyMember()" :disabled="paramData.comment === null || paramData.comment === ''">Unverify</button>
+                <button type="submit" class="btn btn-sm btn-default btn-active-til" data-dismiss="modal" @click="unverifyMember()" :disabled="paramData.comment === null || paramData.comment === ''">Reverify</button>
                 <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
               </div>
             </div>
