@@ -27,7 +27,7 @@
             <td class="gr-6 verification-block">
               <!--How cow verification status: {{ verificationStatus }} and verification type: {{ verificationType }}-->
               <div v-restrict="'MS_MM_USER_VERIFICATION_VERIFY'">
-                <form  v-on:submit.prevent="acceptVerification" v-on:reset.prevent="rejectVerification">
+                <form  v-on:submit.prevent="changeStatus('acceptVerification')" v-on:reset.prevent="changeStatus('rejectVerification')">
                   <br>
                   <div class="row text-center red" v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'">
                     <i class="fa fa-times" aria-hidden="true"></i> DATA NOT VERIFIED
@@ -228,7 +228,7 @@
                 </div>
 
                 <div v-else>
-                  <form v-on:submit.prevent="acceptApproval" v-on:reset.prevent="rejectApproval">
+                  <form v-on:submit.prevent="changeStatus('acceptApproval')" v-on:reset.prevent="changeStatus('rejectApproval')">
 
                     <div v-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' &&
                   verificationType === 'VERIFY')" class="row text-center">
@@ -323,6 +323,38 @@
       </div>
     </div>
 
+    <div id="VerificationStatusChangeModal" class="modal fade" role="dialog">
+      <div class="modal-dialog  modal-md">
+        <!-- Modal content-->
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" >&times;</button>
+            <h4 class="modal-title"> Change verification status of the Member? </h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <span>
+                    <div class="comment">
+                      <!--<span>Browse</span>-->
+                      <b>Member's verification status will be changed by this action. Do you want to make this change?</b>
+                    </div>
+                    <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-default btn-active-til" @click="changeVerificationStatus" data-dismiss="modal">Confirm</button>
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="gr-12 w3-header-card">
         <div class="gr-12 panel-label">
           <label class="text-label"><b>Verification History</b></label>
@@ -409,7 +441,8 @@
         approver: {},
         verifier: {},
         accountClassMapper: {},
-        classes: []
+        classes: [],
+        action: null
       }
     },
     created () {
@@ -451,6 +484,17 @@
               console.log('error getting service list', error)
             }
           )
+      },
+      changeStatus (param) {
+        $('#VerificationStatusChangeModal').modal('show')
+        this.action = param
+      },
+      changeVerificationStatus () {
+        console.log('CHANGING STATUS...', this.action)
+        if (this.action === 'acceptVerification') this.acceptVerification()
+        else if (this.action === 'rejectVerification') this.rejectVerification()
+        else if (this.action === 'acceptApproval') this.acceptApproval()
+        else if (this.action === 'rejectApproval') this.rejectApproval()
       },
       acceptVerification () {
         let request = {
