@@ -55,7 +55,7 @@
                   </div>
 
 
-                  <div v-else-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' && verificationType === 'VERIFY')" class="row" >
+                  <div v-else-if="verificationStatus === 'IN_PROGRESS'" class="row" >
                     <div class="text-center inprogress-color">
                       <i class="fa fa-spinner" aria-hidden="true"></i> DATA VERIFIED
                     </div>
@@ -83,7 +83,7 @@
 
                   </div>
 
-                  <div v-else-if="(verificationStatus === 'REJECTED' && verificationType === null) || (verificationStatus === 'REJECT' && verificationType === 'VERIFY')"
+                  <div v-else-if="verificationStatus === 'REJECTED'"
                       class="row justify-content-center text-center">
                     <div class="red">
                       <i class="fa fa-times"></i> DATA VERIFICATION REJECTED
@@ -112,7 +112,7 @@
                     </div>
                   </div>
 
-                  <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT') && verificationType === 'APPROVE'">
+                  <div v-else-if="verificationStatus === 'REJECTED'">
                     <div class="text-center inprogress-color">
 
                     </div>
@@ -141,7 +141,7 @@
 
 
 
-                  <div v-else-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') || (verificationStatus === 'VERIFIED' && verificationType === null) || (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
+                  <div v-else-if="verificationStatus === 'VERIFIED'" class="row text-center">
                     <div class="verified-color">
                       <i class="fa fa-check"></i> DATA VERIFIED
                     </div>
@@ -174,9 +174,7 @@
             <td class="gr-6 height-280">
               <br>
               <div v-restrict="'MS_MM_USER_VERIFICATION_APPROVE'">
-                <div v-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
-                  (verificationStatus === 'VERIFIED' && verificationType === null) ||
-                  (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
+                <div v-if="verificationStatus === 'VERIFIED'" class="row text-center">
                   <div class="verified-color">
                     <i class="fa fa-check"></i> ACCOUNT VERIFIED
                   </div>
@@ -201,8 +199,7 @@
                   </div>
                 </div>
 
-                <div v-else-if="(verificationStatus === 'REJECTED' || verificationStatus === 'REJECT')
-                && verificationType === 'APPROVE'">
+                <div v-else-if="verificationStatus === 'REJECTED'">
                   <div class="red text-center">
                     <i class="fa fa-times"></i> ACCOUNT VERIFICATION REJECTED
                   </div>
@@ -230,8 +227,7 @@
                 <div v-else>
                   <form v-on:submit.prevent="changeStatus('acceptApproval')" v-on:reset.prevent="changeStatus('rejectApproval')">
 
-                    <div v-if="verificationStatus === 'IN_PROGRESS' || (verificationStatus === 'ACCEPT' &&
-                  verificationType === 'VERIFY')" class="row text-center">
+                    <div v-if="verificationStatus === 'IN_PROGRESS'" class="row text-center">
                       <div class="red">
                         <i class="fa fa-times"></i> ACCOUNT NOT VERIFIED
                       </div>
@@ -265,9 +261,7 @@
           </tr>
           </tbody>
         </table>
-        <div v-restrict="'MS_MM_USER_VERIFICATION_REVOKE'" v-if="(verificationStatus === 'ACCEPT' && verificationType === 'APPROVE') ||
-                  (verificationStatus === 'VERIFIED' && verificationType === null) ||
-                  (verificationStatus === 'VERIFIED' && verificationType === 'APPROVE')" class="row text-center">
+        <div v-restrict="'MS_MM_USER_VERIFICATION_REVOKE'" v-if="verificationStatus === 'VERIFIED'" class="row text-center">
           <button data-toggle="modal" data-target="#MemberUnverifiedModal" data-backdrop="false"
           class="button-md-verify width-100">
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -299,7 +293,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <div class="row">
                     <div class="col-md-6 col-md-offset-2">
                       Account Class:
@@ -310,7 +304,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="modal-footer">
 
@@ -382,7 +376,7 @@
                       <div class="chat-body clearfix">
                         <div class="header">
                           <strong class="primary-font">
-                          {{history.verificationType == 'APPROVE'? 'Account Verification' : 'Data Verification'}} {{ history.verificationStatus }}</strong> by
+                          {{ history.verificationStatus | underscoreless }}</strong> by
                           <strong class="primary-font">{{ history.adminLoginId ? history.adminLoginId : (history.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User') }}  </strong>
                           <small class="pull-right text-muted">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
@@ -427,7 +421,7 @@
     data () {
       return {
         verificationStatus: '',
-        verificationType: '',
+        // verificationType: '',
         approvalHistory: [],
         verificationHistory: [],
         verificationComment: '',
@@ -448,8 +442,7 @@
     created () {
       console.log('verify and approve component::', this.member)
       this.init()
-      console.log('verification information component created, verification status: ', this.verificationStatus,
-        ', verirification type: ', this.verificationType)
+      console.log('verification information component created, verification status: ', this.verificationStatus)
     },
     methods: {
       init () {
@@ -461,16 +454,16 @@
         this.verificationStatus = this.member.basicInfo.verificationStatus
         // this.verificationType = this.approvalHistory && this.approvalHistory.length > 0 ? this.approvalHistory[this.approvalHistory.length - 1].verificationType : null
         if (this.member.approveDetails) {
-          this.verificationType = this.member.approveDetails.verificationType
+          // this.verificationType = this.member.approveDetails.verificationType
           this.approver = this.member.approveDetails
           this.verifier = this.member.verifyDetails
         } else if (this.member.verifyDetails) {
-          this.verificationType = this.member.verifyDetails.verificationType
+          // this.verificationType = this.member.verifyDetails.verificationType
           this.verifier = this.member.verifyDetails
         } else {
-          this.verificationType = null
+          // this.verificationType = null
         }
-        console.log('verification status: ', this.verificationStatus, ' verification type: ', this.verificationType)
+        console.log('verification status: ', this.verificationStatus)
         Http.GET('resource', ['account-class'])
           .then(
             ({data: {data: classes}}) => {
@@ -498,8 +491,8 @@
       },
       acceptVerification () {
         let request = {
-          'comment': this.verificationComment,
-          'status': 'ACCEPT'
+          'message': this.verificationComment,
+          'verificationStatus': 'IN_PROGRESS'
         }
         console.log('verification request: ', request, ' this.id: ', this.id)
         this.showLoader = true
@@ -518,7 +511,7 @@
               })
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
-              this.verificationType = verificationResponse.verificationType
+              // this.verificationType = verificationResponse.verificationType
               this.verificationHistory.unshift(verificationResponse)
               console.log('now, verification history: ', this.verificationHistory)
               this.verifier = verificationResponse
@@ -541,8 +534,8 @@
       },
       rejectVerification () {
         let request = {
-          'comment': this.verificationComment,
-          'status': 'REJECT'
+          'message': this.verificationComment,
+          'verificationStatus': 'REJECTED'
         }
         console.log('verification request: ', request)
         this.showLoader = true
@@ -561,7 +554,7 @@
               })
               console.log('verification request response::', verificationResponse)
               this.verificationStatus = verificationResponse.verificationStatus
-              this.verificationType = verificationResponse.verificationType
+              // this.verificationType = verificationResponse.verificationType
               this.verificationHistory.unshift(verificationResponse)
               console.log('now, verification history: ', this.verificationHistory)
               this.verifier = verificationResponse
@@ -584,12 +577,12 @@
       },
       acceptApproval () {
         let request = {
-          'comment': this.approvalComment,
-          'status': 'ACCEPT'
+          'message': this.approvalComment,
+          'verificationStatus': 'VERIFIED'
         }
         console.log('approval request: ', request)
         this.showLoader = true
-        Http.PUT('verification', request, [this.id, 'approve'])
+        Http.PUT('verification', request, [this.id])
           .then(
             ({data: approvalResponse}) => {
               $.notify({
@@ -604,7 +597,7 @@
               this.showLoader = false
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
-              this.verificationType = approvalResponse.data.verificationType
+              // this.verificationType = approvalResponse.data.verificationType
               this.verificationHistory.unshift(approvalResponse.data)
               this.approver = approvalResponse.data
               console.log('now, approval history: ', this.verificationHistory)
@@ -627,18 +620,18 @@
       },
       rejectApproval () {
         let request = {
-          'comment': this.approvalComment,
-          'status': 'REJECT'
+          'message': this.approvalComment,
+          'verificationStatus': 'REJECTED'
         }
         console.log('approval request: ', request)
         this.showLoader = true
-        Http.PUT('verification', request, [this.id, 'approve'])
+        Http.PUT('verification', request, [this.id])
           .then(
             ({data: approvalResponse}) => {
               this.showLoader = false
               console.log('approval request response::', approvalResponse)
               this.verificationStatus = approvalResponse.data.verificationStatus
-              this.verificationType = approvalResponse.data.verificationType
+              // this.verificationType = approvalResponse.data.verificationType
               this.verificationHistory.unshift(approvalResponse.data)
               console.log('now, approval history: ', this.verificationHistory)
               this.approver = approvalResponse.data
@@ -652,8 +645,12 @@
       },
       unverifyMember () {
         console.log(this.paramData)
+        let request = {
+          'message': this.paramData.comment,
+          'verificationStatus': 'NOT_VERIFIED'
+        }
         this.showLoader = true
-        Http.PUT('verification', this.paramData, [this.id, 'revoke-verification'])
+        Http.PUT('verification', request, [this.id])
           .then(
             ({data: revokeResponse}) => {
               this.showLoader = false
@@ -668,7 +665,7 @@
               })
               console.log('revoke request response::', revokeResponse)
               this.verificationStatus = revokeResponse.data.verificationStatus
-              this.verificationType = revokeResponse.data.verificationType
+              // this.verificationType = revokeResponse.data.verificationType
               this.verificationHistory.unshift(revokeResponse.data)
               console.log('now, approval history: ', this.verificationHistory)
               this.clearComment()
