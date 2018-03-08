@@ -350,7 +350,7 @@
                       <div class="chat-body clearfix">
                         <div class="header">
                           <strong class="primary-font">
-                          {{history.verificationType == 'APPROVE'? 'Approval' : 'Verification'}} {{ history.verificationStatus }}</strong> by
+                          {{history.verificationType == 'APPROVE'? 'Account Verification' : 'Data Verification'}} {{ history.verificationStatus }}</strong> by
                           <strong class="primary-font">{{ history.adminLoginId ? history.adminLoginId : (history.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User') }}  </strong>
                           <small class="pull-right text-muted">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
