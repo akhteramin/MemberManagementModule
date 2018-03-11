@@ -44,20 +44,20 @@
             <table class="table ui celled" cellspacing="0" width="100%" v-if="activities.list.length > 0">
             <thead class="thead-default">
             <tr>
+                <th class="text-center">Time</th>
                 <th class="text-center">Actor</th>
                 <th class="text-center">Activity</th>
                 <th class="text-center">Device Information</th>
                 <th class="text-center">Service ID</th>
-                <th class="text-center">Time</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="activity in activities.list" >
+                <td>{{ activity.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}</td> 
                 <td>{{ activity.adminLoginId }}</td>
                 <td>{{ activity.description }}</td>
                 <td>{{ activity.deviceId }} </td> <!--{{ activity.deviceBrowser }}-->
                 <td>{{ activity.serviceId }}</td>
-                <td>{{ activity.createdAt | date('MMM D, YYYY') }}</td>
             </tr>
             </tbody>
             </table>

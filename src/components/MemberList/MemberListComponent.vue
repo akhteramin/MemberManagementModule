@@ -192,7 +192,7 @@
                   <div class="select select-sm">
                     <select id="personal-business-select"  v-model="query.accountType">
                       <!--<option selected disabled>Select account type</option>-->
-                      <option selected value = "">Both</option>
+                      <option selected value = "">All</option>
                       <option value="1">Personal</option>
                       <option value="2">Business</option>
                     </select>

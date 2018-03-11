@@ -44,18 +44,18 @@
             <table class="table ui celled" cellspacing="0" width="100%" v-if="activities.activities.length > 0">
             <thead class="thead-default">
             <tr>
+                <th class="text-center">Time</th>
                 <th class="text-center">Activity</th>
                 <th class="text-center">Device Information</th>
                 <th class="text-center">User Agent</th>
-                <th class="text-center">Time</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="activity in activities.activities" >
+                <td class="text-center">{{ activity.time | date('MMM D, YYYY - HH:mm:ss a') }}</td>
                 <td class="text-center width-250">{{ activity.description }}</td>
                 <td class="text-center width-300">{{ activity.deviceName }}, {{ activity.deviceOs }}  </td> <!--{{ activity.deviceBrowser }}-->
                 <td class="text-center width-800">{{ activity.userAgentString }}</td>
-                <td class="text-center">{{ activity.time | date('MMM D, YYYY - HH:mm:ss a') }}</td>
             </tr>
             </tbody>
             </table>
