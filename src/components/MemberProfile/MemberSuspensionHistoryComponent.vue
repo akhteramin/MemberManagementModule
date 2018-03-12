@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <div class="form-group push-4">
+    <div class="form-group push-0">
       <!--<div class="gr-4">-->
         <!--<button type="submit" class="button-search">-->
           <!--<i class="fa fa-search" aria-hidden="true"></i> Search</button>-->
@@ -23,9 +23,9 @@
           <!--<i class="fa fa-undo" aria-hidden="true"></i> Reset</button>-->
       <!--</div>-->
 
-      <div id="container" class="gr-8 height-40">
+      <div id="container" class="gr-12 height-40">
         <!--<label class="gr-5" style="background-color: red; width: 250px;">Number of entries per page</label>-->
-        <div class="gr-2 push-10">
+        <div class="gr-1 push-11">
           <div class="select select-sm">
             <select v-model="suspensionHistoryQuery.pageSize" @change="getSuspensionHistory(true)">
               <option disabled>Number of Entries</option>

@@ -6,29 +6,29 @@
 
       <form v-on:submit.prevent="filter" v-on:reset.prevent="init">
         <br>
-        <div class="row">
+        <!-- <div class="row"> -->
           <div class="gr-12">
-            <div class="gr-3">
-              <div class="form-group">
-                <label> Mobile Number: </label>
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label> Mobile Number </label>
                 <input  name="mobilenumber" type="text" id="mobilenumber"
                         v-model="query.searchNumber" placeholder="+8801XXXXXXXXX"
                         value=""/>
               </div>
             </div>
-            <div class="gr-3">
-              <div class="form-group">
-                <label> Name: </label>
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label> Name </label>
                 <input  name="queryName" type="text" id="queryName" placeholder="Name"
                         v-model="query.searchName"
                         value=""/>
               </div>
             </div>
 
-            <div class="gr-3">
-              <div class="form-group">
-                <label class="push-2">iPay Account: </label>
-                <div class="push-1">
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label class="push-0">iPay Account </label>
+                <div class="push-0">
                   <div class="select select-sm">
                     <select  v-model="query.ipay">
                       <!--<option selected disabled>Select account type</option>-->
@@ -41,9 +41,9 @@
               </div>
             </div>
 
-            <div class="gr-3">
-              <div class="form-group">
-                <label class="push-2"> Verified: </label>
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label class="push-0"> Verified </label>
                 <div class="push-0">
                   <div class="select select-sm">
                     <select id="verification-status" v-model="query.verified">
@@ -57,20 +57,23 @@
             </div>
           </div>
 
-          <div class="gr-4 push-5">
-            <div class="form-group">
-              <button type="submit" class="button-search" :disabled="showLoader">
-                <i class="fa fa-search" aria-hidden="true"></i>
-                Search
-              </button>
-              <button type="reset" class="button-reset" :disabled="showLoader">
-                <i class="fa fa-undo" aria-hidden="true"></i>
-                Reset
-              </button>
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+          <div class="gr-12">
+            <div class="gr-4 push-4">
+              <div class="form-group text-right">
+                <button type="submit" class="button-search" :disabled="showLoader">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  Search
+                </button>
+                <button type="reset" class="button-reset" :disabled="showLoader">
+                  <i class="fa fa-undo" aria-hidden="true"></i>
+                  Reset
+                </button>
+              </div>
             </div>
           </div>
-
-        </div>
+        <!-- </div> -->
       </form>
       <!-- ================================ Filter ============================== -->
       <br>

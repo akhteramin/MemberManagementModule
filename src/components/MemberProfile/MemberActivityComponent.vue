@@ -1,42 +1,47 @@
  <template>
     <div>
         <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
-            <div class="form-group gr-12">
-            <div  class="text-center">
-              <br>
-              <div class="gr-3">
-                <label> From: </label>
-                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromDate" placeholder="activityQuery.fromDate"  v-model="searchFromDate"/>
-              </div>
-              <div class="gr-3">
-                <label>To:</label>
-                <input type="date" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="activityQuery.toDate" v-model="searchToDate"/>
-              </div>
-              <div class="gr-4">
-                <label class="justify-content-md-start" for="search-key">Description</label>
-                <input id="search-key" v-model="activityQuery.searchKey"
-                       placeholder="description" type="text">
-              </div>
-            </div>
-            </div>
-            <div class="form-group push-4">
-              <div class="gr-4">
-                <button type="submit" class="button-search" :disabled="showLoader">
-                  <i class="fa fa-search" aria-hidden="true"></i> Search</button>
-                <button type="reset" class="button-reset" :disabled="showLoader">
-                  <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
-              </div>
-              <div class="gr-1 push-3">
-                <div class="select select-sm">
-                  <select v-model="activityQuery.count" @change="triggerSearchActivities">
-                    <option disabled>Number of Entries</option>
-                    <option selected value=10>10</option>
-                    <option value=20>20</option>
-                    <option value=30>30</option>
-                    <option value=50>50</option>
-                  </select>
+            <div class="gr-12">
+              <div class="gr-2">
+                <div class="form-group padding-5">
+                  <label>From </label>
+                  <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromDate" placeholder="activityQuery.fromDate"  v-model="searchFromDate"/>
                 </div>
               </div>
+              <div class="gr-2">
+                <div class="form-group padding-5">
+                  <label>To</label>
+                  <input type="date" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="activityQuery.toDate" v-model="searchToDate"/>
+                </div>
+              </div>
+              <div class="gr-2">
+                <div class="form-group padding-5">
+                  <label class="justify-content-md-start" for="search-key">Description</label>
+                  <input id="search-key" v-model="activityQuery.searchKey"
+                        placeholder="description" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="gr-12">
+              <div class="gr-2 push-4">
+                <div class="form-group text-right">
+                  <button type="submit" class="button-search" :disabled="showLoader">
+                    <i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                  <button type="reset" class="button-reset" :disabled="showLoader">
+                    <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
+                </div>
+              </div>
+              <div class="gr-1 push-9">
+                  <div class="select select-sm">
+                    <select v-model="activityQuery.count" @change="triggerSearchActivities">
+                      <option disabled>Number of Entries</option>
+                      <option selected value=10>10</option>
+                      <option value=20>20</option>
+                      <option value=30>30</option>
+                      <option value=50>50</option>
+                    </select>
+                  </div>
+                </div>
             </div>
         </form>
 

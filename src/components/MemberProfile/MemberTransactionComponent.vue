@@ -19,24 +19,28 @@
 
       <br>
       <form @submit.prevent="filterTransactions" @reset.prevent="resetTransactions">
-          <div class="form-group gr-12">
-            <div class="gr-3">
-              <label> Date Range From: </label>
-              <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromRDate"  v-model="searchDateFrom" />
+          <div class="gr-12">
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label> Date Range From </label>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromRDate"  v-model="searchDateFrom" />
+              </div>
             </div>
-            <div class="gr-3">
-              <label>To:</label>
-              <input type="date" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="to"
-                     v-model="searchDateTo" />
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label>To</label>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="to"
+                      v-model="searchDateTo" />
+              </div>
             </div>
 
 
 
-            <div class="gr-3"> <!-- #8b9eb6; -->
-              <div class="form-group">
-                <label>Service Type: </label>
+            <div class="gr-2"> <!-- #8b9eb6; -->
+              <div class="form-group padding-5">
+                <label>Service Type </label>
                 <div>
-                  <div class="select">
+                  <div class="select select-sm">
                     <select id="sort-by-select" v-model="transactionQuery.serviceID">
                       <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
                       <option value=null disabled selected>Select Service Type</option>
@@ -47,11 +51,11 @@
               </div>
             </div>
 
-            <div class="gr-3"> <!-- #8b9eb6; -->
-              <div class="form-group">
-                <label>Type: </label>
+            <div class="gr-2"> <!-- #8b9eb6; -->
+              <div class="form-group padding-5">
+                <label>Type </label>
                 <div>
-                  <div class="select">
+                  <div class="select select-sm">
                     <select id="sort-by-select" v-model="transactionQuery.isPending">
                       <!--<select class="push-0.5" id="transaction-selector" v-model="transactionQuery.serviceID">-->
                       <option value="false" selected>Completed</option>
@@ -66,15 +70,17 @@
 
 
 
-          <div class="form-group push-4">
-            <div class="gr-4">
-              <button type="submit" class="button-search" :disabled="showLoader">
-                <i class="fa fa-search" aria-hidden="true"></i> Search</button>
-              <button type="reset" class="button-reset" :disabled="showLoader">
-                <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
+          <div class="gr-12">
+            <div class="gr-2 push-6">
+              <div class="form-group text-right">
+                <button type="submit" class="button-search" :disabled="showLoader">
+                  <i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                <button type="reset" class="button-reset" :disabled="showLoader">
+                  <i class="fa fa-undo" aria-hidden="true"></i> Reset</button>
+              </div>
             </div>
 
-            <div class="gr-1 push-3">
+            <div class="gr-1 push-9">
               <div class="select select-sm">
                 <select v-model="transactionQuery.pageSize">
                   <option disabled>Number of Entries</option>
