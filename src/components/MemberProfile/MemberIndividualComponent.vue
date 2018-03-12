@@ -9,13 +9,13 @@
               <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
             <div class="w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round">
               <div class="gr-12">
-                <div class="gr-2 margin-10">
+                <div class="gr-4 margin-0">
                   <p><b><h3>
                   <span v-if="balance">Current Balance: {{ balance.balance || 'N/A'}} BDT </span>
                   <span v-else>Current Balance: N/A </span>
                   </h3></b></p>
                 </div>
-                <div class="gr-6 push-7">
+                <div class="gr-6 push-5">
                   <div class="gr-3 padding-5 margin-10 text-right">
                     <span>
                     <b v-if="member.basicInfo.accountType == 1">{{member.basicInfo.name}}</b>
@@ -27,7 +27,7 @@
                     <br>
                     <span><b>{{member.basicInfo.profileCompletionScore}}%</b></span>
                     <br>
-                    <div class="select select-sm push-3">
+                    <div class="select select-sm push-0">
                       <select id="order-by-select"  v-model="member.basicInfo.accountStatus" @change="statusChange(id, member.basicInfo.accountStatus)">
                         <option value = "1">Active</option>
                         <option value = "2">Suspended</option>

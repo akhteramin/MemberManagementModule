@@ -161,7 +161,7 @@
           <div class="gr-12">
            <div class="gr-2">
               <div class="form-group padding-5">
-                <label> Mobile Number: </label>
+                <label> Mobile Number </label>
                 <input  name="mobilenumber" type="text" id="mobilenumber"
                         v-model="query.mobileNumber" placeholder="+8801XXXXXXXXX"
                         value=""/>
@@ -169,8 +169,8 @@
             </div>
             <div class="gr-2">
               <div class="form-group padding-5">
-                <label> Name: </label>
-                <input  name="queryName" type="text" id="queryName" placeholder="Name"
+                <label class="push-0"> Name </label>
+                <input class="push-0" name="queryName" type="text" id="queryName" placeholder="Name"
                         v-model="query.name"
                         value=""/>
               </div>
@@ -185,10 +185,10 @@
               </div>
             </div> -->
 
-            <div class="gr-3">
+            <div class="gr-2">
               <div class="form-group padding-5">
-                <label class="push-1">Account Type: </label>
-                <div class="push-1">
+                <label class="push-0">Account Type </label>
+                <div class="push-0">
                   <div class="select select-sm">
                     <select id="personal-business-select"  v-model="query.accountType">
                       <!--<option selected disabled>Select account type</option>-->
@@ -201,9 +201,9 @@
               </div>
             </div>
 
-            <div class="gr-3">
+            <div class="gr-2">
               <div class="form-group padding-5">
-                <label class="push-0"> Verification Status: </label>
+                <label class="push-0"> Verification Status </label>
                 <div class="push-0">
                   <div class="select select-sm">
                     <select id="verification-status" v-model="query.verificationStatus">
@@ -228,60 +228,70 @@
           <br>
           <div class="gr-12">
 
-            <div class="gr-3">
-              <label>Signup From: </label>
-              <input type="date" :max="new Date().toISOString().substring(0,10)" v-model="signUpDateFrom"/>
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label>Signup From </label>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" v-model="signUpDateFrom"/>
+              </div>
             </div>
-            <div class="gr-3">
-              <label>Signup To: </label>
-              <input type="date" :max="new Date().toISOString().substring(0,10)" v-model="signUpDateTo"/>
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label>Signup To </label>
+                <input type="date" :max="new Date().toISOString().substring(0,10)" v-model="signUpDateTo"/>
+              </div>
             </div>
 
-            <div class="gr-3">
-              <label class="push-2">Sort by: </label>
-              <div class="push-2">
-                <div class="select select-sm">
-                  <select id="sort-by-select"  v-model="query.sort">
-                    <!--<option selected disabled>Select account type</option>-->
-                    <option selected value="PROFILE_COMPLETION_SCORE">Profile Completion Score</option>
-                    <option value = "DOCUMENT_UPLOAD">Document Upload Date</option>
-                    <option value="CREATION_DATE">Account Creation Date</option>
-                  </select>
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label class="push-0">Sort by </label>
+                <div class="push-0">
+                  <div class="select select-sm">
+                    <select id="sort-by-select"  v-model="query.sort">
+                      <!--<option selected disabled>Select account type</option>-->
+                      <option selected value="PROFILE_COMPLETION_SCORE">Profile Completion Score</option>
+                      <option value = "DOCUMENT_UPLOAD">Document Upload Date</option>
+                      <option value="CREATION_DATE">Account Creation Date</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="gr-3">
-              <label class="offset-2">Order by: </label>
-              <div class="push-0">
-                <div class="select select-sm">
-                  <select id="order-by-select"  v-model="query.order">
-                    <!--<option selected disabled>Select account type</option>-->
-                    <option selected value = "DESC">DESC</option>
-                    <option value="ASC">ASC</option>
-                  </select>
+            <div class="gr-2">
+              <div class="form-group padding-5">
+                <label class="push-0">Order by </label>
+                <div class="push-0">
+                  <div class="select select-sm">
+                    <select id="order-by-select"  v-model="query.order">
+                      <!--<option selected disabled>Select account type</option>-->
+                      <option selected value = "DESC">DESC</option>
+                      <option value="ASC">ASC</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
 
 
           </div>
-          <div class="gr-6 push-2 text-center">
-            <br>
-              <label> Profile Completion Range: </label>
-              <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
-          </div>
-
-        </div>
-        <div class="gr-8 pointer">
-        <span class="advanced-search"></span>
-           <a @click="toggleAdvancedSearch">
-             <i class="fa fa-search-plus" aria-hidden="true" v-if="!doAdvancedSearch"></i>
-             <i class="fa fa-search-minus" aria-hidden="true" v-if="doAdvancedSearch"></i>
-             Advanced Search</a>
+          <div class="gr-12">
+            <div class="gr-6 push-2 text-center">
+              <br>
+                <label> Profile Completion Range </label>
+                <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
+            </div>
+          </div>  
         </div>
         <div class="gr-12">
-          <div class="gr-4 push-4">
-            <div class="form-group">
+          <br v-if="doAdvancedSearch">
+          <div class="gr-2 pointer">
+            <span class="advanced-search"></span>
+            <a @click="toggleAdvancedSearch">
+              <i class="fa fa-search-plus" aria-hidden="true" v-if="!doAdvancedSearch"></i>
+              <i class="fa fa-search-minus" aria-hidden="true" v-if="doAdvancedSearch"></i>
+              Advanced Search</a>
+          </div>
+          <div class="gr-2 push-4">
+            <div class="form-group text-right">
               <button type="submit" class="button-search" :disabled="showLoader">
                 <i class="fa fa-search" aria-hidden="true"></i>
                 Search
