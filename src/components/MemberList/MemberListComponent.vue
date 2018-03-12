@@ -1083,16 +1083,34 @@
           'message': this.memberComment,
           'effectiveFrom': new Date().getTime().toString()
         }
-//        this.showLoader = true
+        this.showLoader = true
         Http.PUT('mmAdminMember', paramData, [this.memberAccountID, 'status', accountStatus])
         .then(
           ({data: statusData}) => {
-//            this.showLoader = false
+            this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Success!</strong>',
+              message: 'Account Status changed successfully.'
+            }, {
+              // settings
+              type: 'success',
+              delay: 3000
+            })
             console.log('document data::', statusData)
             this.init()
           },
           error => {
-//            this.showLoader = false
+            this.showLoader = false
+            $.notify({
+              // options
+              title: '<strong>Changing Account Status failed!</strong>',
+              message: 'Please try again.'
+            }, {
+              // settings
+              type: 'danger',
+              delay: 3000
+            })
             console.log('Error vrification of document: ', error)
           }
         )
