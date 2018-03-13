@@ -3,11 +3,22 @@
     <div class="MenuComponent gr-2 menu-container" v-if="!collapseMenuComponent">
       <div>
         <div class="menu-header">
-          <img class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="110" height="50">
-          Admin
-          <button v-if="!collapseMenuComponent" @click="toggleCollapse" class="menu-expansion">
-            <i class="fa fa-arrow-left white" aria-hidden="true"></i>
-          </button>
+          <div class="gr-12">
+            <div class="gr-10">
+              <div class="row">
+                <img class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="90">
+              </div>
+              <div class="row padding-5">
+                <span class="padding-5">Member Service</span>
+              </div>
+            </div>
+            <div class="gr-2">
+              <br>
+              <button v-if="!collapseMenuComponent" @click="toggleCollapse" class="menu-expansion">
+                <i class="fa fa-arrow-left white" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <nav>
