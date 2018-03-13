@@ -11,7 +11,7 @@
               <div class="gr-12">
                 <div class="gr-4 margin-0">
                   <p><b><h3>
-                  <span v-if="balance">Current Balance: {{ balance.balance || 'N/A'}} BDT </span>
+                  <span v-if="balance">Current Balance: {{ balance.balance }} BDT </span>
                   <span v-else>Current Balance: N/A </span>
                   </h3></b></p>
                 </div>
