@@ -1,9 +1,5 @@
 const Constants = [
   {
-    id: 0,
-    name: 'TARGETED_NOTIFICATION'
-  },
-  {
     id: 1001,
     name: 'OPENING_BALANCE'
   },

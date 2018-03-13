@@ -346,26 +346,26 @@
         // Http call for identification documEnts
         this.showLoader = true
         Http.GET('member', [this.id, 'identification-documents'])
-           .then(
-             ({data: {list: documents}}) => {
-               this.showLoader = false
-               this.documents = documents
-//               console.log('docs::', this.documents)
-               for (var i = 0; i < this.documentTypes.length; i++) {
-                 if (this.documents.find(x => x.documentType === this.documentTypes[i].type)) {
-                   this.documentTypes[i].found = 'Found'
-                 } else {
-                   this.documentTypes[i].found = 'Not Found'
-                 }
-               }
+          .then(
+            ({data: {list: documents}}) => {
+              this.showLoader = false
+              this.documents = documents
+              console.log('docs::', this.documents)
+              for (var i = 0; i < this.documentTypes.length; i++) {
+                if (this.documents.find(x => x.documentType === this.documentTypes[i].type)) {
+                  this.documentTypes[i].found = 'Found'
+                } else {
+                  this.documentTypes[i].found = 'Not Found'
+                }
+              }
 //               console.log('Got the list of documents: ', this.documents, ' documents.length: ',
 //               this.documents.length)
 //               console.log('document types::', this.documentTypes)
-             },
-             error => {
-               this.showLoader = false
-               console.log('Error in getting list of identification documents, error: ', error)
-             }
+            },
+            error => {
+              this.showLoader = false
+              console.log('Error in getting list of identification documents, error: ', error)
+            }
            )
       },
       editIdentificationDocument (param = 'false') {
