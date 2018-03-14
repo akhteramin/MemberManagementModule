@@ -1,20 +1,5 @@
 <template>
     <div>
-        <div class="loaders loading" v-if="showLoader">
-        <div class="loader">
-          <div class="loader-inner ball-grid-pulse">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
       <div class="gr-6 push-4">
         <h1>iPay Member ACL</h1>
       </div>
@@ -38,7 +23,7 @@
                 </thead>
                 <tbody v-if="groups && groups.length > 0">
                     <tr v-for="groupData in filteredGroup" class="pointer">
-                        <td @click="highlightRow(); getService(groupData.id); ">
+                        <td :class="{'selected': groupData.id === group.id}" @click="getService(groupData.id)">
                              {{groupData.groupName}}
                         </td>
                     </tr>
@@ -194,7 +179,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-12" v-if="group.users.totalElements > 0">
+            <div class="col-md-12" v-if="group.users && group.users.totalElements > 0">
                 <div class="row">
                     <div class="gr-3">
                         <div v-if="group.users.userList">
@@ -501,7 +486,21 @@
                 </div>
             </div>
         </div>
-
+        <div class="loaders loading" v-if="showLoader">
+            <div class="loader">
+                <div class="loader-inner ball-grid-pulse">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -536,7 +535,8 @@ export default {
       enabledSearch: '',
       blockedSearch: '',
       memberSearch: '',
-      groupSearch: ''
+      groupSearch: '',
+      maxPaginationItem: ''
     }
   },
   computed: {
