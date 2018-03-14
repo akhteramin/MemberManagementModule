@@ -18,7 +18,7 @@
     </div>
 
     <div v-if="addressType==0">
-        <form v-on:submit.prevent="updateMemberAddress(addressType)">
+        <form v-on:submit.prevent="updateMemberAddress(0)">
             <div class="gr-6">
             <h3 class="text-left"><b>Present</b></h3>
             <br>
@@ -220,9 +220,9 @@
         updatedAddress.address['district'] = updatedAddress.address['districtId']
         updatedAddress.address['thana'] = updatedAddress.address['thanaId']
         updatedAddress.address['country'] = 'BD'
-        delete updatedAddress.address['thanaId']
-        delete updatedAddress.address['districtId']
-        delete updatedAddress.address['type']
+        // delete updatedAddress.address['thanaId']
+        // delete updatedAddress.address['districtId']
+        // delete updatedAddress.address['type']
         console.log('updatedAddress: ', updatedAddress)
         this.showLoader = true
         Http.PUT('mmAdminMember', updatedAddress, [this.id, 'address'])
