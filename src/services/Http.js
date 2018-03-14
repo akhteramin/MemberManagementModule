@@ -61,7 +61,7 @@ axios.interceptors.response.use(
 // const MM_ADMIN_URL = 'http://192.168.1.184:9001/api/v1'
 // const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
-// const MM_ADMIN_URL = 'http://10.10.10.10:9002/api/v1' // dev
+// const MM_ADMIN_URL = 'http://10.10.10.10:9001/api/v1' // dev
 const MM_ADMIN_URL = 'http://10.15.40.10:9001/api/v1' // test
 const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1' // test
 const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'

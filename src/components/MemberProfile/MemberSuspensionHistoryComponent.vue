@@ -60,7 +60,7 @@
             <td class="text-center">{{ suspension.effectiveFrom | date('MMM D, YYYY - HH:mm:ss a') }}</td>
             <td v-if="suspension.effectiveTo > 10000000000000" class="text-center">{{ 'N/A' }}</td>
             <td v-else class="text-center">{{ suspension.effectiveTo | date('MMM D, YYYY - HH:mm:ss a') }}</td>
-            <td class="text-center">{{ suspension.adminUserDetails ? suspension.adminUserDetails.name : 'SYSTEM' }}</td>
+            <td class="text-center">{{ suspension.adminLoginId ? suspension.adminLoginId : (suspension.verifierId === -1 ? 'Auto Verification' : 'Legacy Admin User') }}</td>
             <td class="width-350 text-center;">{{ suspension.description }}</td>
           </tr>
         </tbody>
