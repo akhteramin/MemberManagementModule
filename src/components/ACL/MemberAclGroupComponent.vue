@@ -597,7 +597,6 @@ export default {
       this.showLoader = true
       Http.GET('aclUserGroup', [param, 'services'])
         .then(({data: aclService}) => {
-          this.showLoader = false
           console.log('Success, got services: ', aclService)
           this.immutableServices = {
             enabledServices: Object.assign([], this.group.enabledServices),
@@ -606,9 +605,11 @@ export default {
         //   this.groupList = aclUserGroup.data.groupList
           Http.GET('aclUserGroup', [param, 'users'], this.query)
             .then(({data: users}) => {
+              this.showLoader = false
               this.group = Object.assign([], aclService, {userList: users.userList}, {users: users})
               console.log('Success, got userList: ', this.group.users)
             }, error => {
+              this.showLoader = false
               console.error('Error in offers: ', error)
             })
         }, error => {
