@@ -141,8 +141,6 @@
         console.log(this.member)
       },
       updateMemberBasicProfile () {
-        this.member.basicInfo.dateOfBirth = Date.parse(this.dob)
-        console.log(this.member.basicInfo)
         this.member.basicInfo.dob = Date.parse(this.dob)
         console.log('update member clicked, this.member.basicInfo: ', this.member.basicInfo)
         this.showLoader = true

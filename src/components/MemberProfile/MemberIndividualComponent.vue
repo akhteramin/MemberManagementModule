@@ -768,7 +768,7 @@
               console.log('Got, member success::')
               console.log('member basic info: ', this.member.basicInfo,
                 ' member verification history: ', this.member.verificationHistory)
-              this.member.basicInfo.dob = this.$options.filters.date(this.member.basicInfo.dateOfBirth, 'YYYY-MM-DD')
+              // this.member.basicInfo.dob = this.$options.filters.date(this.member.basicInfo.dob, 'YYYY-MM-DD')
               // check for address
 
               for (let indx in this.member.addresses) {
