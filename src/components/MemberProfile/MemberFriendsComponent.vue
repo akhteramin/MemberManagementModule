@@ -47,7 +47,7 @@
                 <div class="push-0">
                   <div class="select select-sm">
                     <select id="verification-status" v-model="query.verified">
-                      <option selected value = "null">All</option>
+                      <option selected :value ="null">All</option>
                       <option value=true>YES</option>
                       <option value=false>NO</option>
                     </select>
