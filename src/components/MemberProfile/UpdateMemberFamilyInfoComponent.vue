@@ -86,6 +86,8 @@
       },
       updateMemberParents () {
         // this.member.basicInfo.dob = Date.parse(this.member.basicInfo.dob)
+        if (this.member.basicInfo.fatherMobileNumber === '') this.member.basicInfo.fatherMobileNumber = null
+        if (this.member.basicInfo.motherMobileNumber === '') this.member.basicInfo.motherMobileNumber = null
         this.showLoader = true
         Http.PUT('mmAdminMember', this.member.basicInfo, [this.member.basicInfo.accountId])
           .then(

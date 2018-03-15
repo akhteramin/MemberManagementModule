@@ -222,106 +222,108 @@
                         </div>
 
                         <!--<hr>-->
-                      <div v-if="member.basicInfo.accountType===1">
-                        <div class="gr-12 panel-label margin-5">
-                          <div class="gr-2">
-                              <label class="text-label"><b>Family Information</b></label>
-                            </div>
-                            <div class="gr-2 push-7"
-                                 v-if="!editParentsMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
-                                <button class="button-md-verify" @click="editParents()">
-                                  <i class="fa fa-pencil-square-o"></i> Edit </button>
-                            </div>
-                        </div>
-                        <div v-if="!editParentsMode" class="gr-10">
-                          <div class="gr-2">
-                          Father Name:
-                          </div>
-                          <div class="gr-4 text-left">
-                            {{ member.basicInfo.father || 'N/A' }}
-
-                          </div>
-                          <div class="gr-2">
-                          Mother Name:
-                          </div>
-                          <div class="gr-4 text-left">
-                            {{ member.basicInfo.mother || 'N/A' }}
-                          </div>
-                          <div class="gr-2">
-                          Father Mobile:
-                          </div>
-                          <div class="gr-4 text-left">
-                            {{ member.basicInfo.fatherMobileNumber || 'N/A' }}
-                          </div>
-                          <div class="gr-2">
-                          Mother Mobile:
-                          </div>
-                          <div class="gr-4 text-left">
-                            {{ member.basicInfo.motherMobileNumber || 'N/A' }}
-                          </div>
-                        </div>
-                        <div class="gr-12" v-else>
-                          <update-member-parents
-                              :member="member"
-                              @update="editParents">
-                          </update-member-parents>
-                        </div>
-                      </div>
-                      <div class="gr-12" v-if="member.basicInfo.accountType===2">
-                        <div class="gr-1">
-                          <span v-if="member.businessDetails.businessOwnerPictures[0]">
-                              <img :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
-                              class="img-rounded img-responsive" alt="Profile Picture" width="130" height="100">
-                          </span>
-                          <span v-else>
-                              <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
-                          </span>
-                          <update-member-business-image
-                            :member="member"
-                            :id="id"
-                            @update="editProfilePic">
-                          </update-member-business-image>
-                        </div>
-                        <div class="gr-11">
+                        <div v-if="member.basicInfo.accountType===1">
                           <div class="gr-12 panel-label margin-5">
-
-                            <div class="gr-3">
-                              <label class="text-label"><b>Business Information</b></label>
-                            </div>
-
+                            <div class="gr-2">
+                                <label class="text-label"><b>Family Information</b></label>
+                              </div>
+                              <div class="gr-2 push-7"
+                                  v-if="!editParentsMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
+                                  <button class="button-md-verify" @click="editParents()">
+                                    <i class="fa fa-pencil-square-o"></i> Edit </button>
+                              </div>
                           </div>
-                          <div>
+                          <div v-if="!editParentsMode" class="gr-10">
                             <div class="gr-2">
-                            Business Name:
+                            Father Name:
                             </div>
                             <div class="gr-4 text-left">
-                              {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
+                              {{ member.basicInfo.father || 'N/A' }}
 
                             </div>
                             <div class="gr-2">
-                            Business Type:
+                            Mother Name:
                             </div>
                             <div class="gr-4 text-left">
-                              {{ member.businessDetails.businessBasicInfo.businessType || 'N/A' }}
+                              {{ member.basicInfo.mother || 'N/A' }}
                             </div>
                             <div class="gr-2">
-                            Email:
+                            Father Mobile:
                             </div>
                             <div class="gr-4 text-left">
-                              {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
+                              {{ member.basicInfo.fatherMobileNumber || 'N/A' }}
                             </div>
                             <div class="gr-2">
-                            Ipay Number:
+                            Mother Mobile:
                             </div>
                             <div class="gr-4 text-left">
-                              {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                              {{ member.basicInfo.motherMobileNumber || 'N/A' }}
                             </div>
+                          </div>
+                          <div class="gr-12" v-else>
+                            <update-member-parents
+                                :member="member"
+                                @update="editParents">
+                            </update-member-parents>
                           </div>
                         </div>
+                        <div class="gr-12" v-if="member.basicInfo.accountType===2">
+                          <div class="gr-1">
+                            <span v-if="member.businessDetails.businessOwnerPictures[0]">
+                                <img :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
+                                class="img-rounded img-responsive" alt="Profile Picture" width="130" height="100">
+                            </span>
+                            <span v-else>
+                                <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
+                            </span>
+                            <update-member-business-image
+                              :member="member"
+                              :id="id"
+                              @update="editProfilePic">
+                            </update-member-business-image>
+                          </div>
+                          <div class="gr-11">
+                            <div class="gr-12 panel-label margin-5">
 
-                      </div>
-                      <div class="gr-12" v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE') && (member.basicInfo.verificationStatus !== 'VERIFIED' || (member.basicInfo.verificationStatus === 'VERIFIED' && !memberMissingInfo.isVerifiable) )">
-                            <div class="gr-12 panel-label"><b>Missing Information</b></div>
+                              <div class="gr-3">
+                                <label class="text-label"><b>Business Information</b></label>
+                              </div>
+
+                            </div>
+                            <div>
+                              <div class="gr-2">
+                              Business Name:
+                              </div>
+                              <div class="gr-4 text-left">
+                                {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
+
+                              </div>
+                              <div class="gr-2">
+                              Business Type:
+                              </div>
+                              <div class="gr-4 text-left">
+                                {{ member.businessDetails.businessBasicInfo.businessType || 'N/A' }}
+                              </div>
+                              <div class="gr-2">
+                              Email:
+                              </div>
+                              <div class="gr-4 text-left">
+                                {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
+                              </div>
+                              <div class="gr-2">
+                              Ipay Number:
+                              </div>
+                              <div class="gr-4 text-left">
+                                {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE') && (member.basicInfo.verificationStatus !== 'VERIFIED' || (member.basicInfo.verificationStatus === 'VERIFIED' && !memberMissingInfo.isVerifiable) )">
+                            <div class="gr-12 panel-label margin-5">
+                              <label class="text-label"><b>Missing Information</b></label>
+                            </div>
                             <hr>
                             <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
                                 No missing Information.This Member is <b>Verifiable</b>.
