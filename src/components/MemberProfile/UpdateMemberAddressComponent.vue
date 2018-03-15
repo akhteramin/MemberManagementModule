@@ -250,7 +250,7 @@
               $.notify({
                 // options
                 title: '<strong>Failure!</strong>',
-                message: error.response.data.message
+                message: 'Address Update failed'
               }, {
                 // settings
                 type: 'danger',
