@@ -23,13 +23,15 @@
             <div class="gr-2">
               <div class="form-group padding-5">
                 <label> Date Range From </label>
-                <input type="date" :max="new Date().toISOString().substring(0,10)" name="fromRDate"  v-model="searchDateFrom" />
+                <input type="date" :max="searchDateTo !== null && searchDateTo !== '' ?
+                new Date(searchDateTo).toISOString().substring(0,10)
+                : new Date().toISOString().substring(0,10)" name="fromRDate"  v-model="searchDateFrom" />
               </div>
             </div>
             <div class="gr-2">
               <div class="form-group padding-5">
                 <label>To</label>
-                <input :disabled="searchDateFrom === null || searchDateFrom === ''" type="date" :min="new Date(searchDateFrom).toISOString().substring(0,10)" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="to"
+                <input type="date" :min="new Date(searchDateFrom).toISOString().substring(0,10)" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="to"
                       v-model="searchDateTo" />
               </div>
             </div>
