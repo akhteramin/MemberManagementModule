@@ -25,18 +25,27 @@
                 <td>{{ item.documentType ? item.documentType : 'N/A' | underscoreless}}</td>
                 <td>{{ item.documentIdNumber ? item.documentIdNumber : 'N/A' }}</td>
                 <td>
-                    <button data-toggle="modal" data-target="#DocumentPreviewModal" data-backdrop="false" @click="setPreviewDocument(item)">
-                      <img default-src="/images/default-news-feed.jpg"
-                      v-if="!isPdf(item.documentUrl)"
-                      :src="documentBaseUrl + item.documentUrl"
-                      alt="Profile Picture"
-                      height="50"
-                      width="auto"
-                      class="img-rounded">
-                      <i v-if="isPdf(item.documentUrl)"
-                      class="fa fa-file-pdf-o font-size-50"
-                      aria-hidden="true"></i>
-                    </button>
+                  <table>
+                  <tbody>
+                  <tr v-for="page in item.documentPages">
+                    <td>
+                      <button data-toggle="modal" data-target="#DocumentPreviewModal" data-backdrop="false" @click="setPreviewDocument(page)">
+                        <img default-src="/images/default-document-icon.png"
+                        v-if="!isPdf(page.url)"
+                        :src="documentBaseUrl + page.url"
+                        onerror="onerror=null; src='/static/images/default-document-icon.png'"
+                        height="50"
+                        width="auto"
+                        class="img-rounded">
+                        <i v-if="isPdf(page.url)"
+                        class="fa fa-file-pdf-o font-size-50"
+                        alt="PDF"
+                        aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                  </table>
                 </td>
                 <td>{{ item.documentVerificationStatus | underscoreless }}</td>
                 <td v-if="containsPermission('MS_MM_USER_ADD_DOC')">
@@ -144,27 +153,29 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" >&times;</button>
-                    <h4 class="modal-title"> Document {{ document.documentType }} </h4>
+                    <!-- <h4 class="modal-title"> Document {{ document.documentType }} </h4> -->
                   </div>
                   <div class="modal-body">
                     <div class="form-group">
 
                       <div class="row">
                         <div class="col-md-3">
-                          <label class="control-label">Document:</label>
+                          <label class="control-label">Document</label>
                         </div>
                         <div class="col-md-8">
                           <div>
-                              <div v-if="!isPdf(document.documentUrl)">
-                                <img id="ppImage" v-if="document.documentUrl"
-                                      :src="documentBaseUrl+document.documentUrl || 'static/images/default-original.jpg'"
+                              <div v-if="!isPdf(document.url)">
+                                <img id="ppImage" v-if="document.url"
+                                      :src="documentBaseUrl+document.url || 'static/images/default-document-icon.png'"
+                                      onerror="onerror=null; src='/static/images/default-document-icon.png'"
                                       class="img-rounded" width="250" height="250">
 
-                                <img v-else src="static/images/default-original.jpg" class="img-rounded"
-                                    alt="N/A" width="30" height="30">
+                                <img v-else src="/static/images/default-document-icon.png" class="img-rounded"
+                                    onerror="onerror=null; src='/static/images/default-document-icon.png'" width="30" height="30">
                               </div>
-                              <div v-if="isPdf(document.documentUrl)">
-                                  <iframe :src="documentBaseUrl+document.documentUrl" width="400" height="400"></iframe>
+                              <div v-if="isPdf(document.url)">
+                                  <iframe :src="documentBaseUrl+document.url"
+                                  alt="PDF" width="400" height="400"></iframe>
                               </div>
 
 
