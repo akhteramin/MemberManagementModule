@@ -32,7 +32,7 @@
                   <div class="select select-sm">
                     <select  v-model="query.ipay">
                       <!--<option selected disabled>Select account type</option>-->
-                      <option selected value = null>BOTH</option>
+                      <option selected :value ="null">BOTH</option>
                       <option value=true>YES</option>
                       <option value=false>NO</option>
                     </select>
