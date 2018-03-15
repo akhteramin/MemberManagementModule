@@ -29,7 +29,7 @@
             <div class="gr-2">
               <div class="form-group padding-5">
                 <label>To</label>
-                <input type="date" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="to"
+                <input :disabled="searchDateFrom === null || searchDateFrom === ''" type="date" :min="new Date(searchDateFrom).toISOString().substring(0,10)" :max="new Date().toISOString().substring(0,10)" name="toRange"  placeholder="to"
                       v-model="searchDateTo" />
               </div>
             </div>
@@ -96,7 +96,7 @@
 
       </form>
       <div class="table-responsive gr-12">
-            <table class="table ui celled" cellspacing="0" width="100%" v-if="transactions.list.length > 0">
+            <table class="table ui celled" cellspacing="0" width="100%" v-if="transactions.list && transactions.list.length > 0">
                 <thead class="thead-default">
                     <tr>
                         <th class="text-center">Transaction Id</th>
