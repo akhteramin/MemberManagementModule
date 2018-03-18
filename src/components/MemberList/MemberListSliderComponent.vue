@@ -223,8 +223,7 @@
                         </div>
                     </div>
                 </div>
-            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails &&
-              containsPermission('MS_MM_USER_VERIFICATION_VERIFY')">
+            <div class="gr-12 small-text" v-if="memberBasicDetails.basicInfo && profileDetails">
               <member-verify-and-approve-component
                 :id = "memberBasicDetails.basicInfo.accountId"
                 :member = "memberBasicDetails">
