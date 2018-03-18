@@ -79,13 +79,12 @@
                       <div class="gr-5 text-center padding-2">
                           <img :src="imageBaseUrl+memberDocument.documentUrl"
                           v-if="!isPdf(memberDocument.documentUrl)"
-                          class="img-rounded" alt="Documents" width="140" height="80"
-                          @click="showDocumentDetails(memberDocument)"
-                              onerror="this.onerror=null;"
-                          >
+                          class="img-rounded" onerror="onerror=null; src='/static/images/default-document-icon.png'" width="140" height="80"
+                          @click="showDocumentDetails(memberDocument)">
 
                           <i v-if="isPdf(memberDocument.documentUrl)"
                           class="fa fa-file-pdf-o font-size-50"
+                          alt="PDF"
                           aria-hidden="true"
                           @click="showDocumentDetails(memberDocument)"></i>
                       </div>

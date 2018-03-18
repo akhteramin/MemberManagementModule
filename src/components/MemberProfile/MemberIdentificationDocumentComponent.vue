@@ -30,7 +30,7 @@
                   <tr v-for="page in item.documentPages">
                     <td>
                       <button data-toggle="modal" data-target="#DocumentPreviewModal" data-backdrop="false" @click="setPreviewDocument(page)">
-                        <img default-src="/images/default-document-icon.png"
+                        <img default-src="/static/images/default-document-icon.png"
                         v-if="!isPdf(page.url)"
                         :src="documentBaseUrl + page.url"
                         onerror="onerror=null; src='/static/images/default-document-icon.png'"

@@ -21,13 +21,13 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" @click="clearDocument" class="close" data-dismiss="modal" >&times;</button>
-              <h4 class="modal-title"> Change Document {{ document.documentType }} </h4>
+              <h4 class="modal-title"> Change Document: {{ document.documentType }} </h4>
             </div>
             <div class="modal-body">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-3">
-                    <label class="control-label">Document No:</label>
+                    <label class="control-label">Document No</label>
                   </div>
                   <div class="col-md-8">
                     <input type="text" v-model="document.documentIdNumber" required>
@@ -38,20 +38,22 @@
 
                 <div class="row">
                   <div class="col-md-3">
-                    <label class="control-label">Document:</label>
+                    <label class="control-label">Document</label>
                   </div>
                   <div class="col-md-8">
                     <div>
-                        <div v-if="!isPdf(document.documentUrl)">
-                          <img id="ppImage" v-if="document.documentUrl"
-                                :src="documentUrl || 'static/images/default-original.jpg'"
+                        <div v-if="!isPdf(document.documentPages[0].url)">
+                          <img id="ppImage" v-if="document.documentPages[0].url"
+                                :src="url"
+                                onerror="onerror=null; src='/static/images/default-document-icon.png'"
                                 class="img-rounded" width="250" height="250">
 
-                          <img v-else src="static/images/default-original.jpg" class="img-rounded"
-                              alt="N/A" width="30" height="30">
+                          <img v-else src="static/images/default-document-icon.png"
+                          onerror="onerror=null; src='/static/images/default-document-icon.png'" class="img-rounded"
+                          width="30" height="30">
                         </div>
-                        <div v-if="isPdf(document.documentUrl)">
-                            <iframe :src="documentBaseUrl+document.documentUrl" width="400" height="400"></iframe>
+                        <div v-if="isPdf(document.documentPages[0].url)">
+                            <iframe :src="url" alt="PDF" width="400" height="400"></iframe>
                         </div>
 
 
@@ -93,7 +95,7 @@
     data () {
       return {
         documentBaseUrl: '',
-        documentUrl: '',
+        url: '',
         memberDocument: {},
         showLoader: false
       }
@@ -101,8 +103,8 @@
     methods: {
       init () {
         this.documentBaseUrl = Http.IMAGE_URL
-        this.documentUrl = this.documentBaseUrl + this.document.documentUrl
-//        console.log('document::', this.documentUrl)
+        this.url = this.documentBaseUrl + this.document.documentPages[0].url
+        console.log('document::', this.document)
       },
       onDocumentChange (e) {
         console.log('document::', this.document)
@@ -111,10 +113,10 @@
         if (!files.length) {
           return
         }
-        this.documentUrl = new Image()
+        this.url = new Image()
         var reader = new FileReader()
         reader.onload = (e) => {
-          this.documentUrl = e.target.result
+          this.url = e.target.result
         }
         reader.readAsDataURL(files[0])
         this.memberDocument = files[0]
@@ -122,7 +124,7 @@
       },
       clearDocument () {
         console.log('clear the document')
-        this.documentUrl = this.documentBaseUrl + this.document.documentUrl
+        this.url = this.documentBaseUrl + this.document.documentPages[0].url
         $('#uploadBtn3').val('')
       },
       uploadDocument () {
