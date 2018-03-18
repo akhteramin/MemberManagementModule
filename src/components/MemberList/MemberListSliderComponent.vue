@@ -77,12 +77,12 @@
                 <div v-if="memberDocuments.length > 0">
                   <div class="row margin-5" v-for="memberDocument in memberDocuments">
                       <div class="gr-5 text-center padding-2">
-                          <img :src="imageBaseUrl+memberDocument.documentUrl"
-                          v-if="!isPdf(memberDocument.documentUrl)"
+                          <img :src="imageBaseUrl+memberDocument.documentPages[0].url"
+                          v-if="!isPdf(memberDocument.documentPages[0].url)"
                           class="img-rounded" onerror="onerror=null; src='/static/images/default-document-icon.png'" width="140" height="80"
                           @click="showDocumentDetails(memberDocument)">
 
-                          <i v-if="isPdf(memberDocument.documentUrl)"
+                          <i v-if="isPdf(memberDocument.documentPages[0].url)"
                           class="fa fa-file-pdf-o font-size-50"
                           alt="PDF"
                           aria-hidden="true"
@@ -109,7 +109,7 @@
                               </div>
                               <button class="button-small-verify"
                               data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
-                              @click= "setDocument(memberDocument)">
+                              @click="setDocument(memberDocument)">
                               Verify
                               <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                               </button>
@@ -117,7 +117,7 @@
                           <span v-else>
                             <button class="button-small-verify width-90"
                             data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false"
-                            @click= "setDocumentUnverify(memberDocument)">
+                            @click="setDocumentUnverify(memberDocument)">
                             Unverify
                             <i class="fa fa-times" aria-hidden="true"></i>
                             </button>
@@ -242,12 +242,12 @@
             </div>
             <hr>
             <div class="gr-12">
-                <img v-if="!isPdf(memberDocumentDetail.documentUrl)"
-                :src="imageBaseUrl+memberDocumentDetail.documentUrl"
+                <img v-if="!isPdf(memberDocumentDetail.documentPages[0].url)"
+                :src="imageBaseUrl+memberDocumentDetail.documentPages[0].url"
                 class="img-rounded" alt="Documents" width="350" height="200">
 
-                <iframe v-if="isPdf(memberDocumentDetail.documentUrl)"
-                :src="imageBaseUrl+memberDocumentDetail.documentUrl" width="350" height="200"></iframe>
+                <iframe v-if="isPdf(memberDocumentDetail.documentPages[0].url)"
+                :src="imageBaseUrl+memberDocumentDetail.documentPages[0].url" width="350" height="200"></iframe>
 
             </div>
             <br>
@@ -271,7 +271,7 @@
                 </div>
                 <button class="button-md-verify"
                         data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
-                        @click= "setDocument(memberDocumentDetail)">
+                        @click="setDocument(memberDocumentDetail)">
                         Verify
                         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                 </button>
