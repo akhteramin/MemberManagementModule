@@ -317,7 +317,7 @@
       </div>
     </div>
 
-    <div id="VerificationStatusChangeModal" class="modal fade" role="dialog">
+    <div id="VerificationStatusChangeModal" class="modal fade" role="dialog" data-backdrop="false">
       <div class="modal-dialog  modal-md">
         <!-- Modal content-->
 
@@ -582,7 +582,7 @@
         }
         console.log('approval request: ', request)
         this.showLoader = true
-        Http.PUT('verification', request, [this.id])
+        Http.PUT('verification', request, [this.id, 'approve'])
           .then(
             ({data: approvalResponse}) => {
               $.notify({
@@ -625,7 +625,7 @@
         }
         console.log('approval request: ', request)
         this.showLoader = true
-        Http.PUT('verification', request, [this.id])
+        Http.PUT('verification', request, [this.id, 'approve'])
           .then(
             ({data: approvalResponse}) => {
               this.showLoader = false
@@ -650,7 +650,7 @@
           'verificationStatus': 'NOT_VERIFIED'
         }
         this.showLoader = true
-        Http.PUT('verification', request, [this.id])
+        Http.PUT('verification', request, [this.id, 'revoke'])
           .then(
             ({data: revokeResponse}) => {
               this.showLoader = false

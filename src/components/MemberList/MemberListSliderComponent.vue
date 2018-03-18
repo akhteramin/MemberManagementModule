@@ -39,7 +39,7 @@
             </div>
             <div class="gr-10">
                 <div class="gr-3">
-                    <button class="button-banner-label-text padding-2" >{{memberProfile.verificationStatus}}</button>
+                    <button class="button-banner-label-text padding-2" >{{memberProfile.verificationStatus | underscoreless}}</button>
                 </div>
                 <div class="gr-2 push-7" v-if="memberProfile.accountType===2">
                     <!--button class="button-edit">Edit <i class="fa fa-pencil-square-o"></i></button-->

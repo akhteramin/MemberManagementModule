@@ -539,8 +539,8 @@
           </div>
 
           <div class="modal-body">
-            <form role="form" @submit.prevent="verifyOrApproveMembers('ACCEPT')"
-                  @reset.prevent="verifyOrApproveMembers('REJECT')"
+            <form role="form" @submit.prevent="verifyOrApproveMembers('VERIFIED')"
+                  @reset.prevent="verifyOrApproveMembers('REJECTED')"
                   id="verificationForm">
 
               <div class="small-scrollable">
@@ -832,8 +832,8 @@
         this.disableModalVerificationAndRejectionButton = true
         console.log('verify button clicked::::')
         let request = {
-          'comment': this.verificationComment,
-          'status': status
+          'message': this.verificationComment,
+          'verificationStatus': status
         }
         let totalSelected = this.memberListForVerificationNames.length
         console.log('total selected: ', totalSelected)
