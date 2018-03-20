@@ -1,5 +1,20 @@
  <template>
     <div class="row justify-content-center">
+      <div class="loaders loading" v-if="showLoader">
+        <div class="loader">
+          <div class="loader-inner ball-grid-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
       <div class="gr-12 panel-label">
         <label class="text-label"><b>Bank Info</b></label>
       </div>
@@ -16,16 +31,31 @@
               <th class = "text-center">A/C Status</th>
               <th class = "text-center">Verification Status</th>
               <th class = "text-center">Added</th>
+              <th class = "text-center">Consent Agreement</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in bankAccounts">
+            <tr class="text-center" v-for="item in bankAccounts">
               <td>{{ item.bankName }}</td>
               <td>{{ item.accountNumber }}</td>
               <td>{{ item.accountName }}</td>
               <td><span class="badge" :class="{'badge-success': true }">ACTIVE</span></td>
               <td>{{ item.verificationStatus }}</td>
-              <td>{{ item.creationDate | date }}</td>
+              <td v-if="item.creationDate">{{ item.creationDate | date }}</td>
+              <td v-else>{{ 'N/A' }}</td>
+              <td>
+                <button data-toggle="modal" :data-target="`#ChangeDocumentModal${item.bankId}`" data-backdrop="false"
+                  class="button-md-verify"><i class="fa fa-pencil-square-o"></i> Edit </button>
+                <div :id="`ChangeDocumentModal${item.bankId}`" class="modal fade" role="dialog">
+                  <update-member-consent-document
+                  :url="item.consentAgreementUrl"
+                  :id="item.bankId"
+                  @update="editDoc">
+                  </update-member-consent-document>
+                </div>
+                <button
+                  class="button-md-verify width-110" @click="downloadDoc(item.bankId)">Download <i class="fa fa-download" aria-hidden="true"></i></button>
+              </td>
             </tr>
             </tbody>
           </table>
@@ -53,15 +83,21 @@
 
 <script>
   import Http from '../../services/Http'
+  import UpdateMemberConsentDocument from './UpdateMemberConsentDocument.vue'
+
   export default {
     name: 'MemberBankAccount',
     props: [
       'id'
     ],
+    components: {
+      'update-member-consent-document': UpdateMemberConsentDocument
+    },
     data () {
       return {
         bankAccounts: {},
         imageBaseUrl: '',
+        url: '',
         showLoader: false
       }
     },
@@ -82,13 +118,39 @@
              ({data: {data: bankAccounts}}) => {
                this.showLoader = false
                this.bankAccounts = bankAccounts
-//               console.log('Got the list of bank accounts: ', bankAccounts)
+               console.log('Got the list of bank accounts: ', bankAccounts)
              },
              error => {
                this.showLoader = false
                console.log('Error in getting the list of bank accounts, error: ', error)
              }
            )
+      },
+      editDoc (param = 'false') {
+        this.init()
+      },
+      downloadDoc (bankId) {
+        this.showLoader = true
+        Http.GET('mmAdminMember', [bankId, 'consent-agreement'], {}, {responseType: 'blob'})
+          .then(
+            response => {
+              console.log(response)
+              // const hiddenElement = document.createElement('a')
+              const file = new Blob([response.data], {type: response.headers['content-type']})
+              console.log(file)
+              this.url = window.URL.createObjectURL(file)
+              console.log(this.url)
+  
+              const hiddenElement = document.createElement('a')
+              hiddenElement.href = this.url
+              hiddenElement.target = '_blank'
+              hiddenElement.download = `consent-agreement-${bankId}.pdf`
+              hiddenElement.click()
+
+              // window.open(url)
+              this.showLoader = false
+            }
+          )
       }
     }
 }

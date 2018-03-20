@@ -36,7 +36,7 @@
                   </div>
                   <div class="gr-6 margin-5">
                     <img v-if="member.profilePictures[0]"
-                                :src="imageBaseUrl+member.profilePictures[0].url || 'static/images/default-original.jpg'"
+                                :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
                                 class="img-circle img-responsive" width="70" height="70"
                               onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
                     <img v-else src="/static/images/default-original.jpg" class="img-circle img-responsive"
@@ -73,7 +73,7 @@
 
                       <div class="gr-2 text-center margin-top-10">
                         <img v-if="member.profilePictures[0]"
-                              :src="imageBaseUrl+member.profilePictures[0].url || 'static/images/default-original.jpg'"
+                              :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250"
                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
 
@@ -268,57 +268,57 @@
                           </div>
                         </div>
                         <div class="gr-12" v-if="member.basicInfo.accountType===2">
-                          <div class="gr-1">
-                            <span v-if="member.businessDetails.businessOwnerPictures[0]">
-                                <img :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
-                                class="img-rounded img-responsive" alt="Profile Picture" width="130" height="100">
-                            </span>
-                            <span v-else>
-                                <img src="static/images/default-original.jpg" class="img-rounded" alt="N/A" width="70" height="80">
-                            </span>
-                            <update-member-business-image
-                              :member="member"
-                              :id="id"
-                              @update="editProfilePic">
-                            </update-member-business-image>
-                          </div>
-                          <div class="gr-11">
-                            <div class="gr-12 panel-label margin-5">
-
-                              <div class="gr-3">
-                                <label class="text-label"><b>Business Information</b></label>
-                              </div>
-
+                          <div class="row">
+                            <div class="gr-1 text-center margin-top-10">
+                              <img v-if="member.businessDetails.businessOwnerPictures[0]"
+                                  :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
+                                  class="img-rounded img-responsive" onerror="this.onerror=null; this.src='/static/images/default-original.jpg';" width="80" height="70">
+                              <!-- <span v-else> -->
+                              <img v-else src="/static/images/default-original.jpg" class="img-rounded" alt="N/A" width="80" height="70">
+                              <!-- </span> -->
+                              <update-member-business-image
+                                :member="member"
+                                :id="id"
+                                @update="editProfilePic">
+                              </update-member-business-image>
                             </div>
-                            <div>
-                              <div class="gr-2">
-                              Business Name:
-                              </div>
-                              <div class="gr-4 text-left">
-                                {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
+                            <div class="gr-10">
+                              <div class="gr-12 panel-label margin-5">
+
+                                <div class="gr-3">
+                                  <label class="text-label"><b>Business Information</b></label>
+                                </div>
 
                               </div>
-                              <div class="gr-2">
-                              Business Type:
-                              </div>
-                              <div class="gr-4 text-left">
-                                {{ member.businessDetails.businessBasicInfo.businessType || 'N/A' }}
-                              </div>
-                              <div class="gr-2">
-                              Email:
-                              </div>
-                              <div class="gr-4 text-left">
-                                {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
-                              </div>
-                              <div class="gr-2">
-                              Ipay Number:
-                              </div>
-                              <div class="gr-4 text-left">
-                                {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                              <div class="margin-10">
+                                <div class="gr-2">
+                                Business Name:
+                                </div>
+                                <div class="gr-4 text-left">
+                                  {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
+
+                                </div>
+                                <div class="gr-2">
+                                Business Type:
+                                </div>
+                                <div class="gr-4 text-left">
+                                  {{ member.businessDetails.businessBasicInfo.businessType || 'N/A' }}
+                                </div>
+                                <div class="gr-2">
+                                Email:
+                                </div>
+                                <div class="gr-4 text-left">
+                                  {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
+                                </div>
+                                <div class="gr-2">
+                                Ipay Number:
+                                </div>
+                                <div class="gr-4 text-left">
+                                  {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                                </div>
                               </div>
                             </div>
                           </div>
-
                         </div>
                         <div v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE') && (member.basicInfo.verificationStatus !== 'VERIFIED' || (member.basicInfo.verificationStatus === 'VERIFIED' && !memberMissingInfo.isVerifiable) )">
                             <div class="gr-12 panel-label margin-5">

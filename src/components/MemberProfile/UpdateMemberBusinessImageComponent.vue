@@ -41,10 +41,10 @@
                   <div class="col-md-8">
                     <div>
                       <img id="ppImage" v-if="member.businessDetails.businessOwnerPictures[0]"
-                              :src="imageUrl || 'static/images/default-original.jpg'"
+                              :src="imageUrl" onerror="this.onerror=null; this.src='/static/images/default-original.jpg';"
                               class="img-rounded img-responsive" width="250" height="250">
 
-                        <img v-else src="static/images/default-original.jpg" class="img-rounded img-responsive"
+                        <img v-else src="/static/images/default-original.jpg" class="img-rounded img-responsive"
                             alt="N/A" width="30" height="30">
 
                     </div>

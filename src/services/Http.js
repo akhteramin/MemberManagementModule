@@ -94,6 +94,7 @@ const routes = {
   // twofactor: `${API_URL}/configuration/2fa/`,
   member: `${MM_ADMIN_URL}/ms/member/`,
   mmAdminMember: `${MM_ADMIN_URL}/admin/internal/user/`,
+  mmAdminBusiness: `${MM_ADMIN_URL}/admin/internal/business/`,
   verification: `${MM_ADMIN_URL}/ms/verify/member/`,
   // user: `${API_URL}/user/`,
   mmAdminUser: `${MM_ADMIN_URL}/ms/admin/user/`,
@@ -120,7 +121,7 @@ const encodeQueryData = (data) => {
 const isEmpty = (obj) => Object.keys(obj).length === 0 && obj.constructor === Object
 
 export default {
-  GET (key, props = {}, params = {}) {
+  GET (key, props = {}, params = {}, requestConfig = {}) {
     let parameters = ''
     if (Object.prototype.toString.call(props) === '[object Array]') {
       parameters = props.length > 0 ? `/${props.join('/')}` : ''
@@ -139,7 +140,7 @@ export default {
     console.log('Line 60, http.js, key: ', key)
     const route = routes[key]
     console.log('Line 62, http.js parameters: ' + parameters)
-    return axios.get(route.concat(parameters).concat(additionalParams))
+    return axios.get(route.concat(parameters).concat(additionalParams), requestConfig)
   },
   POST (key, data, props = {}) {
     let parameters = ''
