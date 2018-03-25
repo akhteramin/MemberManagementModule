@@ -62,28 +62,26 @@ axios.interceptors.response.use(
 // const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
 // // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
 // const MM_ADMIN_URL = 'http://10.10.10.10:9002/api/v1' // dev
-const MM_ADMIN_URL = 'http://10.15.40.10:9002/api/v1' // test
-const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1' // test
-const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
-const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
-const ADMIN_URI = 'http://10.15.40.11:80/'
+// const MM_ADMIN_URL = 'http://10.15.40.10:9002/api/v1' // test
+// const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1' // test
+// const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
+// const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
+// const ADMIN_URI = 'http://10.15.40.11:80/'
 
 /// /live////
-// const API_URL = 'http://192.168.1.95:8085/member-service/api/v1'
-// const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
-// const API_URL = 'http://verification.ipay.com.bd/member-service/api/v1'
-// const AUTH_URL = 'http://10.200.40.204:7000/auth/api/v1'
-// const AUTH_HTTP_URI = 'http://10.200.40.204:7001/'
-// const AUTH_ACCOUNTS_URI = 'http://10.200.40.204:7001/accounts'
-// const ADMIN_URI = 'http://verification.ipay.com.bd/'
+const MM_ADMIN_URL = 'http://10.200.40.206:9001/api/v1'
+const AUTH_URL = 'http://10.200.40.203:7000/auth/api/v1'
+const AUTH_HTTP_URI = 'http://10.200.40.203:7001/'
+const AUTH_ACCOUNTS_URI = 'http://10.200.40.203:7001/accounts'
+const ADMIN_URI = 'http://verification.ipay.com.bd'
 
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
 // const IMAGE_URL = 'https://dev.ipay.com.bd'
-// const IMAGE_URL = 'https://www.ipay.com.bd'
-const IMAGE_URL = 'https://test.ipay.com.bd'
+const IMAGE_URL = 'https://www.ipay.com.bd'
+// const IMAGE_URL = 'https://test.ipay.com.bd'
 
-const CRM_URI = 'http://10.10.10.169/login'
-// const CRM_URI = 'http://crmnew.ipay.com.bd'
+// const CRM_URI = 'http://10.10.10.169/login'
+const CRM_URI = 'http://crmnew.ipay.com.bd'
 
 const routes = {
   apps: `${AUTH_URL}/user/get`,
