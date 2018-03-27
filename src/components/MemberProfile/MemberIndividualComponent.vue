@@ -64,6 +64,8 @@
                 :class="{'btn-active-til': showOffer}" @click="setTab('offers')">Offers</button>
                 <button v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button>
+                <button v-if="containsPermission('MS_MM_USER_GET_MANUAL_VERIFICATION_CRITERIA')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showVerificationChecklist}" @click="setTab('verificationChecklist')">Verification Checklist</button>
               </div>
             </div>
             
@@ -539,6 +541,7 @@
             <member-offer v-if="showOffer" :id="id"></member-offer>
             <member-access-control v-if="showAccessControl" :id="id"></member-access-control>
             <member-friends v-if="showFriends" :mobileNumber="member.basicInfo.mobileNumber"></member-friends>
+            <member-verification-checklist v-if="showVerificationChecklist" :id="id"></member-verification-checklist>
         </div>
       </div>
 
@@ -640,6 +643,7 @@
   import UpdateMemberBusinessImage from './UpdateMemberBusinessImageComponent.vue'
   import MemberAccessControl from './MemberAccessControlComponent.vue'
   import MemberBankCard from './MemberBankCardComponent.vue'
+  import MemberVerificationChecklist from './MemberVerificationChecklistComponent.vue'
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -665,7 +669,8 @@
       'update-member-business-image': UpdateMemberBusinessImage,
       'member-offer': MemberOffer,
       'member-access-control': MemberAccessControl,
-      'member-bank-card': MemberBankCard
+      'member-bank-card': MemberBankCard,
+      'member-verification-checklist': MemberVerificationChecklist
     },
     data () {
       return {
@@ -687,6 +692,7 @@
         showLikelyNames: false,
         showFriends: false,
         showOffer: false,
+        showVerificationChecklist: false,
         occupationName: '',
         editBasicProfileMode: false,
         editParentsMode: false,
@@ -913,6 +919,7 @@
         this.showFriends = false
         this.showOffer = false
         this.showAccessControl = false
+        this.showVerificationChecklist = false
         if (tabName === 'basicDetails') {
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
@@ -931,6 +938,8 @@
           this.showOffer = true
         } else if (tabName === 'accessControl') {
           this.showAccessControl = true
+        } else if (tabName === 'verificationChecklist') {
+          this.showVerificationChecklist = true
         }
       },
       getStaticNames () {
