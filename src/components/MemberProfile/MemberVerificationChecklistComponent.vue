@@ -29,11 +29,13 @@
         </thead>
         <tbody>
           <tr v-for="entry,index in checklist">
-            <td class="text-center"><strong>{{ index + 1 }}</strong></td>
-            <td class="text-center">{{ entry.tag }}</td>
-            <td class="text-center" style="white-space: pre-line;">{{ entry.remark || 'N/A' }}
+            <td class="text-center" style="vertical-align: middle;"><strong>{{ index + 1 }}</strong></td>
+            <td class="text-center" style="vertical-align: middle;">{{ entry.tag }}</td>
+            <td class="text-center" style="white-space: pre-line; vertical-align: middle;">
+              <div id="remark">{{ entry.remark || 'N/A' }}</div>
+            </td>
             <!-- <td class="text-center"><input type="checkbox" @click.prevent.stop v-model="entry.status"/></td> -->
-            <td class="text-center">
+            <td class="text-center" style="vertical-align: middle;">
               <span :style="{'color': entry.status ? 'green' : 'red'}">
                 <i class="fa" :class="{'fa-check': entry.status, 'fa-times': !entry.status }"></i>
               </span>
@@ -115,3 +117,27 @@
     }
   }
 </script>
+
+<style>
+  #remark {
+    /* width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; */
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+
+  #remark:hover {
+    /* width: auto;
+    overflow: visible;
+    white-space: pre-line; */
+    overflow : visible;
+    display: -webkit-box;
+    -webkit-line-clamp: 100;
+    -webkit-box-orient: vertical;
+  }
+</style>
