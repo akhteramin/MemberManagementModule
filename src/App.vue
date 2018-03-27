@@ -1,23 +1,46 @@
 <template>
-  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
   <div id="app">
-    <NavBar v-if="$route.name !== 'Login'"></NavBar>
-
     <div class="row">
-      <router-view></router-view>
+      <MenuComponent v-if="$route.name !== 'Login'"
+      @update="learnMenuComponentCollapsedOrNot"></MenuComponent>
+      <router-view v-if="!isMenuCollapsed" class="gr-10 push-2"></router-view>
+      <router-view v-else class="gr-11 push-1"></router-view>
     </div>
     <!--<router-view></router-view>-->
   </div>
 </template>
 
 <script>
-  import NavBar from './components/NavBar.vue'
-  import ListRenderer from './components/ListRenderer.vue'
+  import MenuComponent from './components/MenuComponent.vue'
+  import MemberList from './components/MemberList/MemberListComponent.vue'
   import Home from './components/Home.vue'
-
+  import WaitingForApprovalList from './components/MemberList/WaitingForApprovalListComponent.vue'
+  import WaitingForVerificationList from './components/MemberList/WaitingForVerificationListComponent.vue'
+  import MemberAclGroup from './components/ACL/MemberAclGroupComponent.vue'
   export default {
     name: 'app',
-    components: {'NavBar': NavBar, 'ListRenderer': ListRenderer, 'Home': Home}
+    data () {
+      return {
+        'isMenuCollapsed': false
+      }
+    },
+    components: {
+      'MenuComponent': MenuComponent,
+      'MemberList': MemberList,
+      'Home': Home,
+      'WaitingForApprovalList': WaitingForApprovalList,
+      'WaitingForVerificationList': WaitingForVerificationList,
+      'MemberAclGroup': MemberAclGroup
+    },
+    methods: {
+      learnMenuComponentCollapsedOrNot () {
+        if (!this.isMenuCollapsed) {
+          this.isMenuCollapsed = true
+        } else {
+          this.isMenuCollapsed = false
+        }
+      }
+    }
   }
 </script>
 
@@ -25,9 +48,10 @@
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  -moz-osx-font-smoothing: black;
   color: #2c3e50;
+  background: #ffffff;
+  min-height: 1000px;
 }
 
 
