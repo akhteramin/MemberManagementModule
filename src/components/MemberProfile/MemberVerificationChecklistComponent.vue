@@ -31,9 +31,13 @@
           <tr v-for="entry,index in checklist">
             <td class="text-center"><strong>{{ index + 1 }}</strong></td>
             <td class="text-center">{{ entry.tag }}</td>
-            <td class="text-center">{{ entry.remark || 'N/A' }}
-            <td class="text-center"><input type="checkbox" @click.prevent.stop v-model="entry.status"/></td>
-
+            <td class="text-center" style="white-space: pre-line;">{{ entry.remark || 'N/A' }}
+            <!-- <td class="text-center"><input type="checkbox" @click.prevent.stop v-model="entry.status"/></td> -->
+            <td class="text-center">
+              <span :style="{'color': entry.status ? 'green' : 'red'}">
+                <i class="fa" :class="{'fa-check': entry.status, 'fa-times': !entry.status }"></i>
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>
