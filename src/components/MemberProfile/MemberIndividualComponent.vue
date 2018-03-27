@@ -64,7 +64,7 @@
                 :class="{'btn-active-til': showOffer}" @click="setTab('offers')">Offers</button>
                 <button v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button>
-                <button type="button" class="btn btn-default"
+                <button v-if="containsPermission('MS_MM_USER_GET_MANUAL_VERIFICATION_CRITERIA')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showVerificationChecklist}" @click="setTab('verificationChecklist')">Verification Checklist</button>
               </div>
             </div>
