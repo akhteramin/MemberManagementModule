@@ -8,6 +8,7 @@ import MemberIndividualComponent from '@/components/MemberProfile/MemberIndividu
 import UserListComponent from '@/components/User/UserListComponent'
 import UserIndividualComponent from '@/components/User/UserOwnIndividualComponent'
 import UserIndividualProfileComponent from '@/components/User/UserIndividualProfileComponent'
+import UserPasswordChangeComponent from '@/components/User/UserPasswordChangeComponent'
 
 import MemberAclGroup from '@/components/ACL/MemberAclGroupComponent'
 import StaticOccupationComponent from '@/components/Configuration/StaticOccupationComponent'
@@ -93,11 +94,19 @@ const router = new Router({
       // auth check
       meta: { requiresAuth: true }
     },
+    // {
+    //   path: '/user/:loginID',
+    //   name: 'UserIndividualComponent',
+    //   component: UserIndividualComponent,
+    //   props: true
+    //   // auth check
+    //   // meta: { requiresAuth: true }
+    // },
     {
-      path: '/user/:loginID',
-      name: 'UserIndividualComponent',
-      component: UserIndividualComponent,
-      props: true
+      path: '/user/change-password',
+      name: 'UserPasswordChangeComponent',
+      component: UserPasswordChangeComponent
+      // props: true
       // auth check
       // meta: { requiresAuth: true }
     },
