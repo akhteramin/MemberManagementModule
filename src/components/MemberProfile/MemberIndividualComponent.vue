@@ -304,7 +304,7 @@
                                 Business Type:
                                 </div>
                                 <div class="gr-4 text-left">
-                                  {{ member.businessDetails.businessBasicInfo.businessType || 'N/A' }}
+                                  {{ businessType || 'N/A' }}
                                 </div>
                                 <div class="gr-2">
                                 Email:
@@ -693,7 +693,8 @@
         showFriends: false,
         showOffer: false,
         showVerificationChecklist: false,
-        occupationName: '',
+        occupationName: null,
+        businessType: null,
         editBasicProfileMode: false,
         editParentsMode: false,
         editPresentAddressMode: false,
@@ -957,6 +958,10 @@
             }
           )
 
+        this.businessTypeList = JSON.parse(localStorage.getItem('businessType'))
+        if (this.member.businessDetails.businessBasicInfo.businessType) {
+          this.businessType = this.businessTypeList.find(x => x.id === this.member.businessDetails.businessBasicInfo.businessType).name
+        }
         this.occupationList = JSON.parse(localStorage.getItem('occupation'))
         if (this.member.basicInfo.occupation) {
           this.occupationName = this.occupationList.find(x => x.id === this.member.basicInfo.occupation).name

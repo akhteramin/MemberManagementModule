@@ -91,14 +91,16 @@
           // Http.GET('resource', ['branch']),
           Http.GET('resource', ['country']),
           Http.GET('resource', ['occupation']),
-          Http.GET('resource', ['bank'])])
+          Http.GET('resource', ['bank']),
+          Http.GET('resource', ['business-type'])])
           .then(([
             {data: thana},
             {data: district},
             // {data: branch},
             {data: country},
             {data: occupation},
-            {data: bank}]) => {
+            {data: bank},
+            {data: businessType}]) => {
             console.log('Success in retrieving all the resources.')
             localStorage.setItem('thana', JSON.stringify(thana.data))
             localStorage.setItem('district', JSON.stringify(district.data))
@@ -106,6 +108,7 @@
             localStorage.setItem('country', JSON.stringify(country.data))
             localStorage.setItem('occupation', JSON.stringify(occupation.data))
             localStorage.setItem('bank', JSON.stringify(bank.data))
+            localStorage.setItem('businessType', JSON.stringify(businessType.data))
             this.hashBankCodeToBankNameAndStore(bank.data)
             this.hashDistrictIdToDistrictNameAndStore(district.data)
           },
@@ -126,6 +129,9 @@
           },
           error => {
             console.log('Error in getting bank list, ', error)
+          },
+          error => {
+            console.log('Error in getting business-type list, ', error)
           })
         // save login id
         let user = {'loginID': this.$route.query.loginID}
