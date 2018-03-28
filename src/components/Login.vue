@@ -88,21 +88,21 @@
         Promise.all([
           Http.GET('resource', ['thana']),
           Http.GET('resource', ['district']),
-          Http.GET('resource', ['branch']),
+          // Http.GET('resource', ['branch']),
           Http.GET('resource', ['country']),
           Http.GET('resource', ['occupation']),
           Http.GET('resource', ['bank'])])
           .then(([
             {data: thana},
             {data: district},
-            {data: branch},
+            // {data: branch},
             {data: country},
             {data: occupation},
             {data: bank}]) => {
             console.log('Success in retrieving all the resources.')
             localStorage.setItem('thana', JSON.stringify(thana.data))
             localStorage.setItem('district', JSON.stringify(district.data))
-            localStorage.setItem('branch', JSON.stringify(branch.data))
+            // localStorage.setItem('branch', JSON.stringify(branch.data))
             localStorage.setItem('country', JSON.stringify(country.data))
             localStorage.setItem('occupation', JSON.stringify(occupation.data))
             localStorage.setItem('bank', JSON.stringify(bank.data))
@@ -115,9 +115,9 @@
           error => {
             console.log('Error in getting district list, ', error)
           },
-          error => {
-            console.log('Error in getting branch list, ', error)
-          },
+          // error => {
+          //   console.log('Error in getting branch list, ', error)
+          // },
           error => {
             console.log('Error in getting country list, ', error)
           },
