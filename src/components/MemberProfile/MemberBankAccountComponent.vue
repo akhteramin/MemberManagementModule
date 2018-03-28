@@ -149,6 +149,25 @@
 
               // window.open(url)
               this.showLoader = false
+            },
+            error => {
+              console.log('error::', error.response)
+              const file = new Blob([error.response.data], {type: error.response.headers['content-type']})
+              const reader = new FileReader()
+              reader.onload = function () {
+                console.log(JSON.parse(reader.result).consentAgreementUrl)
+
+                this.url = `${Http.IMAGE_URL}${JSON.parse(reader.result).consentAgreementUrl}`
+                console.log(this.url)
+  
+                const hiddenElement = document.createElement('a')
+                hiddenElement.href = this.url
+                hiddenElement.target = '_blank'
+                hiddenElement.download = `consent-agreement-${bankId}.pdf`
+                hiddenElement.click()
+              }
+              reader.readAsText(file)
+              this.showLoader = false
             }
           )
       }
