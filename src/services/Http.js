@@ -71,8 +71,8 @@ axios.interceptors.response.use(
 /// /live////
 const MM_ADMIN_URL = 'http://10.200.40.206:9001/api/v1'
 const AUTH_URL = 'http://10.200.40.203:7000/auth/api/v1'
-const AUTH_HTTP_URI = 'http://10.200.40.203:7001/'
-const AUTH_ACCOUNTS_URI = 'http://10.200.40.203:7001/accounts'
+const AUTH_HTTP_URI = 'http://centralauth.ipay.com.bd/'
+const AUTH_ACCOUNTS_URI = 'http://centralauth.ipay.com.bd/accounts'
 const ADMIN_URI = 'http://verification.ipay.com.bd'
 
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
