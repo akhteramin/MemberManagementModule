@@ -9,14 +9,17 @@
               <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
             <div class="w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round">
               <div class="gr-12">
-                <div class="gr-4 margin-0">
-                  <p><b><h3>
-                  <span v-if="balance">Current Balance: {{ balance.balance }} BDT </span>
-                  <span v-else>Current Balance: N/A </span>
-                  </h3></b></p>
-                </div>
-                <div class="gr-6 push-5">
-                  <div class="gr-3 padding-5 margin-10 text-right">
+                <div class="gr-5 margin-5">
+                  <div class="gr-2 margin-5">
+                    <img v-if="member.profilePictures[0]"
+                                :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
+                                class="img-circle img-responsive" width="80" height="80"
+                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
+                    <img v-else src="/static/images/default-original.jpg" class="img-circle img-responsive"
+                        alt="N/A" width="70" height="70"
+                          onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
+                  </div>
+                  <div class="gr-8 padding-5 text-left">
                     <span>
                     <b v-if="member.basicInfo.accountType == 1">{{member.basicInfo.name}}</b>
                     <b v-if="member.basicInfo.accountType == 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
@@ -27,22 +30,21 @@
                     <br>
                     <span><b>{{member.basicInfo.profileCompletionScore}}%</b></span>
                     <br>
-                    <div class="select select-sm push-0">
-                      <select id="order-by-select"  v-model="member.basicInfo.accountStatus" @change="statusChange(id, member.basicInfo.accountStatus)">
-                        <option value = "1">Active</option>
-                        <option value = "2">Suspended</option>
-                      </select>
+                    <div class="width-150">
+                      <div class="select select-sm push-0">
+                        <select id="order-by-select"  v-model="member.basicInfo.accountStatus" @change="statusChange(id, member.basicInfo.accountStatus)">
+                          <option value = "1">Active</option>
+                          <option value = "2">Suspended</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
-                  <div class="gr-6 margin-5">
-                    <img v-if="member.profilePictures[0]"
-                                :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
-                                class="img-circle img-responsive" width="70" height="70"
-                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
-                    <img v-else src="/static/images/default-original.jpg" class="img-circle img-responsive"
-                        alt="N/A" width="70" height="70"
-                          onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
-                  </div>
+                </div>
+                <div class="gr-6 push-1 margin-5 text-right">
+                  <p><b><h3>
+                  <span v-if="balance">Current Balance: {{ balance.balance }} BDT </span>
+                  <span v-else>Current Balance: N/A </span>
+                  </h3></b></p>
                 </div>
               </div>
               <div class="btn-group btn-group-sm padding-5 margin-5">
@@ -74,7 +76,7 @@
                     <div class="row">
 
                       <div class="gr-2 text-center margin-top-10">
-                        <img v-if="member.profilePictures[0]"
+                        <img v-if="member.profilePictures[0]" @click="imagePreview(imageBaseUrl+member.profilePictures[0].url)"
                               :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250"
                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
@@ -156,63 +158,80 @@
                           </div>
                         </div>
                         <div class="gr-10" v-if="!editBasicProfileMode">
-                          <div class="gr-2">
-                            Name:
+                          <div class=row>
+                            <div class="gr-2">
+                              Name:
+                            </div>
+                            <div class="gr-4 text-left">
+                              {{ member.basicInfo.name || 'N/A'}}
+                            </div>
+                          <!-- </div>
+                          <div class="row"> -->
+                            <div class="gr-2">
+                              Ipay Number:
+                            </div>
+                            <div class="gr-4 text-left pull-.5">
+                              {{ member.basicInfo.mobileNumber || 'N/A' }}
+                            </div>
                           </div>
-                          <div class="gr-4 text-left">
-                            {{ member.basicInfo.name || 'N/A'}}
+                          <div class=row>
+                            <div class="gr-2">
+                              Email:
+                            </div>
+                            <div class="gr-4 text-left">
+                            {{  member.emails.length !== 0 ? member.emails[0].emailAddress: 'N/A' }}
+                            </div>
+                          <!-- </div>
+                          <div class=row> -->
+                            <div class="gr-2">
+                              Date of Birth:
+                            </div>
+                            <div class="gr-4 text-left pull-.5">
+                            {{ member.basicInfo.dob | date('MMM D, YYYY') || 'N/A' }}
+                            </div>
                           </div>
-                          <div class="gr-2">
-                            Ipay Number:
+                          <div class=row>
+                            <div class="gr-2">
+                            Gender:
+                            </div>
+                            <div class="gr-4 text-left">
+                            <i v-bind:class="{'fa fa-male':member.basicInfo.gender==='M','fa fa-female':member.basicInfo.gender==='F'}"></i>{{ !member.basicInfo.gender ? 'N/A' : '' }}
+                            </div>
+                          <!-- </div>
+                          <div class=row> -->
+                            <div class="gr-2">
+                            Occupation:
+                            </div>
+                            <div class="gr-4 text-left pull-.5">
+                            {{ occupationName || 'N/A' }}
+                            </div>
                           </div>
-                          <div class="gr-4 text-left pull-.5">
-                            {{ member.basicInfo.mobileNumber || 'N/A' }}
+                          <div class=row>
+                            <div class="gr-2">
+                            Verification Status:
+                            </div>
+                            <div class="gr-4 text-left">
+                              {{ member.basicInfo.verificationStatus === null ? 'N/A': member.basicInfo.verificationStatus == 'VERIFIED' ? 'Verified':
+                              member.basicInfo.verificationStatus == 'NOT_VERIFIED' ? 'Not Verified':
+                              member.basicInfo.verificationStatus == 'IN_PROGRESS' ? 'In Progress':
+                              'Rejected'}}
+                            </div>
+                          <!-- </div>
+                          <div class=row> -->
+                            <div class="gr-2">
+                            Member Since:
+                            </div>
+                            <div class="gr-4 text-left pull-.5">
+                            {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
+                            </div>
                           </div>
-                          <div class="gr-2">
-                            Email:
-                          </div>
-                          <div class="gr-4 text-left">
-                          {{  member.emails.length !== 0 ? member.emails[0].emailAddress: 'N/A' }}
-                          </div>
-                          <div class="gr-2">
-                            Date of Birth:
-                          </div>
-                          <div class="gr-4 text-left pull-.5">
-                          {{ member.basicInfo.dob | date('MMM D, YYYY') || 'N/A' }}
-                          </div>
-                          <div class="gr-2">
-                          Gender:
-                          </div>
-                          <div class="gr-4 text-left">
-                          <i v-bind:class="{'fa fa-male':member.basicInfo.gender==='M','fa fa-female':member.basicInfo.gender==='F'}"></i>{{ !member.basicInfo.gender ? 'N/A' : '' }}
-                          </div>
-                          <div class="gr-2">
-                          Occupation:
-                          </div>
-                          <div class="gr-4 text-left pull-.5">
-                          {{ occupationName || 'N/A' }}
-                          </div>
-
-                          <div class="gr-2">
-                          Verification Status:
-                          </div>
-                          <div class="gr-4 text-left">
-                            {{ member.basicInfo.verificationStatus === null ? 'N/A': member.basicInfo.verificationStatus == 'VERIFIED' ? 'Verified':
-                            member.basicInfo.verificationStatus == 'NOT_VERIFIED' ? 'Not Verified':
-                            member.basicInfo.verificationStatus == 'IN_PROGRESS' ? 'In Progress':
-                            'Rejected'}}
-                          </div>
-                          <div class="gr-2">
-                          Member Since:
-                          </div>
-                          <div class="gr-4 text-left pull-.5">
-                          {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
-                          </div>
-                          <div class="gr-2">
-                          Organization Name:
-                          </div>
-                          <div class="gr-4 text-left pull-.5">
-                          {{ member.basicInfo.organizationName || 'N/A' }}
+                          <div class=row>
+                            <div class="gr-2">
+                            Organization Name:
+                            </div>
+                            <div class="gr-4 text-left pull-.5">
+                            {{ member.basicInfo.organizationName || 'N/A' }}
+                            </div>
                           </div>
                         </div>
                         <div class="gr-12" v-else>
@@ -272,7 +291,7 @@
                         <div class="gr-12" v-if="member.basicInfo.accountType===2">
                           <div class="row">
                             <div class="gr-1 text-center margin-top-10">
-                              <img v-if="member.businessDetails.businessOwnerPictures[0]"
+                              <img v-if="member.businessDetails.businessOwnerPictures[0]" @click="imagePreview(imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url)"
                                   :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
                                   class="img-rounded img-responsive" onerror="this.onerror=null; this.src='/static/images/default-original.jpg';" width="80" height="70">
                               <!-- <span v-else> -->
@@ -293,30 +312,34 @@
 
                               </div>
                               <div class="margin-10">
-                                <div class="gr-2">
-                                Business Name:
-                                </div>
-                                <div class="gr-4 text-left">
-                                  {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
+                                <div class=row>
+                                  <div class="gr-2">
+                                  Business Name:
+                                  </div>
+                                  <div class="gr-4 text-left">
+                                    {{ member.businessDetails.businessBasicInfo.businessName || 'N/A' }}
 
+                                  </div>
+                                  <div class="gr-2">
+                                  Business Type:
+                                  </div>
+                                  <div class="gr-4 text-left">
+                                    {{ businessType || 'N/A' }}
+                                  </div>
                                 </div>
-                                <div class="gr-2">
-                                Business Type:
-                                </div>
-                                <div class="gr-4 text-left">
-                                  {{ businessType || 'N/A' }}
-                                </div>
-                                <div class="gr-2">
-                                Email:
-                                </div>
-                                <div class="gr-4 text-left">
-                                  {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
-                                </div>
-                                <div class="gr-2">
-                                Ipay Number:
-                                </div>
-                                <div class="gr-4 text-left">
-                                  {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                                <div class=row>
+                                  <div class="gr-2">
+                                  Email:
+                                  </div>
+                                  <div class="gr-4 text-left">
+                                    {{ member.businessDetails.businessBasicInfo.email || 'N/A' }}
+                                  </div>
+                                  <div class="gr-2">
+                                  Ipay Number:
+                                  </div>
+                                  <div class="gr-4 text-left">
+                                    {{ member.businessDetails.businessBasicInfo.mobileNumber || 'N/A' }}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -545,6 +568,42 @@
         </div>
       </div>
 
+      <div id="ImagePreviewModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: 45%">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" >&times;</button>
+              <!-- <h4 class="modal-title"> Document {{ document.documentType }} </h4> -->
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+
+                <div class="row">
+                  <!-- <div class="col-md-3">
+                    <label class="control-label">Document</label>
+                  </div> -->
+                  <div class="col-md-12">
+                    <div class="text-center">
+                        <img id="ppImage" v-if="imagePreviewUrl"
+                              :src="imagePreviewUrl"
+                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'"
+                              class="img-rounded" width="90%" height="auto">
+
+                        <img v-else src="/static/images/default-profile-180x180.png" class="img-rounded"
+                            width="90%" height="auto">
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="MemberAccountStatusModal" class="modal fade" role="dialog">
             <div class="modal-dialog  modal-md">
             <!-- Modal content-->
@@ -675,6 +734,7 @@
     data () {
       return {
         member: {},
+        imagePreviewUrl: '',
         balance: '',
         thanaNamePresent: '',
         districtNamePresent: '',
@@ -831,6 +891,11 @@
                 }
               )
         }
+      },
+      imagePreview (url) {
+        this.imagePreviewUrl = url
+        console.log(this.imagePreviewUrl)
+        $('#ImagePreviewModal').modal({backdrop: false})
       },
       editBasicInfo (param = '') {
         if (this.editBasicProfileMode) {

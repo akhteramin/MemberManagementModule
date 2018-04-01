@@ -48,10 +48,10 @@
                   </table>
                 </td>
                 <td>{{ item.documentVerificationStatus | underscoreless }}</td>
-                <td v-if="containsPermission('MS_MM_USER_ADD_DOC')">
+                <td>
                   <span>
 
-                  <button data-toggle="modal" :data-target="`#ChangeDocumentModal${item.id}`"
+                  <button :disabled="!containsPermission('MS_MM_USER_ADD_DOC')" data-toggle="modal" :data-target="`#ChangeDocumentModal${item.id}`"
                   class="button-md-verify" data-backdrop="false"><i class="fa fa-pencil-square-o"></i> Edit </button>
                     <div :id="`ChangeDocumentModal${item.id}`" class="modal fade" role="dialog">
                       <update-member-identification-document
@@ -60,17 +60,17 @@
                       @update="editIdentificationDocument">
                       </update-member-identification-document>
                     </div>
-                    <button
+                    <button :disabled="!containsPermission('MS_MM_USER_VERIFICATION_DOCUMENT')"
                      data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false" @click= "setDocument(item)"
                      class="button-md-verify" v-if="item.documentVerificationStatus=='NOT_VERIFIED'">Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
-                    <button
+                    <button :disabled="!containsPermission('MS_MM_USER_VERIFICATION_DOCUMENT')"
                      data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false" @click= "setDocumentUnverify(item)"
                      class="button-md-verify width-100" v-else>Unverify <i class="fa fa-times" aria-hidden="true"></i></button>
                   </span>
 
                 </td>
                 <td>
-                  <button data-toggle="modal" data-target="#DocumentHistoryModal" data-backdrop="false" @click= "setDocumentHistory(item)"
+                  <button :disabled="!containsPermission('MS_MM_USER_GET_SPECIFIC_DOCUMENTS')" data-toggle="modal" data-target="#DocumentHistoryModal" data-backdrop="false" @click= "setDocumentHistory(item)"
                      class="button-md-verify width-100">View History</button>
                 </td>
 
@@ -149,7 +149,7 @@
             </div>
 
             <div id="DocumentPreviewModal" class="modal fade" role="dialog">
-              <div class="modal-dialog  modal-md">
+              <div class="modal-dialog modal-lg" style="width: 70%">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" >&times;</button>
@@ -159,23 +159,23 @@
                     <div class="form-group">
 
                       <div class="row">
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                           <label class="control-label">Document</label>
-                        </div>
-                        <div class="col-md-8">
-                          <div>
+                        </div> -->
+                        <div class="col-md-12">
+                          <div class="text-center">
                               <div v-if="!isPdf(document.url)">
                                 <img id="ppImage" v-if="document.url"
-                                      :src="documentBaseUrl+document.url || 'static/images/default-document-icon.png'"
+                                      :src="documentBaseUrl+document.url"
                                       onerror="onerror=null; src='/static/images/default-document-icon.png'"
-                                      class="img-rounded" width="250" height="250">
+                                      class="img-rounded" width="90%" height="auto">
 
                                 <img v-else src="/static/images/default-document-icon.png" class="img-rounded"
-                                    onerror="onerror=null; src='/static/images/default-document-icon.png'" width="30" height="30">
+                                    onerror="onerror=null; src='/static/images/default-document-icon.png'" width="90%" height="auto">
                               </div>
                               <div v-if="isPdf(document.url)">
                                   <iframe :src="documentBaseUrl+document.url"
-                                  alt="PDF" width="400" height="400"></iframe>
+                                  alt="PDF" width="70%" height="700px"></iframe>
                               </div>
 
 
