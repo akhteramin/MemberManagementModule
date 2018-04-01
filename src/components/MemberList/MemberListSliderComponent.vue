@@ -94,7 +94,7 @@
                           <br>{{memberDocument.documentIdNumber}}
                           <br>
                           <span v-if="memberDocument.documentVerificationStatus=='NOT_VERIFIED'">
-                              <button class="button-small-edit"
+                              <button class="button-small-edit" :disabled="!containsPermission('MS_MM_USER_ADD_DOC')"
                               data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocument.id}`"
                               data-backdrop="false">
                               <i class="fa fa-pencil-square-o"></i>
@@ -107,7 +107,7 @@
                                   @update="editIdentificationDocument">
                                   </update-member-identification-document>
                               </div>
-                              <button class="button-small-verify"
+                              <button class="button-small-verify" :disabled="!containsPermission('MS_MM_USER_VERIFICATION_DOCUMENT')"
                               data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
                               @click="setDocument(memberDocument)">
                               Verify
@@ -115,7 +115,7 @@
                               </button>
                           </span>
                           <span v-else>
-                            <button class="button-small-verify width-90"
+                            <button class="button-small-verify width-90" :disabled="!containsPermission('MS_MM_USER_VERIFICATION_DOCUMENT')"
                             data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false"
                             @click="setDocumentUnverify(memberDocument)">
                             Unverify
@@ -255,7 +255,7 @@
                 <br>{{memberDocumentDetail.documentIdNumber}}
                 <br>
                 <span v-if="memberDocumentDetail.documentVerificationStatus=='NOT_VERIFIED'">
-                <button class="button-md-edit"
+                <button class="button-md-edit" :disabled="!containsPermission('MS_MM_USER_ADD_DOC')"
                 data-toggle="modal" :data-target="`#ChangeDocumentModal${memberDocumentDetail.id}`"
                              data-backdrop="false">
                              <i class="fa fa-pencil-square-o"></i>
@@ -268,7 +268,7 @@
                     @update="editIdentificationDocument">
                     </update-member-identification-document>
                 </div>
-                <button class="button-md-verify"
+                <button class="button-md-verify" :disabled="!containsPermission('MS_MM_USER_VERIFICATION_DOCUMENT')"
                         data-toggle="modal" data-target="#DocumentVerificationModal" data-backdrop="false"
                         @click="setDocument(memberDocumentDetail)">
                         Verify
@@ -276,7 +276,7 @@
                 </button>
                 </span>
                 <span v-else>
-                  <button class="button-small-verify width-90"
+                  <button class="button-small-verify width-90" :disabled="!containsPermission('MS_MM_USER_VERIFICATION_DOCUMENT')"
                   data-toggle="modal" data-target="#DocumentUnverificationModal" data-backdrop="false"
                   @click= "setDocumentUnverify(memberDocument)">
                   Unverify
@@ -284,7 +284,7 @@
                   </button>
                 </span>
             </div>
-            <div class="gr-12 margin-top-10" v-if="documentDetails.histories">
+            <div class="gr-12 margin-top-10" v-if="documentDetails.histories && containsPermission('MS_MM_USER_GET_SPECIFIC_DOCUMENTS')">
                 <div class="gr-12 comment" v-for="history in documentDetails.histories">
                    <ul class="chat">
                     <li class="left clearfix"><span class="chat-img pull-left">
