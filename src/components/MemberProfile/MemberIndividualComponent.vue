@@ -19,7 +19,7 @@
                         alt="N/A" width="70" height="70"
                           onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
                   </div>
-                  <div class="gr-6 padding-5 text-left">
+                  <div class="gr-8 padding-5 text-left">
                     <span>
                     <b v-if="member.basicInfo.accountType == 1">{{member.basicInfo.name}}</b>
                     <b v-if="member.basicInfo.accountType == 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
