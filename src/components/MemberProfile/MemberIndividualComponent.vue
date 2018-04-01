@@ -76,7 +76,7 @@
                     <div class="row">
 
                       <div class="gr-2 text-center margin-top-10">
-                        <img v-if="member.profilePictures[0]"
+                        <img v-if="member.profilePictures[0]" @click="imagePreview(imageBaseUrl+member.profilePictures[0].url)"
                               :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250"
                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
@@ -291,7 +291,7 @@
                         <div class="gr-12" v-if="member.basicInfo.accountType===2">
                           <div class="row">
                             <div class="gr-1 text-center margin-top-10">
-                              <img v-if="member.businessDetails.businessOwnerPictures[0]"
+                              <img v-if="member.businessDetails.businessOwnerPictures[0]" @click="imagePreview(imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url)"
                                   :src="imageBaseUrl+member.businessDetails.businessOwnerPictures[0].url"
                                   class="img-rounded img-responsive" onerror="this.onerror=null; this.src='/static/images/default-original.jpg';" width="80" height="70">
                               <!-- <span v-else> -->
@@ -568,6 +568,42 @@
         </div>
       </div>
 
+      <div id="ImagePreviewModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: 45%">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" >&times;</button>
+              <!-- <h4 class="modal-title"> Document {{ document.documentType }} </h4> -->
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+
+                <div class="row">
+                  <!-- <div class="col-md-3">
+                    <label class="control-label">Document</label>
+                  </div> -->
+                  <div class="col-md-12">
+                    <div class="text-center">
+                        <img id="ppImage" v-if="imagePreviewUrl"
+                              :src="imagePreviewUrl"
+                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'"
+                              class="img-rounded" width="90%" height="auto">
+
+                        <img v-else src="/static/images/default-profile-180x180.png" class="img-rounded"
+                            width="90%" height="auto">
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="MemberAccountStatusModal" class="modal fade" role="dialog">
             <div class="modal-dialog  modal-md">
             <!-- Modal content-->
@@ -698,6 +734,7 @@
     data () {
       return {
         member: {},
+        imagePreviewUrl: '',
         balance: '',
         thanaNamePresent: '',
         districtNamePresent: '',
@@ -854,6 +891,11 @@
                 }
               )
         }
+      },
+      imagePreview (url) {
+        this.imagePreviewUrl = url
+        console.log(this.imagePreviewUrl)
+        $('#ImagePreviewModal').modal({backdrop: false})
       },
       editBasicInfo (param = '') {
         if (this.editBasicProfileMode) {
