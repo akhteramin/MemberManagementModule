@@ -79,7 +79,10 @@ export default{
               text: 'Profile Completion Score'
             },
             labels: {
-              enabled: true
+              enabled: true,
+              style: {
+                    fontSize:'24px'
+                }
             },
             // minorTickLength: 0,
             // tickLength: 0,
@@ -127,7 +130,10 @@ export default{
               text: 'Data Points'
             },
             labels: {
-              enabled: true
+              enabled: true,
+              style: {
+                    fontSize:'16px'
+                }
             },
             // minorTickLength: 0,
             // tickLength: 0,
