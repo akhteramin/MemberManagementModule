@@ -23,7 +23,7 @@
       </div>
       <nav>
         <ul>
-          <!-- <a class="break-word" v-on:click="goHome"><li :class="{'btn-active-til': showHome}" @click="setMenu('home')"><i class="fa fa-home fa-1x" aria-hidden="true"></i> Home</li></a> -->
+          <a class="break-word" v-on:click="goHome"><li :class="{'btn-active-til': showHome}" @click="setMenu('home')"><i class="fa fa-home fa-1x" aria-hidden="true"></i> Home</li></a>
           <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList"><li :class="{'btn-active-til': showMembers}" @click="setMenu('member')"><i class="fa fa-users fa-1x" aria-hidden="true"></i> Members</li></a>
           <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList"><li :class="{'btn-active-til': showWaitingVerification}" @click="setMenu('memberVerification')"><i class="fa fa-user-circle fa-1x" aria-hidden="true"></i> Waiting For Verification</li></a>
           <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList"><li :class="{'btn-active-til': showWaitingApproval}" @click="setMenu('memberApproval')"><i class="fa fa-user-circle-o fa-1x" aria-hidden="true"></i> Waiting For Approval</li></a>

@@ -7,6 +7,8 @@ import router from './router'
 import vueSlider from 'vue-slider-component'
 import VueCookies from 'vue-cookies'
 import Restrict from './directives/restrict'
+import VueHighcharts from 'vue-highcharts';
+
 // import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 
 // require('../node_modules/bootstrap/less/bootstrap.less')
@@ -19,7 +21,7 @@ import Restrict from './directives/restrict'
 require('./assets/css/login.css')
 Vue.config.productionTip = false
 Vue.component('vueSlider', vueSlider)
-
+Vue.use(VueHighcharts);
 Vue.use(VueCookies)
 
 Vue.directive('restrict', Restrict)

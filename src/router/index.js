@@ -74,8 +74,8 @@ const router = new Router({
     {
       path: '/home',
       name: 'Home',
-      // component: Home,
-      redirect: '/member/default',
+      component: Home,
+      // redirect: '/member/default',
       // auth check
       meta: { requiresAuth: true }
     },

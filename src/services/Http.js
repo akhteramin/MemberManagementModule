@@ -51,7 +51,7 @@ axios.interceptors.response.use(
 // const API_URL = 'http://192.168.1.95:8085//member-service/api/v1' // muhit
 
 // const API_URL = 'http://192.168.1.95:8085/member-service/api/v1'
-// const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
+const MM_ADMIN_URL = 'http://10.10.10.10:9001/api/v1'
 // const AUTH_URL = 'http://localhost:9000/auth/api/v1'
 // const AUTH_HTTP_URI = 'http://localhost:8000/'
 // const AUTH_ACCOUNTS_URI = 'http://localhost:8000/accounts'
@@ -60,20 +60,24 @@ axios.interceptors.response.use(
 /// //dev/test configuration///////
 // const MM_ADMIN_URL = 'http://192.168.1.184:9001/api/v1'
 // const API_URL = 'http://10.10.10.169:8085/member-service/api/v1'
-// // const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
-// const MM_ADMIN_URL = 'http://10.10.10.10:9001/api/v1' // dev
+// const API_URL = 'http://10.10.10.199:8085/member-service/api/v1'
+// const MM_ADMIN_URL = 'http://192.168.1.221:9001/api/v1' // dev
 // const MM_ADMIN_URL = 'http://10.15.40.10:9001/api/v1' // test
-// const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1' // test
-// const AUTH_HTTP_URI = 'http://10.10.40.31:8080/'
-// const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts'
+const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1' // test
+// const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1' // dev
+const AUTH_HTTP_URI = 'http://10.10.40.31:8080/' //test
+const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts' //test
+// const AUTH_HTTP_URI = 'http://10.10.10.199:9000/' //dev
+// const AUTH_ACCOUNTS_URI = 'http://10.10.10.199:9000/accounts' //dev
 // const ADMIN_URI = 'http://10.15.40.11:80/'
+const ADMIN_URI = 'http://localhost:8081/'
 
 /// /live////
-const MM_ADMIN_URL = 'http://10.200.40.206:9001/api/v1'
-const AUTH_URL = 'http://10.200.40.203:7000/auth/api/v1'
-const AUTH_HTTP_URI = 'http://centralauth.ipay.com.bd/'
-const AUTH_ACCOUNTS_URI = 'http://centralauth.ipay.com.bd/accounts'
-const ADMIN_URI = 'http://verification.ipay.com.bd'
+// const MM_ADMIN_URL = 'http://10.200.40.206:9001/api/v1'
+// const AUTH_URL = 'http://10.200.40.203:7000/auth/api/v1'
+// const AUTH_HTTP_URI = 'http://centralauth.ipay.com.bd/'
+// const AUTH_ACCOUNTS_URI = 'http://centralauth.ipay.com.bd/accounts'
+// const ADMIN_URI = 'http://verification.ipay.com.bd'
 
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
 // const IMAGE_URL = 'https://dev.ipay.com.bd'
@@ -100,7 +104,8 @@ const routes = {
   // offer: `${API_URL}/offer/business/member/`,
   aclUserGroup: `${MM_ADMIN_URL}/acl/groups/`,
   memberAclUpdate: `${MM_ADMIN_URL}/acl/users/`,
-  memberAclGet: `${MM_ADMIN_URL}/acl/`
+  memberAclGet: `${MM_ADMIN_URL}/acl/`,
+  memberVerificationMetrics: `${MM_ADMIN_URL}/ms/metrics/`
 }
 
 const encodeQueryData = (data) => {
