@@ -64,6 +64,17 @@ export default{
               groupPadding: 0,
               shadow: false,
               maxPointWidth: 100
+            },
+            series: {
+              dataLabels: {
+                  enabled: true,
+                  color: '#000',
+                  style: {fontWeight: 'bolder'},
+                  formatter: function() {return this.y},
+                  inside: false
+              },
+              pointPadding: 0.1,
+              groupPadding: 0
             }
           },
           tooltip: {
@@ -115,6 +126,17 @@ export default{
               groupPadding: 0,
               shadow: false,
               maxPointWidth: 100
+            },
+            series: {
+              dataLabels: {
+                  enabled: true,
+                  color: '#000',
+                  style: {fontWeight: 'bolder'},
+                  formatter: function() {return this.y},
+                  inside: false
+              },
+              pointPadding: 0.1,
+              groupPadding: 0
             }
           },
           tooltip: {
