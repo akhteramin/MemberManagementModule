@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <div class="row gr-12 push-3">
+    <div class="row gr-12 push-3 text-center">
       <div class="card gr-5 padding-10" style="width: 30rem; border:1px solid #ddd; border-radius:4px; margin: 8px; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);">
         <div class="card-body margin-10">
           <h1 class="card-title margin-10">{{metricVerifiedData[0].value}}</h1>
