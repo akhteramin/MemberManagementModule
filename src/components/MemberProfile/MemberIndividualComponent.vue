@@ -846,6 +846,8 @@
                   this.memberPresentAddress = address
                 } else if (address.type === 'PERMANENT') {
                   this.memberPermanentAddress = address
+                } else if (address.type === 'OFFICE') {
+                  this.memberPermanentAddress = address
                 }
               }
               console.log('this.memberPresentAddress: ', this.memberPresentAddress)
@@ -1024,7 +1026,7 @@
           )
 
         this.businessTypeList = JSON.parse(localStorage.getItem('businessType'))
-        if (this.member.businessDetails.businessBasicInfo.businessType) {
+        if (this.member.businessDetails && this.member.businessDetails.businessBasicInfo.businessType) {
           this.businessType = this.businessTypeList.find(x => x.id === this.member.businessDetails.businessBasicInfo.businessType).name
         }
         this.occupationList = JSON.parse(localStorage.getItem('occupation'))
