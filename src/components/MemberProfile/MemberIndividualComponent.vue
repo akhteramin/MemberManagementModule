@@ -1024,7 +1024,7 @@
           )
 
         this.businessTypeList = JSON.parse(localStorage.getItem('businessType'))
-        if (this.member.businessDetails.businessBasicInfo.businessType) {
+        if (this.member.businessDetails && this.member.businessDetails.businessBasicInfo.businessType) {
           this.businessType = this.businessTypeList.find(x => x.id === this.member.businessDetails.businessBasicInfo.businessType).name
         }
         this.occupationList = JSON.parse(localStorage.getItem('occupation'))
