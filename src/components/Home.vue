@@ -53,130 +53,133 @@ export default{
       showLoader: false,
       metricVerifiedData: {},
       memberMetricData: {
-          chart: {
-            type: 'column',
-            height: '400px'
+        chart: {
+          type: 'column',
+          height: '400px'
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0,
+            groupPadding: 0,
+            shadow: false,
+            maxPointWidth: 100
           },
-          plotOptions: {
-            column: {
-              pointPadding: 0.2,
-              borderWidth: 0,
-              groupPadding: 0,
-              shadow: false,
-              maxPointWidth: 100
-            },
-            series: {
-              dataLabels: {
-                  enabled: true,
-                  color: '#000',
-                  style: {fontWeight: 'bolder'},
-                  formatter: function() {return this.y},
-                  inside: false
-              },
-              pointPadding: 0.1,
-              groupPadding: 0
-            }
-          },
-          tooltip: {
-            formatter() {
-              return `<span style="color:${this.color}">\u25CF</span> ${this.x}: <b>${this.y}</b><br/>`;
-            }
-          },
-          title: {
-            text: 'Profile completion score vs No. of members.'
-          },
-          xAxis: {
-            title: {
-              text: 'Profile Completion Score'
-            },
-            labels: {
+          series: {
+            dataLabels: {
               enabled: true,
-              style: {
-                    fontSize:'24px'
-                }
+              color: '#000',
+              style: {fontWeight: 'bolder'},
+              formatter: function () {
+                return this.y
+              },
+              inside: false
             },
-            // minorTickLength: 0,
-            // tickLength: 0,
-            categories: []
-          },
-          yAxis: {
-            allowDecimals: false,
-            min: 0,
-            title: {
-              text: 'No of Members'
-            }
-          },
-          series: [],
-          legend: {
-            enabled: false
-          },
-          credits: {
-            enabled: false
+            pointPadding: 0.1,
+            groupPadding: 0
           }
         },
-        memberAvailableData: {
-          chart: {
-            type: 'column',
-            height: '400px'
-          },
-          plotOptions: {
-            column: {
-              pointPadding: 0.2,
-              borderWidth: 0,
-              groupPadding: 0,
-              shadow: false,
-              maxPointWidth: 100
-            },
-            series: {
-              dataLabels: {
-                  enabled: true,
-                  color: '#000',
-                  style: {fontWeight: 'bolder'},
-                  formatter: function() {return this.y},
-                  inside: false
-              },
-              pointPadding: 0.1,
-              groupPadding: 0
-            }
-          },
-          tooltip: {
-            formatter() {
-              return `<span style="color:${this.color}">\u25CF</span> ${this.x}: <b>${this.y}</b><br/>`;
-            }
-          },
-          title: {
-            text: 'Available Data Points vs No. of members.'
-          },
-          xAxis: {
-            title: {
-              text: 'Data Points'
-            },
-            labels: {
-              enabled: true,
-              style: {
-                    fontSize:'16px'
-                }
-            },
-            // minorTickLength: 0,
-            // tickLength: 0,
-            categories: []
-          },
-          yAxis: {
-            allowDecimals: false,
-            min: 0,
-            title: {
-              text: 'No of Members'
-            }
-          },
-          series: [],
-          legend: {
-            enabled: false
-          },
-          credits: {
-            enabled: false
+        tooltip: {
+          formatter () {
+            return `<span style="color:${this.color}">\u25CF</span> ${this.x}: <b>${this.y}</b><br/>`
           }
+        },
+        title: {
+          text: 'Profile completion score vs No. of members.'
+        },
+        xAxis: {
+          title: {
+            text: 'Profile Completion Score'
+          },
+          labels: {
+            enabled: true,
+            style: {
+              fontSize: '24px'
+            }
+          },
+          // minorTickLength: 0,
+          // tickLength: 0,
+          categories: []
+        },
+        yAxis: {
+          allowDecimals: false,
+          min: 0,
+          title: {
+            text: 'No of Members'
+          }
+        },
+        series: [],
+        legend: {
+          enabled: false
+        },
+        credits: {
+          enabled: false
         }
-    
+      },
+      memberAvailableData: {
+        chart: {
+          type: 'column',
+          height: '400px'
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0,
+            groupPadding: 0,
+            shadow: false,
+            maxPointWidth: 100
+          },
+          series: {
+            dataLabels: {
+              enabled: true,
+              color: '#000',
+              style: {fontWeight: 'bolder'},
+              formatter: function () {
+                return this.y
+              },
+              inside: false
+            },
+            pointPadding: 0.1,
+            groupPadding: 0
+          }
+        },
+        tooltip: {
+          formatter () {
+            return `<span style="color:${this.color}">\u25CF</span> ${this.x}: <b>${this.y}</b><br/>`
+          }
+        },
+        title: {
+          text: 'Available Data Points vs No. of members.'
+        },
+        xAxis: {
+          title: {
+            text: 'Data Points'
+          },
+          labels: {
+            enabled: true,
+            style: {
+              fontSize: '16px'
+            }
+          },
+          // minorTickLength: 0,
+          // tickLength: 0,
+          categories: []
+        },
+        yAxis: {
+          allowDecimals: false,
+          min: 0,
+          title: {
+            text: 'No of Members'
+          }
+        },
+        series: [],
+        legend: {
+          enabled: false
+        },
+        credits: {
+          enabled: false
+        }
+      }
     }
   },
   created () {
@@ -196,34 +199,33 @@ export default{
                 //   data: [x.count],
                 //   name: x.name || '-'
                 // }));
-                this.memberMetricData.series = [];
-                this.memberMetricData.series.push({ data: metricData.data.map(x => x.value) });
-              }
-              this.memberMetricData.xAxis.categories = metricData.data.map(x => x.key);
+            this.memberMetricData.series = []
+            this.memberMetricData.series.push({ data: metricData.data.map(x => x.value) })
+          }
+          this.memberMetricData.xAxis.categories = metricData.data.map(x => x.key)
         }, error => {
           this.showLoader = false
           console.error('Error in offers: ', error)
         })
-        
-        Http.GET('memberVerificationMetrics', ['availableData'])
+      Http.GET('memberVerificationMetrics', ['availableData'])
         .then(({data: metricData}) => {
           this.showLoader = false
           console.log('Success, got metric list: ', metricData)
           if (metricData.data !== undefined) {
-                // this.agentCommentOptions.series = data.map(x => Object.assign({}, {
-                //   data: [x.count],
-                //   name: x.name || '-'
-                // }));
-                this.memberAvailableData.series = [];
-                this.memberAvailableData.series.push({ data: metricData.data.map(x => x.value) });
-              }
-              this.memberAvailableData.xAxis.categories = metricData.data.map(x => x.key);
+            // this.agentCommentOptions.series = data.map(x => Object.assign({}, {
+            //   data: [x.count],
+            //   name: x.name || '-'
+            // }));
+            this.memberAvailableData.series = []
+            this.memberAvailableData.series.push({ data: metricData.data.map(x => x.value) })
+          }
+          this.memberAvailableData.xAxis.categories = metricData.data.map(x => x.key)
         }, error => {
           this.showLoader = false
           console.error('Error in offers: ', error)
         })
 
-        Http.GET('memberVerificationMetrics', ['verification'])
+      Http.GET('memberVerificationMetrics', ['verification'])
         .then(({data: metricVerifiedData}) => {
           this.showLoader = false
           console.log('Success, got metric list: ', metricVerifiedData)
@@ -233,7 +235,6 @@ export default{
           this.showLoader = false
           console.error('Error in offers: ', error)
         })
-        
     }
   }
 }
