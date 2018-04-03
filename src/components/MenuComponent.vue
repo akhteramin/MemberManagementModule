@@ -57,7 +57,7 @@
             </div>
           </li>
 
-          <a v-on:click="goToUserProfile"><li class="break-word" :class="{'btn-active-til': showProfile}" @click="setMenu('profile')" ><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
+          <a v-on:click="goToUserProfile"><li class="break-word" :class="{'btn-active-til': showProfile}"><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
           <a v-on:click="logout"><li class="break-word" :class="{'btn-active-til': showLogout}" @click="setMenu('logout')"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</li></a>
         </ul>
 
@@ -109,7 +109,7 @@
             </div>
           </li>
 
-          <a v-on:click="goToUserProfile"><li :class="{'btn-active-til': showProfile}" @click="setMenu('profile')"><i class="fa fa-user-circle" aria-hidden="true"></i></li></a>
+          <a v-on:click="goToUserProfile"><li :class="{'btn-active-til': showProfile}"><i class="fa fa-user-circle" aria-hidden="true"></i></li></a>
           <a v-on:click="logout"><li :class="{'btn-active-til': showLogout}" @click="setMenu('logout')"><i class="fa fa-sign-out" aria-hidden="true"></i></li></a>
         </ul>
 
@@ -214,7 +214,7 @@
       },
       goToUserProfile () {
         this.expandList = false
-        route.push('/user/change-password')
+        // route.push('/user/change-password')
       },
       goToMemberAcl () {
         this.expandList = false
