@@ -321,6 +321,8 @@
           else if (secondKey === 'acl') this.showACL = true
         } else if (firstKey === 'manage') {
           if (secondKey === 'services') this.showManageService = true
+        } else if (firstKey === 'home') {
+          this.showHome = true
         }
       }
     },
