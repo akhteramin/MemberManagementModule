@@ -11,7 +11,7 @@
               <div class="gr-12">
                 <div class="gr-5 margin-5">
                   <div class="gr-2 margin-5">
-                    <img v-if="member.profilePictures[0]"
+                    <img v-if="member.profilePictures && member.profilePictures[0]"
                                 :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
                                 class="img-circle img-responsive" width="80" height="80"
                               onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
@@ -21,8 +21,8 @@
                   </div>
                   <div class="gr-8 padding-5 text-left">
                     <span>
-                    <b v-if="member.basicInfo.accountType == 1">{{member.basicInfo.name}}</b>
-                    <b v-if="member.basicInfo.accountType == 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
+                    <b v-if="member.basicInfo.accountType === 1">{{member.basicInfo.name}}</b>
+                    <b v-if="member.basicInfo.accountType === 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
                     </span>
                           
                     <br>
@@ -76,7 +76,7 @@
                     <div class="row">
 
                       <div class="gr-2 text-center margin-top-10">
-                        <img v-if="member.profilePictures[0]" @click="imagePreview(imageBaseUrl+member.profilePictures[0].url)"
+                        <img v-if="member.profilePictures && member.profilePictures[0]" @click="imagePreview(imageBaseUrl+member.profilePictures[0].url)"
                               :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250"
                              onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
@@ -179,7 +179,7 @@
                               Email:
                             </div>
                             <div class="gr-4 text-left">
-                            {{  member.emails.length !== 0 ? member.emails[0].emailAddress: 'N/A' }}
+                            {{ member.emails && member.emails.length !== 0 ? member.emails[0].emailAddress: 'N/A' }}
                             </div>
                           <!-- </div>
                           <div class=row> -->
@@ -345,15 +345,15 @@
                             </div>
                           </div>
                         </div>
-                        <div v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE') && (member.basicInfo.verificationStatus !== 'VERIFIED' || (member.basicInfo.verificationStatus === 'VERIFIED' && !memberMissingInfo.isVerifiable) )">
+                        <div v-if="containsPermission('MS_MM_USER_IS_VERIFIABLE') && (member.basicInfo.verificationStatus !== 'VERIFIED' || (member.basicInfo.verificationStatus === 'VERIFIED' && memberMissingInfo && !memberMissingInfo.isVerifiable) )">
                             <div class="gr-12 panel-label margin-5">
                               <label class="text-label"><b>Missing Information</b></label>
                             </div>
                             <hr>
-                            <div class="gr-12 text-center" v-if="memberMissingInfo.isVerifiable">
+                            <div class="gr-12 text-center" v-if="memberMissingInfo && memberMissingInfo.isVerifiable">
                                 No missing Information.This Member is <b>Verifiable</b>.
                             </div>
-                            <div class="gr-12" v-else>
+                            <div class="gr-12" v-else-if="memberMissingInfo">
                                 <div class="gr-6" v-for="missingInfo in memberMissingInfo.missingInformation">
                                     <span class="text-ash">
                                         -{{missingInfo | underscoreless}}
@@ -393,7 +393,7 @@
                       </div>
                       <div class="row text-left">
                         <div class="gr-2">
-                          Address Line 1:
+                          Address:
                         </div>
                         <div class="gr-3">
                           {{ memberPresentAddress.addressLine1 }}
@@ -401,7 +401,6 @@
                       </div>
                       <div class="row text-left">
                         <div class="gr-2">
-                          Address Line 2:
                         </div>
                         <div class="gr-3 ">
                           {{ memberPresentAddress.addressLine2 }}
@@ -460,7 +459,7 @@
                       </div>
                       <div class="row text-left">
                         <div class="gr-2">
-                          Address Line 1:
+                          Address:
                         </div>
                         <div class="gr-3">
                           {{ memberPermanentAddress.addressLine1 }}
@@ -469,7 +468,6 @@
                       </div>
                       <div class="row text-left">
                         <div class="gr-2">
-                          Address Line 2:
                         </div>
                         <div class="gr-3 ">
                           {{ memberPermanentAddress.addressLine2 }}
@@ -733,7 +731,11 @@
     },
     data () {
       return {
-        member: {},
+        member: {
+          basicInfo: {
+            accountType: this.accountType
+          }
+        },
         imagePreviewUrl: '',
         balance: '',
         thanaNamePresent: '',
@@ -770,7 +772,7 @@
         memberComment: '',
         memberPresentAddress: {
           addressLine1: 'N/A',
-          addressLine2: 'N/A',
+          addressLine2: '',
           country: 1,
           districtId: 'N/A',
           postalCode: 'N/A',
@@ -780,7 +782,7 @@
         },
         memberPermanentAddress: {
           addressLine1: 'N/A',
-          addressLine2: 'N/A',
+          addressLine2: '',
           country: 1,
           districtId: 'N/A',
           postalCode: 'N/A',
@@ -808,7 +810,7 @@
         // Http call for basic information of the member with the 'id'
         this.memberPresentAddress = {
           addressLine1: 'N/A',
-          addressLine2: 'N/A',
+          addressLine2: '',
           country: 'Bangladesh',
           districtId: 'N/A',
           postalCode: 'N/A',
@@ -818,7 +820,7 @@
         }
         this.memberPermanentAddress = {
           addressLine1: 'N/A',
-          addressLine2: 'N/A',
+          addressLine2: '',
           country: 'Bangladesh',
           districtId: 'N/A',
           postalCode: 'N/A',
