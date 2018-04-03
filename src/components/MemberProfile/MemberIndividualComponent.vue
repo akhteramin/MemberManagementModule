@@ -846,6 +846,8 @@
                   this.memberPresentAddress = address
                 } else if (address.type === 'PERMANENT') {
                   this.memberPermanentAddress = address
+                } else if (address.type === 'OFFICE') {
+                  this.memberPermanentAddress = address
                 }
               }
               console.log('this.memberPresentAddress: ', this.memberPresentAddress)
