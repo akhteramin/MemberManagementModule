@@ -38,7 +38,7 @@
                   </div>
                   <div class="col-md-8">
                     <div>
-                      <img id="ppImage" v-if="member.profilePictures[0]"
+                      <img id="ppImage" v-if="member.profilePictures && member.profilePictures[0]"
                               :src="imageUrl" onerror="this.onerror=null; this.src='/static/images/default-original.jpg';"
                               class="img-rounded img-responsive" width="250" height="250">
 
@@ -95,8 +95,8 @@
       init () {
         console.log('type::', this.id)
         this.imageBaseUrl = Http.IMAGE_URL
-        if (this.member.profilePictures[0]) {
-          this.imageUrl = this.imageBaseUrl + this.member.profilePictures[0].document.url
+        if (this.member.profilePictures && this.member.profilePictures[0]) {
+          this.imageUrl = this.imageBaseUrl + this.member.profilePictures[0].url
         } else {
           this.imageUrl = 'static/images/default-original.jpg'
         }
@@ -117,7 +117,9 @@
       },
       clearDocument () {
         console.log('clear the document')
-        this.imageUrl = this.imageBaseUrl + this.member.profilePictures[0].document.url
+        if (this.member.profilePictures && this.member.profilePictures[0]) {
+          this.imageUrl = this.imageBaseUrl + this.member.profilePictures[0].document.url
+        }
         $('#uploadBtn3').val('')
       },
       uploadPP () {
