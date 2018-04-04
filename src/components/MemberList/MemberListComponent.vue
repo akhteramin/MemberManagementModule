@@ -334,7 +334,7 @@
             <!-- <th v-if="showBusinessOwner">Business Owner Name</th> -->
             <th>Basic Info</th>
             <!--<th>Mother</th>-->
-            <th class="text-center">A/C Type</th>
+            <!-- <th class="text-center">A/C Type</th> -->
             <th class="text-center">Identification Documents</th>
             <th class="text-center">Bank Info</th>
             <th class="text-center">Card Info</th>
@@ -386,6 +386,20 @@
                 <small>
                   <br>
                   {{ member.mobileNumber }}
+                  <!-- <span v-if="member.accountType == 1" class="fa-stack fa-sm">
+                    <i class="fa fa-circle-thin fa-stack-2x" aria-hidden="true"></i>
+                    <i class="fa fa-user fa-2 fa-stack-1x" aria-hidden="true"></i>
+                  </span>
+                  <span v-else class="fa-stack fa-sm">
+                    <i class="fa fa-circle-thin fa-stack-2x" aria-hidden="true"></i>
+                    <i class="fa fa-briefcase fa-2 fa-stack-1x" aria-hidden="true"></i>
+                  </span> -->
+                  <span v-if="member.accountType == 1">
+                    <i class="fa fa-user fa-2" aria-hidden="true"></i>
+                  </span>
+                  <span v-else>
+                    <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
+                  </span>
                 </small>
               </span>
               <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
@@ -397,19 +411,20 @@
             <br>
             <small>{{ member.organizationName }}</small>
           </td>
-          <td class="text-center">
+          <!-- <td class="text-center">
             <span v-if="member.accountType == 1">
               <i class="fa fa-user fa-2" aria-hidden="true"></i>
             </span>
             <span v-else>
               <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
             </span>
-          </td>
+          </td> -->
           <td class="text-center">
             <div v-if="member.identificationDocuments.length > 0">
               <a @click="showIdentificationDocumentsModal(member.identificationDocuments)"
                 class="pointer">
-                {{ member.identificationDocuments.length }} documents
+                <!-- {{ member.identificationDocuments.length }} documents -->
+                {{ identificationDocumentList(member.identificationDocuments) | underscoreless }}
               </a>
             </div>
             <div v-else>
@@ -754,6 +769,21 @@
     methods: {
       containsPermission (permission) {
         return this.accessControlList.indexOf(permission) > -1
+      },
+      identificationDocumentList (docList) {
+        if (docList.length === 0) return ''
+        var viewString = ''
+        console.log('Array:: ', docList)
+        docList.forEach((item, index) => {
+          console.log(item.documentType, index)
+          if (index === 0) viewString += item.documentType
+          else {
+            viewString += ', '
+            viewString += item.documentType
+          }
+        })
+        console.log('String:: ', viewString)
+        return viewString
       },
       isPdf (fileName) {
         if (fileName) {

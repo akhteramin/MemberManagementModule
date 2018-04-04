@@ -21,8 +21,8 @@
                   </div>
                   <div class="gr-8 padding-5 text-left">
                     <span>
-                    <b v-if="member.basicInfo.accountType === 1">{{member.basicInfo.name}}</b>
-                    <b v-if="member.basicInfo.accountType === 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
+                    <b v-if="member.basicInfo && member.basicInfo.accountType === 1">{{member.basicInfo.name}}</b>
+                    <b v-else-if="member.basicInfo && member.basicInfo.accountType === 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
                     </span>
                           
                     <br>
@@ -545,9 +545,7 @@
 
                   <div class="justify-content-center"
                        v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY') || containsPermission('MS_MM_USER_VERIFICATION_APPROVE')">
-                     {{ member.basicInfo.verificationStatus ? '' : '' }}
                     <member-verify-and-approve :id="id" :member="member">
-
                     </member-verify-and-approve>
 
                   </div>
@@ -731,11 +729,7 @@
     },
     data () {
       return {
-        member: {
-          basicInfo: {
-            accountType: this.accountType
-          }
-        },
+        member: {},
         imagePreviewUrl: '',
         balance: '',
         thanaNamePresent: '',
