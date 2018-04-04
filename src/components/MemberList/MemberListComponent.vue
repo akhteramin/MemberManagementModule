@@ -448,7 +448,24 @@
             <div v-if="member.userCards.length > 0">
               <a @click="showCardsModal(member.userCards)"
                  class="pointer">
-                {{ member.userCards.length }} cards
+                <!-- {{ member.userCards.length }} cards -->
+                <span v-for="card in member.userCards">
+                  <span v-if="card.cardInfo.substring(0,1) === '4'">
+                    <i class="fa fa-lg fa-cc-visa"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
+                  </span>
+                  <span v-else-if="card.cardInfo.substring(0,2) === '34' || card.cardInfo.substring(0,2) === '37'">
+                    <i class="fa fa-lg fa-cc-amex"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
+                  </span>
+                  <span v-else-if="card.cardInfo.substring(0,2) === '51' || card.cardInfo.substring(0,2) === '51'
+                                || card.cardInfo.substring(0,2) === '53' || card.cardInfo.substring(0,2) === '54'
+                                || card.cardInfo.substring(0,2) === '55'">
+                    <i class="fa fa-lg fa-cc-mastercard"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
+                  </span>
+                  <span v-else-if="card.cardInfo.substring(0,4) === '6011'">
+                    <i class="fa fa-lg fa-cc-discover"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
+                  </span>
+                  <br>
+                </span>
               </a>
             </div>
             <div v-else>
