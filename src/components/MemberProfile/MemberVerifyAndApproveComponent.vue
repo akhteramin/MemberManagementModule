@@ -29,7 +29,7 @@
               <div v-restrict="'MS_MM_USER_VERIFICATION_VERIFY'">
                 <form  v-on:submit.prevent="changeStatus('acceptVerification')" v-on:reset.prevent="changeStatus('rejectVerification')">
                   <br>
-                  <div class="row text-center red" v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'">
+                  <div class="row text-center red" v-if="verificationStatus === 'NOT_VERIFIED'">
                     <i class="fa fa-times" aria-hidden="true"></i> DATA NOT VERIFIED
                     <br> <br>
                     <div class="gr-10 push-1">
@@ -83,7 +83,7 @@
 
                   </div>
 
-                  <div v-else-if="verificationStatus === 'REJECTED'"
+                  <div v-else-if="verificationStatus === 'REJECTED' && verifier.verificationStatus === 'REJECTED'"
                       class="row justify-content-center text-center">
                     <div class="red">
                       <i class="fa fa-times"></i> DATA VERIFICATION REJECTED
@@ -104,7 +104,7 @@
                       Time:
                     </div>
                     <div class="gr-7 text-left" v-if="verifier">
-                      {{ verifier.createdAt | date('MMM D, YYYY') }}
+                      {{ verifier.createdAt | date('MMM D, YYYY - HH:mm:ss a') }}
                       <!--{{ verificationHistory ? verificationHistory.actor.name : 'N/A' }}-->
                     </div>
                     <div v-else class="gr-7 text-left">
@@ -112,9 +112,9 @@
                     </div>
                   </div>
 
-                  <div v-else-if="verificationStatus === 'REJECTED'">
+                  <div v-else-if="verificationStatus === 'REJECTED' && verifier.verificationStatus === 'IN_PROGRESS'">
                     <div class="text-center inprogress-color">
-
+                      <i class="fa fa-spinner" aria-hidden="true"></i> DATA VERIFIED
                     </div>
                     <br>
                     <div class="gr-4 push-1 text-left">
@@ -199,7 +199,7 @@
                   </div>
                 </div>
 
-                <div v-else-if="verificationStatus === 'REJECTED'">
+                <div v-else-if="verificationStatus === 'REJECTED' && approver.verificationStatus === 'REJECTED'">
                   <div class="red text-center">
                     <i class="fa fa-times"></i> ACCOUNT VERIFICATION REJECTED
                   </div>
@@ -237,17 +237,19 @@
 
                       <div>
                         <div class="form-group">
-                          <button type="submit" class="button-md-verify">
+                          <button type="submit" class="button-md-verify"
+                          :disabled="approvalComment === null || approvalComment === ''">
                             Approve
                           </button>
-                          <button  type="reset" class="button-reset">
+                          <button  type="reset" class="button-reset"
+                          :disabled="approvalComment === null || approvalComment === ''">
                             Reject
                           </button>
                         </div>
                       </div>
                     </div>
 
-                    <div v-if="verificationStatus === 'NOT_VERIFIED' || verificationStatus === 'UNVERIFY'" class="row text-center">
+                    <div v-if="verificationStatus === 'NOT_VERIFIED'" class="row text-center">
                       <div class="red">
                         <i class="fa fa-times"></i> ACCOUNT NOT VERIFIED
                       </div>
