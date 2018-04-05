@@ -47,15 +47,171 @@ axios.interceptors.response.use(
  }
 )
 
-// const API_URL = 'http://192.168.1.134:8085/member-service/api/v1' // nafisa
-// const API_URL = 'http://192.168.1.95:8085//member-service/api/v1' // muhit
+// DYNAMIC URL CONFIG
 
-// const API_URL = 'http://192.168.1.95:8085/member-service/api/v1'
-// const MM_ADMIN_URL = 'http://10.10.10.10:9001/api/v1'
-// const AUTH_URL = 'http://localhost:9000/auth/api/v1'
-// const AUTH_HTTP_URI = 'http://localhost:8000/'
-// const AUTH_ACCOUNTS_URI = 'http://localhost:8000/accounts'
-// const ADMIN_URI = 'http://localhost:8080'
+let apiUrl = ''
+let authUrl = ''
+let authHttpUrl = ''
+let adminUrl = ''
+let imageUrl = ''
+let crmUrl = ''
+
+const setApiUrl = () => {
+  if (apiUrl.length) return apiUrl
+
+  let ENV = 'www'
+  const [domain] = window.location.hostname.split('.')
+  const mapper = {
+    verification: '10.200.40.206',
+    adminnew: '10.15.40.10',
+    localhost: '10.15.40.10',
+    192: '10.15.40.10'
+  }
+
+  if (typeof domain !== 'undefined') {
+    ENV = domain.substring(0, 4) === 'test' ? domain.split('.')[0] : mapper[domain]
+  }
+
+  // console.log('ENV: ', ENV);
+
+  if (domain === 'verification') apiUrl = `${ENV}:9001`
+  else if (domain === 'adminnew') apiUrl = `${ENV}:9001`
+  else if (ENV.substring(0, 3) === '10.' || domain === 'localhost') apiUrl = `${ENV}:9001`
+  else apiUrl = `${ENV}.ipay.com.bd`
+
+  return apiUrl
+}
+
+const setAuthUrl = () => {
+  if (authUrl.length) return authUrl
+
+  let ENV = 'www'
+  const [domain] = window.location.hostname.split('.')
+  const mapper = {
+    verification: '10.200.40.203',
+    adminnew: '10.10.40.31',
+    localhost: '10.10.40.31',
+    192: '10.10.40.31'
+  }
+
+  if (typeof domain !== 'undefined') {
+    ENV = domain.substring(0, 4) === 'test' ? domain.split('.')[0] : mapper[domain]
+  }
+
+  // console.log('ENV: ', ENV);
+  if (domain === 'verification') authUrl = `${ENV}:7000`
+  else if (domain === 'adminnew') authUrl = `${ENV}:8000`
+  else if (ENV.substring(0, 3) === '10.' || domain === 'localhost') authUrl = `${ENV}:8000`
+  else authUrl = `${ENV}.ipay.com.bd`
+
+  return authUrl
+}
+
+const setAuthHttpUrl = () => {
+  if (authHttpUrl.length) return authHttpUrl
+
+  let ENV = 'www'
+  const [domain] = window.location.hostname.split('.')
+  const mapper = {
+    verification: 'centralauth',
+    adminnew: '10.10.40.31',
+    localhost: '10.10.40.31',
+    192: '10.10.40.31'
+  }
+
+  if (typeof domain !== 'undefined') {
+    ENV = domain.substring(0, 4) === 'test' ? domain.split('.')[0] : mapper[domain]
+  }
+
+  // console.log('ENV: ', ENV);
+  if (domain === 'adminnew') authHttpUrl = `${ENV}:8080`
+  else if (ENV.substring(0, 3) === '10.' || domain === 'localhost') authHttpUrl = `${ENV}:8080`
+  else authHttpUrl = `${ENV}.ipay.com.bd`
+
+  return authHttpUrl
+}
+
+const setAdminUrl = () => {
+  if (adminUrl.length) return adminUrl
+
+  let ENV = 'www'
+  const [domain] = window.location.hostname.split('.')
+  const mapper = {
+    verification: 'verification',
+    adminnew: 'adminnew',
+    localhost: 'localhost',
+    192: 'localhost'
+  }
+
+  if (typeof domain !== 'undefined') {
+    ENV = domain.substring(0, 4) === 'test' ? domain.split('.')[0] : mapper[domain]
+  }
+
+  // console.log('ENV: ', ENV);
+  if (ENV.substring(0, 3) === '10.' || domain === 'localhost') adminUrl = `${ENV}:8080`
+  else adminUrl = `${ENV}.ipay.com.bd`
+
+  return adminUrl
+}
+
+const setImageUrl = () => {
+  if (imageUrl.length) return imageUrl
+
+  let ENV = 'www'
+  const [domain] = window.location.hostname.split('.')
+  const mapper = {
+    verification: 'www',
+    adminnew: 'test',
+    localhost: 'test',
+    192: 'test'
+  }
+
+  if (typeof domain !== 'undefined') {
+    ENV = domain.substring(0, 4) === 'test' ? domain.split('.')[0] : mapper[domain]
+  }
+
+  // console.log('ENV: ', ENV);
+  imageUrl = `${ENV}.ipay.com.bd`
+
+  return imageUrl
+}
+
+const setCrmUrl = () => {
+  if (crmUrl.length) return crmUrl
+
+  let ENV = 'www'
+  const [domain] = window.location.hostname.split('.')
+  const mapper = {
+    verification: 'crmnew',
+    adminnew: '10.10.10.169/login',
+    localhost: '10.10.10.169/login',
+    192: '10.10.10.169/login'
+  }
+
+  if (typeof domain !== 'undefined') {
+    ENV = domain.substring(0, 4) === 'test' ? domain.split('.')[0] : mapper[domain]
+  }
+
+  if (domain === 'verification') crmUrl = `${ENV}.ipay.com.bd`
+  else crmUrl = `${ENV}`
+
+  return crmUrl
+}
+
+setApiUrl()
+setAuthUrl()
+setAuthHttpUrl()
+setAdminUrl()
+setImageUrl()
+setCrmUrl()
+
+const MM_ADMIN_URL = `http://${setApiUrl()}/api/v1`
+const AUTH_URL = `http://${setAuthUrl()}/auth/api/v1`
+const AUTH_HTTP_URI = `http://${setAuthHttpUrl()}/`
+const AUTH_ACCOUNTS_URI = `http://${setAuthHttpUrl()}/accounts`
+const ADMIN_URI = `http://${setAdminUrl()}/`
+const IMAGE_URL = `http://${setImageUrl()}/`
+const CRM_URI = `http://${setCrmUrl()}/`
 
 /// //dev/test configuration///////
 // const MM_ADMIN_URL = 'http://192.168.1.184:9001/api/v1'
@@ -65,27 +221,27 @@ axios.interceptors.response.use(
 // const MM_ADMIN_URL = 'http://10.15.40.10:9001/api/v1' // test
 // const AUTH_URL = 'http://10.10.40.31:8000/auth/api/v1' // test
 // // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1' // dev
-// const AUTH_HTTP_URI = 'http://10.10.40.31:8080/' //test
-// const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts' //test
+// const AUTH_HTTP_URI = 'http://10.10.40.31:8080/' // test
+// const AUTH_ACCOUNTS_URI = 'http://10.10.40.31:8080/accounts' // test
 // // const AUTH_HTTP_URI = 'http://10.10.10.199:9000/' //dev
 // // const AUTH_ACCOUNTS_URI = 'http://10.10.10.199:9000/accounts' //dev
 // const ADMIN_URI = 'http://10.15.40.11:80/'
 // const ADMIN_URI = 'http://localhost:8081/'
 
-/// /live////
-const MM_ADMIN_URL = 'http://10.200.40.206:9001/api/v1'
-const AUTH_URL = 'http://10.200.40.203:7000/auth/api/v1'
-const AUTH_HTTP_URI = 'http://centralauth.ipay.com.bd/'
-const AUTH_ACCOUNTS_URI = 'http://centralauth.ipay.com.bd/accounts'
-const ADMIN_URI = 'http://verification.ipay.com.bd'
+// /// /live////
+// const MM_ADMIN_URL = 'http://10.200.40.206:9001/api/v1'
+// const AUTH_URL = 'http://10.200.40.203:7000/auth/api/v1'
+// const AUTH_HTTP_URI = 'http://centralauth.ipay.com.bd/'
+// const AUTH_ACCOUNTS_URI = 'http://centralauth.ipay.com.bd/accounts'
+// const ADMIN_URI = 'http://verification.ipay.com.bd'
 
 // const AUTH_URL = 'http://10.10.10.199:8000/auth/api/v1'
 // const IMAGE_URL = 'https://dev.ipay.com.bd'
-const IMAGE_URL = 'https://www.ipay.com.bd'
+// const IMAGE_URL = 'https://www.ipay.com.bd'
 // const IMAGE_URL = 'https://test.ipay.com.bd'
 
 // const CRM_URI = 'http://10.10.10.169/login'
-const CRM_URI = 'http://crmnew.ipay.com.bd'
+// const CRM_URI = 'http://crmnew.ipay.com.bd'
 
 const routes = {
   apps: `${AUTH_URL}/user/get`,
