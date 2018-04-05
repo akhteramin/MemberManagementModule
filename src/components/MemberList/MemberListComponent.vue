@@ -27,7 +27,7 @@
               <tr v-for="document,index in identificationDocuments">
                 <td>{{ index + 1 }}</td>
                 <td>{{ document.documentName ? document.documentName : 'N/A' }}</td>
-                <td>{{ document.documentType ? document.documentType : 'N/A' }}</td>
+                <td>{{ (document.documentType ? document.documentType : 'N/A') | underscoreless }}</td>
                 <td>{{ document.documentIdNumber ? document.documentIdNumber : 'N/A' }}</td>
                 <td class="text-center">
                   <img default-src="/static/images/default-document-icon.png"
@@ -119,22 +119,46 @@
                   <th>#</th>
                   <th>Issuer</th>
                   <th>Info</th>
-                  <th>Level</th>
-                  <th>Bin Number</th>
-                  <th>Type</th>
-                  <th>Network Company</th>
+                  <!-- <th>Level</th> -->
+                  <!-- <th>Bin Number</th> -->
+                  <!-- <th>Type</th> -->
+                  <!-- <th>Network Company</th> -->
                   <th class="text-center">Status</th>
                 </tr>
               </thead>
               <tbody>
               <tr v-for="card,index in cards" class="height-10">
                 <td>{{ index + 1 }}</td>
-                <td>{{ card.issuerName ? card.issuerName : 'N/A' }}</td>
+                <td>
+                  <span v-if="card.cardInfo.substring(0,1) === '4'">
+                    <i class="fa fa-lg fa-2x fa-cc-visa"></i>
+                  </span>
+                  <span v-else-if="card.cardInfo.substring(0,2) === '34' || card.cardInfo.substring(0,2) === '37'">
+                    <i class="fa fa-lg fa-2x fa-cc-amex"></i>
+                  </span>
+                  <span v-else-if="card.cardInfo.substring(0,2) === '51' || card.cardInfo.substring(0,2) === '51'
+                                || card.cardInfo.substring(0,2) === '53' || card.cardInfo.substring(0,2) === '54'
+                                || card.cardInfo.substring(0,2) === '55'">
+                    <i class="fa fa-lg fa-2x fa-cc-mastercard"></i>
+                  </span>
+                  <span v-else-if="card.cardInfo.substring(0,4) === '6011'">
+                    <i class="fa fa-lg fa-2x fa-cc-discover"></i>
+                  </span>
+                  <span v-else-if="card.cardInfo.substring(0,3) === '300' || card.cardInfo.substring(0,3) === '301'
+                                || card.cardInfo.substring(0,3) === '302' || card.cardInfo.substring(0,3) === '303'
+                                || card.cardInfo.substring(0,3) === '304' || card.cardInfo.substring(0,3) === '305'
+                                || card.cardInfo.substring(0,2) === '36' || card.cardInfo.substring(0,2) === '54'">
+                    <i class="fa fa-lg fa-2x fa-cc-diners-club"></i>
+                  </span>
+                  <span v-else>
+                    <i class="fa fa-lg fa-2x fa-credit-card"></i>
+                  </span>
+                </td>
                 <td>{{ card.cardInfo ? card.cardInfo : 'N/A' }}</td>
-                <td>{{ card.cardLevel ? card.cardLevel : 'N/A' }}</td>
+                <!-- <td>{{ card.cardLevel ? card.cardLevel : 'N/A' }}</td>
                 <td>{{ card.binNumber ? card.binNumber : 'N/A' }}</td>
                 <td>{{ card.cardType ? card.cardType : 'N/A' }}</td>
-                <td>{{ card.networkCompany ? card.networkCompany : 'N/A' }}</td>
+                <td>{{ card.networkCompany ? card.networkCompany : 'N/A' }}</td> -->
                 <td class="text-center">{{ card.cardStatus ? card.cardStatus : 'N/A' }}</td>
               </tr>
               </tbody>
@@ -463,6 +487,15 @@
                   </span>
                   <span v-else-if="card.cardInfo.substring(0,4) === '6011'">
                     <i class="fa fa-lg fa-cc-discover"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
+                  </span>
+                  <span v-else-if="card.cardInfo.substring(0,3) === '300' || card.cardInfo.substring(0,3) === '301'
+                                || card.cardInfo.substring(0,3) === '302' || card.cardInfo.substring(0,3) === '303'
+                                || card.cardInfo.substring(0,3) === '304' || card.cardInfo.substring(0,3) === '305'
+                                || card.cardInfo.substring(0,2) === '36' || card.cardInfo.substring(0,2) === '54'">
+                    <i class="fa fa-lg fa-cc-diners-club"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
+                  </span>
+                  <span v-else>
+                    <i class="fa fa-lg fa-2x fa-credit-card"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
                   </span>
                   <br>
                 </span>
