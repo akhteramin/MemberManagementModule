@@ -9,9 +9,9 @@
           <table class="table ui celled" cellspacing="0" width="100%">
             <thead class="thead-default">
             <tr>
-              <th class = "text-center">Card Info.</th>
+              <th class = "text-left">Card Info.</th>
               <!--th class = "text-center">Card Level</th-->
-              <th class = "text-center">Card Status</th>
+              <th class = "text-left">Card Status</th>
               <!--th class = "text-center">Card Type</th>
               <th class = "text-center">Issuer Name</th>
               <th class = "text-center">Network Company</th>
@@ -23,7 +23,7 @@
               <!--td>{{ item.binNumber }}</td-->
               <td>{{ item.cardInfo }}</td>
               <!--td>{{ item.cardLevel }}</td-->
-              <td><span class="badge" :class="{'badge-success': true }">{{item.cardStatus}}</span></td>
+              <td><span class="badge" :class="{'badge-success': true }">{{item.cardStatus | underscoreless}}</span></td>
               <!--td>{{ item.cardType }}</td>
               <td>{{ item.issuerName }}</td>
               <td>{{ item.networkCompany }}</td>
@@ -83,11 +83,9 @@
         Http.GET('member', [this.id, 'card'])
            .then(
              ({data: {data: bankCards}}) => {
-              
-              this.showLoader = false
-              if (bankCards)
-                this.bankCards = bankCards
-              console.log('Got the list of bank accounts: ', this.bankCards)
+               this.showLoader = false
+               if (bankCards)              { this.bankCards = bankCards }
+               console.log('Got the list of bank accounts: ', this.bankCards)
              },
              error => {
                this.showLoader = false
@@ -98,8 +96,8 @@
       verifyCard (item) {
         this.showLoader = true
         let paramData = {
-            cardInfo: item.cardInfo,
-            status: "Verified"
+          cardInfo: item.cardInfo,
+          status: 'Verified'
         }
         console.log(paramData)
         Http.PUT('verification', paramData, [this.id, 'card'])
@@ -109,27 +107,27 @@
                this.showLoader = false
                $.notify({
                   // options
-                  title: '<strong>Success!</strong>',
-                  message: 'Document verified successfully'
-                }, {
+                 title: '<strong>Success!</strong>',
+                 message: 'Document verified successfully'
+               }, {
                   // settings
-                  type: 'success',
-                  delay: 3000
-                })
-                this.init()
+                 type: 'success',
+                 delay: 3000
+               })
+               this.init()
              },
              error => {
                this.showLoader = false
                $.notify({
                   // options
-                  title: '<strong>Failure!</strong>',
-                  message: error.response.data.message
-                }, {
+                 title: '<strong>Failure!</strong>',
+                 message: error.response.data.message
+               }, {
                   // settings
-                  type: 'danger',
-                  delay: 3000
-                })
-              }
+                 type: 'danger',
+                 delay: 3000
+               })
+             }
            )
       }
     }

@@ -39,7 +39,11 @@
               <td>{{ item.bankName }}</td>
               <td>{{ item.accountNumber }}</td>
               <td>{{ item.accountName }}</td>
-              <td><span class="badge" :class="{'badge-success': true }">ACTIVE</span></td>
+              <td>
+                <span v-if="item.accountStatus === 0" class="badge badge-success">ACTIVE</span>
+                <span v-else-if="item.accountStatus === 1" class="badge badge-warning">INACTIVE</span>
+                <span v-else-if="item.accountStatus === 2" class="badge badge-danger">DELETED</span>
+              </td>
               <td>{{ item.verificationStatus }}</td>
               <td v-if="item.creationDate">{{ item.creationDate | date }}</td>
               <td v-else>{{ 'N/A' }}</td>
