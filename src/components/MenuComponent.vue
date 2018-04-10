@@ -2,9 +2,9 @@
   <nav id="sidebar">
     <!-- Close Sidebar Button -->
     <div id="dismiss" class="text-center">
-        <img class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="90">
+        <img id="icon" class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="90">
         <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn" v-on:click="sideBarCollapse">
-            <i class="ti-layout-grid3"></i>
+            <i class="ti-align-justify"></i>
         </button>
     </div>
 

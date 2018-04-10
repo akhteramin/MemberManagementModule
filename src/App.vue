@@ -180,7 +180,9 @@ i, span {
 #sidebar #dismiss{
   background: #13998b;
 }
-
+#sidebar.active #dismiss #icon{
+  width:60px;
+}
 #sidebar .sidebar-header strong {
     display: none;
     font-size: 1.8em;
