@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div id="content">
     <div class="loaders loading" v-if="showLoader">
       <div class="loader">
         <div class="loader-inner ball-grid-pulse">

@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div id="content">
+        <div class="gr-6 push-5">
+            <h1>Manage Service</h1> <br>
+        </div>
         <div class="gr-10">
             <div class="loaders loading" v-if="showLoader">
             <div class="loader">
@@ -16,9 +19,7 @@
             </div>
             </div>
         </div>
-        <div class="gr-6 push-5">
-            <h1>Manage Service</h1> <br>
-        </div>
+        
         <div class="gr-12">
             <table  class="table ui celled" cellspacing="0" width="100%">
                 <thead>

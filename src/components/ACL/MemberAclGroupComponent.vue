@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="content">
       <div class="gr-6 push-4">
         <h1>iPay Member ACL</h1>
       </div>
