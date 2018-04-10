@@ -1,6 +1,5 @@
 <template>
-  <div id = "list">
-
+  <div id="content">
 
     <div id="IdentificationDocumentModal" class="modal fade" role="dialog">
       <div class="modal-dialog modal-md">
@@ -446,7 +445,7 @@
           <td class="text-center">
             <div v-if="member.identificationDocuments.length > 0">
               <a @click="showIdentificationDocumentsModal(member.identificationDocuments)"
-                class="pointer">
+                class="pointer break-word">
                 <!-- {{ member.identificationDocuments.length }} documents -->
                 {{ identificationDocumentList(member.identificationDocuments) | underscoreless }}
               </a>

@@ -1,123 +1,39 @@
 <template>
-  <div>
-    <div class="MenuComponent gr-2 menu-container" v-if="!collapseMenuComponent">
-      <div>
-        <div class="menu-header">
-          <div class="gr-12">
-            <div class="gr-10">
-              <div class="row">
-                <img class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="90">
-              </div>
-              <div class="row padding-5">
-                <span class="padding-5">Member Service</span>
-              </div>
-            </div>
-            <div class="gr-2">
-              <br>
-              <button v-if="!collapseMenuComponent" @click="toggleCollapse" class="menu-expansion">
-                <i class="fa fa-arrow-left white" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav>
-        <ul>
-          <a class="break-word" v-on:click="goHome"><li :class="{'btn-active-til': showHome}" @click="setMenu('home')"><i class="fa fa-home fa-1x" aria-hidden="true"></i> Home</li></a>
-          <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList"><li :class="{'btn-active-til': showMembers}" @click="setMenu('member')"><i class="fa fa-users fa-1x" aria-hidden="true"></i> Members</li></a>
-          <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList"><li :class="{'btn-active-til': showWaitingVerification}" @click="setMenu('memberVerification')"><i class="fa fa-user-circle fa-1x" aria-hidden="true"></i> Waiting For Verification</li></a>
-          <a class="break-word" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList"><li :class="{'btn-active-til': showWaitingApproval}" @click="setMenu('memberApproval')"><i class="fa fa-user-circle-o fa-1x" aria-hidden="true"></i> Waiting For Approval</li></a>
-          <a class="break-word" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li :class="{'btn-active-til': showACL}" @click="setMenu('acl')"><i class="fa fa-lock fa-1x" aria-hidden="true"></i> Ipay Member ACL</li></a>
-          <a class="break-word" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices"><li :class="{'btn-active-til': showManageService}" @click="setMenu('manageService')"><i class="fa fa-tasks fa-1x" aria-hidden="true"></i> Manage Services</li></a>
-          <!-- <a class="break-word" v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li :class="{'btn-active-til': showUsers}" @click="setMenu('user')"> <i class="fa fa-user fa-1x" aria-hidden="true"></i> Users</li></a> -->
-          <!--a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
-            <li :class="{'btn-active-til': showConfiguration}" @click="setMenu('configuration')"> <i class="fa fa-cog fa-1x" aria-hidden="true"></i> Configuration <i class="fa fa-angle-down"></i></li>
-          </a>
-          <div id="subMenu" v-if="expandList" class="gr-10 small-scrollable" style="height:120px">
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="highlightMenu(); goToOccupationList();"><li>Occupation</li></a>
-            <a @click="highlightMenu(); goTo2faList();"><li>2FA</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="highlightMenu();goToBankList()"><li>Bank</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="highlightMenu();goToBranchList();"><li>Branch</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_DISTRICT_LIST'" @click="highlightMenu();goToDistrictList();"><li>District</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_THANA_LIST'" @click="highlightMenu();goToThanaList();"><li>Thana</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_COUNTRY_LIST'" @click="highlightMenu();goToCountryList();"><li>Country</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_BUSINESS_TYPE_LIST'" @click="highlightMenu();goToBusinessType();"><li>Business Type</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_TYPE_LIST'" @click="highlightMenu();goToAccountType();"><li>Account Type</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_CLASS_LIST'" @click="highlightMenu();goToAccountClass();"><li>Account Class</li></a>
-          </div-->
-        </ul>
-        <ul class="bottom-menu">
-
-          <li class="break-word" v-if="appsData.length > 1" :class="{'btn-active-til': showModule}" @click="setMenu('module')">
-            <div class="dropup">
-              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-th fa-1x" aria-hidden="true"></i></button>
-              <ul class="dropdown-menu">
-                <li v-if="appList[app.appID] != 'Admin'" v-for="app in appsData"><a :href="appURL[app.appID]" target="_blank">{{appList[app.appID]}}</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <a v-on:click="goToUserProfile"><li class="break-word" :class="{'btn-active-til': showProfile}"><i class="fa fa-user-circle" aria-hidden="true"></i> {{user.loginID}}</li></a>
-          <a v-on:click="logout"><li class="break-word" :class="{'btn-active-til': showLogout}" @click="setMenu('logout')"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</li></a>
-        </ul>
-
-      </nav>
-      
-    </div>
-    <div class="MenuComponent gr-1 menu-container" v-else>
-      <div class="menu-header">
-        <img class="padding-2" src="/static/images/iPay-short-icon.png"
-             alt="Pro. Pic" width="50" height="50">
-        <button v-if="collapseMenuComponent" @click="toggleCollapse"
-                class="menu-expansion">
-          <i class="fa fa-arrow-right white" aria-hidden="true"></i>
+  <nav id="sidebar">
+    <!-- Close Sidebar Button -->
+    <div id="dismiss" class="text-center">
+        <img id="icon" class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="90">
+        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn" v-on:click="sideBarCollapse">
+            <i class="ti-align-justify"></i>
         </button>
-      </div>
-      <nav>
-        <ul>
-          <a v-on:click="goHome"><li  :class="{'btn-active-til': showHome}" @click="setMenu('home')"><i class="fa fa-home fa-2x" aria-hidden="true"></i></li></a>
-          <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList"><li :class="{'btn-active-til': showMembers}" @click="setMenu('member')"><i class="fa fa-users fa-2x" aria-hidden="true"></i></li></a>
-          <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList"><li :class="{'btn-active-til': showWaitingVerification}" @click="setMenu('memberVerification')"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i></li></a>
-          <a v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList"><li :class="{'btn-active-til': showWaitingApproval}" @click="setMenu('memberApproval')"><i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i></li></a>
-          <a v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl"><li  :class="{'btn-active-til': showACL}" @click="setMenu('acl')"><i class="fa fa-lock fa-2x" aria-hidden="true"></i></li></a>
-          <a v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices"><li  :class="{'btn-active-til': showManageService}" @click="setMenu('manageService')"><i class="fa fa-tasks fa-2x" aria-hidden="true"></i></li></a>
-          <!-- <a v-restrict="'MS_USER_GET_ALL'" v-on:click="goToUserList"><li  :class="{'btn-active-til': showUsers}" @click="setMenu('user')"> <i class="fa fa-user fa-2x" aria-hidden="true"></i></li></a> -->
-          <!--a v-restrict="'Configuration|MENU'" @click="toggleConfigurationLists">
-            <li :class="{'btn-active-til': showConfiguration}" @click="setMenu('configuration')"> <i class="fa fa-cog fa-2x" aria-hidden="true"></i> <i class="fa fa-angle-down"></i></li>
-          </a>
-          <div id="subMenu" v-if="expandList" class="gr-10 small-scrollable" style="height:120px">
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_OCCUPATION_LIST'" @click="highlightMenu(); goToOccupationList();"><li>Occupation</li></a>
-            <a v-restrict="'MS_2FA_GET_PREFERENCES'" @click="highlightMenu(); goTo2faList();"><li>2FA</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_BANK_LIST'" @click="highlightMenu();goToBankList()"><li>Bank</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_BRANCH_LIST'" @click="highlightMenu();goToBranchList();"><li>Branch</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_DISTRICT_LIST'" @click="highlightMenu();goToDistrictList();"><li>District</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_THANA_LIST'" @click="highlightMenu();goToThanaList();"><li>Thana</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_COUNTRY_LIST'" @click="highlightMenu();goToCountryList();"><li>Country</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_BUSINESS_TYPE_LIST'" @click="highlightMenu();goToBusinessType();"><li>Business Type</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_TYPE_LIST'" @click="highlightMenu();goToAccountType();"><li>Account Type</li></a>
-            <a v-restrict="'MS_STATIC_RESOURCE_GET_ACCOUNT_CLASS_LIST'" @click="highlightMenu();goToAccountClass();"><li>Account Class</li></a>
-          </div-->
-        </ul>
-        <ul class="bottom-menu">
-
-          <li v-if="appsData.length > 1" :class="{'btn-active-til': showModule}" @click="setMenu('module')">
-            <div class="dropup">
-              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-th fa-2x" aria-hidden="true"></i></button>
-              <ul class="dropdown-menu">
-                <li v-if="appList[app.appID] != 'Admin'" v-for="app in appsData"><a :href="appURL[app.appID]" target="_blank">{{appList[app.appID]}}</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <a v-on:click="goToUserProfile"><li :class="{'btn-active-til': showProfile}"><i class="fa fa-user-circle" aria-hidden="true"></i></li></a>
-          <a v-on:click="logout"><li :class="{'btn-active-til': showLogout}" @click="setMenu('logout')"><i class="fa fa-sign-out" aria-hidden="true"></i></li></a>
-        </ul>
-
-      </nav>
     </div>
-    <br>
-    
-  </div>
+
+    <!-- Sidebar Header -->
+    <div class="sidebar-header text-center">
+        <h3>Member Service</h3>
+        
+    </div>
+
+    <!-- Sidebar Links -->
+    <ul class="list-unstyled components">
+        <li :class="{'active': showHome}" @click="setMenu('home')"><a href="#" v-on:click="goHome">Home</a></li>        
+        <li :class="{'active': showMembers}" @click="setMenu('member')"><a href="#" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList">Members</a></li>
+        <li :class="{'active': showWaitingVerification}" @click="setMenu('memberVerification')"><a href="#" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList">Waiting for Verification</a></li>
+        <li :class="{'active': showWaitingApproval}" @click="setMenu('memberApproval')"><a href="#" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList">Waiting for Approval</a></li>
+        <li :class="{'active': showACL}" @click="setMenu('acl')"><a href="#" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl">Ipay Member ACL</a></li>
+        <li :class="{'active': showManageService}" @click="setMenu('manageService')"><a href="#" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices">Manage Services</a></li>
+        <hr>
+        <li :class="{'active': showModule}" @click="setMenu('module')"><!-- Link with dropdown items -->
+            <a href="#homeSubmenu" v-if="appsData.length > 1" data-toggle="collapse" aria-expanded="false">Apps</a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li v-if="appList[app.appID] != 'Admin'" v-for="app in appsData"><a :href="appURL[app.appID]" target="_blank">{{appList[app.appID]}}</a></li>
+            </ul>
+        </li>
+        <li class="break-word" :class="{'active': showProfile}"><a href="#" v-on:click="goToUserProfile">{{user.loginID ? user.loginID:"User"}}</a></li>
+        <li><a href="#" v-on:click="logout">Logout</a></li>
+        
+    </ul>
+  </nav>
 </template>
 
 
@@ -324,6 +240,9 @@
         } else if (firstKey === 'home') {
           this.showHome = true
         }
+      },
+      sideBarCollapse () {
+        $('#sidebar').toggleClass('active');
       }
     },
     created () {

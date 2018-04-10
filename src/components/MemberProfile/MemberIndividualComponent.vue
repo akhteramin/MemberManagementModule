@@ -1,7 +1,6 @@
 <template>
 
-    <div class="member-list" v-if="member">
-
+    <div id="content" class="member-list" v-if="member">
         <br>
         <div class="gr-12"> <!--offset-md-1-->
           <div class="card"> <!-- class="card"-->
