@@ -55,7 +55,6 @@
 /*
     DEMO STYLE
 */
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
 body {
@@ -72,7 +71,7 @@ p {
 }
 
 a, a:hover, a:focus {
-    color: inherit;
+    color: #ffffff;
     text-decoration: none;
     transition: all 0.3s;
 }
@@ -94,6 +93,10 @@ a, a:hover, a:focus {
 }
 .navbar-btn:hover{
   background: #1bb1a5;
+}
+
+#sidebar a, a:hover, a:focus{
+  color: #ffffff
 }
 #sidebar.active .navbar-btn{
   box-shadow: none;
