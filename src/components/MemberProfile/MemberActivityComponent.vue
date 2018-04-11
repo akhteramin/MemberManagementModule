@@ -1,6 +1,8 @@
  <template>
     <div>
+      <div class="gr-12 w3-card padding-16">
         <form @submit.prevent="filterActivities" @reset.prevent="resetActivities">
+          
             <div class="gr-12">
               <div class="gr-2">
                 <div class="form-group padding-5">
@@ -44,7 +46,8 @@
                 </div>
             </div>
         </form>
-
+      </div>
+      <div class="gr-12 w3-card w3-padding-16">
         <div  class="table-responsive gr-12">
             <table class="table ui celled" cellspacing="0" width="100%" v-if="activities.activities.length > 0">
             <thead class="thead-default">
@@ -68,7 +71,7 @@
               <strong class="primary-font">NO ENTRIES FOUND</strong>
             </div>
         </div>
-        
+      
 
         <div class="card-footer text-muted" v-if="activities.totalElements > 0 && activities.totalPages > 1">
             <div class="row">
@@ -128,7 +131,7 @@
             </div>
             </div>
         </div>
-
+      </div>
       <div class="loaders loading" v-if="showLoader">
         <div class="loader">
           <div class="loader-inner ball-grid-pulse">
@@ -224,7 +227,7 @@
           })
       },
       pageChange (number = 0, activeQuery = true) {
-        if (number > 0 && number < this.activities.totalPages && activeQuery && this.activityQuery.page !== number) { // activity query
+        if (number > -1 && number < this.activities.totalPages && activeQuery && this.activityQuery.page !== number) { // activity query
           this.activityQuery.page = number
           this.getActivities()
         }

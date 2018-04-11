@@ -67,6 +67,9 @@
                 :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button>
                 <button v-if="containsPermission('MS_MM_USER_GET_MANUAL_VERIFICATION_CRITERIA')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showVerificationChecklist}" @click="setTab('verificationChecklist')">Verification Checklist</button>
+                <button v-if="containsPermission('MS_MM_USER_SEND_SMS')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showMemberSMS}" @click="setTab('memberSms')">Member SMS</button>
+              
               </div>
             </div>
             
@@ -560,6 +563,8 @@
             <member-access-control v-if="showAccessControl" :id="id"></member-access-control>
             <member-friends v-if="showFriends" :mobileNumber="member.basicInfo.mobileNumber"></member-friends>
             <member-verification-checklist v-if="showVerificationChecklist" :id="id"></member-verification-checklist>
+            <member-sms-send v-if="showMemberSMS" :id="id"></member-sms-send>
+            
         </div>
       </div>
 
@@ -698,6 +703,7 @@
   import MemberAccessControl from './MemberAccessControlComponent.vue'
   import MemberBankCard from './MemberBankCardComponent.vue'
   import MemberVerificationChecklist from './MemberVerificationChecklistComponent.vue'
+  import MemberSMSSend from './MemberSMSSendComponent.vue'
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -724,7 +730,8 @@
       'member-offer': MemberOffer,
       'member-access-control': MemberAccessControl,
       'member-bank-card': MemberBankCard,
-      'member-verification-checklist': MemberVerificationChecklist
+      'member-verification-checklist': MemberVerificationChecklist,
+      'member-sms-send': MemberSMSSend
     },
     data () {
       return {
@@ -748,6 +755,7 @@
         showFriends: false,
         showOffer: false,
         showVerificationChecklist: false,
+        showMemberSMS: false,
         occupationName: null,
         businessType: null,
         editBasicProfileMode: false,
@@ -983,6 +991,7 @@
         this.showOffer = false
         this.showAccessControl = false
         this.showVerificationChecklist = false
+        this.showMemberSMS = false
         if (tabName === 'basicDetails') {
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
@@ -1003,7 +1012,10 @@
           this.showAccessControl = true
         } else if (tabName === 'verificationChecklist') {
           this.showVerificationChecklist = true
+        } else if (tabName === 'memberSms') {
+          this.showMemberSMS = true
         }
+
       },
       getStaticNames () {
         Http.GET('resource', ['account-class'])

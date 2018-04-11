@@ -1,5 +1,5 @@
 <template>
-    <div id="content">
+    <div id="content" style="width:100%">
         <div class="gr-6 push-5">
             <h1>Manage Service</h1> <br>
         </div>

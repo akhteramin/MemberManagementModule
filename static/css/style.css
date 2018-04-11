@@ -12715,6 +12715,9 @@ textarea:focus {
   height: 150px;
   resize: none; }
 
+.height-110 {
+  height: 110px;
+ }
 .height-210 {
   height: 210px; }
 
