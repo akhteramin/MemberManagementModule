@@ -30,7 +30,7 @@
             </ul>
         </li>
         <li class="break-word" :class="{'active': showProfile}"><a href="" v-on:click="goToUserProfile">{{user.loginID ? user.loginID:"User"}}</a></li>
-        <li><a href="" v-on:click="logout">Logout</a></li>
+        <li><a href="#" v-on:click="logout">Logout</a></li>
         
     </ul>
   </nav>

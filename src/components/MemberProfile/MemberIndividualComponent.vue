@@ -68,7 +68,7 @@
                 <button v-if="containsPermission('MS_MM_USER_GET_MANUAL_VERIFICATION_CRITERIA')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showVerificationChecklist}" @click="setTab('verificationChecklist')">Verification Checklist</button>
                 <button v-if="containsPermission('MS_MM_USER_SEND_SMS')" type="button" class="btn btn-default"
-                :class="{'btn-active-til': showMemberSMS}" @click="setTab('memberSms')">Member SMS</button>
+                :class="{'btn-active-til': showMemberSMS}" @click="setTab('memberSms')">Message</button>
               
               </div>
             </div>
