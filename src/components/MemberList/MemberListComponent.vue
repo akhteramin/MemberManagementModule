@@ -361,7 +361,8 @@
             <th class="text-center">Identification Documents</th>
             <th class="text-center">Bank Info</th>
             <th class="text-center">Card Info</th>
-            <th class="text-center" v-if="listType === 'default'">
+            <!-- <th class="text-center" v-if="listType === 'default'"> -->
+            <th class="text-center">
               Verification
             </th>
             <th class="text-center">Profile Completed</th>
@@ -505,7 +506,8 @@
             </div>
           </td>
 
-          <td class="text-center" v-if="listType === 'default'">
+          <!-- <td class="text-center" v-if="listType === 'default'"> -->
+          <td class="text-center" :style="{'color': member.verificationStatus === 'VERIFIED' ? 'green' : (member.verificationStatus === 'REJECTED' ? 'red' : 'black')}">
             {{ member.verificationStatus | underscoreless }}
           </td>
           <td class="text-center">{{ member.profileCompletionScore }}%</td>

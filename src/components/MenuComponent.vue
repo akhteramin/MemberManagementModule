@@ -242,8 +242,8 @@
         }
       },
       sideBarCollapse () {
-        $('#sidebar').toggleClass('active');
-      }
+        $('#sidebar').toggleClass('active')
+    }
     },
     created () {
       console.log('nav bar created::::')
@@ -252,3 +252,8 @@
   }
 </script>
 
+<style>
+  #sidebar a, a:hover, a:focus{
+    color: #ffffff
+  }
+</style>

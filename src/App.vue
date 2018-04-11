@@ -70,10 +70,14 @@ p {
     color: #999;
 }
 
-a, a:hover, a:focus {
-    color: #ffffff;
+/* #content a{
+    color: black;
     text-decoration: none;
     transition: all 0.3s;
+} */
+
+#content a:hover, a:focus {
+    color: #13998b;
 }
 
 .navbar {
@@ -95,9 +99,6 @@ a, a:hover, a:focus {
   background: #1bb1a5;
 }
 
-#sidebar a, a:hover, a:focus{
-  color: #ffffff
-}
 #sidebar.active .navbar-btn{
   box-shadow: none;
     outline: none !important;
