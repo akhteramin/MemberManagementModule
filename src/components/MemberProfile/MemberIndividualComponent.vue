@@ -178,34 +178,16 @@
                           </div>
                           <div class=row>
                             <div class="gr-2">
-                              Email:
-                            </div>
-                            <div class="gr-4 text-left">
-                            {{ member.emails && member.emails.length !== 0 ? member.emails[0].emailAddress: 'N/A' }}
-                            </div>
-                          <!-- </div>
-                          <div class=row> -->
-                            <div class="gr-2">
-                              Date of Birth:
-                            </div>
-                            <div class="gr-4 text-left pull-.5">
-                            {{ member.basicInfo.dob | date('MMM D, YYYY') || 'N/A' }}
-                            </div>
-                          </div>
-                          <div class=row>
-                            <div class="gr-2">
                             Gender:
                             </div>
                             <div class="gr-4 text-left">
                             <i v-bind:class="{'fa fa-male':member.basicInfo.gender==='M','fa fa-female':member.basicInfo.gender==='F'}"></i>{{ !member.basicInfo.gender ? 'N/A' : '' }}
                             </div>
-                          <!-- </div>
-                          <div class=row> -->
                             <div class="gr-2">
-                            Occupation:
+                              Date of Birth:
                             </div>
                             <div class="gr-4 text-left pull-.5">
-                            {{ occupationName || 'N/A' }}
+                            {{ member.basicInfo.dob | date('MMM D, YYYY') || 'N/A' }}
                             </div>
                           </div>
                           <div class=row>
@@ -221,10 +203,10 @@
                           <!-- </div>
                           <div class=row> -->
                             <div class="gr-2">
-                            Member Since:
+                            Occupation:
                             </div>
                             <div class="gr-4 text-left pull-.5">
-                            {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
+                            {{ occupationName || 'N/A' }}
                             </div>
                           </div>
                           <div class=row>
@@ -234,6 +216,16 @@
                             <div class="gr-4 text-left pull-.5">
                             {{ member.basicInfo.organizationName || 'N/A' }}
                             </div>
+                          <!-- </div>
+                          <div class=row> -->
+                            <div class="gr-2">
+                            Member Since:
+                            </div>
+                            <div class="gr-4 text-left pull-.5">
+                            {{ member.basicInfo.accountCreationDate | date('MMM D, YYYY') || 'N/A' }}
+                            </div>
+                          </div>
+                          <div class=row>
                           </div>
                         </div>
                         <div class="gr-12" v-else>
@@ -371,148 +363,176 @@
 
 
               <div id="addresses" class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_BASIC_DETAILS')">
-                  <div class="gr-12 panel-label">
-                    <label class="text-label"><b>Address</b></label>
-                  </div>
-                  <!--<div class="gr-2 push-6" v-if="!editAddressMode">-->
-                    <!--<button class="button-md-edit" @click="editAddress"><i class="fa fa-pencil-square-o"></i> Edit </button>-->
-                  <!--</div>-->
+                <div class="gr-12 panel-label">
+                  <label class="text-label"><b>Address</b></label>
+                </div>
+                <!--<div class="gr-2 push-6" v-if="!editAddressMode">-->
+                  <!--<button class="button-md-edit" @click="editAddress"><i class="fa fa-pencil-square-o"></i> Edit </button>-->
+                <!--</div>-->
 
                 <!--<br>-->
-                  <div class="justify-content-left">
-                    <!-- ================================= present address =============================================== -->
+                <div class="justify-content-left">
+                  <!-- ================================= present address =============================================== -->
 
-                    <div class="gr-6" v-if="!editPresentAddressMode">
-                      <div class="gr-12">
-                        <div class="gr-2">
-                          <h3><b>Present</b></h3>
-                        </div>
-                        <div class="gr-2 push-6"
-                             v-if="!editPresentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
-                          <button class="button-md-verify" @click="editPresentAddress">
-                            <i class="fa fa-pencil-square-o"></i> Edit </button>
-                        </div>
+                  <div class="gr-6" v-if="!editPresentAddressMode">
+                    <div class="gr-12">
+                      <div class="gr-2">
+                        <h3><b>Present</b></h3>
                       </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Address:
-                        </div>
-                        <div class="gr-3">
-                          {{ memberPresentAddress.addressLine1 }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                        </div>
-                        <div class="gr-3 ">
-                          {{ memberPresentAddress.addressLine2 }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          District:
-                        </div>
-                        <div class="gr-3">
-                          {{ districtNamePresent }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Thana:
-                        </div>
-                        <div class="gr-3">
-                          {{ thanaNamePresent }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Country:
-                        </div>
-                        <div class="gr-3">
-                          {{ countryNamePresent === 'BD' ? 'Bangladesh' : countryNamePresent }}
-                        </div>
+                      <div class="gr-2 push-6"
+                            v-if="!editPresentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
+                        <button class="button-md-verify" @click="editPresentAddress">
+                          <i class="fa fa-pencil-square-o"></i> Edit </button>
                       </div>
                     </div>
-
-                    <div v-else id="editPresentAddress" v-else-if="containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
-                      <update-member-address
-                            :id= "id"
-                            :memberPresentAddress="memberPresentAddress"
-                            :thanaList= "thanaList"
-                            :districtList= "districtList"
-                            @update="editPresentAddress">
-                      </update-member-address>
-                    </div>
-
-                    <!-- ================================= permanent address =============================================== -->
-
-                    <div class="gr-6" v-if="!editPermanentAddressMode" >
-                      <div class="gr-12">
-                        <div class="gr-2">
-                          <h3 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h3>
-                          <h3 v-if="member.basicInfo && member.basicInfo.accountType===2"><b>Business</b></h3>
-
-                        </div>
-                        <div class="gr-2 push-6"
-                             v-if="!editPermanentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
-                          <button class="button-md-verify" @click="editPermanentAddress">
-                            <i class="fa fa-pencil-square-o"></i> Edit </button>
-                        </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Address:
                       </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Address:
-                        </div>
-                        <div class="gr-3">
-                          {{ memberPermanentAddress.addressLine1 }}
-                          <!--{{ member.addresses.length > 1 ? member.addresses[1].addressLine1 : 'N/A' }}-->
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                        </div>
-                        <div class="gr-3 ">
-                          {{ memberPermanentAddress.addressLine2 }}
-                          <!--{{ member.addresses.length > 1 ? member.addresses[1].addressLine2 : 'N/A' }}-->
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          District:
-                        </div>
-                        <div class="gr-3">
-                          {{ districtNamePermanent }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Thana:
-                        </div>
-                        <div class="gr-3">
-                          {{ thanaNamePermanent }}
-                        </div>
-                      </div>
-                      <div class="row text-left">
-                        <div class="gr-2">
-                          Country:
-                        </div>
-                        <div class="gr-3">
-                          {{ countryNamePermanent === 'BD' ? 'Bangladesh' : countryNamePermanent }}
-                        </div>
+                      <div class="gr-3">
+                        {{ memberPresentAddress.addressLine1 }}
                       </div>
                     </div>
-                    <div v-else id="editPermanentAddress" v-else-if="containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
-                      <update-member-address
-                            :id= "id"
-                            :memberPermanentAddress="memberPermanentAddress"
-                            :thanaList= "thanaList"
-                            :districtList= "districtList"
-                            @update="editPermanentAddress">
-                      </update-member-address>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                      </div>
+                      <div class="gr-3 ">
+                        {{ memberPresentAddress.addressLine2 }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        District:
+                      </div>
+                      <div class="gr-3">
+                        {{ districtNamePresent }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Thana:
+                      </div>
+                      <div class="gr-3">
+                        {{ thanaNamePresent }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Country:
+                      </div>
+                      <div class="gr-3">
+                        {{ countryNamePresent === 'BD' ? 'Bangladesh' : countryNamePresent }}
+                      </div>
                     </div>
                   </div>
+
+                  <div v-else id="editPresentAddress" v-else-if="containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
+                    <update-member-address
+                          :id= "id"
+                          :memberPresentAddress="memberPresentAddress"
+                          :thanaList= "thanaList"
+                          :districtList= "districtList"
+                          @update="editPresentAddress">
+                    </update-member-address>
+                  </div>
+
+                  <!-- ================================= permanent address =============================================== -->
+
+                  <div class="gr-6" v-if="!editPermanentAddressMode" >
+                    <div class="gr-12">
+                      <div class="gr-2">
+                        <h3 v-if="member.basicInfo && member.basicInfo.accountType===1"><b>Permanent</b></h3>
+                        <h3 v-if="member.basicInfo && member.basicInfo.accountType===2"><b>Business</b></h3>
+
+                      </div>
+                      <div class="gr-2 push-6"
+                            v-if="!editPermanentAddressMode && containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
+                        <button class="button-md-verify" @click="editPermanentAddress">
+                          <i class="fa fa-pencil-square-o"></i> Edit </button>
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Address:
+                      </div>
+                      <div class="gr-3">
+                        {{ memberPermanentAddress.addressLine1 }}
+                        <!--{{ member.addresses.length > 1 ? member.addresses[1].addressLine1 : 'N/A' }}-->
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                      </div>
+                      <div class="gr-3 ">
+                        {{ memberPermanentAddress.addressLine2 }}
+                        <!--{{ member.addresses.length > 1 ? member.addresses[1].addressLine2 : 'N/A' }}-->
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        District:
+                      </div>
+                      <div class="gr-3">
+                        {{ districtNamePermanent }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Thana:
+                      </div>
+                      <div class="gr-3">
+                        {{ thanaNamePermanent }}
+                      </div>
+                    </div>
+                    <div class="row text-left">
+                      <div class="gr-2">
+                        Country:
+                      </div>
+                      <div class="gr-3">
+                        {{ countryNamePermanent === 'BD' ? 'Bangladesh' : countryNamePermanent }}
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else id="editPermanentAddress" v-else-if="containsPermission('MS_MM_USER_UPDATE_ADDRESS')">
+                    <update-member-address
+                          :id= "id"
+                          :memberPermanentAddress="memberPermanentAddress"
+                          :thanaList= "thanaList"
+                          :districtList= "districtList"
+                          @update="editPermanentAddress">
+                    </update-member-address>
+                  </div>
+                </div>
+              </div>
+              
+              <div id="email" class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_BASIC_DETAILS')">
+                <div class="gr-12 panel-label">
+                  <label class="text-label"><b>Email</b></label>
                 </div>
 
+                <div class="gr-11 padding-5">
+        
+                  <div class="text-center" v-if="member.emails && member.emails.length === 0">No Email Added<br></div>
+                  <div v-else-if="member.emails" class="small-scrollable height-210">
+                    <table class="table ui celled" cellspacing="0" width="100%">
+                      <thead class="thead-default">
+                      <tr>
+                        <th class = "text-center">Email Address</th>
+                        <th class = "text-center">Type</th>
+                        <th class = "text-center">Status</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr class="text-center" v-for="item in member.emails">
+                        <td>{{ item.emailAddress }}</td>
+                        <td>{{ item.primary ? 'Primary' : 'Not Primary' }}</td>
+                        <td>{{ item.verificationStatus | underscoreless }}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
 
               <div>
                 <div class="verification">
