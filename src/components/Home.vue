@@ -18,14 +18,14 @@
     <div class="row gr-12 push-3 text-center">
       <div class="card gr-5 padding-10" style="width: 30rem; border:1px solid #ddd; border-radius:4px; margin: 8px; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);">
         <div class="card-body margin-10">
-          <h1 class="card-title margin-10">{{metricVerifiedData[0].value}}</h1>
-          <div><h3 class="card-subtitle mb-2 text-muted margin-10">Verified {{metricVerifiedData[0].key}} Member</h3></div>
+          <h1 class="card-title margin-10" v-if="metricVerifiedData[0]">{{metricVerifiedData[0].value}}</h1>
+          <div><h3 class="card-subtitle mb-2 text-muted margin-10" v-if="metricVerifiedData[0]">Verified {{metricVerifiedData[0].key}} Member</h3></div>
         </div>
       </div>
       <div class="card padding-10 gr-5" style="width: 30rem; border:1px solid #ddd; border-radius:4px; margin: 8px; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);">
         <div class="card-body margin-10">
-          <h1 class="card-title margin-10">{{metricVerifiedData[1].value}} </h1>
-          <div><h3 class="card-subtitle mb-2 text-muted margin-10">Verified {{metricVerifiedData[1].key}} Member</h3></div>
+          <h1 class="card-title margin-10" v-if="metricVerifiedData[1]">{{metricVerifiedData[1].value}} </h1>
+          <div><h3 class="card-subtitle mb-2 text-muted margin-10" v-if="metricVerifiedData[1]">Verified {{metricVerifiedData[1].key}} Member</h3></div>
         </div>
       </div>
     </div>
@@ -55,7 +55,67 @@ export default{
       memberMetricData: {
         chart: {
           type: 'column',
-          height: '400px'
+          height: '400px',
+          events: {
+            drilldown: function (e) {
+              console.log(e.point.category)
+                if (!e.seriesOptions) {
+
+                    var chart = this,
+                        drilldowns = {
+                            '0': {
+                                name: '0',
+                                data: [
+                                    ['Cows', 2],
+                                    ['Sheep', 3]
+                                ]
+                            },
+                            '25': {
+                                name: '25',
+                                data: [
+                                    ['Apples', 5],
+                                    ['Oranges', 7],
+                                    ['Bananas', 2]
+                                ]
+                            },
+                            '50': {
+                                name: '50',
+                                data: [
+                                    ['Toyota', 1],
+                                    ['Volkswagen', 2],
+                                    ['Opel', 5]
+                                ]
+                            },
+                            '75': {
+                                name: '75',
+                                data: [
+                                    ['Toyota', 1],
+                                    ['Volkswagen', 2],
+                                    ['Opel', 5]
+                                ]
+                            },
+                            '100': {
+                                name: '10',
+                                data: [
+                                    ['Toyota', 1],
+                                    ['Volkswagen', 2],
+                                    ['Opel', 5]
+                                ]
+                            }
+                        },
+                        series = drilldowns[e.point.name];
+
+                    // Show the loading label
+                    chart.showLoading('Simulating Ajax ...');
+
+                    setTimeout(function () {
+                        chart.hideLoading();
+                        chart.addSeriesAsDrilldown(e.point, series);
+                    }, 1000);
+                }
+
+            }
+          }
         },
         plotOptions: {
           column: {
@@ -109,6 +169,9 @@ export default{
           }
         },
         series: [],
+         drilldown: {
+            series: []
+        },
         legend: {
           enabled: false
         },
@@ -195,12 +258,19 @@ export default{
           this.showLoader = false
           console.log('Success, got metric list: ', metricData)
           if (metricData.data !== undefined) {
-                // this.agentCommentOptions.series = data.map(x => Object.assign({}, {
-                //   data: [x.count],
-                //   name: x.name || '-'
-                // }));
-            this.memberMetricData.series = []
-            this.memberMetricData.series.push({ data: metricData.data.map(x => x.value) })
+                
+            var datam = metricData.data.map(function(el) {
+              var o = Object.assign({}, el);
+              o.drilldown = true;
+              o.y = el.value;
+              o.name = el.key; 
+              return o;
+            })
+            console.log(datam)
+            // this.memberMetricData.series.push({ data: datam.map(x => x.value)})
+            this.memberMetricData.series=[{data:datam}]    
+            console.log("hello there::",this.memberMetricData.series)        
+            
           }
           this.memberMetricData.xAxis.categories = metricData.data.map(x => x.key)
         }, error => {
@@ -212,10 +282,6 @@ export default{
           this.showLoader = false
           console.log('Success, got metric list: ', metricData)
           if (metricData.data !== undefined) {
-            // this.agentCommentOptions.series = data.map(x => Object.assign({}, {
-            //   data: [x.count],
-            //   name: x.name || '-'
-            // }));
             this.memberAvailableData.series = []
             this.memberAvailableData.series.push({ data: metricData.data.map(x => x.value) })
           }
@@ -239,3 +305,4 @@ export default{
   }
 }
 </script>
+

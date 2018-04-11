@@ -8,22 +8,16 @@ import vueSlider from 'vue-slider-component'
 import VueCookies from 'vue-cookies'
 import Restrict from './directives/restrict'
 import VueHighcharts from 'vue-highcharts';
+import Highcharts from 'highcharts';
+import loadDrillDown from 'highcharts/modules/drilldown';
 
-// import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
-
-// require('../node_modules/bootstrap/less/bootstrap.less')
-// require('../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss')
-
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
-//
-// Vue.use(BootstrapVue)
+loadDrillDown(Highcharts)
 require('./assets/css/login.css')
 Vue.config.productionTip = false
 Vue.component('vueSlider', vueSlider)
 Vue.use(VueHighcharts);
 Vue.use(VueCookies)
-
+Vue.use(VueHighcharts, { Highcharts })
 Vue.directive('restrict', Restrict)
 
 Vue.filter('date', (value, formatStr = 'MMM D, YYYY - h:mm A') => moment(value).format(formatStr))

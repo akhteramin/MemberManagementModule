@@ -64,7 +64,7 @@ const setApiUrl = () => {
   const mapper = {
     verification: '10.200.40.206',
     adminnew: '10.15.40.10',
-    localhost: '10.15.40.10',
+    localhost: '10.10.10.10',
     192: '10.15.40.10'
   }
 

@@ -16,12 +16,12 @@
 
     <!-- Sidebar Links -->
     <ul class="list-unstyled components">
-        <li :class="{'active': showHome}" @click="setMenu('home')"><a href="#" v-on:click="goHome">Home</a></li>        
-        <li :class="{'active': showMembers}" @click="setMenu('member')"><a href="#" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList">Members</a></li>
-        <li :class="{'active': showWaitingVerification}" @click="setMenu('memberVerification')"><a href="#" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList">Waiting for Verification</a></li>
-        <li :class="{'active': showWaitingApproval}" @click="setMenu('memberApproval')"><a href="#" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList">Waiting for Approval</a></li>
-        <li :class="{'active': showACL}" @click="setMenu('acl')"><a href="#" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl">Ipay Member ACL</a></li>
-        <li :class="{'active': showManageService}" @click="setMenu('manageService')"><a href="#" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices">Manage Services</a></li>
+        <li :class="{'active': showHome}" @click="setMenu('home')"><a href="" v-on:click="goHome">Home</a></li>        
+        <li :class="{'active': showMembers}" @click="setMenu('member')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList">Members</a></li>
+        <li :class="{'active': showWaitingVerification}" @click="setMenu('memberVerification')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList">Waiting for Verification</a></li>
+        <li :class="{'active': showWaitingApproval}" @click="setMenu('memberApproval')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList">Waiting for Approval</a></li>
+        <li :class="{'active': showACL}" @click="setMenu('acl')"><a href="" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl">Ipay Member ACL</a></li>
+        <li :class="{'active': showManageService}" @click="setMenu('manageService')"><a href="" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices">Manage Services</a></li>
         <hr>
         <li :class="{'active': showModule}" @click="setMenu('module')"><!-- Link with dropdown items -->
             <a href="#homeSubmenu" v-if="appsData.length > 1" data-toggle="collapse" aria-expanded="false">Apps</a>
@@ -29,7 +29,7 @@
                 <li v-if="appList[app.appID] != 'Admin'" v-for="app in appsData"><a :href="appURL[app.appID]" target="_blank">{{appList[app.appID]}}</a></li>
             </ul>
         </li>
-        <li class="break-word" :class="{'active': showProfile}"><a href="#" v-on:click="goToUserProfile">{{user.loginID ? user.loginID:"User"}}</a></li>
+        <li class="break-word" :class="{'active': showProfile}"><a href="" v-on:click="goToUserProfile">{{user.loginID ? user.loginID:"User"}}</a></li>
         <li><a href="#" v-on:click="logout">Logout</a></li>
         
     </ul>
