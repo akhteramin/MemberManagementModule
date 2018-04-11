@@ -22,16 +22,16 @@
         <thead>
           <tr>
             <th class="text-center">#</th>
-            <th class="text-center">Tag</th>
-            <th class="text-center">Remark</th>
+            <th class="text-left">Tag</th>
+            <th class="text-left">Remark</th>
             <th class="text-center">Status</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="entry,index in checklist">
             <td class="text-center" style="vertical-align: middle;"><strong>{{ index + 1 }}</strong></td>
-            <td class="text-center" style="vertical-align: middle;">{{ entry.tag }}</td>
-            <td class="text-center" style="white-space: pre-line; vertical-align: middle;">
+            <td class="text-left" style="vertical-align: middle;">{{ entry.tag }}</td>
+            <td class="text-left" style="white-space: pre-line; vertical-align: middle;">
               <div id="remark">{{ entry.remark || 'N/A' }}</div>
             </td>
             <!-- <td class="text-center"><input type="checkbox" @click.prevent.stop v-model="entry.status"/></td> -->
@@ -137,7 +137,7 @@
     white-space: pre-line; */
     overflow : visible;
     display: -webkit-box;
-    -webkit-line-clamp: 100;
+    -webkit-line-clamp: 1000;
     -webkit-box-orient: vertical;
   }
 </style>
