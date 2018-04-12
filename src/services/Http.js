@@ -168,7 +168,7 @@ const setImageUrl = () => {
   const mapper = {
     verification: 'www',
     adminnew: 'test',
-    localhost: 'test',
+    localhost: 'dev',
     192: 'dev',
     10: 'dev'
   }
