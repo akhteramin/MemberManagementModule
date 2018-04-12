@@ -22,8 +22,16 @@
                 </thead>
                 <tbody>
                 <tr class = "text-center" v-for="item in documents">
-                <td>{{ item.documentType ? item.documentType : 'N/A' | underscoreless}}</td>
-                <td>{{ item.documentIdNumber ? item.documentIdNumber : 'N/A' }}</td>
+                <td>
+                  <span class="margin-10">
+                    {{ item.documentType ? item.documentType : 'N/A' | underscoreless}}
+                  </span>
+                </td>
+                <td>
+                  <span class="margin-10">
+                    {{ item.documentIdNumber ? item.documentIdNumber : 'N/A' }}
+                  </span>
+                </td>
                 <td>
                   <table>
                   <tbody>
@@ -47,7 +55,15 @@
                   </tbody>
                   </table>
                 </td>
-                <td>{{ item.documentVerificationStatus | underscoreless }}</td>
+                <!-- <td>{{ item.documentVerificationStatus | underscoreless }}</td> -->
+                <td>
+                  <span class="margin-10" v-if="item.documentVerificationStatus === 'VERIFIED'">
+                    <i class="fa fa-check-circle-o banner-text fa-lg"></i>
+                  </span>
+                  <span class="margin-10" v-else-if="item.documentVerificationStatus === 'NOT_VERIFIED'">
+                    <i class="fa fa-times-circle-o fa-lg" style="color: red"></i>
+                  </span>
+                </td>
                 <td>
                   <span>
 
