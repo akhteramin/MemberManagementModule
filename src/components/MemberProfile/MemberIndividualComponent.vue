@@ -19,11 +19,43 @@
                           onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
                   </div>
                   <div class="gr-8 padding-5 text-left">
-                    <span>
-                    <b v-if="member.basicInfo && member.basicInfo.accountType === 1">{{member.basicInfo.name}}</b>
-                    <b v-else-if="member.basicInfo && member.basicInfo.accountType === 2">{{member.businessDetails.businessBasicInfo.businessName}}</b>
+                    <span class="margin-bottom-5">
+                      <span v-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'VERIFIED'">
+                        <span class="label" style="color: teal">VERIFIED</span>
+                      </span>
+                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'IN_PROGRESS'">
+                        <span class="label label-warning">IN PROGRESS</span>
+                      </span>
+                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'REJECTED'">
+                        <span class="label label-danger">REJECTED</span>
+                      </span>
+                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'NOT_VERIFIED'">
+                        <span class="label label-default">NOT VERIFIED</span>
+                      </span>
+                      <span v-else>
+                        <span v-if="member.basicInfo.verificationStatus === 'VERIFIED'">
+                          <span class="label" style="background-color: teal">VERIFIED</span>
+                        </span>
+                        <span v-else-if="member.basicInfo.verificationStatus === 'IN_PROGRESS'">
+                          <span class="label label-warning">IN PROGRESS</span>
+                        </span>
+                        <span v-else-if="member.basicInfo.verificationStatus === 'REJECTED'">
+                          <span class="label label-danger">REJECTED</span>
+                        </span>
+                        <span v-else-if="member.basicInfo.verificationStatus === 'NOT_VERIFIED'">
+                          <span class="label label-default">NOT VERIFIED</span>
+                        </span>
+                      </span>
                     </span>
-                          
+                    <br>
+                    <span>
+                      <b v-if="member.basicInfo && member.basicInfo.accountType === 1">
+                        {{member.basicInfo.name}}
+                      </b>
+                      <b v-else-if="member.basicInfo && member.basicInfo.accountType === 2">
+                        {{member.businessDetails.businessBasicInfo.businessName}}
+                      </b>
+                    </span>
                     <br>
                     <span><b>{{member.basicInfo.mobileNumber}}</b></span>
                     <br>
@@ -1035,7 +1067,6 @@
         } else if (tabName === 'memberSms') {
           this.showMemberSMS = true
         }
-
       },
       getStaticNames () {
         Http.GET('resource', ['account-class'])

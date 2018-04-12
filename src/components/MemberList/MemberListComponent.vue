@@ -1245,7 +1245,7 @@
           profileCompletionScoreEndRange: '',
           startSignUpDate: '',
           endSignUpDate: '',
-          sort: 'PROFILE_COMPLETION_SCORE',
+          sort: 'CREATION_DATE',
           order: 'DESC',
           pageNumber: 0,
           pageSize: 10
@@ -1264,6 +1264,8 @@
           this.query.verificationStatus = 'NOT_VERIFIED'
         } else if (this.listType === 'waiting-approval') {
           this.query.verificationStatus = 'IN_PROGRESS'
+        } else if (this.listType === 'rejected') {
+          this.query.verificationStatus = 'REJECTED'
         }
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
