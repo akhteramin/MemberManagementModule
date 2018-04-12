@@ -64,8 +64,9 @@ const setApiUrl = () => {
   const mapper = {
     verification: '10.200.40.206',
     adminnew: '10.15.40.10',
-    localhost: '10.10.10.10',
-    192: '10.15.40.10'
+    localhost: '10.15.40.10',
+    192: '10.10.10.10',
+    10: '10.10.10.10'
   }
 
   if (typeof domain !== 'undefined') {
@@ -76,7 +77,7 @@ const setApiUrl = () => {
 
   if (domain === 'verification') apiUrl = `${ENV}:9001`
   else if (domain === 'adminnew') apiUrl = `${ENV}:9001`
-  else if (ENV.substring(0, 3) === '10.' || domain === 'localhost') apiUrl = `${ENV}:9001`
+  else if (ENV.substring(0, 3) === '10.' || ENV.substring(0, 4) === '192.' || domain === 'localhost') apiUrl = `${ENV}:9001`
   else apiUrl = `${ENV}.ipay.com.bd`
 
   return apiUrl
@@ -91,7 +92,8 @@ const setAuthUrl = () => {
     verification: '10.200.40.203',
     adminnew: '10.10.40.31',
     localhost: '10.10.40.31',
-    192: '10.10.40.31'
+    192: '10.10.10.199',
+    10: '10.10.10.199'
   }
 
   if (typeof domain !== 'undefined') {
@@ -101,7 +103,7 @@ const setAuthUrl = () => {
   // console.log('ENV: ', ENV);
   if (domain === 'verification') authUrl = `${ENV}:7000`
   else if (domain === 'adminnew') authUrl = `${ENV}:8000`
-  else if (ENV.substring(0, 3) === '10.' || domain === 'localhost') authUrl = `${ENV}:8000`
+  else if (ENV.substring(0, 3) === '10.' || ENV.substring(0, 4) === '192.' || domain === 'localhost') authUrl = `${ENV}:8000`
   else authUrl = `${ENV}.ipay.com.bd`
 
   return authUrl
@@ -116,7 +118,8 @@ const setAuthHttpUrl = () => {
     verification: 'centralauth',
     adminnew: '10.10.40.31',
     localhost: '10.10.40.31',
-    192: '10.10.40.31'
+    192: '10.10.10.199',
+    10: '10.10.10.199'
   }
 
   if (typeof domain !== 'undefined') {
@@ -125,7 +128,8 @@ const setAuthHttpUrl = () => {
 
   // console.log('ENV: ', ENV);
   if (domain === 'adminnew') authHttpUrl = `${ENV}:8080`
-  else if (ENV.substring(0, 3) === '10.' || domain === 'localhost') authHttpUrl = `${ENV}:8080`
+  else if (domain === 'localhost') authHttpUrl = `${ENV}:8080`
+  else if (ENV.substring(0, 3) === '10.' || ENV.substring(0, 3) === '192.') authHttpUrl = `${ENV}:9000`
   else authHttpUrl = `${ENV}.ipay.com.bd`
 
   return authHttpUrl
@@ -140,7 +144,8 @@ const setAdminUrl = () => {
     verification: 'verification',
     adminnew: 'adminnew',
     localhost: 'localhost',
-    192: 'localhost'
+    192: '10.10.10.10',
+    10: '10.10.10.10'
   }
 
   if (typeof domain !== 'undefined') {
@@ -148,7 +153,8 @@ const setAdminUrl = () => {
   }
 
   // console.log('ENV: ', ENV);
-  if (ENV.substring(0, 3) === '10.' || domain === 'localhost') adminUrl = `${ENV}:8080`
+  if (domain === 'localhost') adminUrl = `${ENV}:8080`
+  else if (ENV.substring(0, 3) === '10.') adminUrl = `${ENV}:9009`
   else adminUrl = `${ENV}.ipay.com.bd`
 
   return adminUrl
@@ -163,7 +169,8 @@ const setImageUrl = () => {
     verification: 'www',
     adminnew: 'test',
     localhost: 'test',
-    192: 'test'
+    192: 'dev',
+    10: 'dev'
   }
 
   if (typeof domain !== 'undefined') {
@@ -185,7 +192,8 @@ const setCrmUrl = () => {
     verification: 'crmnew',
     adminnew: '10.10.10.169/login',
     localhost: '10.10.10.169/login',
-    192: '10.10.10.169/login'
+    192: '10.10.10.169/login',
+    10: '10.10.10.169/login'
   }
 
   if (typeof domain !== 'undefined') {
