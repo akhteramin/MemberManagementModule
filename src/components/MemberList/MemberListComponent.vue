@@ -1264,6 +1264,8 @@
           this.query.verificationStatus = 'NOT_VERIFIED'
         } else if (this.listType === 'waiting-approval') {
           this.query.verificationStatus = 'IN_PROGRESS'
+        } else if (this.listType === 'rejected') {
+          this.query.verificationStatus = 'REJECTED'
         }
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
