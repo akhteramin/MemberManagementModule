@@ -17,9 +17,10 @@
     <!-- Sidebar Links -->
     <ul class="list-unstyled components">
         <li :class="{'active': showHome}" @click="setMenu('home')"><a href="" v-on:click="goHome">Home</a></li>        
-        <li :class="{'active': showMembers}" @click="setMenu('member')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList">Members</a></li>
+        <li :class="{'active': showMembers}" @click="setMenu('member')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList">Recent Members</a></li>
         <li :class="{'active': showWaitingVerification}" @click="setMenu('memberVerification')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList">Waiting for Verification</a></li>
         <li :class="{'active': showWaitingApproval}" @click="setMenu('memberApproval')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList">Waiting for Approval</a></li>
+        <li :class="{'active': showRejectedMembers}" @click="setMenu('memberRejected')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToRejectedMemberList">Rejected Members</a></li>
         <li :class="{'active': showACL}" @click="setMenu('acl')"><a href="" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl">iPay Member ACL</a></li>
         <li :class="{'active': showManageService}" @click="setMenu('manageService')"><a href="" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices">Manage Services</a></li>
         <hr>
@@ -58,6 +59,7 @@
         showMembers: false,
         showWaitingVerification: false,
         showWaitingApproval: false,
+        showRejectedMembers: false,
         showACL: false,
         showManageService: false,
         showUsers: false,
@@ -124,6 +126,13 @@
         route.push('/member/waiting-approval')
 //        route.push('/member/waiting/approval')
       },
+      goToRejectedMemberList () {
+        this.expandList = false
+        $('#memberlist-table').removeClass('background-nonclickable')
+        $('#seachFilter').removeClass('background-nonclickable')
+        route.push('/member/rejected')
+//        route.push('/member/waiting/approval')
+      },
       goToUserList () {
         this.expandList = false
         route.push('/user')
@@ -175,6 +184,7 @@
         this.showMembers = false
         this.showWaitingVerification = false
         this.showWaitingApproval = false
+        this.showRejectedMembers = false
         this.showACL = false
         this.showManageService = false
         this.showUsers = false
@@ -190,6 +200,8 @@
           this.showWaitingVerification = true
         } else if (menuName === 'memberApproval') {
           this.showWaitingApproval = true
+        } else if (menuName === 'memberRejected') {
+          this.showRejectedMembers = true
         } else if (menuName === 'acl') {
           this.showACL = true
         } else if (menuName === 'manageService') {
@@ -234,6 +246,7 @@
           if (secondKey === 'default') this.showMembers = true
           else if (secondKey === 'waiting-verification') this.showWaitingVerification = true
           else if (secondKey === 'waiting-approval') this.showWaitingApproval = true
+          else if (secondKey === 'rejected') this.showRejectedMembers = true
           else if (secondKey === 'acl') this.showACL = true
         } else if (firstKey === 'manage') {
           if (secondKey === 'services') this.showManageService = true
