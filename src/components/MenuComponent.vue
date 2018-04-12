@@ -20,7 +20,7 @@
         <li :class="{'active': showMembers}" @click="setMenu('member')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList">Members</a></li>
         <li :class="{'active': showWaitingVerification}" @click="setMenu('memberVerification')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList">Waiting for Verification</a></li>
         <li :class="{'active': showWaitingApproval}" @click="setMenu('memberApproval')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList">Waiting for Approval</a></li>
-        <li :class="{'active': showACL}" @click="setMenu('acl')"><a href="" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl">Ipay Member ACL</a></li>
+        <li :class="{'active': showACL}" @click="setMenu('acl')"><a href="" v-restrict="'MS_IPAY_ACL_GET_USER_GROUPS'" v-on:click="goToMemberAcl">iPay Member ACL</a></li>
         <li :class="{'active': showManageService}" @click="setMenu('manageService')"><a href="" v-restrict="'MS_IPAY_ACL_SERVICES'" v-on:click="goToManageServices">Manage Services</a></li>
         <hr>
         <li :class="{'active': showModule}" @click="setMenu('module')"><!-- Link with dropdown items -->
@@ -243,7 +243,7 @@
       },
       sideBarCollapse () {
         $('#sidebar').toggleClass('active')
-    }
+      }
     },
     created () {
       console.log('nav bar created::::')
