@@ -58,108 +58,71 @@ export default{
           height: '400px',
           events: {
             drilldown: function (e) {
-              console.log(e.point.category)
+              console.log(e.point.name)
+              var titleName=e.point.name
                 if (!e.seriesOptions) {
-
-                    var chart = this,
+                    Http.GET('memberVerificationMetrics', ['profileCompletionSegment-'+e.point.name])
+                    .then(({data: profileCompletionSegmentData}) => {
+                      console.log('Success, got details list: ', profileCompletionSegmentData.data)
+                      // this.memberAvailableData.series.push({ data: profileCompletionSegmentData.data.map(x => x.value) })
+                      var data=[]
+                      for (var i = 0; i < profileCompletionSegmentData.data.length; i++) {
+                          data[i]=[profileCompletionSegmentData.data[i].key,profileCompletionSegmentData.data[i].value]
+                      } 
+                      console.log(data)
+                      
+                      var chart = this,
                         drilldowns = {
-                            '0': {
-                                name: '0',
-                                data: [
-                                    ['Cows', 2],
-                                    ['Sheep', 3]
-                                ]
-                            },
-                            '25': {
-                                name: '25',
-                                data: [
-                                    ['Apples', 5],
-                                    ['Oranges', 7],
-                                    ['Bananas', 2]
-                                ]
-                            },
-                            '50': {
-                                name: '50',
-                                data: [
-                                    ['Toyota', 1],
-                                    ['Volkswagen', 2],
-                                    ['Opel', 5]
-                                ]
-                            },
-                            '75': {
-                                name: '75',
-                                data: [
-                                    ['Toyota', 1],
-                                    ['Volkswagen', 2],
-                                    ['Opel', 5]
-                                ]
-                            },
-                            '100': {
-                                name: '10',
-                                data: [
-                                    ['Toyota', 1],
-                                    ['Volkswagen', 2],
-                                    ['Opel', 5]
-                                ]
+                            [titleName] : {
+                                name: e.point.name,
+                                data: data
                             }
                         },
                         series = drilldowns[e.point.name];
+                        console.log(series)
+                        console.log(e.point.name)
+                        // Show the loading label
+                      chart.showLoading('Retreiving Details ...');
 
-                    // Show the loading label
-                    chart.showLoading('Simulating Ajax ...');
-
-                    setTimeout(function () {
-                        chart.hideLoading();
-                        chart.addSeriesAsDrilldown(e.point, series);
-                    }, 1000);
+                      setTimeout(function () {
+                          chart.hideLoading();
+                          chart.addSeriesAsDrilldown(e.point, series);
+                      }, 1000);
+                    }, error => {
+                      console.error('Error in offers: ', error)
+                    })
                 }
 
             }
           }
         },
-        plotOptions: {
-          column: {
-            pointPadding: 0.2,
-            borderWidth: 0,
-            groupPadding: 0,
-            shadow: false,
-            maxPointWidth: 100
-          },
-          series: {
-            dataLabels: {
-              enabled: true,
-              color: '#000',
-              style: {fontWeight: 'bolder'},
-              formatter: function () {
-                return this.y
-              },
-              inside: false
-            },
-            pointPadding: 0.1,
-            groupPadding: 0
-          }
-        },
         tooltip: {
           formatter () {
-            return `<span style="color:${this.color}">\u25CF</span> ${this.x}: <b>${this.y}</b><br/>`
+            return `<span style="color:${this.color}">\u25CF</span> ${this.point.name}: <b>${this.y}</b><br/>`
           }
         },
         title: {
           text: 'Profile completion score vs No. of members.'
         },
         xAxis: {
-          title: {
-            text: 'Profile Completion Score'
-          },
-          labels: {
+            title: {
+              text: 'Profile Completion Score'
+            },
+            type: 'category',
+            labels: {
             enabled: true,
             style: {
               fontSize: '24px'
             }
-          },
-          // minorTickLength: 0,
-          // tickLength: 0,
-          categories: []
+          }
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true
+                }
+            }
         },
         yAxis: {
           allowDecimals: false,
@@ -184,27 +147,13 @@ export default{
           type: 'column',
           height: '400px'
         },
-        plotOptions: {
-          column: {
-            pointPadding: 0.2,
-            borderWidth: 0,
-            groupPadding: 0,
-            shadow: false,
-            maxPointWidth: 100
-          },
-          series: {
-            dataLabels: {
-              enabled: true,
-              color: '#000',
-              style: {fontWeight: 'bolder'},
-              formatter: function () {
-                return this.y
-              },
-              inside: false
-            },
-            pointPadding: 0.1,
-            groupPadding: 0
-          }
+         plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true
+                }
+            }
         },
         tooltip: {
           formatter () {
@@ -215,18 +164,7 @@ export default{
           text: 'Available Data Points vs No. of members.'
         },
         xAxis: {
-          title: {
-            text: 'Data Points'
-          },
-          labels: {
-            enabled: true,
-            style: {
-              fontSize: '16px'
-            }
-          },
-          // minorTickLength: 0,
-          // tickLength: 0,
-          categories: []
+            type: 'category'
         },
         yAxis: {
           allowDecimals: false,
@@ -267,12 +205,10 @@ export default{
               return o;
             })
             console.log(datam)
-            // this.memberMetricData.series.push({ data: datam.map(x => x.value)})
             this.memberMetricData.series=[{data:datam}]    
             console.log("hello there::",this.memberMetricData.series)        
             
           }
-          this.memberMetricData.xAxis.categories = metricData.data.map(x => x.key)
         }, error => {
           this.showLoader = false
           console.error('Error in offers: ', error)
