@@ -1245,7 +1245,7 @@
           profileCompletionScoreEndRange: '',
           startSignUpDate: '',
           endSignUpDate: '',
-          sort: 'CREATION_DATE',
+          sort: this.listType === 'default' ? 'CREATION_DATE' : 'PROFILE_COMPLETION_SCORE',
           order: 'DESC',
           pageNumber: 0,
           pageSize: 10
