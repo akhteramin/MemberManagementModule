@@ -64,7 +64,7 @@ const setApiUrl = () => {
   const mapper = {
     verification: '10.200.40.206',
     adminnew: '10.15.40.10',
-    localhost: '10.15.40.10',
+    localhost: '10.10.10.10',
     192: '10.10.10.10',
     10: '10.10.10.10'
   }
@@ -91,7 +91,7 @@ const setAuthUrl = () => {
   const mapper = {
     verification: '10.200.40.203',
     adminnew: '10.10.40.31',
-    localhost: '10.10.40.31',
+    localhost: '10.10.10.199',
     192: '10.10.10.199',
     10: '10.10.10.199'
   }
@@ -117,7 +117,7 @@ const setAuthHttpUrl = () => {
   const mapper = {
     verification: 'centralauth',
     adminnew: '10.10.40.31',
-    localhost: '10.10.40.31',
+    localhost: '10.10.10.199',
     192: '10.10.10.199',
     10: '10.10.10.199'
   }
@@ -128,7 +128,7 @@ const setAuthHttpUrl = () => {
 
   // console.log('ENV: ', ENV);
   if (domain === 'adminnew') authHttpUrl = `${ENV}:8080`
-  else if (domain === 'localhost') authHttpUrl = `${ENV}:8080`
+  else if (domain === 'localhost') authHttpUrl = `${ENV}:9000`
   else if (ENV.substring(0, 3) === '10.' || ENV.substring(0, 3) === '192.') authHttpUrl = `${ENV}:9000`
   else authHttpUrl = `${ENV}.ipay.com.bd`
 
