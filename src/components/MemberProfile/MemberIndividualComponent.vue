@@ -595,6 +595,11 @@
                       </member-has-introduced>
                     </div>
 
+                    <div class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_INVITERS')">
+                      <member-invited-by :id="id">
+                      </member-invited-by>
+                    </div>
+
                   </div>
 
                   <div class="justify-content-center"
@@ -756,6 +761,8 @@
   import MemberBankCard from './MemberBankCardComponent.vue'
   import MemberVerificationChecklist from './MemberVerificationChecklistComponent.vue'
   import MemberSMSSend from './MemberSMSSendComponent.vue'
+  import MemberInvitedBy from './MemberInvitedByComponent.vue'
+
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -783,7 +790,8 @@
       'member-access-control': MemberAccessControl,
       'member-bank-card': MemberBankCard,
       'member-verification-checklist': MemberVerificationChecklist,
-      'member-sms-send': MemberSMSSend
+      'member-sms-send': MemberSMSSend,
+      'member-invited-by': MemberInvitedBy
     },
     data () {
       return {
