@@ -61,7 +61,7 @@
                     <br>
                     <span><b>{{member.basicInfo.profileCompletionScore}}%</b></span>
                     <br>
-                    <div class="width-150">
+                    <div v-restrict="'MS_MM_USER_CHANGE_ACCOUNT_STATUS'" class="width-150">
                       <div class="select select-sm push-0">
                         <select id="order-by-select"  v-model="member.basicInfo.accountStatus" @change="statusChange(id, member.basicInfo.accountStatus)">
                           <option value = "1">Active</option>
