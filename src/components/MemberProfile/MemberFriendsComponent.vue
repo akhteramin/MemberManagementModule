@@ -92,7 +92,14 @@
             <td>{{ index + 1 }}</td>
             <td class="text-left">{{ entry.contactName }}</td>
 
-            <td class="text-center">{{ entry.mobileNumber }}</td>
+            <td class="text-center">
+              <span v-if="entry.iPayMember">
+                <a class="pointer" @click="goToMember(entry.mobileNumber)">{{ entry.mobileNumber }}</a>
+              </span>
+              <span v-else>
+                {{ entry.mobileNumber }}
+              </span>
+            </td>
 
             <td class="text-center">{{ entry.verified ? 'VERIFIED' : 'NOT VERIFIED'}}</td>
 
@@ -178,6 +185,18 @@
             this.showLoader = false
             console.log('error in retrieving contact list: ', error)
           })
+      },
+      goToMember (mobileNumber) {
+        Http.GET('mmAdminMember', {mobileNumber})
+          .then(
+            ({data}) => {
+              console.log('found member::', data)
+              window.open(`/member/profile/${data.accountId}/${data.accountType}`, '_blank')
+            },
+            error => {
+              console.log(error)
+            }
+          )
       },
       loadMore () {
         this.query.pageNumber = this.query.pageNumber + 1
