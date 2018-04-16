@@ -138,6 +138,7 @@
                   type: 'success',
                   delay: 3000
                 })
+                localStorage.setItem('token', response.data.token)
               },
               error => {
                 this.showLoader = false
