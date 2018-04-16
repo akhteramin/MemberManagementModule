@@ -603,7 +603,7 @@
                   </div>
 
                   <div class="justify-content-center"
-                       v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY') || containsPermission('MS_MM_USER_VERIFICATION_APPROVE')">
+                       v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY') || containsPermission('MS_MM_USER_VERIFICATION_APPROVE') || containsPermission('MS_MM_USER_BASIC_DETAILS')">
                     <member-verify-and-approve :id="id" :member="member">
                     </member-verify-and-approve>
 
