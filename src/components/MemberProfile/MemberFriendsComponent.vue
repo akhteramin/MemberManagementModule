@@ -92,7 +92,14 @@
             <td>{{ index + 1 }}</td>
             <td class="text-left">{{ entry.contactName }}</td>
 
-            <td class="text-center">{{ entry.mobileNumber }}</td>
+            <td class="text-center">
+              <span v-if="entry.iPayMember">
+                <a class="pointer" @click="goToMember(entry.mobileNumber)">{{ entry.mobileNumber }}</a>
+              </span>
+              <span v-else>
+                {{ entry.mobileNumber }}
+              </span>
+            </td>
 
             <td class="text-center">{{ entry.verified ? 'VERIFIED' : 'NOT VERIFIED'}}</td>
 
@@ -106,9 +113,17 @@
       </div>
 
       <div class="text-center"
-        v-if="totalCount > query.pageNumber * query.pageSize">
+        v-if="query.pageSize !== '' && totalCount > (query.pageNumber+1) * query.pageSize">
         <a class="padding-5" role="button" @click="loadMore">
           <strong class="loadmore-color"> Load More </strong>
+        </a>|
+        <a class="padding-5" role="button" @click="showAll">
+          <strong class="loadmore-color"> Show All </strong>
+        </a>
+      </div>
+      <div class="text-center" v-else>
+        <a class="padding-5" role="button" @click="init">
+          <strong class="loadmore-color"> Show Less </strong>
         </a>
       </div>
 
@@ -179,6 +194,18 @@
             console.log('error in retrieving contact list: ', error)
           })
       },
+      goToMember (mobileNumber) {
+        Http.GET('mmAdminMember', {mobileNumber})
+          .then(
+            ({data}) => {
+              console.log('found member::', data)
+              window.open(`/member/profile/${data.accountId}/${data.accountType}`, '_blank')
+            },
+            error => {
+              console.log(error)
+            }
+          )
+      },
       loadMore () {
         this.query.pageNumber = this.query.pageNumber + 1
         console.log('loadMore, member friends component, query: ', this.query)
@@ -189,6 +216,22 @@
             for (let indx in friends.contactList) {
               this.friends.push(friends.contactList[indx])
             }
+            console.log('success in getting friends: ', this.friends)
+          },
+          error => {
+            this.showLoader = false
+            console.log('error in retrieving contact list: ', error)
+          })
+      },
+      showAll () {
+        this.query.pageNumber = 0
+        this.query.pageSize = ''
+        console.log('loadMore, member friends component, query: ', this.query)
+        this.showLoader = true
+        Http.GET('member', ['contacts'], this.query)
+          .then(({data: friends}) => {
+            this.showLoader = false
+            this.friends = friends.contactList
             console.log('success in getting friends: ', this.friends)
           },
           error => {

@@ -366,8 +366,8 @@
               Verification
             </th>
             <th class="text-center">Profile Completed</th>
-            <th class="text-center"
-                v-if="listType === 'default'">Account Status</th>
+            <!-- <th class="text-center"
+                v-if="listType === 'default'">Account Status</th> -->
             <!--th v-else class="text-center">
               Action
               <input type="checkbox" @click="allMemberSelectAndDeselect"
@@ -511,7 +511,7 @@
             {{ member.verificationStatus | underscoreless }}
           </td>
           <td class="text-center">{{ member.profileCompletionScore }}%</td>
-          <td v-if="listType === 'default'">
+          <!-- <td v-if="listType === 'default'">
             <div class="select">
               <select id="order-by-select"  v-model="member.accountStatus" @change="statusChange( member.accountId,member.accountStatus)">
                 <option value = "1">Active</option>
@@ -519,7 +519,7 @@
               </select>
             </div>
 
-          </td>
+          </td> -->
           <!--td v-else class="text-center">
             <input type="checkbox" @change="verificationBoxClicked(member, index)"
               v-model="checkBoxTicked[index]"> <!-- member.uncheckVerificationActionBox -->

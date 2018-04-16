@@ -102,14 +102,14 @@ const router = new Router({
     //   // auth check
     //   // meta: { requiresAuth: true }
     // },
-    // {
-    //   path: '/user/change-password',
-    //   name: 'UserPasswordChangeComponent',
-    //   component: UserPasswordChangeComponent
-    //   // props: true
-    //   // auth check
-    //   // meta: { requiresAuth: true }
-    // },
+    {
+      path: '/user/change-password',
+      name: 'UserPasswordChangeComponent',
+      component: UserPasswordChangeComponent
+      // props: true
+      // auth check
+      // meta: { requiresAuth: true }
+    },
     {
       path: '/user/profile/:id',
       name: 'UserIndividualProfileComponent',

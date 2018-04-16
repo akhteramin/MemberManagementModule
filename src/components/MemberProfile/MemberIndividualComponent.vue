@@ -61,7 +61,7 @@
                     <br>
                     <span><b>{{member.basicInfo.profileCompletionScore}}%</b></span>
                     <br>
-                    <div class="width-150">
+                    <div v-restrict="'MS_MM_USER_CHANGE_ACCOUNT_STATUS'" class="width-150">
                       <div class="select select-sm push-0">
                         <select id="order-by-select"  v-model="member.basicInfo.accountStatus" @change="statusChange(id, member.basicInfo.accountStatus)">
                           <option value = "1">Active</option>
@@ -595,10 +595,15 @@
                       </member-has-introduced>
                     </div>
 
+                    <div class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_INVITERS')">
+                      <member-invited-by :id="id">
+                      </member-invited-by>
+                    </div>
+
                   </div>
 
                   <div class="justify-content-center"
-                       v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY') || containsPermission('MS_MM_USER_VERIFICATION_APPROVE')">
+                       v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY') || containsPermission('MS_MM_USER_VERIFICATION_APPROVE') || containsPermission('MS_MM_USER_BASIC_DETAILS')">
                     <member-verify-and-approve :id="id" :member="member">
                     </member-verify-and-approve>
 
@@ -756,6 +761,8 @@
   import MemberBankCard from './MemberBankCardComponent.vue'
   import MemberVerificationChecklist from './MemberVerificationChecklistComponent.vue'
   import MemberSMSSend from './MemberSMSSendComponent.vue'
+  import MemberInvitedBy from './MemberInvitedByComponent.vue'
+
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -783,7 +790,8 @@
       'member-access-control': MemberAccessControl,
       'member-bank-card': MemberBankCard,
       'member-verification-checklist': MemberVerificationChecklist,
-      'member-sms-send': MemberSMSSend
+      'member-sms-send': MemberSMSSend,
+      'member-invited-by': MemberInvitedBy
     },
     data () {
       return {

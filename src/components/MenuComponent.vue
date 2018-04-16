@@ -139,7 +139,7 @@
       },
       goToUserProfile () {
         this.expandList = false
-        // route.push('/user/change-password')
+        route.push('/user/change-password')
       },
       goToMemberAcl () {
         this.expandList = false
