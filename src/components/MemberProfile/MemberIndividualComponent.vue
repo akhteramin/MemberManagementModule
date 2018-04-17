@@ -20,7 +20,7 @@
                   </div>
                   <div class="gr-8 padding-5 text-left">
                     <span class="margin-bottom-5">
-                      <span v-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'VERIFIED'">
+                      <!-- <span v-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'VERIFIED'">
                         <span class="label" style="color: teal">VERIFIED</span>
                       </span>
                       <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'IN_PROGRESS'">
@@ -32,7 +32,7 @@
                       <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'NOT_VERIFIED'">
                         <span class="label label-default">NOT VERIFIED</span>
                       </span>
-                      <span v-else>
+                      <span v-else> -->
                         <span v-if="member.basicInfo.verificationStatus === 'VERIFIED'">
                           <span class="label" style="background-color: teal">VERIFIED</span>
                         </span>
@@ -45,7 +45,7 @@
                         <span v-else-if="member.basicInfo.verificationStatus === 'NOT_VERIFIED'">
                           <span class="label label-default">NOT VERIFIED</span>
                         </span>
-                      </span>
+                      <!-- </span> -->
                     </span>
                     <br>
                     <span>
@@ -93,8 +93,8 @@
                 :class="{'btn-active-til': showLikelyNames}" @click="setTab('likelyNames')">Likely Names</button>
                 <button v-if="containsPermission('MS_MM_USER_GET_CONTACTS')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showFriends}" @click="setTab('friends')">Friends</button>
-                <button v-if="member.basicInfo && member.basicInfo.accountType==2" type="button" class="btn btn-default"
-                :class="{'btn-active-til': showOffer}" @click="setTab('offers')">Offers</button>
+                <!-- <button v-if="member.basicInfo && member.basicInfo.accountType==2" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showOffer}" @click="setTab('offers')">Offers</button> -->
                 <button v-if="containsPermission('MS_IPAY_ACL_CHANGE_SERVICE_ACCESS_LEVEL')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showAccessControl}" @click="setTab('accessControl')">Access Control</button>
                 <button v-if="containsPermission('MS_MM_USER_GET_MANUAL_VERIFICATION_CRITERIA')" type="button" class="btn btn-default"
@@ -285,7 +285,7 @@
                             Father Name:
                             </div>
                             <div class="gr-4 text-left">
-                              {{ member.basicInfo.father || 'N/A' }}
+                              {{ member.basicInfo.father || ':qN/A' }}
 
                             </div>
                             <div class="gr-2">
@@ -604,7 +604,7 @@
 
                   <div class="justify-content-center"
                        v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY') || containsPermission('MS_MM_USER_VERIFICATION_APPROVE') || containsPermission('MS_MM_USER_BASIC_DETAILS')">
-                    <member-verify-and-approve :id="id" :member="member">
+                    <member-verify-and-approve :id="id" :member="member" @update="init">
                     </member-verify-and-approve>
 
                   </div>

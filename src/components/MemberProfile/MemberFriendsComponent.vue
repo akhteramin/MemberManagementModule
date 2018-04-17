@@ -121,7 +121,7 @@
           <strong class="loadmore-color"> Show All </strong>
         </a>
       </div>
-      <div class="text-center" v-else>
+      <div class="text-center" v-else-if="totalCount > 0">
         <a class="padding-5" role="button" @click="init">
           <strong class="loadmore-color"> Show Less </strong>
         </a>
