@@ -1,16 +1,18 @@
 <template>
     <div>
+      
         <div class="btn-group">
             <button type="button" :class="[(infoValidationStatus == 'VALIDATED') ? 'active' : '','btn btn-primary']" @click="validateData('VALIDATED')">{{(infoValidationStatus == 'VALIDATED') ?"Validated":"Validate"}}</button>
             <button type="button" :class="[(infoValidationStatus == 'INVALIDATED') ? 'active' : '','btn btn-primary']" @click="validateData('INVALIDATED')">{{(infoValidationStatus == 'INVALIDATED') ?"Invalidated":"Invalidate"}}</button>
         </div>
+        <span v-if="infoValidationStatus=='NOT_VALIDATED'">(yet to be validated)</span>
         <div :id="'MemberInfoValidationModal_'+infoType" class="modal fade text-left" role="dialog">
                 <div class="modal-dialog  modal-md">
                 <!-- Modal content-->
 
                 <div class="modal-content">
                     <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"> Info Validation </h4>
                     </div>
                     <div class="modal-body">
@@ -30,7 +32,7 @@
                                               </span>
                                                   <div class="chat-body clearfix">
                                                       <div class="header">
-                                                          <strong class="primary-font">{{history.validationStatus}}</strong> by <strong class="primary-font">{{ history.adminLoginId }}  </strong> <small class="pull-right text-muted">
+                                                          <strong :class="[(history.validationStatus == 'VALIDATED') ? 'text-success' : 'text-danger','primary-font']">{{history.validationStatus}}</strong> by <strong class="primary-font">{{ history.adminLoginId }}  </strong> <small class="pull-right text-muted">
                                                               <span class="glyphicon glyphicon-time"></span>{{history.createdAt | date('MMM D, YYYY')}}</small>
                                                       </div>
                                                       <p>

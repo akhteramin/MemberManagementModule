@@ -76,7 +76,7 @@
                     <table class="table table-striped">
                         <thead class="thead-default">
                         <tr>
-                            <th class="text-center" colspan="4">Validation Status</th>
+                            <th class="text-center" colspan="4">Validation Score : {{memberValidationScore}}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -1035,7 +1035,8 @@
           "INTRODUCER":"9",
           "PROFILE_PICTURE":"10"
         },        
-        memberValidationDataFound: false
+        memberValidationDataFound: false,
+        memberValidationScore: 0
       }
     },
     created () {
@@ -1383,6 +1384,7 @@
           .then(({data}) => {
             console.log('Success, got validation history: ', data)
             let memberInfoValidation = data.infoValidationList
+            this.memberValidationScore=data.totalValidationScore
             for (let i = 0; i < memberInfoValidation.length; i++) {
                 this.memberInfoValidationData[memberInfoValidation[i].infoType] = memberInfoValidation[i].validationStatus
                 console.log("here it is")
