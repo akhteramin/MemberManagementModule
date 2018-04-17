@@ -20,7 +20,7 @@
                   </div>
                   <div class="gr-8 padding-5 text-left">
                     <span class="margin-bottom-5">
-                      <span v-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'VERIFIED'">
+                      <!-- <span v-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'VERIFIED'">
                         <span class="label" style="color: teal">VERIFIED</span>
                       </span>
                       <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'IN_PROGRESS'">
@@ -32,7 +32,7 @@
                       <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'NOT_VERIFIED'">
                         <span class="label label-default">NOT VERIFIED</span>
                       </span>
-                      <span v-else>
+                      <span v-else> -->
                         <span v-if="member.basicInfo.verificationStatus === 'VERIFIED'">
                           <span class="label" style="background-color: teal">VERIFIED</span>
                         </span>
@@ -45,7 +45,7 @@
                         <span v-else-if="member.basicInfo.verificationStatus === 'NOT_VERIFIED'">
                           <span class="label label-default">NOT VERIFIED</span>
                         </span>
-                      </span>
+                      <!-- </span> -->
                     </span>
                     <br>
                     <span>
@@ -285,7 +285,7 @@
                             Father Name:
                             </div>
                             <div class="gr-4 text-left">
-                              {{ member.basicInfo.father || 'N/A' }}
+                              {{ member.basicInfo.father || ':qN/A' }}
 
                             </div>
                             <div class="gr-2">
