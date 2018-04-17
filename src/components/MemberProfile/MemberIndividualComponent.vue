@@ -8,7 +8,7 @@
               <i class="fa fa-user" aria-hidden="true"></i> Member Information</h3>
             <div class="w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round">
               <div class="gr-12">
-                <div class="gr-5 margin-5">
+                <div class="gr-4">
                   <div class="gr-2 margin-5">
                     <img v-if="member.profilePictures && member.profilePictures[0]"
                                 :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
@@ -71,7 +71,121 @@
                     </div>
                   </div>
                 </div>
-                <div class="gr-6 push-1 margin-5 text-right">
+                <div class="gr-4">
+                  <div class="table-responsive ">
+                    <table class="table table-striped">
+                        <thead class="thead-default">
+                        <tr>
+                            <th class="text-center" colspan="4">Validation Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                              <td>
+                                Basic Info
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['1'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['1'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['1'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                              <td style="border-left: 1px solid black">
+                                Verified Bank
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['6'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['6'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['6'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                Parents Info
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['2'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['2'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['2'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                              <td style="border-left: 1px solid black">
+                                Verified Card
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['7'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['7'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['7'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                Present Address
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['3'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['3'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['3'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                              <td style="border-left: 1px solid black">
+                                Introduced Chain
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['8'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['8'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['8'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                Permanent Address
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['4'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['4'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['4'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                              <td style="border-left: 1px solid black">
+                                Introducer
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['9'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['9'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['9'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                Identification Documents
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['5'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['5'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['5'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                              <td style="border-left: 1px solid black">
+                                Profile Picture
+                              </td>
+                              <td  class="text-center">
+                                <span v-if="memberInfoValidationData['10'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['10'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
+                                <span v-if="memberInfoValidationData['10'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
+                                
+                              </td>
+                          </tr>
+                          
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="gr-4 text-right">
                   <p><b><h3>
                   <span v-if="balance">Current Balance: {{ balance.balance }} BDT </span>
                   <span v-else>Current Balance: N/A </span>
@@ -187,7 +301,16 @@
                           <div class="gr-2">
                             <label class="text-label"><b>Basic Information</b></label>
                           </div>
-                          <div class="gr-2 push-7" v-if="!editBasicProfileMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
+                          <div class="gr-4">
+                            <member-info-validation
+                              v-if="memberValidationDataFound"
+                              :id="id"
+                              :infoType="memberInfoType.BASIC_INFO"
+                              :infoValidationStatus="memberInfoValidationData['1']"
+                              @update="updateInfoValidation">
+                            </member-info-validation>
+                          </div>
+                          <div class="gr-2 push-3" v-if="!editBasicProfileMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
                               <button class="button-md-verify" @click="editBasicInfo()"><i class="fa fa-pencil-square-o"></i> Edit </button>
                           </div>
                         </div>
@@ -274,7 +397,18 @@
                             <div class="gr-2">
                                 <label class="text-label"><b>Family Information</b></label>
                               </div>
-                              <div class="gr-2 push-7"
+                              <div class="gr-4">
+                                
+                                  <member-info-validation
+                                    v-if="memberValidationDataFound"
+                                    :id="id"
+                                    :infoType="memberInfoType['PARENTS_INFO']"
+                                    :infoValidationStatus="memberInfoValidationData['2']"
+                                    @update="updateInfoValidation">
+                                  </member-info-validation>
+                              
+                              </div>
+                              <div class="gr-2 push-3"
                                   v-if="!editParentsMode && containsPermission('MS_MM_USER_UPDATE_BASIC_DETAILS')">
                                   <button class="button-md-verify" @click="editParents()">
                                     <i class="fa fa-pencil-square-o"></i> Edit </button>
@@ -396,7 +530,27 @@
 
               <div id="addresses" class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_BASIC_DETAILS')">
                 <div class="gr-12 panel-label">
-                  <label class="text-label"><b>Address</b></label>
+                  <div class="gr-2">
+                    <label class="text-label"><b>Address</b></label>
+                  </div>
+                  <div class="gr-3 text-right">
+                    <member-info-validation
+                      v-if="memberValidationDataFound"
+                      :id="id"
+                      :infoType="memberInfoType['PRESENT_ADDRESS']"
+                      :infoValidationStatus="memberInfoValidationData['3']"
+                      @update="updateInfoValidation">
+                    </member-info-validation>
+                  </div>
+                  <div class="gr-6 text-right">
+                    <member-info-validation
+                      v-if="memberValidationDataFound"
+                      :id="id"
+                      :infoType="memberInfoType['PERMANENT_ADDRESS']"
+                      :infoValidationStatus="memberInfoValidationData['4']"
+                      @update="updateInfoValidation">
+                    </member-info-validation>
+                  </div>
                 </div>
                 <!--<div class="gr-2 push-6" v-if="!editAddressMode">-->
                   <!--<button class="button-md-edit" @click="editAddress"><i class="fa fa-pencil-square-o"></i> Edit </button>-->
@@ -571,6 +725,7 @@
                   <div>
                     <div class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
                       <member-identification-document
+                        v-if="memberValidationDataFound"
                         :id="id" :accountType="accountType" :boom="2">
                       </member-identification-document>
                     </div>
@@ -713,6 +868,12 @@
 
     
 
+      
+      
+      
+      
+      
+      
       <div class="loaders loading" v-if="showLoader">
         <div class="loader">
           <div class="loader-inner ball-grid-pulse">
@@ -756,6 +917,7 @@
   import MemberBankCard from './MemberBankCardComponent.vue'
   import MemberVerificationChecklist from './MemberVerificationChecklistComponent.vue'
   import MemberSMSSend from './MemberSMSSendComponent.vue'
+  import MemberInfoValidation from './MemberInfoValidationComponent.vue'
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -783,7 +945,8 @@
       'member-access-control': MemberAccessControl,
       'member-bank-card': MemberBankCard,
       'member-verification-checklist': MemberVerificationChecklist,
-      'member-sms-send': MemberSMSSend
+      'member-sms-send': MemberSMSSend,
+      'member-info-validation':MemberInfoValidation
     },
     data () {
       return {
@@ -847,7 +1010,32 @@
         showLoader: false,
         memberMissingInfo: null,
         accountClassMapper: {},
-        classes: []
+        classes: [],
+        memberInfoValidationData: {
+          "1":"NOT_VALIDATED",
+          "2":"NOT_VALIDATED",
+          "3":"NOT_VALIDATED",
+          "4":"NOT_VALIDATED",
+          "5":"NOT_VALIDATED",
+          "6":"NOT_VALIDATED",
+          "7":"NOT_VALIDATED",
+          "8":"NOT_VALIDATED",
+          "9":"NOT_VALIDATED",
+          "10":"NOT_VALIDATED"
+        },
+        memberInfoType: {
+          "BASIC_INFO":"1",
+          "PARENTS_INFO":"2",
+          "PRESENT_ADDRESS":"3",
+          "PERMANENT_ADDRESS":"4",
+          "IDENTIFICATION_DOCS":"5",
+          "VERIFIED_BANK":"6",
+          "VERIFIED_CARD":"7",
+          "INTRODUCER_CHAIN":"8",
+          "INTRODUCER":"9",
+          "PROFILE_PICTURE":"10"
+        },        
+        memberValidationDataFound: false
       }
     },
     created () {
@@ -948,6 +1136,7 @@
                 }
               )
         }
+        this.infoValidationData()
       },
       imagePreview (url) {
         this.imagePreviewUrl = url
@@ -1187,7 +1376,44 @@
             console.log('Error account status change: ', error)
           }
         )
+      },
+      infoValidationData: function () {
+        console.log("validated info. ")
+        Http.GET('memberValidation', [this.id])
+          .then(({data}) => {
+            console.log('Success, got validation history: ', data)
+            let memberInfoValidation = data.infoValidationList
+            for (let i = 0; i < memberInfoValidation.length; i++) {
+                this.memberInfoValidationData[memberInfoValidation[i].infoType] = memberInfoValidation[i].validationStatus
+                console.log("here it is")
+                console.log(this.memberInfoValidationData[memberInfoValidation[i].infoType])
+            }
+            this.memberValidationDataFound = true
+            console.log("validation data:",this.memberInfoValidationData) 
+          }, error => {
+            this.memberValidationDataFound = true
+            console.error('Error in getting members: ', error)
+          }
+        )
+      },
+      updateInfoValidation (param = '') {
+        this.init()
       }
     }
   }
 </script>
+<style>
+.validation {
+  color: black !important;
+}
+.glyphicon-ok-circle {
+  color:green;
+}
+.glyphicon-ban-circle {
+  color:red;
+}
+.glyphicon-refresh {
+  color:blue;
+}
+
+</style>
