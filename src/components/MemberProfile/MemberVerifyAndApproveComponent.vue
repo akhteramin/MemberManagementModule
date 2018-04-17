@@ -523,6 +523,7 @@
               console.log('now, verification history: ', this.verificationHistory)
               this.verifier = verificationResponse
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
@@ -566,6 +567,7 @@
               console.log('now, verification history: ', this.verificationHistory)
               this.verifier = verificationResponse
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
@@ -609,6 +611,7 @@
               this.approver = approvalResponse.data
               console.log('now, approval history: ', this.verificationHistory)
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
@@ -643,6 +646,7 @@
               console.log('now, approval history: ', this.verificationHistory)
               this.approver = approvalResponse.data
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
@@ -676,6 +680,7 @@
               this.verificationHistory.unshift(revokeResponse.data)
               console.log('now, approval history: ', this.verificationHistory)
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
