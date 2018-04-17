@@ -849,7 +849,7 @@
         }
       },
       showBankDocumentsModal (bankDocuments) {
-        this.bankDocuments = bankDocuments
+        this.bankDocuments = bankDocuments.filter(x => x.verificationStatus !== 'BLOCKED')
         console.log('bank documents: ', this.bankDocuments)
         $('#BankDocumentModal').modal({backdrop: false})
       },
