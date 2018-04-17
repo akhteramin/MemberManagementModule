@@ -43,7 +43,12 @@
                      aria-hidden="true"></i>
                 </td>
                 <td class="text-center">
-                  {{ document.documentVerificationStatus ? document.documentVerificationStatus : 'N/A' }}
+                  <span class="margin-10" v-if="document.documentVerificationStatus === 'VERIFIED'">
+                    <i class="fa fa-check-circle-o banner-text fa-lg"></i>
+                  </span>
+                  <span class="margin-10" v-else-if="document.documentVerificationStatus === 'NOT_VERIFIED'">
+                    <i class="fa fa-times-circle-o fa-lg" style="color: red"></i>
+                  </span>
                 </td>
               </tr>
               </tbody>
