@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="gr-12 w3-header-card">
+    <div class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_VERIFICATION_VERIFY') || containsPermission('MS_MM_USER_VERIFICATION_APPROVE')">
       <div class="gr-12 panel-label">
             <label class="text-label"><b>Verification</b></label>
       </div>
@@ -351,7 +351,7 @@
       </div>
     </div>
 
-    <div class="gr-12 w3-header-card">
+    <div class="gr-12 w3-header-card" v-restrict="'MS_MM_USER_BASIC_DETAILS'">
         <div class="gr-12 panel-label">
           <label class="text-label"><b>Verification History</b></label>
         </div>
@@ -447,7 +447,12 @@
       console.log('verification information component created, verification status: ', this.verificationStatus)
     },
     methods: {
+      containsPermission (permission) {
+        return this.accessControlList.indexOf(permission) > -1
+      },
       init () {
+        this.accessControlList = localStorage.getItem('accessControlList')
+        this.accessControlList = this.accessControlList.split(',')
         if (this.member.verificationHistory && this.member.verificationHistory.length > 0) {
           this.verificationHistory = this.member.verificationHistory
         } else {
@@ -466,19 +471,19 @@
           // this.verificationType = null
         }
         console.log('verification status: ', this.verificationStatus)
-        Http.GET('resource', ['account-class'])
-          .then(
-            ({data: {data: classes}}) => {
-              this.classes = classes
-              console.log('successfully got account class list: ', classes)
-              this.classes.forEach(item => {
-                this.accountClassMapper[item.id] = item.name
-              })
-            },
-            error => {
-              console.log('error getting service list', error)
-            }
-          )
+        // Http.GET('resource', ['account-class'])
+        //   .then(
+        //     ({data: {data: classes}}) => {
+        //       this.classes = classes
+        //       console.log('successfully got account class list: ', classes)
+        //       this.classes.forEach(item => {
+        //         this.accountClassMapper[item.id] = item.name
+        //       })
+        //     },
+        //     error => {
+        //       console.log('error getting service list', error)
+        //     }
+        //   )
       },
       changeStatus (param) {
         $('#VerificationStatusChangeModal').modal('show')
@@ -518,6 +523,7 @@
               console.log('now, verification history: ', this.verificationHistory)
               this.verifier = verificationResponse
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
@@ -561,6 +567,7 @@
               console.log('now, verification history: ', this.verificationHistory)
               this.verifier = verificationResponse
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
@@ -604,6 +611,7 @@
               this.approver = approvalResponse.data
               console.log('now, approval history: ', this.verificationHistory)
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
@@ -638,6 +646,7 @@
               console.log('now, approval history: ', this.verificationHistory)
               this.approver = approvalResponse.data
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false
@@ -671,6 +680,7 @@
               this.verificationHistory.unshift(revokeResponse.data)
               console.log('now, approval history: ', this.verificationHistory)
               this.clearComment()
+              this.$emit('update', 'false')
             },
             error => {
               this.showLoader = false

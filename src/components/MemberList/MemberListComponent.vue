@@ -43,7 +43,12 @@
                      aria-hidden="true"></i>
                 </td>
                 <td class="text-center">
-                  {{ document.documentVerificationStatus ? document.documentVerificationStatus : 'N/A' }}
+                  <span class="margin-10" v-if="document.documentVerificationStatus === 'VERIFIED'">
+                    <i class="fa fa-check-circle-o banner-text fa-lg"></i>
+                  </span>
+                  <span class="margin-10" v-else-if="document.documentVerificationStatus === 'NOT_VERIFIED'">
+                    <i class="fa fa-times-circle-o fa-lg" style="color: red"></i>
+                  </span>
                 </td>
               </tr>
               </tbody>
@@ -366,8 +371,8 @@
               Verification
             </th>
             <th class="text-center">Profile Completed</th>
-            <th class="text-center"
-                v-if="listType === 'default'">Account Status</th>
+            <!-- <th class="text-center"
+                v-if="listType === 'default'">Account Status</th> -->
             <!--th v-else class="text-center">
               Action
               <input type="checkbox" @click="allMemberSelectAndDeselect"
@@ -511,7 +516,7 @@
             {{ member.verificationStatus | underscoreless }}
           </td>
           <td class="text-center">{{ member.profileCompletionScore }}%</td>
-          <td v-if="listType === 'default'">
+          <!-- <td v-if="listType === 'default'">
             <div class="select">
               <select id="order-by-select"  v-model="member.accountStatus" @change="statusChange( member.accountId,member.accountStatus)">
                 <option value = "1">Active</option>
@@ -519,7 +524,7 @@
               </select>
             </div>
 
-          </td>
+          </td> -->
           <!--td v-else class="text-center">
             <input type="checkbox" @change="verificationBoxClicked(member, index)"
               v-model="checkBoxTicked[index]"> <!-- member.uncheckVerificationActionBox -->
@@ -849,7 +854,7 @@
         }
       },
       showBankDocumentsModal (bankDocuments) {
-        this.bankDocuments = bankDocuments
+        this.bankDocuments = bankDocuments.filter(x => x.verificationStatus !== 'BLOCKED')
         console.log('bank documents: ', this.bankDocuments)
         $('#BankDocumentModal').modal({backdrop: false})
       },

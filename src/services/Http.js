@@ -226,7 +226,7 @@ const routes = {
   login: `${AUTH_URL}/login/`,
   permissions: `${AUTH_URL}/permissions/`,
   logout: `${AUTH_URL}/logout/`,
-  changePassword: `${AUTH_URL}/password/set/`,
+  changePassword: `${AUTH_URL}/password/change/`,
   resource: `${MM_ADMIN_URL}/ms/resource/`,
   // twofactor: `${API_URL}/configuration/2fa/`,
   member: `${MM_ADMIN_URL}/ms/member/`,

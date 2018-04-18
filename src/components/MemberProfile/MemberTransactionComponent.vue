@@ -132,13 +132,13 @@
             </div>
         </div>
 
-      <div class="card-footer text-muted" v-if="transactions.totalCount > 0">
+      <div class="card-footer text-muted" v-if="transactions.totalElements > 0">
               <div class="row">
                 <div class="gr-3">
                   <div class="margin-top-rem" v-if="transactions.list">
                     <small>Showing {{ parseInt(transactionQuery.pageNumber * transactionQuery.pageSize + 1)
                       }} to {{ parseInt(transactionQuery.pageNumber * transactionQuery.pageSize + transactions.list.length)
-                      }} out of {{ transactions.totalCount }}
+                      }} out of {{ transactions.totalElements }}
                     </small>
                   </div>
                 </div>
@@ -281,8 +281,7 @@
             let transactionHistory = transactions.list
             this.transactions.list = this.processForCurrencyFilter(transactionHistory)
             console.log('transaction history', this.transactions)
-            this.transactionTotalPages = Math.ceil(
-              this.transactions.totalCount / this.transactionQuery.pageSize)
+            this.transactionTotalPages = this.transactions.totalPages
           }, error => {
             this.showLoader = false
             console.error('Error in getting members: ', error)

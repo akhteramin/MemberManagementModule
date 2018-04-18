@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content" style="width:100%">
     <div class="gr-6 push-5">
         <h1>Change Password</h1>
     </div>
@@ -15,7 +15,7 @@
                   <label class="control-label">Login ID:</label>
                 </div>
                 <div class="col-md-6 text-left">
-                  <h4>jawad.iqbal@ipay.com.bd</h4>
+                  <h4>{{loginID}}</h4>
                 </div>
               </div>
             </div>
@@ -23,7 +23,18 @@
             <div class="row">
               <div class="form-group">
                 <div class="col-md-6 text-right">
-                  <label class="control-label">Password:</label>
+                  <label class="control-label">Old Password:</label>
+                </div>
+                <div class="col-md-4 text-left">
+                  <input type="password" v-model="oldPassword" required minlength="8"/>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="form-group">
+                <div class="col-md-6 text-right">
+                  <label class="control-label">New Password:</label>
                 </div>
                 <div class="col-md-4 text-left">
                   <input type="password" v-model="password" required minlength="8"/>
@@ -34,7 +45,7 @@
             <div class="row">
               <div class="form-group">
                 <div class="col-md-6 text-right">
-                  <label class="control-label">Retype Password:</label>
+                  <label class="control-label">Retype New Password:</label>
                 </div>
                 <div class="col-md-4 text-left">
                   <input type="password" v-model="rePassword" required minlength="8"/>
@@ -78,6 +89,7 @@
     name: 'UserPasswordChangeComponent',
     data () {
       return {
+        oldPassword: '',
         password: '',
         rePassword: '',
         loginID: '',
@@ -107,7 +119,8 @@
           this.showLoader = true
           const param = Object.assign({}, {
             loginID: this.loginID,
-            password: this.password,
+            old_password: this.oldPassword,
+            new_password: this.password,
             appID: 6
           })
           console.log(param)
@@ -125,6 +138,7 @@
                   type: 'success',
                   delay: 3000
                 })
+                localStorage.setItem('token', response.data.token)
               },
               error => {
                 this.showLoader = false
