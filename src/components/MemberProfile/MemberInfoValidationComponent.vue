@@ -2,8 +2,8 @@
     <div>
       
         <div class="btn-group">
-            <button type="button" :class="[(infoValidationStatus == 'VALIDATED') ? 'active' : '','btn btn-primary']" @click="validateData('VALIDATED')">{{(infoValidationStatus == 'VALIDATED') ?"Validated":"Validate"}}</button>
-            <button type="button" :class="[(infoValidationStatus == 'INVALIDATED') ? 'active' : '','btn btn-primary']" @click="validateData('INVALIDATED')">{{(infoValidationStatus == 'INVALIDATED') ?"Invalidated":"Invalidate"}}</button>
+            <button type="button" :class="[(infoValidationStatus == 'VALIDATED') ? 'active' : '','btn btn-xs btn-primary']" @click="validateData('VALIDATED')">{{(infoValidationStatus == 'VALIDATED') ?"Validated":"Validate"}}</button>
+            <button type="button" :class="[(infoValidationStatus == 'INVALIDATED') ? 'active' : '','btn btn-xs btn-primary']" @click="validateData('INVALIDATED')">{{(infoValidationStatus == 'INVALIDATED') ?"Invalidated":"Invalidate"}}</button>
         </div>
         <span v-if="infoValidationStatus=='NOT_VALIDATED'">(yet to be validated)</span>
         <div :id="'MemberInfoValidationModal_'+infoType" class="modal fade text-left" role="dialog">

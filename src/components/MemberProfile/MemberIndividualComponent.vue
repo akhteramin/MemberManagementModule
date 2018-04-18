@@ -72,7 +72,7 @@
                   </div>
                 </div>
                 <div class="gr-4">
-                  <div class="table-responsive ">
+                  <div v-if="containsPermission('MS_USER_GET_VALIDATION_INFORMATION')" class="table-responsive ">
                     <table class="table table-striped">
                         <thead class="thead-default">
                         <tr>
@@ -215,7 +215,9 @@
                 :class="{'btn-active-til': showVerificationChecklist}" @click="setTab('verificationChecklist')">Verification Checklist</button>
                 <button v-if="containsPermission('MS_MM_USER_SEND_SMS')" type="button" class="btn btn-default"
                 :class="{'btn-active-til': showMemberSMS}" @click="setTab('memberSms')">Message</button>
-              
+                <button v-if="member.basicInfo && member.basicInfo.accountType==2 && containsPermission('MS_MM_USER_GET_BUSINESS_LOCATION')" type="button" class="btn btn-default"
+                :class="{'btn-active-til': showIpayHere}" @click="setTab('ipayHere')">iPay Here</button>
+
               </div>
             </div>
             
@@ -224,6 +226,14 @@
                     <div class="row">
 
                       <div class="gr-2 text-center margin-top-10">
+                        <member-info-validation
+                          style="width:125px;height:10px;"
+                          v-if="memberValidationDataFound && containsPermission('MS_USER_VALIDATE_INFORMATION')"
+                          :id="id"
+                          :infoType="memberInfoType.PROFILE_PICTURE"
+                          :infoValidationStatus="memberInfoValidationData['10']"
+                          @update="updateInfoValidation">
+                        </member-info-validation>
                         <img v-if="member.profilePictures && member.profilePictures[0]" @click="imagePreview(imageBaseUrl+member.profilePictures[0].url)"
                               :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
                               class="img-rounded img-responsive" width="250" height="250"
@@ -303,7 +313,7 @@
                           </div>
                           <div class="gr-4">
                             <member-info-validation
-                              v-if="memberValidationDataFound"
+                              v-if="memberValidationDataFound && containsPermission('MS_USER_VALIDATE_INFORMATION')"
                               :id="id"
                               :infoType="memberInfoType.BASIC_INFO"
                               :infoValidationStatus="memberInfoValidationData['1']"
@@ -400,7 +410,7 @@
                               <div class="gr-4">
                                 
                                   <member-info-validation
-                                    v-if="memberValidationDataFound"
+                                    v-if="memberValidationDataFound && containsPermission('MS_USER_VALIDATE_INFORMATION')"
                                     :id="id"
                                     :infoType="memberInfoType['PARENTS_INFO']"
                                     :infoValidationStatus="memberInfoValidationData['2']"
@@ -535,7 +545,7 @@
                   </div>
                   <div class="gr-3 text-right">
                     <member-info-validation
-                      v-if="memberValidationDataFound"
+                      v-if="memberValidationDataFound && containsPermission('MS_USER_VALIDATE_INFORMATION')"
                       :id="id"
                       :infoType="memberInfoType['PRESENT_ADDRESS']"
                       :infoValidationStatus="memberInfoValidationData['3']"
@@ -544,7 +554,7 @@
                   </div>
                   <div class="gr-6 text-right">
                     <member-info-validation
-                      v-if="memberValidationDataFound"
+                      v-if="memberValidationDataFound && containsPermission('MS_USER_VALIDATE_INFORMATION')"
                       :id="id"
                       :infoType="memberInfoType['PERMANENT_ADDRESS']"
                       :infoValidationStatus="memberInfoValidationData['4']"
@@ -771,6 +781,18 @@
             <member-friends v-if="showFriends" :mobileNumber="member.basicInfo.mobileNumber"></member-friends>
             <member-verification-checklist v-if="showVerificationChecklist" :id="id"></member-verification-checklist>
             <member-sms-send v-if="showMemberSMS" :id="id"></member-sms-send>
+            <member-ipay-here v-if="showIpayHere" 
+            :businessAddress="memberPermanentAddress" 
+            :personalAddress="memberPresentAddress" 
+            :thanaNamePresent= "thanaNamePresent"
+            :districtNamePresent= "districtNamePresent"
+            :countryNamePresent= "countryNamePresent"
+            :thanaNameBusiness= "thanaNamePermanent"
+            :districtNameBusiness= "districtNamePermanent"
+            :countryNameBusiness= "countryNamePermanent"
+            :id="id"></member-ipay-here>
+
+            
             
         </div>
       </div>
@@ -865,14 +887,6 @@
               </div>
             </div>
         </div>
-
-    
-
-      
-      
-      
-      
-      
       
       <div class="loaders loading" v-if="showLoader">
         <div class="loader">
@@ -918,6 +932,7 @@
   import MemberVerificationChecklist from './MemberVerificationChecklistComponent.vue'
   import MemberSMSSend from './MemberSMSSendComponent.vue'
   import MemberInfoValidation from './MemberInfoValidationComponent.vue'
+  import MemberIpayHere from './MemberIpayHereComponent.vue'
   export default {
     name: 'MemberIndividualComponent',
     props: [
@@ -946,7 +961,8 @@
       'member-bank-card': MemberBankCard,
       'member-verification-checklist': MemberVerificationChecklist,
       'member-sms-send': MemberSMSSend,
-      'member-info-validation':MemberInfoValidation
+      'member-info-validation':MemberInfoValidation,
+      'member-ipay-here': MemberIpayHere
     },
     data () {
       return {
@@ -971,6 +987,7 @@
         showOffer: false,
         showVerificationChecklist: false,
         showMemberSMS: false,
+        showIpayHere: false,
         occupationName: null,
         businessType: null,
         editBasicProfileMode: false,
@@ -1234,6 +1251,7 @@
         this.showAccessControl = false
         this.showVerificationChecklist = false
         this.showMemberSMS = false
+        this.showIpayHere = false
         if (tabName === 'basicDetails') {
           this.showBasicDetails = true
         } else if (tabName === 'activities') {
@@ -1256,7 +1274,9 @@
           this.showVerificationChecklist = true
         } else if (tabName === 'memberSms') {
           this.showMemberSMS = true
-        }
+        } else if (tabName === 'ipayHere') {
+          this.showIpayHere = true
+        } 
       },
       getStaticNames () {
         Http.GET('resource', ['account-class'])
@@ -1379,24 +1399,27 @@
         )
       },
       infoValidationData: function () {
-        console.log("validated info. ")
-        Http.GET('memberValidation', [this.id])
-          .then(({data}) => {
-            console.log('Success, got validation history: ', data)
-            let memberInfoValidation = data.infoValidationList
-            this.memberValidationScore=data.totalValidationScore
-            for (let i = 0; i < memberInfoValidation.length; i++) {
-                this.memberInfoValidationData[memberInfoValidation[i].infoType] = memberInfoValidation[i].validationStatus
-                console.log("here it is")
-                console.log(this.memberInfoValidationData[memberInfoValidation[i].infoType])
+        if(this.containsPermission('MS_USER_GET_VALIDATION_INFORMATION'))
+        {
+          console.log("validated info. ")
+          Http.GET('memberValidation', [this.id])
+            .then(({data}) => {
+              console.log('Success, got validation history: ', data)
+              let memberInfoValidation = data.infoValidationList
+              this.memberValidationScore=data.totalValidationScore
+              for (let i = 0; i < memberInfoValidation.length; i++) {
+                  this.memberInfoValidationData[memberInfoValidation[i].infoType] = memberInfoValidation[i].validationStatus
+                  console.log("here it is")
+                  console.log(this.memberInfoValidationData[memberInfoValidation[i].infoType])
+              }
+              this.memberValidationDataFound = true
+              console.log("validation data:",this.memberInfoValidationData) 
+            }, error => {
+              this.memberValidationDataFound = true
+              console.error('Error in getting members: ', error)
             }
-            this.memberValidationDataFound = true
-            console.log("validation data:",this.memberInfoValidationData) 
-          }, error => {
-            this.memberValidationDataFound = true
-            console.error('Error in getting members: ', error)
-          }
-        )
+          )
+        }
       },
       updateInfoValidation (param = '') {
         this.init()

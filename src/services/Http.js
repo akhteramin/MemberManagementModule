@@ -240,7 +240,8 @@ const routes = {
   memberAclUpdate: `${MM_ADMIN_URL}/acl/users/`,
   memberAclGet: `${MM_ADMIN_URL}/acl/`,
   memberVerificationMetrics: `${MM_ADMIN_URL}/ms/metrics/`,
-  memberValidation: `${MM_ADMIN_URL}/validate/`
+  memberValidation: `${MM_ADMIN_URL}/validate/`,
+  memberLocation: `${MM_ADMIN_URL}/admin/internal/location/`
 }
 
 const encodeQueryData = (data) => {
