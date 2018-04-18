@@ -10,6 +10,7 @@ import Restrict from './directives/restrict'
 import VueHighcharts from 'vue-highcharts';
 import Highcharts from 'highcharts';
 import loadDrillDown from 'highcharts/modules/drilldown';
+import * as VueGoogleMaps from "vue2-google-maps";
 
 loadDrillDown(Highcharts)
 require('./assets/css/login.css')
@@ -18,6 +19,14 @@ Vue.component('vueSlider', vueSlider)
 Vue.use(VueHighcharts);
 Vue.use(VueCookies)
 Vue.use(VueHighcharts, { Highcharts })
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyAVq0yIOlQ6PB1K39C0xzgZG76qmKFqoOo",
+    libraries: "places", // necessary for places input
+    types: ['(cities)'],
+    componentRestrictions: {country: "bd"}
+  }
+})
 Vue.directive('restrict', Restrict)
 
 Vue.filter('date', (value, formatStr = 'MMM D, YYYY - h:mm A') => moment(value).format(formatStr))

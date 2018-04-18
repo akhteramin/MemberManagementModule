@@ -16,6 +16,7 @@
   import WaitingForApprovalList from './components/MemberList/WaitingForApprovalListComponent.vue'
   import WaitingForVerificationList from './components/MemberList/WaitingForVerificationListComponent.vue'
   import MemberAclGroup from './components/ACL/MemberAclGroupComponent.vue'
+  
   export default {
     name: 'app',
     data () {
