@@ -20,19 +20,6 @@
                   </div>
                   <div class="gr-8 padding-5 text-left">
                     <span class="margin-bottom-5">
-                      <!-- <span v-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'VERIFIED'">
-                        <span class="label" style="color: teal">VERIFIED</span>
-                      </span>
-                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'IN_PROGRESS'">
-                        <span class="label label-warning">IN PROGRESS</span>
-                      </span>
-                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'REJECTED'">
-                        <span class="label label-danger">REJECTED</span>
-                      </span>
-                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'NOT_VERIFIED'">
-                        <span class="label label-default">NOT VERIFIED</span>
-                      </span>
-                      <span v-else> -->
                         <span v-if="member.basicInfo.verificationStatus === 'VERIFIED'">
                           <span class="label" style="background-color: teal">VERIFIED</span>
                         </span>
@@ -81,19 +68,19 @@
                         </thead>
                         <tbody>
                           <tr>
-                              <td>
+                              <td class="validation" @click="goToDiv('BASIC_INFO')">
                                 Basic Info
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['1'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['1'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['1'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
                                 
                               </td>
-                              <td style="border-left: 1px solid black">
+                              <td class="validation" @click="goToDiv('VERIFIED_BANK')" style="border-left: 1px solid black">
                                 Verified Bank
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['6'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['6'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['6'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
@@ -101,19 +88,19 @@
                               </td>
                           </tr>
                           <tr>
-                              <td>
+                              <td class="validation" @click="goToDiv('PARENTS_INFO')">
                                 Parents Info
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['2'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['2'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['2'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
                                 
                               </td>
-                              <td style="border-left: 1px solid black">
+                              <td class="validation" style="border-left: 1px solid black" @click="goToDiv('VERIFIED_CARD')">
                                 Verified Card
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['7'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['7'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['7'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
@@ -121,19 +108,19 @@
                               </td>
                           </tr>
                           <tr>
-                              <td>
+                              <td class="validation" @click="goToDiv('PRESENT_ADDRESS')">
                                 Present Address
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['3'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['3'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['3'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
                                 
                               </td>
-                              <td style="border-left: 1px solid black">
+                              <td class="validation" style="border-left: 1px solid black" @click="goToDiv('INTRODUCER')">
                                 Introduced Chain
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['8'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['8'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['8'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
@@ -141,19 +128,19 @@
                               </td>
                           </tr>
                           <tr>
-                              <td>
+                              <td class="validation" @click="goToDiv('PERMANENT_ADDRESS')">
                                 Permanent Address
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['4'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['4'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['4'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
                                 
                               </td>
-                              <td style="border-left: 1px solid black">
+                              <td class="validation" style="border-left: 1px solid black" @click="goToDiv('INTRODUCER')">
                                 Introducer
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['9'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['9'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['9'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
@@ -161,19 +148,19 @@
                               </td>
                           </tr>
                           <tr>
-                              <td>
+                              <td class="validation" @click="goToDiv('IDENTIFICATION_DOCS')">
                                 Identification Documents
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['5'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['5'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['5'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
                                 
                               </td>
-                              <td style="border-left: 1px solid black">
+                              <td class="validation" style="border-left: 1px solid black" @click="goToDiv('PROFILE_PICTURE')">
                                 Profile Picture
                               </td>
-                              <td  class="text-center">
+                              <td  class="text-left">
                                 <span v-if="memberInfoValidationData['10'] == 'VALIDATED'"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['10'] == 'INVALIDATED'"><i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i></span>
                                 <span v-if="memberInfoValidationData['10'] == 'NOT_VALIDATED'"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i></span>
@@ -222,7 +209,7 @@
             </div>
             
             <div v-if="showBasicDetails">
-              <div class="w3-header-card" v-if="member.basicInfo">
+              <div id="PROFILE_PICTURE" class="w3-header-card" v-if="member.basicInfo">
                     <div class="row">
 
                       <div class="gr-2 text-center margin-top-10">
@@ -232,6 +219,7 @@
                           :id="id"
                           :infoType="memberInfoType.PROFILE_PICTURE"
                           :infoValidationStatus="memberInfoValidationData['10']"
+                          :adminValidationData="adminInfoValidation['10']"
                           @update="updateInfoValidation">
                         </member-info-validation>
                         <img v-if="member.profilePictures && member.profilePictures[0]" @click="imagePreview(imageBaseUrl+member.profilePictures[0].url)"
@@ -305,7 +293,7 @@
                         
                       </div>
 
-                      <div class="gr-10 text-left">
+                      <div id="BASIC_INFO" class="gr-10 text-left">
                         
                         <div class="gr-12 panel-label margin-5">
                           <div class="gr-2">
@@ -317,6 +305,7 @@
                               :id="id"
                               :infoType="memberInfoType.BASIC_INFO"
                               :infoValidationStatus="memberInfoValidationData['1']"
+                              :adminValidationData="adminInfoValidation['1']"
                               @update="updateInfoValidation">
                             </member-info-validation>
                           </div>
@@ -402,7 +391,7 @@
                         </div>
 
                         <!--<hr>-->
-                        <div v-if="member.basicInfo.accountType===1">
+                        <div id="PARENTS_INFO" v-if="member.basicInfo.accountType===1">
                           <div class="gr-12 panel-label margin-5">
                             <div class="gr-2">
                                 <label class="text-label"><b>Family Information</b></label>
@@ -414,6 +403,7 @@
                                     :id="id"
                                     :infoType="memberInfoType['PARENTS_INFO']"
                                     :infoValidationStatus="memberInfoValidationData['2']"
+                                    :adminValidationData="adminInfoValidation['2']"
                                     @update="updateInfoValidation">
                                   </member-info-validation>
                               
@@ -543,21 +533,23 @@
                   <div class="gr-2">
                     <label class="text-label"><b>Address</b></label>
                   </div>
-                  <div class="gr-3 text-right">
+                  <div id="PRESENT_ADDRESS" class="gr-3 text-right">
                     <member-info-validation
                       v-if="memberValidationDataFound && containsPermission('MS_USER_VALIDATE_INFORMATION')"
                       :id="id"
                       :infoType="memberInfoType['PRESENT_ADDRESS']"
                       :infoValidationStatus="memberInfoValidationData['3']"
+                      :adminValidationData="adminInfoValidation['3']"
                       @update="updateInfoValidation">
                     </member-info-validation>
                   </div>
-                  <div class="gr-6 text-right">
+                  <div id="PERMANENT_ADDRESS" class="gr-6 text-right">
                     <member-info-validation
                       v-if="memberValidationDataFound && containsPermission('MS_USER_VALIDATE_INFORMATION')"
                       :id="id"
                       :infoType="memberInfoType['PERMANENT_ADDRESS']"
                       :infoValidationStatus="memberInfoValidationData['4']"
+                      :adminValidationData="adminInfoValidation['4']"
                       @update="updateInfoValidation">
                     </member-info-validation>
                   </div>
@@ -733,25 +725,25 @@
               <div>
                 <div class="verification">
                   <div>
-                    <div class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
+                    <div id="IDENTIFICATION_DOCS" class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
                       <member-identification-document
                         v-if="memberValidationDataFound"
                         :id="id" :accountType="accountType" :boom="2">
                       </member-identification-document>
                     </div>
 
-                    <div class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_BANK_LIST')">
+                    <div id="VERIFIED_BANK" class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_BANK_LIST')">
                       <member-bank-account :id="id">
                       </member-bank-account>
                     </div>
 
-                    <div class="gr-12 w3-header-card">
+                    <div id="VERIFIED_CARD" class="gr-12 w3-header-card">
                       <member-bank-card :id="id">
                       </member-bank-card>
                     </div>
 
 
-                    <div class="gr-12 justify-content-center w3-header-card"
+                    <div id="INTRODUCER" class="gr-12 justify-content-center w3-header-card"
                          v-if="containsPermission('MS_MM_USER_GET_INTRODUCER_LIST')">
                       <member-introduced-by :id="id">
                       </member-introduced-by>
@@ -1047,6 +1039,18 @@
           "8":"NOT_VALIDATED",
           "9":"NOT_VALIDATED",
           "10":"NOT_VALIDATED"
+        },
+        adminInfoValidation: {
+          "1":"",
+          "2":"",
+          "3":"",
+          "4":"",
+          "5":"",
+          "6":"",
+          "7":"",
+          "8":"",
+          "9":"",
+          "10":""
         },
         memberInfoType: {
           "BASIC_INFO":"1",
@@ -1417,6 +1421,7 @@
               this.memberValidationScore=data.totalValidationScore
               for (let i = 0; i < memberInfoValidation.length; i++) {
                   this.memberInfoValidationData[memberInfoValidation[i].infoType] = memberInfoValidation[i].validationStatus
+                  this.adminInfoValidation[memberInfoValidation[i].infoType] = memberInfoValidation[i].adminLoginId
                   console.log("here it is")
                   console.log(this.memberInfoValidationData[memberInfoValidation[i].infoType])
               }
@@ -1428,6 +1433,11 @@
             }
           )
         }
+      },
+      goToDiv (divID='') {
+        $('html,body').animate({
+          scrollTop: $("#"+divID).offset().top},
+        'slow');
       },
       updateInfoValidation (param = '') {
         this.init()
@@ -1448,5 +1458,7 @@
 .glyphicon-refresh {
   color:blue;
 }
-
+.validation {
+  cursor: pointer;
+}
 </style>
