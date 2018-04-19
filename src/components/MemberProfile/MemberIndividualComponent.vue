@@ -20,19 +20,6 @@
                   </div>
                   <div class="gr-8 padding-5 text-left">
                     <span class="margin-bottom-5">
-                      <!-- <span v-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'VERIFIED'">
-                        <span class="label" style="color: teal">VERIFIED</span>
-                      </span>
-                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'IN_PROGRESS'">
-                        <span class="label label-warning">IN PROGRESS</span>
-                      </span>
-                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'REJECTED'">
-                        <span class="label label-danger">REJECTED</span>
-                      </span>
-                      <span v-else-if="member.verificationHistory && member.verificationHistory.length > 0 && member.verificationHistory[0].verificationStatus === 'NOT_VERIFIED'">
-                        <span class="label label-default">NOT VERIFIED</span>
-                      </span>
-                      <span v-else> -->
                         <span v-if="member.basicInfo.verificationStatus === 'VERIFIED'">
                           <span class="label" style="background-color: teal">VERIFIED</span>
                         </span>
@@ -232,6 +219,7 @@
                           :id="id"
                           :infoType="memberInfoType.PROFILE_PICTURE"
                           :infoValidationStatus="memberInfoValidationData['10']"
+                          :adminValidationData="adminInfoValidation['10']"
                           @update="updateInfoValidation">
                         </member-info-validation>
                         <img v-if="member.profilePictures && member.profilePictures[0]" @click="imagePreview(imageBaseUrl+member.profilePictures[0].url)"
@@ -317,6 +305,7 @@
                               :id="id"
                               :infoType="memberInfoType.BASIC_INFO"
                               :infoValidationStatus="memberInfoValidationData['1']"
+                              :adminValidationData="adminInfoValidation['1']"
                               @update="updateInfoValidation">
                             </member-info-validation>
                           </div>
@@ -414,6 +403,7 @@
                                     :id="id"
                                     :infoType="memberInfoType['PARENTS_INFO']"
                                     :infoValidationStatus="memberInfoValidationData['2']"
+                                    :adminValidationData="adminInfoValidation['2']"
                                     @update="updateInfoValidation">
                                   </member-info-validation>
                               
@@ -549,6 +539,7 @@
                       :id="id"
                       :infoType="memberInfoType['PRESENT_ADDRESS']"
                       :infoValidationStatus="memberInfoValidationData['3']"
+                      :adminValidationData="adminInfoValidation['3']"
                       @update="updateInfoValidation">
                     </member-info-validation>
                   </div>
@@ -558,6 +549,7 @@
                       :id="id"
                       :infoType="memberInfoType['PERMANENT_ADDRESS']"
                       :infoValidationStatus="memberInfoValidationData['4']"
+                      :adminValidationData="adminInfoValidation['4']"
                       @update="updateInfoValidation">
                     </member-info-validation>
                   </div>
@@ -1048,6 +1040,18 @@
           "9":"NOT_VALIDATED",
           "10":"NOT_VALIDATED"
         },
+        adminInfoValidation: {
+          "1":"",
+          "2":"",
+          "3":"",
+          "4":"",
+          "5":"",
+          "6":"",
+          "7":"",
+          "8":"",
+          "9":"",
+          "10":""
+        },
         memberInfoType: {
           "BASIC_INFO":"1",
           "PARENTS_INFO":"2",
@@ -1417,6 +1421,7 @@
               this.memberValidationScore=data.totalValidationScore
               for (let i = 0; i < memberInfoValidation.length; i++) {
                   this.memberInfoValidationData[memberInfoValidation[i].infoType] = memberInfoValidation[i].validationStatus
+                  this.adminInfoValidation[memberInfoValidation[i].infoType] = memberInfoValidation[i].adminLoginId
                   console.log("here it is")
                   console.log(this.memberInfoValidationData[memberInfoValidation[i].infoType])
               }

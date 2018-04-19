@@ -6,6 +6,9 @@
             <button type="button" :class="[(infoValidationStatus == 'INVALIDATED') ? 'active' : '','btn btn-xs btn-primary']" @click="validateData('INVALIDATED')">{{(infoValidationStatus == 'INVALIDATED') ?"Invalidated":"Invalidate"}}</button>
         </div>
         <span v-if="infoValidationStatus=='NOT_VALIDATED'">(yet to be validated)</span>
+        <span v-else><small>{{infoValidationStatus}} By <b>{{adminValidationData}}</b></small></span>
+        
+        
         <div :id="'MemberInfoValidationModal_'+infoType" class="modal fade text-left" role="dialog">
                 <div class="modal-dialog  modal-md">
                 <!-- Modal content-->
@@ -82,7 +85,8 @@ export default {
   props: [
     'id',
     'infoType',
-    'infoValidationStatus'
+    'infoValidationStatus',
+    'adminValidationData'
   ],
   data () {
     return {
