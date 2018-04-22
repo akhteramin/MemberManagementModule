@@ -35,8 +35,8 @@
                 <td>
                   <table>
                   <tbody>
-                  <tr v-for="page in item.documentPages">
-                    <td>
+                  <tr>
+                    <td v-for="page in item.documentPages">
                       <button data-toggle="modal" data-target="#DocumentPreviewModal" data-backdrop="false" @click="setPreviewDocument(page)">
                         <img default-src="/static/images/default-document-icon.png"
                         v-if="!isPdf(page.url)"
