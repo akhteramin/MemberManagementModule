@@ -35,8 +35,8 @@
                 <td>
                   <table>
                   <tbody>
-                  <tr v-for="page in item.documentPages">
-                    <td>
+                  <tr>
+                    <td v-for="page in item.documentPages">
                       <button data-toggle="modal" data-target="#DocumentPreviewModal" data-backdrop="false" @click="setPreviewDocument(page)">
                         <img default-src="/static/images/default-document-icon.png"
                         v-if="!isPdf(page.url)"
@@ -86,7 +86,7 @@
 
                 </td>
                 <td>
-                  <button :disabled="!containsPermission('MS_MM_USER_GET_SPECIFIC_DOCUMENTS')" data-toggle="modal" data-target="#DocumentHistoryModal" data-backdrop="false" @click= "setDocumentHistory(item)"
+                  <button :disabled="!containsPermission('MS_MM_USER_GET_SPECIFIC_DOCUMENTS')" data-toggle="modal" data-target="#DocumentHistoryModal" data-backdrop="false" @click="setDocumentHistory(item)"
                      class="button-md-verify width-100">View History</button>
                 </td>
 
@@ -219,11 +219,11 @@
                     <div class="row">
                       <div class="row">
                         <div class="col-md-3">
-                          <label class="control-label">History:</label>
+                          <label class="control-label">History</label>
                         </div>
                       </div>
-                      <div class="gr-12 margin-top-10 pre-scrollable" v-if="documentDetails.histories">
-                        <div class="gr-12 comment" v-for="history in documentDetails.histories">
+                      <div class="gr-12 margin-top-10 pre-scrollable" v-if="documentHistory && documentHistory.length > 0">
+                        <div class="gr-12 comment" v-for="history in documentHistory">
                           <ul class="chat">
                             <li class="left clearfix"><span class="chat-img pull-left">
                               </span>
@@ -240,6 +240,9 @@
                           </ul>
                         </div>
                       </div>
+                      <div class="gr-10 margin-10" v-else>
+                        N/A
+                      </div>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -251,14 +254,14 @@
 
           </div>
 
-            <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC') && documentTypes.filter(x=>x.found === 'Not Found').length">
+            <div class="gr-4 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC') && documentTypes.filter(x=>x.found === 'Not Found').length">
               <div class="form-group">
                 <br>
                 <label>Upload Missing Documents </label>
                 <div class="select">
                   <select id="personal-business-select" v-model="docType" @change="showDocumentUpload()">
                     <!--<option selected disabled>Select account type</option>-->
-                    <option selected value = "">Select Document Type</option>
+                    <option selected :value="''">Select Document Type</option>
                     <option v-for="documentType in documentTypes" :value="documentType.type"
                             v-if="documentType.found == 'Not Found'">{{ documentType.type }}</option>
                   </select>
@@ -266,23 +269,34 @@
               </div>
             </div>
 
-            <div class="gr-10 push-2" v-if="showDocumentUploadData && containsPermission('MS_MM_USER_ADD_DOC')">
-              <div class="gr-4">
-                <div class="form-group">
-                  <label> Document ID: </label>
-                  <input  name="queryName" type="text" id="queryName" placeholder="ID" v-model="documentID"
-                          value=""/>
+            <div class="gr-12" v-if="showDocumentUploadData && containsPermission('MS_MM_USER_ADD_DOC')">
+              <div class="row">
+                <div class="gr-4 push-4">
+                  <div class="form-group">
+                    <label> Document ID </label>
+                    <input  name="queryName" type="text" id="queryName" placeholder="ID" v-model="documentID"
+                            value=""/>
+                  </div>
                 </div>
               </div>
 
-              <div class="gr-4">
-                <div class="form-group">
-                  <label> Document: </label>
-                    <input id="uploadBtn3" type="file" class="btn btn-default" @change="onDocumentChange"/>
+              <div class="row">
+                <div class="gr-4 push-4">
+                  <div class="form-group">
+                    <label> Document Pages </label>
+                    <div class="row" v-if="memberDocument.length > 0">
+                      <ul>
+                        <li v-for="item in memberDocument">
+                          {{ item.name }}
+                        </li>
+                      </ul>
+                    </div>
+                    <input id="uploadBtn3" multiple type="file" class="btn btn-default" @change="onDocumentChange"/>
+                  </div>
                 </div>
               </div>
 
-              <div class="gr-12 push-3">
+              <div class="gr-4 push-4">
                 <div class="form-group">
                   <button type="submit" class="button-search" @click="submitDocument()">
                     Submit
@@ -341,13 +355,13 @@
         documentTypes: {},
         showDocumentUploadData: false,
         docType: '',
-        memberDocument: {},
+        memberDocument: [],
         documentID: '',
         showLoader: false,
         accessControlList: [],
         document: {},
         documentForHistory: {},
-        documentDetails: {}
+        documentHistory: {}
       }
     },
     methods: {
@@ -359,6 +373,7 @@
           ' account type: ', this.accountType)
         this.showDocumentUploadData = false
         this.documentBaseUrl = Http.IMAGE_URL
+        this.docType = ''
         if (this.accountType == 1) {
           this.documentTypes = GLOBAL_VARS.DOCUMENT_TYPE
         } else {
@@ -400,6 +415,7 @@
       },
       showDocumentUpload () {
 //        console.log('doc typ:', this.docType)
+        this.memberDocument = []
         if (!this.showDocumentUploadData && this.docType) {
           this.showDocumentUploadData = true
         } else {
@@ -412,8 +428,8 @@
         this.paramData = {
           documentIdNumber: document.documentIdNumber,
           documentType: document.documentType,
-          documentVerificationStatus: 'VERIFIED',
-          documentID: document.id
+          documentVerificationStatus: 'VERIFIED'
+          // documentID: document.id
         }
       },
       setDocumentUnverify (document) {
@@ -421,14 +437,14 @@
         this.paramData = {
           documentIdNumber: document.documentIdNumber,
           documentType: document.documentType,
-          documentVerificationStatus: 'NOT_VERIFIED',
-          documentID: document.id
+          documentVerificationStatus: 'NOT_VERIFIED'
+          // documentID: document.id
         }
       },
       setDocumentHistory (document) {
         this.documentForHistory = document
         console.log(document)
-        this.getDocumentDetails(document.id)
+        this.getDocumentHistory(document.documentType)
       },
       setPreviewDocument (document) {
         this.document = document
@@ -437,7 +453,7 @@
       verifyDocument () {
 //        console.log('param data ::', this.paramData)
         this.showLoader = true
-        Http.PUT('verification', this.paramData, [this.id, 'document', this.paramData.documentID])
+        Http.PUT('verification', this.paramData, [this.id, 'document'])
         .then(
           ({data: documentData}) => {
 //            console.log('document data::', documentData)
@@ -467,42 +483,51 @@
           })
       },
       onDocumentChange (e) {
-//        console.log('document::', this.document)
+        this.memberDocument = []
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {
           return
         }
-        this.memberDocument = files[0]
+        this.url = new Image()
+        var reader = new FileReader()
+        reader.onload = (e) => {
+          this.url = e.target.result
+        }
+        for (var i = files.length - 1; i >= 0; i--) {
+          this.memberDocument.push(files[i])
+        }
       },
       submitDocument () {
 //        console.log(this.memberDocument)
 //        console.log(this.documentID)
 //        console.log(this.docType)
+        console.log(this.memberDocument)
         var fd = new FormData()
-        fd.append('file', this.memberDocument)
+        // fd.append('file', this.memberDocument)
+        for (var i = 0; i < this.memberDocument.length; i++) {
+          fd.append('file', this.memberDocument[i])
+        }
         fd.append('documentIdNumber', this.documentID)
         fd.append('documentType', this.docType)
-//        console.log('document type::', this.docType)
+        console.log('document type::', this.docType)
         this.showLoader = true
-        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc'])
+        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc', 'v2'])
           .then(
-            () => {
-//              console.log('document data: ', documentData)
-              this.showLoader = false
+            ({data: documentdata}) => {
               $.notify({
                 // options
                 title: '<strong>Success!</strong>',
-                message: 'Document uploaded successfully'
+                message: 'Document Uploaded successfully'
               }, {
                 // settings
                 type: 'success',
                 delay: 3000
               })
+              this.showLoader = false
+              console.log('document data: ', documentdata)
               this.editIdentificationDocument()
-              this.init()
             },
             error => {
-              this.showLoader = false
               $.notify({
                 // options
                 title: '<strong>Failure!</strong>',
@@ -512,13 +537,16 @@
                 type: 'danger',
                 delay: 3000
               })
-            })
+              this.showLoader = false
+              console.log('Error in address update, error: ', error)
+            }
+          )
       },
       isPdf (fileName) {
         if (fileName) {
           var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
           if (ext === 'pdf') {
-            console.log('returning trueeee')
+            // console.log('returning trueeee')
             return true
           } else {
             return false
@@ -527,14 +555,26 @@
           return false
         }
       },
-      getDocumentDetails: function (documentID) {
+      getDocumentHistory: function (documentType) {
         this.showLoader = true
-        Http.GET('member', ['identification-document', documentID])
+        // Http.GET('member', ['identification-document', documentID])
+        // .then(
+        //     ({data: {data: documentDetail}}) => {
+        //       this.showLoader = false
+        //       this.documentDetails = documentDetail
+        //       console.log('documentDetail:', documentDetail)
+        //     },
+        //     error => {
+        //       this.showLoader = false
+        //       console.log('Error in getting list of identification documents, error: ', error)
+        //     }
+        // )
+        Http.GET('member', [this.id, 'document-history', documentType])
         .then(
-            ({data: {data: documentDetail}}) => {
+            ({data: {data: history}}) => {
               this.showLoader = false
-              this.documentDetails = documentDetail
-              console.log('documentDetail:', documentDetail)
+              this.documentHistory = history
+              console.log('documentHistory:', this.documentHistory)
             },
             error => {
               this.showLoader = false

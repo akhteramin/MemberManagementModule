@@ -89,7 +89,7 @@
                 <td>{{ bank.accountNumber ? bank.accountNumber : 'N/A' }}</td>
                 <td>{{ bank.bankName ? bank.bankName : 'N/A' }}</td>
                 <td>{{ bank.branchName ? bank.branchName : 'N/A' }}</td>
-                <td class="text-center">{{ bank.verificationStatus ? bank.verificationStatus : 'N/A' }}</td>
+                <td class="text-center">{{ (bank.verificationStatus ? bank.verificationStatus : 'N/A') | underscoreless }}</td>
                 <td>
                   <div v-if="bank.verifiedDate">
                     {{ bank.verifiedDate | date('MMM D, YYYY')}}
@@ -462,10 +462,10 @@
           </td>
 
           <td class="text-center">
-            <div v-if="member.userBanks.length > 0">
-              <a @click="showBankDocumentsModal(member.userBanks)"
+            <div v-if="filterBanks(member.userBanks).length > 0">
+              <a @click="showBankDocumentsModal(filterBanks(member.userBanks))"
                  class="pointer">
-                {{ member.userBanks.length }} banks
+                {{ filterBanks(member.userBanks).length }} banks
               </a>
             </div>
             <div v-else>
@@ -853,8 +853,13 @@
           return false
         }
       },
+      filterBanks (userBanks) {
+        // console.log('user banks::', userBanks)
+        // console.log('non-deleted user-banks::', userBanks.filter(x => x.accountStatus !== 2))
+        return userBanks.filter(x => x.accountStatus !== 2)
+      },
       showBankDocumentsModal (bankDocuments) {
-        this.bankDocuments = bankDocuments.filter(x => x.verificationStatus !== 'BLOCKED')
+        this.bankDocuments = bankDocuments
         console.log('bank documents: ', this.bankDocuments)
         $('#BankDocumentModal').modal({backdrop: false})
       },
