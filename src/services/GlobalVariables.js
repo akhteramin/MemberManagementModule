@@ -3,7 +3,9 @@ const GLOBAL_VARS = {
     {type: 'national_id', found: 'Not Found'},
     {type: 'passport', found: 'Not Found'},
     {type: 'driving_license', found: 'Not Found'},
-    {type: 'birth_certificate', found: 'Not Found'}
+    {type: 'birth_certificate', found: 'Not Found'},
+    {type: 'tin', found: 'Not Found'},
+    {type: 'other', found: 'Not Found'}
   ],
   DOCUMENT_TYPE_BUSINESS: [
     {type: 'business_tin', found: 'Not Found'},
@@ -12,7 +14,9 @@ const GLOBAL_VARS = {
     {type: 'merchant_acquisition_form', found: 'Not Found'},
     {type: 'national_id', found: 'Not Found'},
     {type: 'passport', found: 'Not Found'},
-    {type: 'driving_license', found: 'Not Found'}
+    {type: 'driving_license', found: 'Not Found'},
+    {type: 'consent_agreement', found: 'Not Found'},
+    {type: 'other', found: 'Not Found'}
   ]
 }
 export default GLOBAL_VARS
