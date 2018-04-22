@@ -698,7 +698,7 @@
                   <label class="text-label"><b>Email</b></label>
                 </div>
 
-                <div class="gr-11 padding-5">
+                <div class="gr-12 padding-5">
         
                   <div class="text-center" v-if="member.emails && member.emails.length === 0">No Email Added<br></div>
                   <div v-else-if="member.emails" class="small-scrollable height-210">
