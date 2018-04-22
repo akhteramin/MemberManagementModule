@@ -3,7 +3,7 @@
       <div class="gr-12 panel-label">
         <label class="text-label"><b>Card Info</b></label>
       </div>
-      <div class="gr-11 padding-5">
+      <div class="gr-12 padding-5">
         <div class="text-center" v-if="bankCards.length === 0">No Card Added<br></div>
         <div v-else-if="bankCards" class="small-scrollable height-210">
           <table class="table ui celled" cellspacing="0" width="100%">
