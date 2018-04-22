@@ -412,8 +412,8 @@
         this.paramData = {
           documentIdNumber: document.documentIdNumber,
           documentType: document.documentType,
-          documentVerificationStatus: 'VERIFIED',
-          documentID: document.id
+          documentVerificationStatus: 'VERIFIED'
+          // documentID: document.id
         }
       },
       setDocumentUnverify (document) {
@@ -421,8 +421,8 @@
         this.paramData = {
           documentIdNumber: document.documentIdNumber,
           documentType: document.documentType,
-          documentVerificationStatus: 'NOT_VERIFIED',
-          documentID: document.id
+          documentVerificationStatus: 'NOT_VERIFIED'
+          // documentID: document.id
         }
       },
       setDocumentHistory (document) {
@@ -437,7 +437,7 @@
       verifyDocument () {
 //        console.log('param data ::', this.paramData)
         this.showLoader = true
-        Http.PUT('verification', this.paramData, [this.id, 'document', this.paramData.documentID])
+        Http.PUT('verification', this.paramData, [this.id, 'document'])
         .then(
           ({data: documentData}) => {
 //            console.log('document data::', documentData)
@@ -518,7 +518,7 @@
         if (fileName) {
           var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
           if (ext === 'pdf') {
-            console.log('returning trueeee')
+            // console.log('returning trueeee')
             return true
           } else {
             return false
