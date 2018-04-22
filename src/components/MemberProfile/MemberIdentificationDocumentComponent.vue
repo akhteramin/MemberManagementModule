@@ -254,7 +254,7 @@
 
           </div>
 
-            <div class="gr-3 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC') && documentTypes.filter(x=>x.found === 'Not Found').length">
+            <div class="gr-4 push-4"  v-if="containsPermission('MS_MM_USER_ADD_DOC') && documentTypes.filter(x=>x.found === 'Not Found').length">
               <div class="form-group">
                 <br>
                 <label>Upload Missing Documents </label>
@@ -269,23 +269,34 @@
               </div>
             </div>
 
-            <div class="gr-10 push-2" v-if="showDocumentUploadData && containsPermission('MS_MM_USER_ADD_DOC')">
-              <div class="gr-4">
-                <div class="form-group">
-                  <label> Document ID: </label>
-                  <input  name="queryName" type="text" id="queryName" placeholder="ID" v-model="documentID"
-                          value=""/>
+            <div class="gr-12" v-if="showDocumentUploadData && containsPermission('MS_MM_USER_ADD_DOC')">
+              <div class="row">
+                <div class="gr-4 push-4">
+                  <div class="form-group">
+                    <label> Document ID </label>
+                    <input  name="queryName" type="text" id="queryName" placeholder="ID" v-model="documentID"
+                            value=""/>
+                  </div>
                 </div>
               </div>
 
-              <div class="gr-4">
-                <div class="form-group">
-                  <label> Document: </label>
-                    <input id="uploadBtn3" type="file" class="btn btn-default" @change="onDocumentChange"/>
+              <div class="row">
+                <div class="gr-4 push-4">
+                  <div class="form-group">
+                    <label> Document Pages </label>
+                    <div class="row" v-if="memberDocument.length > 0">
+                      <ul>
+                        <li v-for="item in memberDocument">
+                          {{ item.name }}
+                        </li>
+                      </ul>
+                    </div>
+                    <input id="uploadBtn3" multiple type="file" class="btn btn-default" @change="onDocumentChange"/>
+                  </div>
                 </div>
               </div>
 
-              <div class="gr-12 push-3">
+              <div class="gr-4 push-4">
                 <div class="form-group">
                   <button type="submit" class="button-search" @click="submitDocument()">
                     Submit
@@ -344,7 +355,7 @@
         documentTypes: {},
         showDocumentUploadData: false,
         docType: '',
-        memberDocument: {},
+        memberDocument: [],
         documentID: '',
         showLoader: false,
         accessControlList: [],
@@ -403,6 +414,7 @@
       },
       showDocumentUpload () {
 //        console.log('doc typ:', this.docType)
+        this.memberDocument = []
         if (!this.showDocumentUploadData && this.docType) {
           this.showDocumentUploadData = true
         } else {
@@ -470,42 +482,52 @@
           })
       },
       onDocumentChange (e) {
-//        console.log('document::', this.document)
+        this.memberDocument = []
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {
           return
         }
-        this.memberDocument = files[0]
+        this.url = new Image()
+        var reader = new FileReader()
+        reader.onload = (e) => {
+          this.url = e.target.result
+        }
+        for (var i = files.length - 1; i >= 0; i--) {
+          this.memberDocument.push(files[i])
+        }
       },
       submitDocument () {
 //        console.log(this.memberDocument)
 //        console.log(this.documentID)
 //        console.log(this.docType)
+        console.log(this.memberDocument)
         var fd = new FormData()
-        fd.append('file', this.memberDocument)
+        // fd.append('file', this.memberDocument)
+        for (var i = 0; i < this.memberDocument.length; i++) {
+          fd.append('file', this.memberDocument[i])
+        }
         fd.append('documentIdNumber', this.documentID)
         fd.append('documentType', this.docType)
-//        console.log('document type::', this.docType)
+        console.log('document type::', this.docType)
         this.showLoader = true
-        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc'])
+        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc', 'v2'])
           .then(
-            () => {
-//              console.log('document data: ', documentData)
-              this.showLoader = false
+            ({data: documentdata}) => {
               $.notify({
                 // options
                 title: '<strong>Success!</strong>',
-                message: 'Document uploaded successfully'
+                message: 'Document Uploaded successfully'
               }, {
                 // settings
                 type: 'success',
                 delay: 3000
               })
+              this.showLoader = false
+              console.log('document data: ', documentdata)
               this.editIdentificationDocument()
               this.init()
             },
             error => {
-              this.showLoader = false
               $.notify({
                 // options
                 title: '<strong>Failure!</strong>',
@@ -515,7 +537,10 @@
                 type: 'danger',
                 delay: 3000
               })
-            })
+              this.showLoader = false
+              console.log('Error in address update, error: ', error)
+            }
+          )
       },
       isPdf (fileName) {
         if (fileName) {
