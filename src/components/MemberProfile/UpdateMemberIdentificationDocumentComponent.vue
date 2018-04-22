@@ -29,14 +29,14 @@
                   <div class="col-md-3">
                     <label class="control-label">Document No</label>
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-7">
                     <input type="text" v-model="document.documentIdNumber" required>
                   </div>
                 </div>
               </div>
               <div class="form-group">
 
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-md-3">
                     <label class="control-label">Document</label>
                   </div>
@@ -60,13 +60,36 @@
                     </div>
                   </div>
                 </div>
+                <br> -->
+                <!-- <div class="row">
+                  <div class="col-md-10 text-left">
+                    <label class="control-label text-center">Pages</label>
+                      <ul>
+                        <li v-for="item in memberDocument">
+                          {{ item.name }}
+                        </li>
+                      </ul>
+                  </div>
+                </div> -->
+                <div class="row" v-if="memberDocument.length > 0">
+                  <div class="col-md-3">
+                    <label class="control-label">Pages</label>
+                  </div>
+                  <div class="col-md-7">
+                    <ul>
+                      <li v-for="item in memberDocument">
+                        {{ item.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
                 <br>
                 <div class="row">
                   <div class="col-md-4 col-md-offset-3">
                     <span>
                       <div class="fileUpload">
                         <!--<span>Browse</span>-->
-                        <input id="uploadBtn3" type="file" class="btn btn-default" @change="onDocumentChange"/>
+                        <input id="uploadBtn3" multiple type="file" class="btn btn-default" @change="onDocumentChange"/>
                       </div>
                       <!-- <input id="uploadFile3" placeholder="Choose File" disabled="disabled" /> -->
                     </span>
@@ -96,19 +119,18 @@
       return {
         documentBaseUrl: '',
         url: '',
-        memberDocument: {},
+        memberDocument: [],
         showLoader: false
       }
     },
     methods: {
       init () {
-        this.documentBaseUrl = Http.IMAGE_URL
-        this.url = this.documentBaseUrl + this.document.documentPages[0].url
+        // this.documentBaseUrl = Http.IMAGE_URL
+        // this.url = this.documentBaseUrl + this.document.documentPages[0].url
         console.log('document::', this.document)
       },
       onDocumentChange (e) {
-        console.log('document::', this.document)
-
+        this.memberDocument = []
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {
           return
@@ -118,24 +140,27 @@
         reader.onload = (e) => {
           this.url = e.target.result
         }
-        reader.readAsDataURL(files[0])
-        this.memberDocument = files[0]
-        console.log(files[0])
+        for (var i = files.length - 1; i >= 0; i--) {
+          this.memberDocument.push(files[i])
+        }
       },
       clearDocument () {
         console.log('clear the document')
-        this.url = this.documentBaseUrl + this.document.documentPages[0].url
+        this.memberDocument = []
         $('#uploadBtn3').val('')
       },
       uploadDocument () {
         console.log(this.memberDocument)
         var fd = new FormData()
-        fd.append('file', this.memberDocument)
+        // fd.append('file', this.memberDocument)
+        for (var i = 0; i < this.memberDocument.length; i++) {
+          fd.append('file', this.memberDocument[i])
+        }
         fd.append('documentIdNumber', this.document.documentIdNumber)
         fd.append('documentType', this.document.documentType)
         console.log('document type::', this.document.documentType)
         this.showLoader = true
-        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc'])
+        Http.POST('mmAdminMember', fd, [this.id, 'identificationdoc', 'v2'])
           .then(
             ({data: documentdata}) => {
               $.notify({
@@ -152,7 +177,6 @@
               this.editIdentificationDocument()
             },
             error => {
-              this.showLoader = false
               $.notify({
                 // options
                 title: '<strong>Failure!</strong>',
@@ -162,6 +186,7 @@
                 type: 'danger',
                 delay: 3000
               })
+              this.showLoader = false
               console.log('Error in address update, error: ', error)
             }
           )
