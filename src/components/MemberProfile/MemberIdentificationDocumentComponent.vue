@@ -86,7 +86,7 @@
 
                 </td>
                 <td>
-                  <button :disabled="!containsPermission('MS_MM_USER_GET_SPECIFIC_DOCUMENTS')" data-toggle="modal" data-target="#DocumentHistoryModal" data-backdrop="false" @click= "setDocumentHistory(item)"
+                  <button :disabled="!containsPermission('MS_MM_USER_GET_SPECIFIC_DOCUMENTS')" data-toggle="modal" data-target="#DocumentHistoryModal" data-backdrop="false" @click="setDocumentHistory(item)"
                      class="button-md-verify width-100">View History</button>
                 </td>
 
@@ -219,11 +219,11 @@
                     <div class="row">
                       <div class="row">
                         <div class="col-md-3">
-                          <label class="control-label">History:</label>
+                          <label class="control-label">History</label>
                         </div>
                       </div>
-                      <div class="gr-12 margin-top-10 pre-scrollable" v-if="documentDetails.histories">
-                        <div class="gr-12 comment" v-for="history in documentDetails.histories">
+                      <div class="gr-12 margin-top-10 pre-scrollable" v-if="documentHistory && documentHistory.length > 0">
+                        <div class="gr-12 comment" v-for="history in documentHistory">
                           <ul class="chat">
                             <li class="left clearfix"><span class="chat-img pull-left">
                               </span>
@@ -239,6 +239,9 @@
                             </li>
                           </ul>
                         </div>
+                      </div>
+                      <div class="gr-10 margin-10" v-else>
+                        N/A
                       </div>
                     </div>
                   </div>
@@ -347,7 +350,7 @@
         accessControlList: [],
         document: {},
         documentForHistory: {},
-        documentDetails: {}
+        documentHistory: {}
       }
     },
     methods: {
@@ -428,7 +431,7 @@
       setDocumentHistory (document) {
         this.documentForHistory = document
         console.log(document)
-        this.getDocumentDetails(document.id)
+        this.getDocumentHistory(document.documentType)
       },
       setPreviewDocument (document) {
         this.document = document
@@ -527,14 +530,26 @@
           return false
         }
       },
-      getDocumentDetails: function (documentID) {
+      getDocumentHistory: function (documentType) {
         this.showLoader = true
-        Http.GET('member', ['identification-document', documentID])
+        // Http.GET('member', ['identification-document', documentID])
+        // .then(
+        //     ({data: {data: documentDetail}}) => {
+        //       this.showLoader = false
+        //       this.documentDetails = documentDetail
+        //       console.log('documentDetail:', documentDetail)
+        //     },
+        //     error => {
+        //       this.showLoader = false
+        //       console.log('Error in getting list of identification documents, error: ', error)
+        //     }
+        // )
+        Http.GET('member', [this.id, 'document-history', documentType])
         .then(
-            ({data: {data: documentDetail}}) => {
+            ({data: {data: history}}) => {
               this.showLoader = false
-              this.documentDetails = documentDetail
-              console.log('documentDetail:', documentDetail)
+              this.documentHistory = history
+              console.log('documentHistory:', this.documentHistory)
             },
             error => {
               this.showLoader = false
