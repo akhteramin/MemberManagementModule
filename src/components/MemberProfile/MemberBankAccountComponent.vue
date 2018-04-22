@@ -83,7 +83,7 @@
                 </table>
               </td>
               <td>
-                <span v-if="item.bankDocuments[0]">
+                <span v-if="item.bankDocuments[0]" v-restrict="'MS_MM_USER_VERIFICATION_CHEQUE'">
                   <button v-if="item.bankDocuments[0].documentVerificationStatus!=='VERIFIED'" data-toggle="modal" :data-target="`#ChequeVerificationModal`" data-backdrop="false" @click="setPreviewDocument(item,'VERIFIED')"
                     class="button-md-verify"> Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
                   <button v-if="item.bankDocuments[0].documentVerificationStatus==='VERIFIED'" data-toggle="modal" :data-target="`#ChequeVerificationModal`" data-backdrop="false" @click="setPreviewDocument(item,'NOT_VERIFIED')"
@@ -92,7 +92,7 @@
                 </span>
               
                 <button v-if="!item.bankDocuments[0] || item.bankDocuments[0].documentVerificationStatus!=='VERIFIED'"
-                class="button-md-verify width-150" @click="uploadCheque(item.bankId)">Upload Cheque <i class="fa fa-upload" aria-hidden="true"></i></button>
+                v-restrict="'MS_MM_USER_ADD_CHEQUE'" class="button-md-verify width-150" @click="uploadCheque(item.bankId)">Upload Cheque <i class="fa fa-upload" aria-hidden="true"></i></button>
                 <div :id="`ChangeChequeModal${item.bankId}`" class="modal fade" role="dialog">
                   <div class="modal-dialog  modal-md">
                     <!-- Modal content-->
