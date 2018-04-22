@@ -261,7 +261,7 @@
                 <div class="select">
                   <select id="personal-business-select" v-model="docType" @change="showDocumentUpload()">
                     <!--<option selected disabled>Select account type</option>-->
-                    <option selected value = "">Select Document Type</option>
+                    <option selected :value="''">Select Document Type</option>
                     <option v-for="documentType in documentTypes" :value="documentType.type"
                             v-if="documentType.found == 'Not Found'">{{ documentType.type }}</option>
                   </select>
@@ -373,6 +373,7 @@
           ' account type: ', this.accountType)
         this.showDocumentUploadData = false
         this.documentBaseUrl = Http.IMAGE_URL
+        this.docType = ''
         if (this.accountType == 1) {
           this.documentTypes = GLOBAL_VARS.DOCUMENT_TYPE
         } else {
@@ -525,7 +526,6 @@
               this.showLoader = false
               console.log('document data: ', documentdata)
               this.editIdentificationDocument()
-              this.init()
             },
             error => {
               $.notify({
