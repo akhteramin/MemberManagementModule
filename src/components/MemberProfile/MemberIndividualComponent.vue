@@ -727,7 +727,6 @@
                   <div>
                     <div id="IDENTIFICATION_DOCS" class="gr-12 w3-header-card" v-if="containsPermission('MS_MM_USER_GET_IDENTIFICATION_DOCUMENTS')">
                       <member-identification-document
-                        v-if="memberValidationDataFound"
                         :id="id" :accountType="accountType" :boom="2">
                       </member-identification-document>
                     </div>

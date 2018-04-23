@@ -401,9 +401,9 @@
           })
       },
       getChequeHistory (docID) {
-        let queryParamData = '?docId='+docID
+        
         // this.showLoader = true
-        Http.GET('member', [this.id,'document-history', 'cheque', queryParamData])
+        Http.GET('member', ['document-history', docID])
         .then(
             ({data: chequeDocumentDetail}) => {
               // this.showLoader = false
