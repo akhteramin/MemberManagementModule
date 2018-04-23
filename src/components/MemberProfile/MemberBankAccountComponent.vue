@@ -302,11 +302,11 @@
         url: '',
         showLoader: false,
         chequeBankID: '',
-        memberCheque:[],
+        memberCheque: [],
         chequePreviewDocument: {},
         chequeComment: '',
-        chequeVerificationStatus:'',
-        chequeDocumentDetails:{}
+        chequeVerificationStatus: '',
+        chequeDocumentDetails: {}
       }
     },
     created () {
@@ -355,20 +355,20 @@
           this.url = e.target.result
         }
         for (var i = files.length - 1; i >= 0; i--) {
-            this.memberCheque.push(files[i]);
-        }
+          this.memberCheque.push(files[i])
+      }
         // this.memberDocument = files[0]
         console.log(this.memberCheque)
       },
       uploadCheque (bankId) {
-        this.chequeBankID=bankId
-        $('#ChangeChequeModal'+this.chequeBankID).modal('show')
+        this.chequeBankID = bankId
+        $('#ChangeChequeModal' + this.chequeBankID).modal('show')
       },
       verifyCheque () {
         let paramData = {
-          "bankId": this.chequePreviewDocument.bankId,
-          "comment": this.chequeComment,
-          "verificationStatus": this.chequeVerificationStatus
+          'bankId': this.chequePreviewDocument.bankId,
+          'comment': this.chequeComment,
+          'verificationStatus': this.chequeVerificationStatus
         }
         this.showLoader = true
         Http.PUT('verification', paramData, [this.id, 'bank-document', this.chequePreviewDocument.bankDocuments[0].documentType])
@@ -401,9 +401,8 @@
           })
       },
       getChequeHistory (docID) {
-        
         // this.showLoader = true
-        Http.GET('member', ['document-history', docID])
+        Http.GET('member', ['document-history', docID, 'cheque'])
         .then(
             ({data: chequeDocumentDetail}) => {
               // this.showLoader = false
@@ -419,15 +418,15 @@
       onSubmitCheque () {
         console.log(this.memberCheque)
         var fd = new FormData()
-        for (var i = 0; i< this.memberCheque.length; i++) {
+        for (var i = 0; i < this.memberCheque.length; i++) {
           fd.append('files', this.memberCheque[i])
         }
         // fd.append('files[]', this.memberCheque)
         fd.append('bankId', this.chequeBankID)
         fd.append('documentType', 'cheque')
         for (var pair of fd.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-        }
+          console.log(pair[0] + ', ' + pair[1]) 
+      }
         this.showLoader = true
         Http.POST('mmAdminMember', fd, [this.id, 'cheque'])
           .then(
@@ -443,7 +442,7 @@
               })
               this.showLoader = false
               console.log('document data: ', documentdata)
-              this.memberCheque=[]
+              this.memberCheque = []
               this.init()
             },
             error => {
@@ -461,8 +460,8 @@
             }
           )
       },
-       isPdf (fileName) {
-        if (fileName) {
+      isPdf (fileName) {
+         if (fileName) {
           var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
           if (ext === 'pdf') {
             console.log('returning trueeee')
@@ -473,8 +472,8 @@
         } else {
           return false
         }
-      },
-      setPreviewDocument (document, status='') {
+       },
+      setPreviewDocument (document, status = '') {
         this.chequePreviewDocument = document
         this.chequeVerificationStatus = status
         this.getChequeHistory(this.chequePreviewDocument.bankDocuments[0].bankDocumentId)
