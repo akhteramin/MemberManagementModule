@@ -444,7 +444,7 @@
       setDocumentHistory (document) {
         this.documentForHistory = document
         console.log(document)
-        this.getDocumentHistory(document.id)
+        this.getDocumentHistory(document.id, document.documentType)
       },
       setPreviewDocument (document) {
         this.document = document
@@ -555,9 +555,9 @@
           return false
         }
       },
-      getDocumentHistory: function (docId) {
+      getDocumentHistory: function (docId, docType) {
         this.showLoader = true
-        Http.GET('member', ['document-history', docId])
+        Http.GET('member', ['document-history', docId, docType])
         .then(
             ({data: {data: history}}) => {
               this.showLoader = false
