@@ -15,20 +15,20 @@
               <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
+                <!-- <th>Name</th> -->
                 <th>Type</th>
                 <th>Id No.</th>
-                <th class="text-center">URL</th>
+                <!-- <th class="text-center">URL</th> -->
                 <th class="text-center">Verification Status</th>
               </tr>
               </thead>
               <tbody>
               <tr v-for="document,index in identificationDocuments">
                 <td>{{ index + 1 }}</td>
-                <td>{{ document.documentName ? document.documentName : 'N/A' }}</td>
+                <!-- <td>{{ document.documentName ? document.documentName : 'N/A' }}</td> -->
                 <td>{{ (document.documentType ? document.documentType : 'N/A') | underscoreless }}</td>
                 <td>{{ document.documentIdNumber ? document.documentIdNumber : 'N/A' }}</td>
-                <td class="text-center">
+                <!-- <td class="text-center">
                   <img default-src="/static/images/default-document-icon.png"
                        v-if="!isPdf(document.documentUrl)"
                        :src="imageBaseUrl + document.documentUrl"
@@ -41,7 +41,7 @@
                   <i v-if="isPdf(document.documentUrl)"
                      class="fa fa-file-pdf-o font-size-50"
                      aria-hidden="true"></i>
-                </td>
+                </td> -->
                 <td class="text-center">
                   <span class="margin-10" v-if="document.documentVerificationStatus === 'VERIFIED'">
                     <i class="fa fa-check-circle-o banner-text fa-lg"></i>
@@ -163,7 +163,7 @@
                 <td>{{ card.binNumber ? card.binNumber : 'N/A' }}</td>
                 <td>{{ card.cardType ? card.cardType : 'N/A' }}</td>
                 <td>{{ card.networkCompany ? card.networkCompany : 'N/A' }}</td> -->
-                <td class="text-center">{{ card.cardStatus ? card.cardStatus : 'N/A' }}</td>
+                <td class="text-center">{{ (card.cardStatus ? card.cardStatus : 'N/A') | underscoreless }}</td>
               </tr>
               </tbody>
             </table>
@@ -478,7 +478,7 @@
               <a @click="showCardsModal(member.userCards)"
                  class="pointer">
                 <!-- {{ member.userCards.length }} cards -->
-                <span v-for="card in member.userCards">
+                <div class="margin-bottom-5" v-for="card in member.userCards">
                   <span v-if="card.cardInfo.substring(0,1) === '4'">
                     <i class="fa fa-lg fa-cc-visa"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
                   </span>
@@ -502,8 +502,7 @@
                   <span v-else>
                     <i class="fa fa-lg fa-2x fa-credit-card"></i> <i v-if="card.cardStatus==='VERIFIED'" class="fa fa-check"></i>
                   </span>
-                  <br>
-                </span>
+                </div>
               </a>
             </div>
             <div v-else>

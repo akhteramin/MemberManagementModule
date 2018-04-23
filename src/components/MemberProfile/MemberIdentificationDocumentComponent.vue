@@ -444,7 +444,7 @@
       setDocumentHistory (document) {
         this.documentForHistory = document
         console.log(document)
-        this.getDocumentHistory(document.documentType)
+        this.getDocumentHistory(document.id)
       },
       setPreviewDocument (document) {
         this.document = document
@@ -555,21 +555,9 @@
           return false
         }
       },
-      getDocumentHistory: function (documentType) {
+      getDocumentHistory: function (docId) {
         this.showLoader = true
-        // Http.GET('member', ['identification-document', documentID])
-        // .then(
-        //     ({data: {data: documentDetail}}) => {
-        //       this.showLoader = false
-        //       this.documentDetails = documentDetail
-        //       console.log('documentDetail:', documentDetail)
-        //     },
-        //     error => {
-        //       this.showLoader = false
-        //       console.log('Error in getting list of identification documents, error: ', error)
-        //     }
-        // )
-        Http.GET('member', [this.id, 'document-history', documentType])
+        Http.GET('member', ['document-history', docId])
         .then(
             ({data: {data: history}}) => {
               this.showLoader = false
