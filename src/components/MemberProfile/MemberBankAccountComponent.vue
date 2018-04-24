@@ -83,15 +83,14 @@
                 </table>
               </td>
               <td>
-                <span v-if="item.bankDocuments[0]" v-restrict="'MS_MM_USER_VERIFICATION_CHEQUE'">
+                <span v-if="item.accountStatus===0 && item.verificationStatus!=='BLOCKED' && item.bankDocuments[0]" v-restrict="'MS_MM_USER_VERIFICATION_CHEQUE'">
                   <button v-if="item.bankDocuments[0].documentVerificationStatus!=='VERIFIED'" data-toggle="modal" :data-target="`#ChequeVerificationModal`" data-backdrop="false" @click="setPreviewDocument(item,'VERIFIED')"
                     class="button-md-verify"> Verify <i class="fa fa-check-circle-o" aria-hidden="true"></i></button>
                   <button v-if="item.bankDocuments[0].documentVerificationStatus==='VERIFIED'" data-toggle="modal" :data-target="`#ChequeVerificationModal`" data-backdrop="false" @click="setPreviewDocument(item,'NOT_VERIFIED')"
                     class="button-reset width-110"> Unverify <i aria-hidden="true" class="fa fa-times"></i></button>
-                  
                 </span>
               
-                <button v-if="!item.bankDocuments[0] || item.bankDocuments[0].documentVerificationStatus!=='VERIFIED'"
+                <button v-if="item.accountStatus===0 && (item.verificationStatus==='NOT_VERIFIED' || item.verificationStatus==='PENDING')  && (!item.bankDocuments[0] || item.bankDocuments[0].documentVerificationStatus!=='VERIFIED')"
                 v-restrict="'MS_MM_USER_ADD_CHEQUE'" class="button-md-verify width-150" @click="uploadCheque(item.bankId)">Upload Cheque <i class="fa fa-upload" aria-hidden="true"></i></button>
                 <div :id="`ChangeChequeModal${item.bankId}`" class="modal fade" role="dialog">
                   <div class="modal-dialog  modal-md">
@@ -356,7 +355,7 @@
         }
         for (var i = files.length - 1; i >= 0; i--) {
           this.memberCheque.push(files[i])
-      }
+        }
         // this.memberDocument = files[0]
         console.log(this.memberCheque)
       },
@@ -425,8 +424,8 @@
         fd.append('bankId', this.chequeBankID)
         fd.append('documentType', 'cheque')
         for (var pair of fd.entries()) {
-          console.log(pair[0] + ', ' + pair[1]) 
-      }
+          console.log(pair[0] + ', ' + pair[1])
+        }
         this.showLoader = true
         Http.POST('mmAdminMember', fd, [this.id, 'cheque'])
           .then(
@@ -461,18 +460,18 @@
           )
       },
       isPdf (fileName) {
-         if (fileName) {
-          var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
-          if (ext === 'pdf') {
+        if (fileName) {
+           var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
+           if (ext === 'pdf') {
             console.log('returning trueeee')
             return true
           } else {
             return false
           }
-        } else {
-          return false
-        }
-       },
+         } else {
+           return false
+         }
+      },
       setPreviewDocument (document, status = '') {
         this.chequePreviewDocument = document
         this.chequeVerificationStatus = status
