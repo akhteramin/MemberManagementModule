@@ -1,12 +1,28 @@
 <template>
     <div>
       
-        <div class="btn-group">
+        <!-- <div class="btn-group">
             <button type="button" :class="[(infoValidationStatus == 'VALIDATED') ? 'active' : '','btn btn-xs btn-primary']" @click="validateData('VALIDATED')">{{(infoValidationStatus == 'VALIDATED') ?"Validated":"Validate"}}</button>
             <button type="button" :class="[(infoValidationStatus == 'INVALIDATED') ? 'active' : '','btn btn-xs btn-primary']" @click="validateData('INVALIDATED')">{{(infoValidationStatus == 'INVALIDATED') ?"Invalidated":"Invalidate"}}</button>
         </div>
         <span v-if="infoValidationStatus=='NOT_VALIDATED'">(yet to be validated)</span>
-        <span v-else><small>{{infoValidationStatus}} By <b>{{adminValidationData}}</b></small></span>
+        <span v-else><small>{{infoValidationStatus}} By <b>{{adminValidationData}}</b></small></span> -->
+
+        <div v-if="infoValidationStatus === 'VALIDATED'">
+          <span><small><i class="fa fa-check-circle-o fa-lg" style="color: green"></i> <b>{{adminValidationData}}</b></small></span>
+          <button type="button" class="btn btn-xs btn-primary" @click="validateData('INVALIDATED')">{{"Invalidate"}}</button>
+        </div>
+        <div v-else-if="infoValidationStatus === 'INVALIDATED'">
+          <span><small><i class="fa fa-times-circle-o fa-lg" style="color: red"></i> <b>{{adminValidationData}}</b></small></span>
+          <button type="button" class="btn btn-xs btn-primary" @click="validateData('VALIDATED')">{{"Validate"}}</button>
+        </div>
+        <div v-else-if="infoValidationStatus === 'NOT_VALIDATED'">
+          <small><i class="fa fa-refresh fa-lg" style="color: blue"></i></small>
+          <div class="btn-group">
+            <button type="button" class="btn btn-xs btn-primary" @click="validateData('VALIDATED')">{{"Validate"}}</button>
+            <button type="button" class="btn btn-xs btn-primary" @click="validateData('INVALIDATED')">{{"Invalidate"}}</button>
+          </div>
+        </div>
         
         
         <div :id="'MemberInfoValidationModal_'+infoType" class="modal fade text-left" role="dialog">
@@ -90,57 +106,56 @@ export default {
   ],
   data () {
     return {
-      memberInfoValidateComment:'',
-      infoValidationType:'',
-      infoTypeData:'',
-      memberValidationHistory:{}
+      memberInfoValidateComment: '',
+      infoValidationType: '',
+      infoTypeData: '',
+      memberValidationHistory: {}
     }
   },
   created () {
     console.log('member validation with id: ', this.id)
     console.log('member validation with type: ', this.infoType)
     console.log('member validation with status: ', this.infoValidationStatus)
-    
+
     this.init()
   },
   methods: {
     init () {
-        this.infoValidationType=this.infoValidationStatus
-        this.infoTypeData=this.infoType
-      
+      this.infoValidationType = this.infoValidationStatus
+      this.infoTypeData = this.infoType
     },
     validateData: function (validityType) {
-        console.log("info type data::",this.infoType)
-        this.infoValidationType = validityType
+      console.log('info type data::', this.infoType)
+      this.infoValidationType = validityType
         // this.infoTypeData = this.infoType
-        this.showLoader = true
-        Http.GET('memberValidation', ['history',this.id, this.infoType])
+      this.showLoader = true
+      Http.GET('memberValidation', ['history', this.id, this.infoType])
           .then(
             ({data: validationHistory}) => {
               this.showLoader = false
-              console.log("valid history",validationHistory)
-              this.memberValidationHistory= validationHistory.validationHistoryList
+              console.log('valid history', validationHistory)
+              this.memberValidationHistory = validationHistory.validationHistoryList
             },
             error => {
               this.showLoader = false
               console.log('Error in getting list of verification history, error: ', error.response.data)
-              this.memberValidationHistory=error.response.data
+              this.memberValidationHistory = error.response.data
             }
            )
-        $('#MemberInfoValidationModal_'+this.infoType).modal('show')
+      $('#MemberInfoValidationModal_' + this.infoType).modal('show')
     },
     confirmInfoValidation: function (memberInfoType) {
-        let user = JSON.parse(localStorage.getItem('user'))
-        console.log("info type data::",memberInfoType)
-        let paramData = {
-          "accountId": this.id,
-          "adminLoginId": user.loginID,
-          "comment": this.memberInfoValidateComment,
-          "infoType": memberInfoType,
-          "validationStatus": this.infoValidationType
-        }
-        this.showLoader = true
-        Http.POST('memberValidation', paramData, [])
+      let user = JSON.parse(localStorage.getItem('user'))
+      console.log('info type data::', memberInfoType)
+      let paramData = {
+        'accountId': this.id,
+        'adminLoginId': user.loginID,
+        'comment': this.memberInfoValidateComment,
+        'infoType': memberInfoType,
+        'validationStatus': this.infoValidationType
+      }
+      this.showLoader = true
+      Http.POST('memberValidation', paramData, [])
         .then(
           ({data: validationData}) => {
             this.showLoader = false
@@ -172,12 +187,11 @@ export default {
             this.updateInfoValidation()
           }
         )
-        
-      },
-      updateInfoValidation () {
-        this.$emit('update', 'false')
-      }
-    
+    },
+    updateInfoValidation () {
+      this.$emit('update', 'false')
+    }
+
   }
 
 }
