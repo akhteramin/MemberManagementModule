@@ -45,11 +45,148 @@
                 <span v-else-if="item.accountStatus === 1" class="label label-default">INACTIVE</span>
                 <span v-else-if="item.accountStatus === 2" class="label label-danger">DELETED</span>
               </td>
-              <td>{{ item.verificationStatus }}</td>
+              <td>
+                <span>{{ item.verificationStatus }}</span>
+                <span>
+                  <button @click="setBank(item)" data-toggle="modal" :data-target="`#BankDetailsModal${item.bankId}`" data-backdrop="false"
+                    class="button-md-verify width-150">Account Details <i class="fa fa-list" aria-hidden="true"></i></button>
+                  <div :id="`BankDetailsModal${item.bankId}`" class="modal fade" role="dialog">
+                    <div class="modal-dialog  modal-md" style="width: 55%">
+                      <!-- Modal content-->
+
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                          <h4 class="modal-title">Account Details</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h4 class="text-left">Basic Details</h4>
+                          <table class="table table-bordered">
+                            <tbody>
+                              <tr class="text-left">
+                                <td>
+                                  <strong>Account Name</strong>
+                                </td>
+                                <td>
+                                  {{bankDetails.bankAccountName}}
+                                </td>
+                              </tr>
+                              <tr class="text-left">
+                                <td>
+                                  <strong>Account No</strong>
+                                </td>
+                                <td>
+                                  {{bankDetails.bankAccountNumber}}
+                                </td>
+                              </tr>
+                              <tr class="text-left">
+                                <td>
+                                  <strong>Bank Name</strong>
+                                </td>
+                                <td>
+                                  {{bankDetails.bankName}}
+                                </td>
+                              </tr>
+                              <tr class="text-left">
+                                <td>
+                                  <strong>Branch Name</strong>
+                                </td>
+                                <td>
+                                  {{bankDetails.branchName}}
+                                </td>
+                              </tr>
+                              <tr class="text-left">
+                                <td>
+                                  <strong>Account Status</strong>
+                                </td>
+                                <td>
+                                  <span v-if="bankBasicDetails.accountStatus === 0" class="label label-success">ACTIVE</span>
+                                  <span v-else-if="bankBasicDetails.accountStatus === 1" class="label label-default">INACTIVE</span>
+                                  <span v-else-if="bankBasicDetails.accountStatus === 2" class="label label-danger">DELETED</span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <h4 class="text-left">Activities</h4>
+                          <div class="text-left">
+                            <div class="row">
+                              <span class="col-md-3">
+                                <strong>Creation Date</strong>
+                              </span>
+                              <span class="col-md-7">
+                                {{bankBasicDetails.creationDate | date}}
+                              </span>
+                            </div>
+                            <div class="row">
+                              <span class="col-md-3">
+                                <strong>Verification Date</strong>
+                              </span>
+                              <span class="col-md-7">
+                                <span v-if="bankBasicDetails.verifiedDate">{{bankBasicDetails.verifiedDate | date}}</span>
+                                <span v-else>N/A</span>
+                              </span>
+                            </div>
+                            <div class="row">
+                              <span class="col-md-3">
+                                <strong>Deletion Date</strong>
+                              </span>
+                              <span class="col-md-7">
+                                <span v-if="bankBasicDetails.deletedDate">{{bankBasicDetails.deletedDate | date}}</span>
+                                <span v-else>N/A</span>
+                              </span>
+                            </div>
+                          </div>
+                          <h4 class="text-left">Transaction</h4>
+                          <table class="table table-bordered">
+                            <thead class="thead-default">
+                              <tr class="text-left">
+                                <th class="text-left">Bank Added On</th>
+                                <th class="text-left">Request Time</th>
+                                <th class="text-left">Response Time</th>
+                                <th class="text-left">Success Time</th>
+                                <th class="text-left">Transacion ID</th>
+                                <th class="text-left">Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="text-left">
+                                <td>
+                                 <span v-if="bankDetails.requestTime">{{bankDetails.requestTime | date}}</span>
+                                 <span v-else>N/A</span>
+                                </td>
+                                <td>
+                                  <span v-if="bankDetails.bankRequestTime">{{bankDetails.bankRequestTime | date}}</span>
+                                  <span v-else>N/A</span>
+                                </td>
+                                <td>
+                                  <span v-if="bankDetails.bankResponseTime">{{bankDetails.bankResponseTime | date}}</span>
+                                  <span v-else>N/A</span>
+                                </td>
+                                <td>
+                                  <span v-if="bankDetails.deliveryTime">{{bankDetails.deliveryTime | date}}</span>
+                                  <span v-else>N/A</span>
+                                </td>
+                                <td>
+                                  <span v-if="bankDetails.transactionId">{{bankDetails.transactionId}}</span>
+                                  <span v-else>N/A</span>
+                                </td>
+                                <td>
+                                  <span v-if="bankDetails.statusDescription">{{bankDetails.statusDescription | underscoreless}}</span>
+                                  <span v-else>N/A</span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </span>
+              </td>
               <td v-if="item.creationDate">{{ item.creationDate | date }}</td>
               <td v-else>{{ 'N/A' }}</td>
               <td class="text-center">
-                <span v-if="item.bankDocuments[0]" :class="[(item.bankDocuments[0].documentVerificationStatus == 'VERIFIED') ? 'label label-success' : 'label label-danger']">{{item.bankDocuments[0].documentVerificationStatus}}</span>
+                <span v-if="item.bankDocuments[0]" :class="[(item.bankDocuments[0].documentVerificationStatus == 'VERIFIED') ? 'label label-success' : 'label label-danger']">{{item.bankDocuments[0].documentVerificationStatus | underscoreless}}</span>
                 <table width="100%" v-if="item.bankDocuments[0]">
                   <tbody>
                     <tr>
@@ -76,7 +213,7 @@
                   <tbody>
                     <tr>
                       <td>
-                        No check available.
+                        N/A
                       </td>
                     </tr>
                   </tbody>
@@ -297,6 +434,8 @@
     data () {
       return {
         bankAccounts: {},
+        bankDetails: {},
+        bankBasicDetails: {},
         imageBaseUrl: '',
         url: '',
         showLoader: false,
@@ -358,6 +497,24 @@
         }
         // this.memberDocument = files[0]
         console.log(this.memberCheque)
+      },
+      setBank (bank) {
+        // fetch bank data
+        // this.showLoader = true
+        this.bankBasicDetails = bank
+        Http.GET('member', ['bank-verification', bank.bankId])
+          .then(
+            ({data: {data: bankDetails}}) => {
+              // this.showLoader = false
+              this.bankDetails = bankDetails
+              console.log('bank details::', this.bankDetails)
+            },
+            error => {
+              // this.showLoader = false
+              console.log(error)
+            }
+          )
+        // $('#BankDetailsModal' + bank.bankId).modal('show')
       },
       uploadCheque (bankId) {
         this.chequeBankID = bankId
@@ -461,16 +618,16 @@
       },
       isPdf (fileName) {
         if (fileName) {
-           var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
-           if (ext === 'pdf') {
+          var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
+          if (ext === 'pdf') {
             console.log('returning trueeee')
             return true
           } else {
             return false
           }
-         } else {
-           return false
-         }
+        } else {
+          return false
+        }
       },
       setPreviewDocument (document, status = '') {
         this.chequePreviewDocument = document
