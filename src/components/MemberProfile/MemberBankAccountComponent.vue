@@ -49,7 +49,7 @@
               <td v-if="item.creationDate">{{ item.creationDate | date }}</td>
               <td v-else>{{ 'N/A' }}</td>
               <td class="text-center">
-                <span v-if="item.bankDocuments[0]" :class="[(item.bankDocuments[0].documentVerificationStatus == 'VERIFIED') ? 'label label-success' : 'label label-danger']">{{item.bankDocuments[0].documentVerificationStatus}}</span>
+                <span v-if="item.bankDocuments[0]" :class="[(item.bankDocuments[0].documentVerificationStatus == 'VERIFIED') ? 'label label-success' : 'label label-danger']">{{item.bankDocuments[0].documentVerificationStatus | underscoreless}}</span>
                 <table width="100%" v-if="item.bankDocuments[0]">
                   <tbody>
                     <tr>
@@ -76,7 +76,7 @@
                   <tbody>
                     <tr>
                       <td>
-                        No check available.
+                        N/A
                       </td>
                     </tr>
                   </tbody>
@@ -461,16 +461,16 @@
       },
       isPdf (fileName) {
         if (fileName) {
-           var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
-           if (ext === 'pdf') {
+          var ext = fileName.substr(fileName.lastIndexOf('.') + 1)
+          if (ext === 'pdf') {
             console.log('returning trueeee')
             return true
           } else {
             return false
           }
-         } else {
-           return false
-         }
+        } else {
+          return false
+        }
       },
       setPreviewDocument (document, status = '') {
         this.chequePreviewDocument = document
