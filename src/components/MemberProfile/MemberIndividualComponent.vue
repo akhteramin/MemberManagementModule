@@ -422,7 +422,7 @@
                             Father Name:
                             </div>
                             <div class="gr-4 text-left">
-                              {{ member.basicInfo.father || ':qN/A' }}
+                              {{ member.basicInfo.father || 'N/A' }}
 
                             </div>
                             <div class="gr-2">
@@ -747,6 +747,21 @@
 
                     <div id="INTRODUCER" class="gr-12 justify-content-center w3-header-card"
                          v-if="containsPermission('MS_MM_USER_GET_INTRODUCER_LIST')">
+                      <div class="gr-12 panel-label">
+                        <div class="gr-2">
+                          <label class="text-label"><b>Introducer Chain</b></label>
+                        </div>
+                        <div class="gr-3">
+                          <member-info-validation
+                            v-if="memberValidationDataFound && containsPermission('MS_USER_VALIDATE_INFORMATION')"
+                            :id="id"
+                            :infoType="memberInfoType.INTRODUCER_CHAIN"
+                            :infoValidationStatus="memberInfoValidationData['8']"
+                            :adminValidationData="adminInfoValidation['8']"
+                            @update="updateInfoValidation">
+                          </member-info-validation>
+                        </div>
+                      </div>
                       <member-introduced-by :id="id">
                       </member-introduced-by>
 

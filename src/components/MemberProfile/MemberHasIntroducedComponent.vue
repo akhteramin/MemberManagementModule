@@ -1,6 +1,6 @@
  <template>
     <div class="gr-6">
-        <div class="gr-12 panel-label">
+        <div class="gr-12">
           <label class="text-label"><b>Has Introduced</b></label>
         </div>
         <hr>
