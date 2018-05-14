@@ -524,10 +524,13 @@
           </td>
           <td class="text-center">
             <div>
-              <a @click="showIntroducerModal(member)"
-                 class="pointer">
-                  See Introducers
-              </a>
+              <b v-if="member.introducerCount===0">No introducer exist.</b>
+              <b v-else>
+                <a v-if="member.introducerCount>0" @click="showIntroducerModal(member)"
+                  class="pointer">
+                    {{member.introducerCount}}
+                </a>
+              </b>
             </div>
           </td>
 
