@@ -28,20 +28,6 @@
                 <!-- <td>{{ document.documentName ? document.documentName : 'N/A' }}</td> -->
                 <td>{{ (document.documentType ? document.documentType : 'N/A') | underscoreless }}</td>
                 <td>{{ document.documentIdNumber ? document.documentIdNumber : 'N/A' }}</td>
-                <!-- <td class="text-center">
-                  <img default-src="/static/images/default-document-icon.png"
-                       v-if="!isPdf(document.documentUrl)"
-                       :src="imageBaseUrl + document.documentUrl"
-                       alt="Document"
-                       height="50"
-                       width="auto"
-                       class="img-rounded"
-                      onerror="onerror=null;
-                      this.src='/static/images/default-document-icon.png'">
-                  <i v-if="isPdf(document.documentUrl)"
-                     class="fa fa-file-pdf-o font-size-50"
-                     aria-hidden="true"></i>
-                </td> -->
                 <td class="text-center">
                   <span class="margin-10" v-if="document.documentVerificationStatus === 'VERIFIED'">
                     <i class="fa fa-check-circle-o banner-text fa-lg"></i>
@@ -105,6 +91,47 @@
         </div>
       </div>
 
+    </div>
+
+    <div id="IntroducerModal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content width-800">
+          <div class="modal-header text-center">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3><i class="fa fa-credit-card" aria-hidden="true"></i> Introducer List of {{introducedMemberName}}</h3>
+          </div>
+
+          <div class="modal-body">
+            <table id="bank-documents-table" v-if="memberIntroducers.length>0" class="table ui celled" cellspacing="0" width="100%">
+              <thead>
+              <tr>
+                
+                <th>Name</th>
+                <th>Mobile No.</th>
+              </tr>
+              </thead>
+              <tbody>
+              <!--bank documents are: {{ bankDocuments }}-->
+                <tr v-for="memberIntroducer,index in memberIntroducers" class="height-10">
+                  <td>
+                    <img :src="imageBaseUrl+memberIntroducer.profilePictureUrl"
+                      class="img-circle" alt="Profile Picture" width="40" height="40"
+                      onerror="this.onerror=null;this.src='/static/images/default-profile-180x180.png'">
+                 
+                    {{memberIntroducer.name}}
+                  </td>
+                  <td>
+                    <a class="pointer" @click="goToMember(memberIntroducer.mobileNumber)">{{memberIntroducer.mobileNumber}}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div v-if="memberIntroducers.length===0" class="text-center">
+              No introducer exists.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="CardDocumentModal" class="modal fade" role="dialog">
@@ -366,18 +393,12 @@
             <th class="text-center">Identification Documents</th>
             <th class="text-center">Bank Info</th>
             <th class="text-center">Card Info</th>
+            <th class="text-center">Introducers</th>
             <!-- <th class="text-center" v-if="listType === 'default'"> -->
             <th class="text-center">
               Verification
             </th>
             <th class="text-center">Profile Completed</th>
-            <!-- <th class="text-center"
-                v-if="listType === 'default'">Account Status</th> -->
-            <!--th v-else class="text-center">
-              Action
-              <input type="checkbox" @click="allMemberSelectAndDeselect"
-                v-model="headerCheckBox"/>
-            </th-->
           </tr>
         </thead>
         <tbody>
@@ -434,20 +455,12 @@
               <span v-if="!containsPermission('MS_MM_USER_BASIC_DETAILS')">{{ member.name }}</span>
             </div>
           </td>
-          <!-- <td v-if="showBusinessOwner">{{member.businessName ? member.name : 'N/A'}}</td> -->
           <td>
             {{ getStaticNames(member.occupation) }}
             <br>
             <small>{{ member.organizationName }}</small>
           </td>
-          <!-- <td class="text-center">
-            <span v-if="member.accountType == 1">
-              <i class="fa fa-user fa-2" aria-hidden="true"></i>
-            </span>
-            <span v-else>
-              <i class="fa fa-briefcase fa-2" aria-hidden="true"></i>
-            </span>
-          </td> -->
+          
           <td class="text-center">
             <div v-if="member.identificationDocuments.length > 0">
               <a @click="showIdentificationDocumentsModal(member.identificationDocuments)"
@@ -509,8 +522,18 @@
               No card
             </div>
           </td>
+          <td class="text-center">
+            <div>
+              <b v-if="member.introducerCount===0">No introducer exist.</b>
+              <b v-else>
+                <a v-if="member.introducerCount>0" @click="showIntroducerModal(member)"
+                  class="pointer">
+                    {{member.introducerCount}}
+                </a>
+              </b>
+            </div>
+          </td>
 
-          <!-- <td class="text-center" v-if="listType === 'default'"> -->
           <td class="text-center" :style="{'color': member.verificationStatus === 'VERIFIED' ? 'green' : (member.verificationStatus === 'REJECTED' ? 'red' : 'black')}">
             {{ member.verificationStatus | underscoreless }}
           </td>
@@ -813,7 +836,8 @@
         loadMemberBasicDetails: {},
         accessControlList: {},
         showLoader: false,
-        occupationList: {}
+        occupationList: {},
+        introducedMemberName: ''
       }
     },
     computed: {
@@ -867,6 +891,29 @@
         console.log('cards: ', this.cards)
         $('#CardDocumentModal').modal({backdrop: false})
       },
+      showIntroducerModal (member) {
+        this.introducedMemberName = member.name
+        if (!this.containsPermission('MS_MM_USER_GET_INTRODUCER_LIST')) {
+            this.memberIntroducers = null
+        } else {
+          // Http call for the introducers
+          this.showLoader = true
+          Http.GET('member', [member.accountId, 'introducers'])
+            .then(
+              ({data: {introducerList: introducers}}) => {
+                this.showLoader = false
+                this.memberIntroducers = introducers
+                console.log('Got the list of introducers: ', this.memberIntroducers)
+              },
+              error => {
+                this.showLoader = false
+                console.log('Error in getting the list of introducers, error: ', error)
+              }
+            )
+        }
+        $('#IntroducerModal').modal({backdrop: false})
+      },
+      
       showIdentificationDocumentsModal (identificationDocuments) {
         this.identificationDocuments = identificationDocuments
         $('#IdentificationDocumentModal').modal({backdrop: false})
@@ -1337,6 +1384,18 @@
           }, error => {
             console.log('Error in getting filtered results: ', error)
           })
+      },
+      goToMember (mobileNumber) {
+        Http.GET('mmAdminMember', {mobileNumber})
+          .then(
+            ({data}) => {
+              console.log('found member::', data)
+              window.open(`/member/profile/${data.accountId}/${data.accountType}`, '_blank')
+            },
+            error => {
+              console.log(error)
+            }
+          )
       }
     },
     created () {
