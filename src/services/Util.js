@@ -57,6 +57,10 @@ const Util = {
       menu.push('MemberList')
       menu.push('WaitingForVerificationList')
       menu.push('WaitingForApprovalList')
+    }
+    if (Util.findAnyOne(accessControlList, [
+      'MS_MM_USER_GET_ADVANCED_SEARCH'
+    ])) {
       menu.push('DeepSearch')
     }
     if (Util.findAnyOne(accessControlList, [
