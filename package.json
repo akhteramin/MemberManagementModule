@@ -21,9 +21,11 @@
     "install": "^0.10.1",
     "moment": "^2.19.1",
     "npm": "^5.5.1",
+    "qs": "^6.5.2",
     "vue": "^2.5.2",
     "vue-cookies": "^1.5.4",
     "vue-highcharts": "0.0.10",
+    "vue-multiselect": "^2.1.0",
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.4.5",
     "vue2-google-maps": "^0.9.2"

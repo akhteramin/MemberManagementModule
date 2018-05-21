@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <div class="wrapper">
-      <MenuComponent v-if="$route.name !== 'Login'"
+    <div class="gr-12">
+      <MenuComponent class="gr-2" v-if="$route.name !== 'Login'"
       @update="learnMenuComponentCollapsedOrNot"></MenuComponent>
-      <router-view></router-view>
+      <router-view v-bind:class="[isMenuCollapsed ? 'gr-11 push-1' : 'gr-10 push-2']"></router-view>
     </div>
     <!--<router-view></router-view>-->
   </div>
@@ -39,10 +39,13 @@
         } else {
           this.isMenuCollapsed = false
         }
+        console.log('menu collapsed status::', this.isMenuCollapsed)
       }
     }
   }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style>
 #app {

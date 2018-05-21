@@ -230,6 +230,7 @@ const routes = {
   resource: `${MM_ADMIN_URL}/ms/resource/`,
   // twofactor: `${API_URL}/configuration/2fa/`,
   member: `${MM_ADMIN_URL}/ms/member/`,
+  memberSearch: `${MM_ADMIN_URL}/ms/member/search`,
   mmAdminMember: `${MM_ADMIN_URL}/admin/internal/user/`,
   mmAdminBusiness: `${MM_ADMIN_URL}/admin/internal/business/`,
   verification: `${MM_ADMIN_URL}/ms/verify/member/`,
