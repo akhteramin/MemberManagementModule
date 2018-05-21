@@ -295,7 +295,7 @@
             <div class="gr-3">
               <div class="form-group padding-5">
                 <label class="push-0">Gender </label>
-                <multiselect style="z-index:100" v-model="genderChoice" :options="genderList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select genders ..." label="name" track-by="value">
+                <multiselect style="z-index:99" v-model="genderChoice" :options="genderList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select genders ..." label="name" track-by="value">
                 </multiselect>
               </div>
             </div>
@@ -303,7 +303,7 @@
             <div class="gr-3">
               <div class="form-group padding-5">
                 <label class="push-0">Bank Document </label>
-                <multiselect style="z-index:100" v-model="bankDocChoice" :options="bankDocList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select bank document types ..." label="name" track-by="value">
+                <multiselect style="z-index:99" v-model="bankDocChoice" :options="bankDocList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select bank document types ..." label="name" track-by="value">
                 </multiselect>
               </div>
             </div>
@@ -344,7 +344,7 @@
             <div class="gr-5">
               <div class="form-group padding-5">
                 <label class="push-0">Identification Document Type </label>
-                <multiselect style="z-index:100" v-model="idTypeChoice" :options="idTypeList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select ID document types ..." label="name" track-by="value">
+                <multiselect style="z-index:98" v-model="idTypeChoice" :options="idTypeList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select ID document types ..." label="name" track-by="value">
                 </multiselect>
               </div>
             </div>
