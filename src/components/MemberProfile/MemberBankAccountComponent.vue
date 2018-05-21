@@ -47,7 +47,7 @@
               </td>
               <td>
                 <span>{{ item.verificationStatus }}</span>
-                <span>
+                <span v-restrict="'MS_MM_USER_GET_TOKEN_AMOUNT_STATUS'">
                   <button @click="setBank(item)" data-toggle="modal" :data-target="`#BankDetailsModal${item.bankId}`" data-backdrop="false"
                     class="button-md-verify width-150">Account Details <i class="fa fa-list" aria-hidden="true"></i></button>
                   <div :id="`BankDetailsModal${item.bankId}`" class="modal fade" role="dialog">
