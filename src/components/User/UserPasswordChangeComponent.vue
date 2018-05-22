@@ -1,8 +1,9 @@
 <template>
-  <div id="content" style="width:100%">
-    <div class="gr-6 push-5">
-        <h1>Change Password</h1>
+  <div id="content">
+    <div class="gr-12">
+        <h1 class="text-center">Change Password</h1>
     </div>
+    
     <div class="gr-12">
       <hr>
       <div class="row">
