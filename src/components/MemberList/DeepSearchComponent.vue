@@ -321,6 +321,7 @@
                       <option selected value="PROFILE_COMPLETION_SCORE">Profile Completion Score</option>
                       <option value = "DOCUMENT_UPLOAD">Document Upload Date</option>
                       <option value="CREATION_DATE">Account Creation Date</option>
+                      <option value="VALIDATION_SCORE">Validation Score</option>
                     </select>
                   </div>
                 </div>
@@ -444,6 +445,7 @@
               Verification
             </th>
             <th class="text-center">Profile Completed</th>
+            <th class="text-center">Validation Score</th>
           </tr>
         </thead>
         <tbody>
@@ -569,7 +571,7 @@
           </td>
           <td class="text-center">
             <div>
-              <b v-if="member.introducerCount===0">No introducer exist.</b>
+              <span v-if="!member.introducerCount || member.introducerCount===0">N/A</span>
               <b v-else>
                 <a v-if="member.introducerCount>0" @click="showIntroducerModal(member)"
                   class="pointer">
@@ -596,7 +598,7 @@
             <input type="checkbox" @change="verificationBoxClicked(member, index)"
               v-model="checkBoxTicked[index]"> <!-- member.uncheckVerificationActionBox -->
           <!--/td-->
-
+          <td class="text-center" :style="{'color': member.validationScore ? 'blue': 'black'}">{{ member.validationScore ? `${member.validationScore}` : 'N/A' }}</td>
         </tr>
         </tbody>
       </table>
