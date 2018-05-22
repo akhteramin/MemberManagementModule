@@ -1,9 +1,9 @@
 <template>
-    <div id="content" style="width:100%">
-        <div class="gr-6 push-5">
-            <h1>Manage Service</h1> <br>
+    <div id="content">
+        <div class="gr-12">
+            <h1 class="text-center">Manage Services</h1>
         </div>
-        <div class="gr-10">
+        <div class="gr-10 push-1">
             <div class="loaders loading" v-if="showLoader">
             <div class="loader">
             <div class="loader-inner ball-grid-pulse">
@@ -21,6 +21,7 @@
         </div>
         
         <div class="gr-12">
+            <br>
             <table  class="table ui celled" cellspacing="0" width="100%">
                 <thead>
                     <tr>

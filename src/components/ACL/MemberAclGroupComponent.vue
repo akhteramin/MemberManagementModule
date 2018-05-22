@@ -1,7 +1,7 @@
 <template>
     <div id="content">
-      <div class="gr-6 push-4">
-        <h1>iPay Member ACL</h1>
+      <div class="gr-12">
+        <h1 class="text-center">iPay Member ACL</h1>
       </div>
       <div class="gr-12 w3-header-card w3-panel w3-border-top w3-border-bottom w3-border-left w3-round">
         <div class="gr-3">

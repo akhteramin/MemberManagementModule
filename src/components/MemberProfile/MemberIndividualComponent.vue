@@ -226,7 +226,7 @@
                         <div class="row">
                           <img v-if="member.profilePictures && member.profilePictures[0]" @click="imagePreview(imageBaseUrl+member.profilePictures[0].url)"
                                 :src="imageBaseUrl+member.profilePictures[0].url || '/static/images/default-original.jpg'"
-                                class="img-rounded img-responsive" width="250" height="250"
+                                class="img-rounded img-responsive pointer" width="250" height="250"
                               onerror="onerror=null; src='/static/images/default-profile-180x180.png'">
 
                           <img v-else src="/static/images/default-original.jpg" class="img-rounded img-responsive"
