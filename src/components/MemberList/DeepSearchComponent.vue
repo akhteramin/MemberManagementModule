@@ -361,7 +361,7 @@
             <div class="gr-3">
               <div class="form-group padding-5">
                 <label class="push-0">Account Status </label>
-                <multiselect style="z-index:99" v-model="accountStatusChoice" :options="accountStatusList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select account status ..." label="name" track-by="value">
+                <multiselect style="z-index:97" v-model="accountStatusChoice" :options="accountStatusList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select account status ..." label="name" track-by="value">
                 </multiselect>
               </div>
             </div>
@@ -369,7 +369,7 @@
             <div class="gr-3">
               <div class="form-group padding-5">
                 <label class="push-0">Account Class </label>
-                <multiselect style="z-index:99" v-model="accountClassChoice" :options="accountClassList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select account classes ..." label="name" track-by="value">
+                <multiselect style="z-index:97" v-model="accountClassChoice" :options="accountClassList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select account classes ..." label="name" track-by="value">
                 </multiselect>
               </div>
             </div>
