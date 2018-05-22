@@ -17,7 +17,7 @@
     <!-- Sidebar Links -->
     <ul class="list-unstyled components">
         <li :class="{'active': showHome}" @click="setMenu('home')"><a href="" v-on:click="goHome">Home</a></li>
-        <li :class="{'active': showSearch}" @click="setMenu('search')"><a href="" v-on:click="goToSearch">Member Search</a></li>
+        <li :class="{'active': showSearch}" @click="setMenu('search')"><a href="" v-restrict="'MS_MM_USER_GET_ADVANCED_SEARCH'" v-on:click="goToSearch">Member Search</a></li>
         <li :class="{'active': showMembers}" @click="setMenu('member')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList">Recent Members</a></li>
         <li :class="{'active': showWaitingVerification}" @click="setMenu('memberVerification')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList">Waiting for Verification</a></li>
         <li :class="{'active': showWaitingApproval}" @click="setMenu('memberApproval')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList">Waiting for Approval</a></li>
