@@ -553,7 +553,7 @@
             <input type="checkbox" @change="verificationBoxClicked(member, index)"
               v-model="checkBoxTicked[index]"> <!-- member.uncheckVerificationActionBox -->
           <!--/td-->
-          <td class="text-center" :style="{'color': member.validationScore ? 'blue': 'black'}">{{ member.validationScore ? `${member.validationScore}%` : 'N/A' }}</td>
+          <td class="text-center" :style="{'color': member.validationScore ? 'blue': 'black'}">{{ member.validationScore ? `${member.validationScore}` : 'N/A' }}</td>
         </tr>
         </tbody>
       </table>
