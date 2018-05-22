@@ -1,5 +1,5 @@
 <template>
-  <nav id="sidebar">
+  <nav id="sidebar" style="height:1000px !important; position:absolute; ">
     <!-- Close Sidebar Button -->
     <div id="dismiss" class="text-center">
         <img id="icon" class="padding-5" src="/static/images/white-ipay-logo.png" alt="Pro. Pic" width="90">
@@ -16,7 +16,8 @@
 
     <!-- Sidebar Links -->
     <ul class="list-unstyled components">
-        <li :class="{'active': showHome}" @click="setMenu('home')"><a href="" v-on:click="goHome">Home</a></li>        
+        <li :class="{'active': showHome}" @click="setMenu('home')"><a href="" v-on:click="goHome">Home</a></li>
+        <li :class="{'active': showSearch}" @click="setMenu('search')"><a href="" v-on:click="goToSearch">Member Search</a></li>
         <li :class="{'active': showMembers}" @click="setMenu('member')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToMemberList">Recent Members</a></li>
         <li :class="{'active': showWaitingVerification}" @click="setMenu('memberVerification')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForVerificationMemberList">Waiting for Verification</a></li>
         <li :class="{'active': showWaitingApproval}" @click="setMenu('memberApproval')"><a href="" v-restrict="'MS_MM_USER_GET_ALL'" v-on:click="goToWaitingForApprovalMemberList">Waiting for Approval</a></li>
@@ -57,6 +58,7 @@
         appURL: {'2': Http.AUTH_HTTP_URI, '3': Http.CRM_URI, '6': Http.ADMIN_URI},
         showHome: false,
         showMembers: false,
+        showSearch: false,
         showWaitingVerification: false,
         showWaitingApproval: false,
         showRejectedMembers: false,
@@ -106,6 +108,10 @@
       goHome () {
         this.expandList = false
         route.push('/home')
+      },
+      goToSearch () {
+        this.expandList = false
+        route.push('/member/search')
       },
       goToMemberList () {
         this.expandList = false
@@ -182,6 +188,7 @@
       setMenu (menuName) {
         this.showHome = false
         this.showMembers = false
+        this.showSearch = false
         this.showWaitingVerification = false
         this.showWaitingApproval = false
         this.showRejectedMembers = false
@@ -194,6 +201,8 @@
         this.showModule = false
         if (menuName === 'home') {
           this.showHome = true
+        } else if (menuName === 'search') {
+          this.showSearch = true
         } else if (menuName === 'member') {
           this.showMembers = true
         } else if (menuName === 'memberVerification') {
@@ -244,6 +253,7 @@
         console.log(firstKey, secondKey)
         if (firstKey === 'member') {
           if (secondKey === 'default') this.showMembers = true
+          else if (secondKey === 'search') this.showSearch = true
           else if (secondKey === 'waiting-verification') this.showWaitingVerification = true
           else if (secondKey === 'waiting-approval') this.showWaitingApproval = true
           else if (secondKey === 'rejected') this.showRejectedMembers = true
@@ -256,6 +266,7 @@
       },
       sideBarCollapse () {
         $('#sidebar').toggleClass('active')
+        this.$emit('update', 'false')
       }
     },
     created () {

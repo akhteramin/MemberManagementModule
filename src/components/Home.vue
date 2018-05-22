@@ -59,40 +59,39 @@ export default{
           events: {
             drilldown: function (e) {
               console.log(e.point.name)
-              var titleName=e.point.name
-                if (!e.seriesOptions) {
-                    Http.GET('memberVerificationMetrics', ['profileCompletionSegment-'+e.point.name])
+              var titleName = e.point.name
+              if (!e.seriesOptions) {
+                Http.GET('memberVerificationMetrics', ['profileCompletionSegment-' + e.point.name])
                     .then(({data: profileCompletionSegmentData}) => {
                       console.log('Success, got details list: ', profileCompletionSegmentData.data)
                       // this.memberAvailableData.series.push({ data: profileCompletionSegmentData.data.map(x => x.value) })
-                      var data=[]
+                      var data = []
                       for (var i = 0; i < profileCompletionSegmentData.data.length; i++) {
-                          data[i]=[profileCompletionSegmentData.data[i].key,profileCompletionSegmentData.data[i].value]
-                      } 
+                        data[i] = [profileCompletionSegmentData.data[i].key, profileCompletionSegmentData.data[i].value]
+                      }
                       console.log(data)
-                      
+
                       var chart = this,
                         drilldowns = {
-                            [titleName] : {
-                                name: e.point.name,
-                                data: data
-                            }
+                          [titleName]: {
+                            name: e.point.name,
+                            data: data
+                          }
                         },
-                        series = drilldowns[e.point.name];
-                        console.log(series)
-                        console.log(e.point.name)
+                        series = drilldowns[e.point.name]
+                      console.log(series)
+                      console.log(e.point.name)
                         // Show the loading label
-                      chart.showLoading('Retreiving Details ...');
+                      chart.showLoading('Retreiving Details ...')
 
                       setTimeout(function () {
-                          chart.hideLoading();
-                          chart.addSeriesAsDrilldown(e.point, series);
-                      }, 1000);
+                        chart.hideLoading()
+                        chart.addSeriesAsDrilldown(e.point, series)
+                      }, 1000)
                     }, error => {
                       console.error('Error in offers: ', error)
                     })
-                }
-
+              }
             }
           }
         },
@@ -105,24 +104,24 @@ export default{
           text: 'Profile completion score vs No. of members.'
         },
         xAxis: {
-            title: {
-              text: 'Profile Completion Score'
-            },
-            type: 'category',
-            labels: {
+          title: {
+            text: 'Profile Completion Score'
+          },
+          type: 'category',
+          labels: {
             enabled: true,
             style: {
-              fontSize: '24px'
-            }
+                fontSize: '24px'
+              }
           }
         },
         plotOptions: {
-            series: {
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true
-                }
-            }
+          series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true
+              }
+          }
         },
         yAxis: {
           allowDecimals: false,
@@ -132,8 +131,8 @@ export default{
           }
         },
         series: [],
-         drilldown: {
-            series: []
+        drilldown: {
+          series: []
         },
         legend: {
           enabled: false
@@ -147,13 +146,13 @@ export default{
           type: 'column',
           height: '400px'
         },
-         plotOptions: {
-            series: {
-                borderWidth: 0,
-                dataLabels: {
-                    enabled: true
-                }
-            }
+        plotOptions: {
+          series: {
+             borderWidth: 0,
+             dataLabels: {
+                enabled: true
+              }
+           }
         },
         tooltip: {
           formatter () {
@@ -164,7 +163,7 @@ export default{
           text: 'Available Data Points vs No. of members.'
         },
         xAxis: {
-            type: 'category'
+          type: 'category'
         },
         yAxis: {
           allowDecimals: false,
@@ -196,18 +195,16 @@ export default{
           this.showLoader = false
           console.log('Success, got metric list: ', metricData)
           if (metricData.data !== undefined) {
-                
-            var datam = metricData.data.map(function(el) {
-              var o = Object.assign({}, el);
-              o.drilldown = true;
-              o.y = el.value;
-              o.name = el.key; 
-              return o;
+            var datam = metricData.data.map(function (el) {
+              var o = Object.assign({}, el)
+              o.drilldown = true
+              o.y = el.value
+              o.name = el.key
+              return o
             })
             console.log(datam)
-            this.memberMetricData.series=[{data:datam}]    
-            console.log("hello there::",this.memberMetricData.series)        
-            
+            this.memberMetricData.series = [{data: datam}]
+            console.log('hello there::', this.memberMetricData.series)
           }
         }, error => {
           this.showLoader = false

@@ -89,7 +89,7 @@ const setAuthUrl = () => {
   let ENV = 'www'
   const [domain] = window.location.hostname.split('.')
   const mapper = {
-    verification: '10.200.40.203',
+    verification: 'centralauth',
     adminnew: '10.10.40.31',
     localhost: '10.10.10.199',
     192: '10.10.10.199',
@@ -101,7 +101,7 @@ const setAuthUrl = () => {
   }
 
   // console.log('ENV: ', ENV);
-  if (domain === 'verification') authUrl = `${ENV}:7000`
+  if (domain === 'verification') authUrl = `${ENV}.ipay.com.bd`
   else if (domain === 'adminnew') authUrl = `${ENV}:8000`
   else if (ENV.substring(0, 3) === '10.' || ENV.substring(0, 4) === '192.' || domain === 'localhost') authUrl = `${ENV}:8000`
   else authUrl = `${ENV}.ipay.com.bd`
@@ -230,6 +230,7 @@ const routes = {
   resource: `${MM_ADMIN_URL}/ms/resource/`,
   // twofactor: `${API_URL}/configuration/2fa/`,
   member: `${MM_ADMIN_URL}/ms/member/`,
+  memberSearch: `${MM_ADMIN_URL}/ms/member/search`,
   mmAdminMember: `${MM_ADMIN_URL}/admin/internal/user/`,
   mmAdminBusiness: `${MM_ADMIN_URL}/admin/internal/business/`,
   verification: `${MM_ADMIN_URL}/ms/verify/member/`,

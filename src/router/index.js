@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import MemberList from '@/components/MemberList/MemberListComponent'
+import DeepSearch from '@/components/MemberList/DeepSearchComponent'
 import Home from '@/components/Home'
 import MemberIndividualComponent from '@/components/MemberProfile/MemberIndividualComponent'
 import UserListComponent from '@/components/User/UserListComponent'
@@ -62,6 +63,14 @@ const router = new Router({
       path: '/',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/member/search',
+      name: 'DeepSearch',
+      component: DeepSearch,
+      // props: true,
+      // auth check
+      meta: { requiresAuth: true }
     },
     {
       path: '/member/:listType',

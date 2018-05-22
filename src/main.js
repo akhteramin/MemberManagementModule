@@ -7,24 +7,26 @@ import router from './router'
 import vueSlider from 'vue-slider-component'
 import VueCookies from 'vue-cookies'
 import Restrict from './directives/restrict'
-import VueHighcharts from 'vue-highcharts';
-import Highcharts from 'highcharts';
-import loadDrillDown from 'highcharts/modules/drilldown';
-import * as VueGoogleMaps from "vue2-google-maps";
+import VueHighcharts from 'vue-highcharts'
+import Highcharts from 'highcharts'
+import loadDrillDown from 'highcharts/modules/drilldown'
+import * as VueGoogleMaps from 'vue2-google-maps'
+import Multiselect from 'vue-multiselect'
 
 loadDrillDown(Highcharts)
 require('./assets/css/login.css')
 Vue.config.productionTip = false
 Vue.component('vueSlider', vueSlider)
-Vue.use(VueHighcharts);
+Vue.component('multiselect', Multiselect)
+Vue.use(VueHighcharts)
 Vue.use(VueCookies)
 Vue.use(VueHighcharts, { Highcharts })
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyAVq0yIOlQ6PB1K39C0xzgZG76qmKFqoOo",
-    libraries: "places", // necessary for places input
+    key: 'AIzaSyAVq0yIOlQ6PB1K39C0xzgZG76qmKFqoOo',
+    libraries: 'places', // necessary for places input
     types: ['(cities)'],
-    componentRestrictions: {country: "bd"}
+    componentRestrictions: {country: 'bd'}
   }
 })
 Vue.directive('restrict', Restrict)
