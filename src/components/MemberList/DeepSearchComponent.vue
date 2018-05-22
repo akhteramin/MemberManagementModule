@@ -342,7 +342,7 @@
               </div>
             </div>
 
-            <div class="gr-5">
+            <div class="gr-6">
               <div class="form-group padding-5">
                 <label class="push-0">Identification Document Type </label>
                 <multiselect style="z-index:98" v-model="idTypeChoice" :options="idTypeList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select ID document types ..." label="name" track-by="value">
@@ -352,13 +352,37 @@
           </div>
 
           <div class="gr-12">
-            <div class="gr-6 push-0 text-center">
+            <div class="gr-4 push-0 text-center">
+              <br>
+              <label> Validation Score Range </label>
+              <vue-slider ref="slider" v-model="validationScoreRangeValue" :width="'100%'"></vue-slider>
+            </div>
+
+            <div class="gr-3">
+              <div class="form-group padding-5">
+                <label class="push-0">Account Status </label>
+                <multiselect style="z-index:99" v-model="accountStatusChoice" :options="accountStatusList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select account status ..." label="name" track-by="value">
+                </multiselect>
+              </div>
+            </div>
+
+            <div class="gr-3">
+              <div class="form-group padding-5">
+                <label class="push-0">Account Class </label>
+                <multiselect style="z-index:99" v-model="accountClassChoice" :options="accountClassList" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" placeholder="Select account classes ..." label="name" track-by="value">
+                </multiselect>
+              </div>
+            </div>
+          </div>
+
+          <div class="gr-12">
+            <div class="gr-4 push-0 text-center">
               <br>
               <label> Profile Completion Range </label>
-              <vue-slider ref="slider" v-model="value" :width="'100%'"></vue-slider>
+              <vue-slider ref="slider" v-model="profileCompletionRangeValue" :width="'100%'"></vue-slider>
             </div>
             
-            <div class="gr-2 push-2">
+            <div class="gr-2 push-4">
               <br>
               <br>
               <div class="form-group text-right">
@@ -373,7 +397,7 @@
               </div>
             </div>
 
-            <div v-if="members.list && members.list.length > 0" class="gr-1 push-3">
+            <div v-if="members.list && members.list.length > 0" class="gr-1 push-5">
               <br>
               <br>
               <div class="select select-sm">
@@ -598,7 +622,7 @@
             <input type="checkbox" @change="verificationBoxClicked(member, index)"
               v-model="checkBoxTicked[index]"> <!-- member.uncheckVerificationActionBox -->
           <!--/td-->
-          <td class="text-center" :style="{'color': member.validationScore ? 'blue': 'black'}">{{ member.validationScore ? `${member.validationScore}` : 'N/A' }}</td>
+          <td class="text-center" :style="{'color': member.validationScore >= 0 ? 'blue': 'black'}">{{ member.validationScore >= 0 ? `${member.validationScore}` : 'N/A' }}</td>
         </tr>
         </tbody>
       </table>
@@ -804,7 +828,11 @@
         cards: null,
         sortParam: '',
         orderParam: '',
-        value: [
+        profileCompletionRangeValue: [
+          0,
+          100
+        ],
+        validationScoreRangeValue: [
           0,
           100
         ],
@@ -856,7 +884,14 @@
         bankDocList: [
           {name: 'Cheque', value: 'cheque'}
         ],
-        bankDocChoice: []
+        bankDocChoice: [],
+        accountClassList: [],
+        accountClassChoice: [],
+        accountStatusList: [
+          {name: 'Active', value: 1},
+          {name: 'Suspended', value: 2}
+        ],
+        accountStatusChoice: []
       }
     },
     computed: {
@@ -1279,6 +1314,8 @@
         this.genderChoice = []
         this.idTypeChoice = []
         this.bankDocChoice = []
+        this.accountClassChoice = []
+        this.accountStatusChoice = []
         this.query = Object.assign({}, {
           name: '', // string
           businessName: '',
@@ -1314,9 +1351,24 @@
         this.accessControlList = localStorage.getItem('accessControlList')
         this.accessControlList = this.accessControlList.split(',')
         // this.containsPermission()
-        this.value = [0, 100]
+        this.profileCompletionRangeValue = [0, 100]
+        this.validationScoreRangeValue = [0, 100]
         this.signUpDateFrom = null
         this.signUpDateTo = null
+
+        Http.GET('resource', ['account-class'])
+          .then(
+            ({data: {data: classes}}) => {
+              console.log('successfully got account class list: ', classes)
+              this.accountClassList = classes.map(x => {
+                return {name: x.name, value: x.id}
+              })
+            },
+            error => {
+              console.log('error getting service list', error)
+            }
+          )
+
         console.log('Menu component appList value: ', MenuComponent.data().appList)
       },
       filter (key = 'memberSearch') {
@@ -1325,10 +1377,14 @@
         this.query.gender = this.genderChoice.map(x => x.value)
         this.query.identificationDocumentType = this.idTypeChoice.map(x => x.value)
         this.query.bankDocumentType = this.bankDocChoice.map(x => x.value)
+        this.query.accountClass = this.accountClassChoice.map(x => x.value)
+        this.query.accountStatus = this.accountStatusChoice.map(x => x.value)
         this.sliderShow = false
         this.query.pageNumber = 0
-        this.query.profileCompletionScoreStartRange = this.value[0]
-        this.query.profileCompletionScoreEndRange = this.value[1]
+        this.query.profileCompletionScoreStartRange = this.profileCompletionRangeValue[0]
+        this.query.profileCompletionScoreEndRange = this.profileCompletionRangeValue[1]
+        this.query.validationScoreStartRange = this.validationScoreRangeValue[0]
+        this.query.validationScoreEndRange = this.validationScoreRangeValue[1]
         this.checkBoxTicked = []
         this.headerCheckBox = false
         for (let i = 0; i < 100; i++) {
