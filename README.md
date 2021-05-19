@@ -1,4 +1,4 @@
-## Member Management Modu;e
+## Member Management Module
 The Member Service is developed for the member service/admin team. Their responsibilities are confined within the member management scope, thus this application is developed with only member management functionalities. The big focus of this application is to find the verifiable members easily and help the team to take necessary actions (verify them or help them to get verified). 
 Current Features
 
