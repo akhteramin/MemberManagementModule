@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "bootstrap-vue": "^1.0.0-beta.9",
     "highcharts": "^6.0.2",
     "install": "^0.10.1",
